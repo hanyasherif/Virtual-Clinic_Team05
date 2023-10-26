@@ -3,14 +3,20 @@ const express = require("express");
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 require("dotenv").config();
-const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
+// const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
 const MongoURI = process.env.MONGO_URI ;
+
+//THIS IS THE TASK CODE TO GUIDE YOUUU
+
+
+
+
 
 
 //App variables
 const app = express();
 const port = process.env.PORT || "8000";
-const medicine = require('./Models/Medicine');
+// const medicine = require('./Models/Medicine');
 // #Importing the userController
 
 
@@ -35,10 +41,9 @@ app.get("/home", (req, res) => {
 // #Routing to userController here
 
 app.use(express.json())
-app.post("/addMedicine",createMedicine);
-app.get("/medicines", getMedicine);
-app.put("/updateMedicine/:id", updateMedicine);
-//app.delete("/deleteUser/:id", deleteUser);
+// app.post("/addMedicine",createMedicine);
+// app.get("/medicines", getMedicine);
+// app.put("/updateMedicine/:id", updateMedicine);
 
 
 /*
