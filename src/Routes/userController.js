@@ -4,31 +4,41 @@ const { default: mongoose } = require('mongoose');
 
 //THIS IS THE TASK CODE TO GUIDE YOUUU
 
+const addAdminstrator = async(req,res) => {
+   //add a new user to the database with 
+   //Name, Email and Age
+   let username = req.body.username
+   let password = req.body.password
 
-
-
-
-
-
-
-// const createUser = async(req,res) => {
-//    //add a new user to the database with 
-//    //Name, Email and Age
-//    let name = req.body.name
-//    let email = req.body.email
-//    let age = req.body.age
-
-//    try{
-//       let user = await userModel.create({Name: name, Email: email, Age: age})
-//       await user.save()
-//       res.status(200).json({message: "User created successfully"})
-//    }
-//    catch(err){
-//       res.json({message: err.message})
-//    }
+   try{
+      let user = await userModel.create({type: "Adminstrator",username: username, password: password})
+      await user.save()
+      res.status(200).json({message: "Adminstrator created successfully"})
+   }
+   catch(err){
+      res.json({message: err.message})
+   }
       
-//    }
+   }
 
+const removeUser = async (req, res) => {
+   let username = req.body.username;
+//    let userID = await userModel.find(username = username)
+    // const user = await userModel.findOne({ username });
+
+   try {
+      const deletedUser = await userModel.findOneAndDelete({ username });
+
+
+      if (!deletedUser) {
+         return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.status(200).json({ message: 'User deleted successfully', user: deletedUser });
+   } catch (err) {
+      res.status(500).json({ message: err.message });
+   }
+}
 
 //    const getUsers = async (req, res) => {
 
@@ -81,3 +91,5 @@ const { default: mongoose } = require('mongoose');
 // }
 // 
 // module.exports = {createUser, getUsers, updateUser, deleteUser};
+
+module.exports = {addAdminstrator, removeUser}
