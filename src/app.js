@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 require("dotenv").config();
 // const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
-const {addAdminstrator, removeUser} = require("./Routes/userController");
+const {addAdminstrator, getUsers , registerPatient, deleteUser  , addFamMem} = require("./Routes/userController");
+const {createPres , viewPatientPrescriptions , filterPrescriptions} = require("./Routes/PrescriptionController");
+const {adminAddPackage , adminDeletePackage , adminUpdatePackage} = require("./Routes/AdminController");
 
 const MongoURI = process.env.MONGO_URI ;
 
@@ -47,12 +49,21 @@ app.get("/home", (req, res) => {
 
 app.use(express.json())
 app.post("/addAdminstrator", addAdminstrator);
-app.delete("/removeUser", removeUser);
-// app.post("/addMedicine",createMedicine);
-// app.get("/medicines", getMedicine);
+app.post("/admin/addPackage", adminAddPackage);
+app.delete("/admin/deletePackage", adminDeletePackage);
+app.put("/admin/updatePackage", adminUpdatePackage);
+app.delete("/deleteUser/:username", deleteUser);
+app.post("/registerPatient",registerPatient);
+app.get("/users", getUsers);
+app.delete("/deleteUser/:username", deleteUser);
+app.put("/addFamMem/:username", addFamMem);
+
 // app.put("/updateMedicine/:id", updateMedicine);
 
-
+//// Prescription routes
+app.post("/addPrescription",createPres);
+app.get("/viewPrescription/:username", viewPatientPrescriptions);
+app.get("/filterPrescription/:username", filterPrescriptions);
 /*
                                                     End of your code
 */

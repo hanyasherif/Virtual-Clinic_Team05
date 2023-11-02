@@ -64,8 +64,13 @@ const userSchema = new Schema({
       },
       docSpeciality:{
         type: String
+      },
+     package: {
+        type: String
       }
   }, { timestamps: true });
+
+ 
   
   const User = mongoose.model('User', userSchema);
   module.exports = User;
