@@ -64,6 +64,9 @@ const userSchema = new Schema({
       },
       docSpeciality:{
         type: String
+      },
+      sessionPrice:{
+        type: Number
       }
   }, { timestamps: true });
   
