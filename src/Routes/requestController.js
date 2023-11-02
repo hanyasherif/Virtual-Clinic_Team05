@@ -55,7 +55,7 @@ const removeUser = async (req, res) => {
    }
 }
 
-const getRequests = async (req,res) => {
+const getARequest = async (req,res) => {
     const id = req.query.id
     try{
         const requests = await requestModel.find({doctor: new mongoose.Types.ObjectId(id)}).populate({
@@ -64,6 +64,15 @@ const getRequests = async (req,res) => {
     }catch(err){
         res.status(400).json({message: err.message})
     }
+}
+
+const getRequests = async (req,res) => {
+   try{
+       const requests = await requestModel.find();
+       res.status(200).json(requests);
+   }catch(err){
+       res.status(400).json({message: err.message})
+   }
 }
 
 // const id = req.query.id
@@ -130,4 +139,4 @@ const getRequests = async (req,res) => {
 // 
 // module.exports = {createUser, getUsers, updateUser, deleteUser};
 
-module.exports = {addRequest, getRequests}
+module.exports = {addRequest, getRequests, getARequest}

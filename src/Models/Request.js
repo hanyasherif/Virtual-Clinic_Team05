@@ -20,10 +20,12 @@ const requestSchema = new Schema({
       required: true
     },
     dateOfBirth: {
-        type: Date
+        type: Date,
+        required: true
     },
     hourlyRate: {
-        type: Number
+        type: Number,
+        required: true
     },
     doctor: {
         type: mongoose.Types.ObjectId,
@@ -31,13 +33,12 @@ const requestSchema = new Schema({
         required: true
     },
     affiliation: {
-        type: String
+        type: String,
+        required: true
     },
     educationalBackground:{
-        type: String
-    },
-    status: {
-        type: String
+        type: String,
+        required: true
     }
   }, { timestamps: true });
   
