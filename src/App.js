@@ -5,6 +5,7 @@ mongoose.set('strictQuery', false);
 require("dotenv").config();
 // const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
 const {addAdminstrator, removeUser} = require("./Routes/userController");
+const {addRequest, getRequests} = require("./Routes/requestController");
 
 const MongoURI = process.env.MONGO_URI ;
 
@@ -43,11 +44,14 @@ app.get("/home", (req, res) => {
     res.status(200).send("You have everything installed!");
   });
 
-// #Routing to userController here
+// #Routing to userController/requestController here
 
 app.use(express.json())
 app.post("/addAdminstrator", addAdminstrator);
 app.delete("/removeUser", removeUser);
+app.post("/addRequest", addRequest);
+app.get("/getRequests", getRequests);
+
 // app.post("/addMedicine",createMedicine);
 // app.get("/medicines", getMedicine);
 // app.put("/updateMedicine/:id", updateMedicine);
