@@ -65,6 +65,9 @@ const userSchema = new Schema({
       docSpeciality:{
         type: String
       }
+      // sessionPrice:{
+      //   type: Number
+      // }
   }, { timestamps: true });
   
   const User = mongoose.model('User', userSchema);

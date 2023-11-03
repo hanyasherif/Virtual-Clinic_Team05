@@ -4,16 +4,9 @@ const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 require("dotenv").config();
 // const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
-const {addAdminstrator, removeUser} = require("./Routes/userController");
+const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs} = require("./Routes/userController");
 
 const MongoURI = process.env.MONGO_URI ;
-
-//THIS IS THE TASK CODE TO GUIDE YOUUU
-
-
-
-
-
 
 //App variables
 const app = express();
@@ -21,9 +14,6 @@ const port = process.env.PORT || "8000";
 app.get('/', (req, res) =>{
   res.json({mssg: 'Welcome to the app'})
 })
-// const medicine = require('./Models/Medicine');
-// #Importing the userController
-
 
 // configurations
 // Mongo DB
@@ -46,14 +36,17 @@ app.get("/home", (req, res) => {
 // #Routing to userController here
 
 app.use(express.json())
-app.post("/addAdminstrator", addAdminstrator);
+app.post("/addAdministrator", addAdministrator);
 app.delete("/removeUser", removeUser);
-// app.post("/addMedicine",createMedicine);
-// app.get("/medicines", getMedicine);
-// app.put("/updateMedicine/:id", updateMedicine);
-
-
-/*
-                                                    End of your code
-*/
+app.post("/checkUsername", checkUsername);
+app.get("/getAllUsers", getUsers);
+app.get("/searchByName",searchByName);
+app.get("/searchBySpec",searchBySpec);
+app.get("/searchByNameSpec",searchByNameSpec);
+app.get("/viewDoctors", viewDoctors);
+app.get("/getDoctorInfo", getDoctorInfo);
+app.get("/getSpecs", getSpecs);
+app.get("/filterSpecs/:spec", filterSpecs);
+app.get("/filterDate/:date", filterByDate);
+app.get("/filterDateSpecs", filterDateSpecs)
 
