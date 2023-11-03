@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.set('strictQuery',false);
 const Schema = mongoose.Schema;
 
                         
@@ -30,7 +31,7 @@ const userSchema = new Schema({
     mobileNumber: {
       type: Number
     },
-    emergencyContactFullname:
+        emergencyContactFullname:
       {
           type: String
       },
@@ -64,6 +65,9 @@ const userSchema = new Schema({
       },
       docSpeciality:{
         type: String
+      },
+      HealthRecord:{
+        type:[String]
       }
   }, { timestamps: true });
   

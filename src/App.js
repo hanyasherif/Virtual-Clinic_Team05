@@ -1,29 +1,29 @@
 // External variables
 const express = require("express");
+const cors = require('cors');
 const mongoose = require('mongoose');
-mongoose.set('strictQuery', false);
 require("dotenv").config();
 // const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
-const {addAdminstrator, removeUser} = require("./Routes/userController");
+const {addAdminstrator, removeUser,AddPatient,AddDoctor,CreatAppoint} = require("./Routes/userController.js");
 
-const MongoURI = process.env.MONGO_URI ;
 
 //THIS IS THE TASK CODE TO GUIDE YOUUU
-
-
-
-
+//Need to Check About requests
+//const{RegisterAsDoc}=require("./Routes/userController")
+const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData}=require("./Routes/DrController");
 
 
 //App variables
 const app = express();
-const port = process.env.PORT || "8000";
+app.use(cors());
+const port = process.env.PORT || "3000";
 app.get('/', (req, res) =>{
   res.json({mssg: 'Welcome to the app'})
 })
 // const medicine = require('./Models/Medicine');
 // #Importing the userController
 
+const MongoURI = process.env.MONGO_URI;
 
 // configurations
 // Mongo DB
@@ -45,9 +45,17 @@ app.get("/home", (req, res) => {
 
 // #Routing to userController here
 
-app.use(express.json())
+app.use(express.json());
 app.post("/addAdminstrator", addAdminstrator);
 app.delete("/removeUser", removeUser);
+app.post("/Addpatient", AddPatient);
+app.post("/Adddoctor", AddDoctor);
+app.post("/AddC", CreatAppoint);
+app.get("/getC",ViewPatients);
+app.get("/SearchP",SearchPatient);//Searchbyname
+app.post("/Edit",EditMyInfo);
+app.get("/UpcomingAppoint",filteredAppointments);
+app.get("/GetFullData",GetPFullData)
 // app.post("/addMedicine",createMedicine);
 // app.get("/medicines", getMedicine);
 // app.put("/updateMedicine/:id", updateMedicine);
