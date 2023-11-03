@@ -32,7 +32,7 @@ const createPres=async(req,res)=>
 const viewPatientPrescriptions=async(req,res)=>
 {
  try{
-     let username = req.params.username;
+     let username = req.query.username;
      let pat = await userModel.findOne({username:username})
      let prescriptions = await PrescriptionModel.find({patient:pat.id})
      if(!prescriptions)
@@ -40,7 +40,7 @@ const viewPatientPrescriptions=async(req,res)=>
       return res.status(404).json({ message: 'No prescriptions found' });
      }
      else{
-      return res.status(404).json(prescriptions);
+      return res.status(200).json(prescriptions);
      }
 
  }
@@ -51,29 +51,33 @@ const viewPatientPrescriptions=async(req,res)=>
 const filterPrescriptions=async(req,res)=>
 {
     try{
-        let username=req.params.username
+        let username=req.query.username
         let filter = req.body.filter
         let data   = req.body.data;
         let user = await userModel.findOne({username:username})
+        
         if(filter=="doctor")
         {
-            let result = await PrescriptionModel.find({doctor:data , patId:user.id});
-            return res.status(404).json(result);
+            
+            let result = await PrescriptionModel.find({doctor:data , patient:user.id});
+            return res.status(200).json(result);
         }
         else if (filter=="date")
         {
-            let result = await PrescriptionModel.find({date:data , patId:user.id});
-            return res.status(404).json(result);
+            let result = await PrescriptionModel.find({date:data , patient:user.id});
+            return res.status(200).json(result);
         }
-        else if(filter="filled")
+        else if(filter=="filled")
         {
-            let result = await PrescriptionModel.find({filled:true , patId:user.id});
-            return res.status(404).json(result);
+            console.log("sss2");
+            let result = await PrescriptionModel.find({filled:true , patient:user.id});
+            return res.status(200).json(result);
         }
         else
         {
-            let result = await PrescriptionModel.find({filled:false , patId:user.id});
-            return res.status(404).json(result);
+            console.log("sss");
+            let result = await PrescriptionModel.find({filled:false , patient:user.id});
+            return res.status(200).json(result);
         }
        
         

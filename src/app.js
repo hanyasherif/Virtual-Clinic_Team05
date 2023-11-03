@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 require("dotenv").config();
 // const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
-const {addAdminstrator, getUsers , registerPatient, deleteUser  , addFamMem} = require("./Routes/userController");
+const {addAdminstrator, getUsers , registerPatient, deleteUser  } = require("./Routes/userController");
 const {createPres , viewPatientPrescriptions , filterPrescriptions} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage} = require("./Routes/AdminController");
 
@@ -56,14 +56,14 @@ app.delete("/deleteUser/:username", deleteUser);
 app.post("/registerPatient",registerPatient);
 app.get("/users", getUsers);
 app.delete("/deleteUser/:username", deleteUser);
-app.put("/addFamMem/:username", addFamMem);
+//app.put("/addFamMem/:username", addFamMem);
 
 // app.put("/updateMedicine/:id", updateMedicine);
 
 //// Prescription routes
 app.post("/addPrescription",createPres);
-app.get("/viewPrescription/:username", viewPatientPrescriptions);
-app.get("/filterPrescription/:username", filterPrescriptions);
+app.get("/viewPrescription", viewPatientPrescriptions);
+app.get("/filterPrescription", filterPrescriptions);
 /*
                                                     End of your code
 */
