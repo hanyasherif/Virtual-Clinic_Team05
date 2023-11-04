@@ -52,32 +52,82 @@ const filterPrescriptions=async(req,res)=>
 {
     try{
         let username=req.query.username
-        let filter = req.body.filter
-        let data   = req.body.data;
+
+        let filter = req.query.name
+        console.log(filter)
+        let doctorId   = req.query.doctorId;
+        let date = req.query.date
         let user = await userModel.findOne({username:username})
-        
+    
         if(filter=="doctor")
         {
             
-            let result = await PrescriptionModel.find({doctor:data , patient:user.id});
-            return res.status(200).json(result);
+            let result = await PrescriptionModel.find({doctor:doctorId , patient:user.id});
+            //let doctor = await userModel.findById(result.doctor);
+            const resultWithNames = result.map((prescription) => {
+                return {
+                  ...prescription.toObject(), // Convert the Mongoose document to a plain object
+                  patientName: username,
+              //    doctorName: doctor.name  // Add the 'name' property
+                };
+              });
+            return res.status(200).json(resultWithNames);
         }
         else if (filter=="date")
         {
-            let result = await PrescriptionModel.find({date:data , patient:user.id});
-            return res.status(200).json(result);
+            let result = await PrescriptionModel.find({date:date , patient:user.id});
+            //let doctor = await userModel.findById(result.doctor);
+            const resultWithNames = result.map((prescription) => {
+                return {
+                  ...prescription.toObject(), // Convert the Mongoose document to a plain object
+                  patientName: username,
+              //    doctorName: doctor.name  // Add the 'name' property
+                };
+              });
+            return res.status(200).json(resultWithNames);
         }
         else if(filter=="filled")
         {
             console.log("sss2");
             let result = await PrescriptionModel.find({filled:true , patient:user.id});
-            return res.status(200).json(result);
+            //let doctor = await userModel.findById(result.doctor);
+            const resultWithNames = result.map((prescription) => {
+                return {
+                  ...prescription.toObject(), // Convert the Mongoose document to a plain object
+                  patientName: username,
+                //  doctorName: doctor.name  // Add the 'name' property
+                };
+              });
+            return res.status(200).json(resultWithNames);
         }
-        else
+        else if (filter=="not filled")
         {
-            console.log("sss");
+          
             let result = await PrescriptionModel.find({filled:false , patient:user.id});
-            return res.status(200).json(result);
+      
+            //let doctor = await userModel.findById(result.doctor);
+            
+            const resultWithNames = result.map((prescription) => {
+                return {
+                  ...prescription.toObject(), // Convert the Mongoose document to a plain object
+                  patientName: username,
+              //    doctorName: doctor.name  // Add the 'name' property
+                };
+              });
+            return res.status(200).json(resultWithNames);
+        }
+        else{
+            console.log("sss");
+            let result = await PrescriptionModel.find({patient:user.id});
+           
+            const resultWithNames = result.map((prescription) => {
+                return {
+                  ...prescription.toObject(), // Convert the Mongoose document to a plain object
+                  patientName: username,
+                  //doctorName: doctor.name  // Add the 'name' property
+                };
+              });
+;            return res.status(200).json(resultWithNames);
         }
        
         

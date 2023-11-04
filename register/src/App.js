@@ -2,25 +2,33 @@ import { BrowserRouter, Routes, Route} from 'react-router-dom'
 
 
 import Home from './pages/Home';
-import Navbar from './components/navbar';
-
-
+import AdminAddPackage from './pages/AdminAddPackage';
+import AdminUpdatePackage from './pages/AdminUpdatePackage';
+import Prescriptions from './pages/Prescriptions';
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar/>
+   
         <div className="pages">
           <Routes>
             <Route 
-              path = "/"
+              path = "/register"
               element = {<Home />}
+             />
+             <Route 
+              path = "/admin"
+              element = {<AdminAddPackage />}
+             />
+              <Route 
+              path = "/admin/update"
+              element = {<AdminUpdatePackage />}
+             />
+              <Route 
+              path = "/patient/prescrptions"
+              element = {<Prescriptions />}
              />
 
-            <Route 
-              path = "/"
-              element = {<Home />}
-             />
 
            </Routes>
         </div>

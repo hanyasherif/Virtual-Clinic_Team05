@@ -29,12 +29,16 @@ const adminAddPackage=async(req,res)=>
    {
       try
       {
-         let name = req.body.name;
-         let package = await PackageModel.findOneAndUpdate({name:name});
+         let name = req.query.name;
+         let updatedPackage=req.body
+         let package = await PackageModel.findOneAndUpdate({name:name},
+            { $set: updatedPackage }, // Update with new package data
+            { new: true });
          if(!package)
          {
             return res.status(404).json({ message: 'Package not found' });
          }
+         package.save();
          return res.status(200).send("Package Updated Successfully");
       } catch (err) {
          res.status(500).json({ message: err.message });
@@ -46,7 +50,7 @@ const adminAddPackage=async(req,res)=>
       try
       {
          {
-            let name = req.body.name;
+            let name = req.query.name;
             let package = await PackageModel.findOneAndDelete({name:name});
             if(!package)
             {
@@ -60,5 +64,13 @@ const adminAddPackage=async(req,res)=>
       }
    }
 
-
-   module.exports = {adminAddPackage , adminUpdatePackage , adminDeletePackage}
+    const getPacakges=async(req,res)=>
+    {
+      try{
+         const pack= await PackageModel.find();
+         res.status(200).json(pack)
+      } catch (err) {
+         res.status(500).json({ message: err.message });
+      }
+    }
+   module.exports = {adminAddPackage , adminUpdatePackage , adminDeletePackage , getPacakges}

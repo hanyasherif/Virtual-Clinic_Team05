@@ -4,9 +4,9 @@ const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 require("dotenv").config();
 // const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
-const {addAdminstrator, getUsers , registerPatient, deleteUser  } = require("./Routes/userController");
+const {addAdminstrator, getUsers , registerPatient, deleteUser} = require("./Routes/userController");
 const {createPres , viewPatientPrescriptions , filterPrescriptions} = require("./Routes/PrescriptionController");
-const {adminAddPackage , adminDeletePackage , adminUpdatePackage} = require("./Routes/AdminController");
+const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 
 const MongoURI = process.env.MONGO_URI ;
 
@@ -20,18 +20,20 @@ const MongoURI = process.env.MONGO_URI ;
 //App variables
 const app = express();
 const port = process.env.PORT || "8000";
+const cors = require('cors');
 app.get('/', (req, res) =>{
   res.json({mssg: 'Welcome to the app'})
 })
 // const medicine = require('./Models/Medicine');
 // #Importing the userController
 
-
 // configurations
 // Mongo DB
+app.use(cors());
 mongoose.connect(MongoURI)
 .then(()=>{
   console.log("MongoDB is now connected!")
+
 // Starting server
  app.listen(port, () => {
     console.log(`Listening to requests on http://localhost:${port}`);
@@ -53,8 +55,10 @@ app.post("/admin/addPackage", adminAddPackage);
 app.delete("/admin/deletePackage", adminDeletePackage);
 app.put("/admin/updatePackage", adminUpdatePackage);
 app.delete("/deleteUser/:username", deleteUser);
-app.post("/registerPatient",registerPatient);
+app.post("/createPatient",registerPatient);
 app.get("/users", getUsers);
+
+app.get("/packs", getPacakges);
 app.delete("/deleteUser/:username", deleteUser);
 //app.put("/addFamMem/:username", addFamMem);
 
@@ -62,7 +66,7 @@ app.delete("/deleteUser/:username", deleteUser);
 
 //// Prescription routes
 app.post("/addPrescription",createPres);
-app.get("/viewPrescription", viewPatientPrescriptions);
+app.get("/viewPrescription/:username", viewPatientPrescriptions);
 app.get("/filterPrescription", filterPrescriptions);
 /*
                                                     End of your code

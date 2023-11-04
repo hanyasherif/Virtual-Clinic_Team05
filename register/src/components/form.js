@@ -5,19 +5,19 @@ const Form = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [birth, setBirth] = useState('')
+  const [dateOfBirth, setBirth] = useState('')
   const [gender, setGender] = useState('')
-  const [mobile, setMobile] = useState('')
-  const [emergencyname, setEmergencyname] = useState('')
-  const [emergencymobile, setEmergencymobile] = useState('')
+  const [mobileNumber, setMobile] = useState('')
+  const [emergencyContactFullname, setEmergencyname] = useState('')
+  const [emergencyContactMobileNumber, setEmergencymobile] = useState('')
   const [error, setError] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const register = {username, name, email, password, birth, gender, mobile, emergencyname, emergencymobile}
+    const register = {username, name, email, password, dateOfBirth, gender, mobileNumber, emergencyContactFullname, emergencyContactMobileNumber}
     
-    const response = await fetch('', { // check the route
+    const response = await fetch('/createPatient', { // check the route
       method: 'POST',
       body: JSON.stringify(register),
       headers: {
@@ -39,7 +39,7 @@ const Form = () => {
       setMobile('')
       setEmergencymobile('')
       setEmergencyname('')
-      console.log('new workout added:', json)
+      console.log('New patient added:', json)
     }
 
   }
@@ -81,7 +81,7 @@ const Form = () => {
       <input 
         type="date" 
         onChange={(e) => setBirth(e.target.value)} 
-        value={birth} 
+        value={dateOfBirth} 
       />
 
 
@@ -97,7 +97,7 @@ const Form = () => {
       <input 
         type="number" 
         onChange={(e) => setMobile(e.target.value)} 
-        value={mobile} 
+        value={mobileNumber} 
       />
 
 
@@ -105,7 +105,7 @@ const Form = () => {
       <input 
         type="text" 
         onChange={(e) => setEmergencyname(e.target.value)} 
-        value={emergencyname} 
+        value={emergencyContactFullname} 
       />
 
 
@@ -113,9 +113,8 @@ const Form = () => {
       <input 
         type="number" 
         onChange={(e) => setEmergencymobile(e.target.value)} 
-        value={emergencymobile} 
+        value={emergencyContactMobileNumber} 
       />
-
 
 
 

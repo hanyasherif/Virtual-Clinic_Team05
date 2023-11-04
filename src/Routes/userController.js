@@ -82,7 +82,7 @@ const registerPatient=async (req,res)=>
              password: req.body.password , dateOfBirth : req.body.dateOfBirth , gender : req.body.gender, mobileNumber : req.body.mobileNumber,
               emergencyContactFullname:  req.body.emergencyContactFullname,  emergencyContactMobileNumber: req.body.emergencyContactMobileNumber})
              await patient.save();
-             res.status(200).send("Patient registered succesfully.");
+             res.status(200).json({message: "Patient Registered Succesfully" });
             }
             catch (err) {
                   res.status(500).json({ message: err.message });
@@ -150,4 +150,4 @@ const deleteUser = async (req, res) => {
 
    
 
-module.exports = {addAdminstrator, removeUser, getUsers,registerPatient , deleteUser,addFamMem}
+module.exports = {addAdminstrator, removeUser, getUsers,registerPatient , deleteUser}
