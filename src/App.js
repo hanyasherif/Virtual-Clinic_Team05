@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 require("dotenv").config();
 // const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
-const {addAdminstrator, removeUser} = require("./Routes/userController");
-
+const {addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName} = require("./Routes/userController");
+const{addAppointment} = require("./Routes/appointmentController");
 const MongoURI = process.env.MONGO_URI ;
 
 //THIS IS THE TASK CODE TO GUIDE YOUUU
@@ -46,12 +46,13 @@ app.get("/home", (req, res) => {
 // #Routing to userController here
 
 app.use(express.json())
-app.post("/addAdminstrator", addAdminstrator);
-app.delete("/removeUser", removeUser);
-// app.post("/addMedicine",createMedicine);
-// app.get("/medicines", getMedicine);
-// app.put("/updateMedicine/:id", updateMedicine);
-
+app.post("/addFamilyMember/:id",addFamilyMember); //no /:id(username) 3shan ana 7atah alreadyf body((or not?))
+app.get("/viewRegFamilyMembers/:id",viewRegFamilyMembers);
+app.get("/viewAppointments",viewAppointments);
+app.get("/filterAppointmentsDate/:date",filterAppointmentsDate); 
+app.get("/filterAppointmentsStatus/:status",filterAppointmentsStatus);
+app.get("/getDoctorName/:id", getDoctorName);
+app.post("/addAppointment",addAppointment);
 
 /*
                                                     End of your code

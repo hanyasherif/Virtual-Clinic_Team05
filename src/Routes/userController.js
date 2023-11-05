@@ -1,95 +1,95 @@
 // #Task route solution
 const userModel = require('../Models/User.js');
 const { default: mongoose } = require('mongoose');
+const familyMemberModel = require('../Models/FamilyMember.js');
+const appointmentsModel = require('../Models/Appointment.js');
 
 //THIS IS THE TASK CODE TO GUIDE YOUUU
 
-const addAdminstrator = async(req,res) => {
-   //add a new user to the database with 
-   //Name, Email and Age
-   let username = req.body.username
-   let password = req.body.password
-
+const addFamilyMember = async(req,res)=>{
+   let username = req.params.id //bn-pass bl session
+  
+   let famMemName = req.body.famMemName;
+   let famMemNatID = req.body.famMemNatID;
+   let famMemAge = req.body.famMemAge;
+   let famMemGender = req.body.famMemGender;
+   let famMemRelation = req.body.famMemRelation;
    try{
-      let user = await userModel.create({type: "Adminstrator",username: username, password: password})
-      await user.save()
-      res.status(200).json({message: "Adminstrator created successfully"})
+       const newfamilyMember = {famMemName: famMemName, famMemNatID: famMemNatID,famMemAge: famMemAge,
+           famMemGender: famMemGender,famMemRelation:famMemRelation, patient : username}
+       const familyMember = await familyMemberModel.create(newfamilyMember);
+       await familyMember.save();
+           res.status(200).json({message: "Family member created successfully"})
+
    }
    catch(err){
-      res.json({message: err.message})
-   }
-      
-   }
-
-const removeUser = async (req, res) => {
-   let username = req.body.username;
-//    let userID = await userModel.find(username = username)
-    // const user = await userModel.findOne({ username });
-
-   try {
-      const deletedUser = await userModel.findOneAndDelete({ username });
+             res.json({message: err.message})}
 
 
-      if (!deletedUser) {
-         return res.status(404).json({ message: 'User not found' });
-      }
-
-      res.status(200).json({ message: 'User deleted successfully', user: deletedUser });
-   } catch (err) {
-      res.status(500).json({ message: err.message });
-   }
+             
+  
 }
 
-//    const getUsers = async (req, res) => {
+const viewRegFamilyMembers = async(req,res)=>{
 
-      
-//       // try {
-//       //     const users = await userModel.find({});
-//       //     res.status(200).json(users);
-//       // } catch (err) {
-//       //     res.status(500).json({ message: err.message });
-//       // }
-//   }
+   const username = req.params.id;
+   try{
+    const famMembers = await familyMemberModel.find({patient: mongoose.Types.ObjectId(username)}).populate({path: 'patient'});
+    res.status(200).send(famMembers);
+}
+   
+    catch(error){
+    res.status(400).json({message: error.message})
+    }
+
+}
+const getDoctorName = async(req,res)=>{
+
+    const username = req.params.id;
+    try{
+     const doctor = await userModel.findById(username);
+     res.status(200).send(doctor);
+ }
+    
+     catch(error){
+     res.status(400).json({message: error.message})
+     }
+ 
+ }
+
+const viewAppointments = async(req,res)=>{
+
+    try{
+     const Appointments = await appointmentsModel.find();
+     res.status(200).send(Appointments);
+ }
+    
+     catch(error){
+     res.status(400).json({message: error.message})
+     }
+ 
+ }
+
+const filterAppointmentsDate = async(req,res)=>{
+   try{
+       const Appointments = await appointmentsModel.find({date :req.params.date})
+       res.status(200).json(Appointments)
+   }
+   catch(error){
+       res.status(400).json({message: error.message})
+       }
+ 
+}
+const filterAppointmentsStatus = async(req,res)=>{
   
+   try{
+       const Appointments = await appointmentsModel.find({status :req.params.status})
+       res.status(200).json(Appointments)
+   }
+   catch(error){
+       res.status(400).json({message: error.message})
+       }
+ 
+}
 
-//   const updateUser = async (req, res) => {
-//    const userId = req.params.id; 
-//    const updateFields = req.body; 
-
-//    try {
-//       const updatedUser = await userModel.findByIdAndUpdate(
-//          userId,
-//          { $set: updateFields },
-//          { new: true } // To return the updated user
-//       );
-
-//       if (!updatedUser) {
-//          return res.status(404).json({ message: 'User not found' });
-//       }
-
-//       res.status(200).json({ message: 'User updated successfully', user: updatedUser });
-//    } catch (err) {
-//       res.status(500).json({ message: err.message });
-//    }
-// }
-
-
-// const deleteUser = async (req, res) => {
-//    const userId = req.params.id; 
-
-//    try {
-//       const deletedUser = await userModel.findByIdAndRemove(userId);
-
-//       if (!deletedUser) {
-//          return res.status(404).json({ message: 'User not found' });
-//       }
-
-//       res.status(200).json({ message: 'User deleted successfully', user: deletedUser });
-//    } catch (err) {
-//       res.status(500).json({ message: err.message });
-//    }
-// }
-// 
-// module.exports = {createUser, getUsers, updateUser, deleteUser};
-
-module.exports = {addAdminstrator, removeUser}
+module.exports = {addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName}
