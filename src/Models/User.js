@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.set('strictQuery',false);
 const Schema = mongoose.Schema;
 
                         
@@ -30,7 +31,7 @@ const userSchema = new Schema({
     mobileNumber: {
       type: Number
     },
-    emergencyContactFullname:
+        emergencyContactFullname:
       {
           type: String
       },
@@ -46,26 +47,19 @@ const userSchema = new Schema({
     },
     educationalBackground:{
         type: String
-    },
-    famMemName: {
+    },docSpeciality:{
         type: String
       },
-    famMemNatID: {
-        type: Number
-      },
-      famMemAge: {
-        type: Number
-      },
-      famMemGender:{
+     package: {
         type: String
       },
-      famMemRelation: {
-        type: String
-      },
-      docSpeciality:{
-        type: String
+      HealthRecord:{
+        type:[String]
       }
   }, { timestamps: true });
+
+ 
   
   const User = mongoose.model('User', userSchema);
+
   module.exports = User;
