@@ -52,14 +52,11 @@ app.get("/getSpecs", getSpecs);
 app.get("/filterSpecs/:spec", filterSpecs);
 app.get("/filterDate/:date", filterByDate);
 app.get("/filterDateSpecs", filterDateSpecs)
-app.get("/home", (req, res) => {
-  res.status(200).send("You have everything installed!");
-});
+
 
 // #Routing to userController here
 
-//app.use(express.json())
-
+app.use(express.json())
 app.post("/admin/addPackage", adminAddPackage);
 app.delete("/admin/deletePackage", adminDeletePackage);
 app.put("/admin/updatePackage", adminUpdatePackage);
