@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import PackageUpdateModal  from './PackageUpdateModal';
 function AdminUpdatePackage() {
   const [packages, setPackages] = useState([]);
-  const [newPackage, setNewPackage] = useState({ name: '', price: ''  , doctorDiscount : '' , pharmacyDiscount: '' , famMemDiscount:'' });
-  const [deletePackageName, setDeletePackageName] = useState('');
   const [updatePackageName, setUpdatePackageName] = useState('');
   const [updatedPackage, setUpdatedPackage] = useState('');
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [selectedPackage, setSelectedPackage] = useState(null);
   useEffect(() => {
     // Fetch existing packages when the component mounts
     fetchPackages();
