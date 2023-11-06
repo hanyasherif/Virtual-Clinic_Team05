@@ -46,23 +46,7 @@ const userSchema = new Schema({
     },
     educationalBackground:{
         type: String
-    },
-    famMemName: {
-        type: String
-      },
-    famMemNatID: {
-        type: Number
-      },
-      famMemAge: {
-        type: Number
-      },
-      famMemGender:{
-        type: String
-      },
-      famMemRelation: {
-        type: String
-      },
-      docSpeciality:{
+    },docSpeciality:{
         type: String
       },
      package: {

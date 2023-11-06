@@ -4,10 +4,12 @@ const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 require("dotenv").config();
 // const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
-const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  , registerPatient, deleteUser} = require("./Routes/userController");
+const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
+   registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName} = require("./Routes/userController");
 const {createPres , viewPatientPrescriptions , filterPrescriptions} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest} = require("./Routes/requestController");
+const{addAppointment} = require("./Routes/appointmentController");
 const MongoURI = process.env.MONGO_URI ;
 
 //App variables
@@ -56,7 +58,7 @@ app.get("/filterDateSpecs", filterDateSpecs)
 
 
 // #Routing to userController here
-////mohab
+///mohab
 app.use(express.json())
 app.post("/admin/addPackage", adminAddPackage);
 app.delete("/admin/deletePackage", adminDeletePackage);
@@ -78,7 +80,15 @@ app.post("/addRequest", addRequest);
 app.get("/getRequests", getRequests);
 app.get("/getARequest", getARequest);
 
+///// aseel
 
+app.post("/addFamilyMember/:id",addFamilyMember); //no /:id(username) 3shan ana 7atah alreadyf body((or not?))
+app.get("/viewRegFamilyMembers/:id",viewRegFamilyMembers);
+app.get("/viewAppointments",viewAppointments);
+app.get("/filterAppointmentsDate/:date",filterAppointmentsDate); 
+app.get("/filterAppointmentsStatus/:status",filterAppointmentsStatus);
+app.get("/getDoctorName/:id", getDoctorName);
+app.post("/addAppointment",addAppointment);
 
 
 /////////////////////

@@ -17,7 +17,9 @@ import Prescriptions from './components/Prescriptions';
 import Requests from './pages/Requests';
 //import Navbar from './components/Navbar1';
 import SubmitRequest from './pages/SubmitRequest';
-
+import ViewFamilyMember from './components/ViewFamilyMember';
+import AddFamilyMember from './components/AddFamilyMember';
+import FilterAppointmentsPatient from './components/FilterAppointmentsPatient';
 
 function App() {
   return (
@@ -50,6 +52,12 @@ function App() {
               element={<SubmitRequest/>}></Route>
               <Route path="/requests"
               element={<Requests/>}></Route>
+              <Route  path='/viewFamilyMember/:id' 
+              element = {<ViewFamilyMember />} />
+              <Route  path='/addFamilyMember/:id' 
+              element = {<AddFamilyMember />} />
+              <Route  path='/FilterAppointmentsPatient' 
+              element = {<FilterAppointmentsPatient />} />
       </Routes>
       </div>
       {/* <UsernameTextBox /> Include TextBoxExample component here */}
