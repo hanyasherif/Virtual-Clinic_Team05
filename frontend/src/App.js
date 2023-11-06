@@ -6,6 +6,7 @@ import { useState } from 'react';
 //Pages & Components
 // import Home from './pages/Home'
 // import Navbar from './components/Navbar'
+import './App.css';
 import AddAdminForm from './components/AddAdminForm'
 import RemoveDoctorPatientAdmin from './components/RemoveDoctorPatientAdmin'
 import DoctorsList from './components/DoctorsList'
@@ -20,7 +21,12 @@ import SubmitRequest from './pages/SubmitRequest';
 import ViewFamilyMember from './components/ViewFamilyMember';
 import AddFamilyMember from './components/AddFamilyMember';
 import FilterAppointmentsPatient from './components/FilterAppointmentsPatient';
-
+import UsersList from './components/UsersList';
+import Setting from './components/Setting';
+import PatientInfo from './components/PatientInfo';
+import Menu from './components/Main';
+import Meeting from './components/Appointments';
+import UserProfile from './components/Patientinformation'
 function App() {
   return (
     <div className="App">
@@ -58,7 +64,19 @@ function App() {
               element = {<AddFamilyMember />} />
               <Route  path='/FilterAppointmentsPatient' 
               element = {<FilterAppointmentsPatient />} />
-      </Routes>
+              <Route path="/ShowPatients"
+              element={<UsersList/>}/>
+              <Route path="/setting"
+              element={<Setting/>}/>
+              <Route path="/Info"
+              element={<PatientInfo/>}/>
+              <Route path="/Meeting"
+              element={<Meeting/>}/>
+              <Route path="/"
+              element={<Menu/>}/>
+              <Route path="/PatientProfile"
+              element={<UserProfile/>}/>
+              </Routes>
       </div>
       {/* <UsernameTextBox /> Include TextBoxExample component here */}
       {/* <PasswordTextBox /> */}

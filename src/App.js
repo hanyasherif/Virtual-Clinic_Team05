@@ -5,11 +5,12 @@ mongoose.set('strictQuery', false);
 require("dotenv").config();
 // const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
 const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
-   registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName} = require("./Routes/userController");
+   registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint} = require("./Routes/userController");
 const {createPres , viewPatientPrescriptions , filterPrescriptions} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest} = require("./Routes/requestController");
 const{addAppointment} = require("./Routes/appointmentController");
+const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData}=require("./Routes/DrController");
 const MongoURI = process.env.MONGO_URI ;
 
 //App variables
@@ -91,4 +92,12 @@ app.get("/getDoctorName/:id", getDoctorName);
 app.post("/addAppointment",addAppointment);
 
 
-/////////////////////
+/////////////////// sherif and momen
+app.post("/Addpatient", AddPatient);
+app.post("/Adddoctor", AddDoctor);
+app.post("/AddC", CreatAppoint);
+app.get("/getC",ViewPatients);
+app.get("/SearchP",SearchPatient);//Searchbyname
+app.post("/Edit",EditMyInfo);
+app.get("/UpcomingAppoint",filteredAppointments);
+app.get("/GetFullData",GetPFullData);

@@ -12,6 +12,40 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.Header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+}
+.left, .middle, .right {
+  display: flex;
+  align-items: center;
+}
+.middle {
+  flex: 1;
+  justify-content: center;
+  margin: 0 10px;
+}
+input {
+  padding: 5px;
+  margin-right: 5px;
+}
+.MiddleAPP{
+  height: auto;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.footer{
+  height: 100px;
+  width: auto;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .App-header {
   background-color: #282c34;

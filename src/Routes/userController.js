@@ -6,6 +6,7 @@ const PackageModel = require('../Models/Package.js');
 const { default: mongoose } = require('mongoose');
 const familyMemberModel = require('../Models/FamilyMember.js');
 const appointmentsModel = require('../Models/Appointment.js');
+const AppointmentModel = require('../Models/Appointment.js');
  
 //THIS IS THE TASK CODE TO GUIDE YOUUU
 //////////HANYA
@@ -432,6 +433,53 @@ const deleteUser = async (req, res) => {
   
  }
 
+
+ /////// sherif and momen
+
+
+ const AddDoctor = async(req,res) => {
+  let username = req.body.username
+  let password = req.body.password   
+  let email=req.body.email;
+  let hourly=req.body.hourly;
+  let affiliation=req.body.affiliation;
+  try{
+     let user = await userModel.create({type: "Doctor",username: username, password: password,email:email,hourly:hourly,affiliation:affiliation})
+     await user.save()
+     res.status(200).json({message: "Doctor created successfully"})
+  }
+  catch(err){
+     res.json({message: err.message})
+  }
+  }
+const AddPatient = async(req,res) => {
+     let username = req.body.username
+     let password = req.body.password      
+     try{
+        let user = await userModel.create({type: "Patient",username: username, password: password})
+        await user.save()
+        res.status(200).json({message: "Patient created successfully"})
+     }
+     catch(err){
+        res.json({message: err.message})
+     }
+}                 
+const CreatAppoint = async (req,res)=>{
+let DocUser=req.body.id;
+let patuser=req.body.id2;
+try{
+  let Doctor=await userModel.findById(DocUser);
+  let patient=await userModel.findById(patuser);
+  let Appoint = await AppointmentModel.create({date:"2024/08/28",doctor:Doctor,patient:patient,status:false});
+  await Appoint.save()
+  res.status(200).json({message: "appoint created successfully"}
+  )
+}
+catch(err){
+  res.json({message: err.message})
+}
+}
+
 module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
-   filterAppointmentsStatus,getDoctorName}   
+   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint}   
