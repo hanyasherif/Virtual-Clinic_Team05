@@ -145,7 +145,7 @@ const FilterAppointmentsPatient = () => {
             
             >Load Appointments </Button>
              <input
-             type="date"
+             type="text"
              onChange={(e) => setDate(e.target.value)}
               value={date}/>
             <Button variant="contained"
