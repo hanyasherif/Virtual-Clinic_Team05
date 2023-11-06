@@ -74,8 +74,6 @@ app.get("/filterPrescription", filterPrescriptions);
 
 ////wael
 app.use(express.json())
-app.post("/addAdminstrator", addAdminstrator);
-app.delete("/removeUser", removeUser);
 app.post("/addRequest", addRequest);
 app.get("/getRequests", getRequests);
 app.get("/getARequest", getARequest);

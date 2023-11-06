@@ -15,7 +15,7 @@ import AdminAddPackage from './components/AdminAddPackage';
 import AdminUpdatePackage from './components/AdminUpdatePackage';
 import Prescriptions from './components/Prescriptions';
 import Requests from './pages/Requests';
-import Navbar from './components/Navbar';
+//import Navbar from './components/Navbar1';
 import SubmitRequest from './pages/SubmitRequest';
 
 
@@ -46,7 +46,9 @@ function App() {
               element={<DoctorsList/>}/>
               <Route path="/docProfile"
               element={<DocProfile/>}/>
-              <Route path="/"
+              <Route path="addRequest"
+              element={<SubmitRequest/>}></Route>
+              <Route path="requests"
               element={<Requests/>}></Route>
       </Routes>
       </div>

@@ -9,6 +9,7 @@ const userModel = require('../Models/User');
 const addRequest = async(req,res) => {
    //add a new user to the database with 
    //Name, Email and Age
+   console.log("dsass");
    let username = req.body.username
    let password = req.body.password
    let name = req.body.name
@@ -24,8 +25,7 @@ const addRequest = async(req,res) => {
       let request = await requestModel.create({username: username, 
         name: name, email: email, dateOfBirth: dateOfBirth,
          password: password, hourlyRate: hourlyRate, affiliation: affiliation,
-         educationalBackground: educationalBackground, doctor: doctor,
-          status: status
+         educationalBackground: educationalBackground
       })
       await request.save()
       res.status(200).json({message: "Request created successfully"})

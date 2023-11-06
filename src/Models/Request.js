@@ -27,11 +27,6 @@ const requestSchema = new Schema({
         type: Number,
         required: true
     },
-    doctor: {
-        type: mongoose.Types.ObjectId,
-        ref:'User',
-        required: true
-    },
     affiliation: {
         type: String,
         required: true
