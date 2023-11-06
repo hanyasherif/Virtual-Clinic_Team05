@@ -31,7 +31,10 @@ header a {
   padding: 20px;
   margin: 0 auto;
 }
-
+.center{
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center;
 /* homepage */
 .home {
   display: grid;
@@ -66,3 +69,4 @@ header a {
   border-radius: 50%;
   color: #333;
 }
+
