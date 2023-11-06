@@ -7,6 +7,7 @@ require("dotenv").config();
 const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  , registerPatient, deleteUser} = require("./Routes/userController");
 const {createPres , viewPatientPrescriptions , filterPrescriptions} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
+const {addRequest, getRequests, getARequest} = require("./Routes/requestController");
 const MongoURI = process.env.MONGO_URI ;
 
 //App variables
@@ -37,7 +38,7 @@ app.get("/home", (req, res) => {
   });
 
 // #Routing to userController here
-
+///hanya
 app.use(express.json())
 app.post("/addAdministrator", addAdministrator);
 app.delete("/removeUser", removeUser);
@@ -55,7 +56,7 @@ app.get("/filterDateSpecs", filterDateSpecs)
 
 
 // #Routing to userController here
-
+////mohab
 app.use(express.json())
 app.post("/admin/addPackage", adminAddPackage);
 app.delete("/admin/deletePackage", adminDeletePackage);
@@ -71,9 +72,15 @@ app.get("/filterPrescription", filterPrescriptions);
 */
 
 
+////wael
+app.use(express.json())
+app.post("/addAdminstrator", addAdminstrator);
+app.delete("/removeUser", removeUser);
+app.post("/addRequest", addRequest);
+app.get("/getRequests", getRequests);
+app.get("/getARequest", getARequest);
+
+
 
 
 /////////////////////
-
-
-

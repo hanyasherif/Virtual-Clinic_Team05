@@ -14,6 +14,10 @@ import Home from './components/Home';
 import AdminAddPackage from './components/AdminAddPackage';
 import AdminUpdatePackage from './components/AdminUpdatePackage';
 import Prescriptions from './components/Prescriptions';
+import Requests from './pages/Requests';
+import Navbar from './components/Navbar';
+import SubmitRequest from './pages/SubmitRequest';
+
 
 function App() {
   return (
@@ -42,6 +46,8 @@ function App() {
               element={<DoctorsList/>}/>
               <Route path="/docProfile"
               element={<DocProfile/>}/>
+              <Route path="/"
+              element={<Requests/>}></Route>
       </Routes>
       </div>
       {/* <UsernameTextBox /> Include TextBoxExample component here */}
