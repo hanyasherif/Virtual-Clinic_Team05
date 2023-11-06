@@ -46,9 +46,9 @@ function App() {
               element={<DoctorsList/>}/>
               <Route path="/docProfile"
               element={<DocProfile/>}/>
-              <Route path="addRequest"
+              <Route path="/addRequest"
               element={<SubmitRequest/>}></Route>
-              <Route path="requests"
+              <Route path="/requests"
               element={<Requests/>}></Route>
       </Routes>
       </div>
