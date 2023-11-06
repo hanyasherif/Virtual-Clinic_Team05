@@ -15,7 +15,7 @@ function AdminUpdatePackage() {
         setPackages(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching packages:', error);
+        alert('An error occurred:', error.message);
       });
   };
 
@@ -28,7 +28,7 @@ function AdminUpdatePackage() {
         fetchPackages(); // Refresh the list of packages
       })
       .catch((error) => {
-        console.error('Error updating package:', error);
+        alert('An error occurred:', error.message);
       });
   };
  

@@ -38,18 +38,16 @@ const SearchPatient = async(req,res) =>{//SearchByName
    
   let doctorId=req.query.Id;
   const patientName = req.query.name;
-  AppointmentModel.find({ doctor: doctorId })
+  AppointmentModel.findOne({ doctor: doctorId })
   .populate({
     path: 'patient',
     select:'_id username name email dateOfBirth emergencyContactFullname emergencyContactMobileNumber gender famMemName famMemNatID famMemAge famMemRelation HealthRecord',
     match: { name: { $regex: `^${patientName}$`, $options: 'i' },}
-  }).exec((err, appointments) => {
+  }).exec((err, appointment) => {
       if (err) {
           return  res.status(400).json({error:err.message})
       }
-      const patientDetails = appointments
-        .filter(appointment => appointment.patient !== null)
-        .map(appointment => ({
+      const patientDetails = ({
         _id:appointment.patient._id,  
         username: appointment.patient.username,
         dateOfBirth: appointment.patient.dateOfBirth,
@@ -62,8 +60,8 @@ const SearchPatient = async(req,res) =>{//SearchByName
         emergencyContactFullname:appointment.patient.emergencyContactFullname,
         emergencyContactMobileNumber:appointment.patient.emergencyContactMobileNumber,
         HealthRecord:appointment.patient.HealthRecord,
-        }));
-      return res.json(patientDetails);
+        });
+      return res.json([patientDetails]);
     });
    
  }

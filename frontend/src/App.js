@@ -27,6 +27,7 @@ import PatientInfo from './components/PatientInfo';
 import Menu from './components/Main';
 import Meeting from './components/Appointments';
 import UserProfile from './components/Patientinformation'
+import PrescriptionInfo from './components/PrescriptionInfo';
 function App() {
   return (
     <div className="App">
@@ -46,6 +47,9 @@ function App() {
               <Route 
               path = "/patient/prescrptions"
               element = {<Prescriptions />}/>
+               <Route 
+              path = "/PrescriptionInfo"
+              element = {<PrescriptionInfo />}/>
               <Route path="/addAdmin"
               element={<AddAdminForm/>}/>
               <Route path="/remove"

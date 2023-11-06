@@ -28,6 +28,7 @@ const Form = () => {
 
     if (!response.ok) {
       setError(json.error)
+      
     }
     if (response.ok) {
       setError(null)
@@ -40,27 +41,35 @@ const Form = () => {
       setEmergencymobile('')
       setEmergencyname('')
       console.log('New patient added:', json)
+      alert(json.message);
     }
 
   }
 
   return (
     <form className="create" onSubmit={handleSubmit}> 
-      <h3>Patient Information</h3>
-
-      <label>Username:</label>
-      <input 
+      <h1>Patient Information</h1>
+     <div>
+        <label>Username:</label>
+        <input 
         type="text" 
         onChange={(e) => setUsername(e.target.value)} 
         value={username}
-      />
-
-      <label>Name:</label>
+        />
+        </div>
+      
+     <div>
+     <label>Name:</label>
       <input 
         type="text" 
         onChange={(e) => setName(e.target.value)} 
         value={name}
       />
+     </div>
+     
+     <div>
+
+     </div>
 
       <label>Email:</label>
       <input 
@@ -68,7 +77,9 @@ const Form = () => {
         onChange={(e) => setEmail(e.target.value)} 
         value={email} 
       />
-
+     <div>
+        
+        </div>
     <label>Password:</label>
       <input 
         type="text" 
@@ -76,7 +87,9 @@ const Form = () => {
         value={password} 
       />
 
-
+     <div>
+        
+     </div>
     <label>Date of Birth:</label>
       <input 
         type="date" 
@@ -84,7 +97,9 @@ const Form = () => {
         value={dateOfBirth} 
       />
 
-
+      <div>
+        
+     </div>
     <label>Gender:</label>
       <input 
         type="text" 
@@ -92,7 +107,9 @@ const Form = () => {
         value={gender} 
       />
 
-
+    <div>
+        
+     </div> 
     <label>Mobile Number:</label>
       <input 
         type="number" 
@@ -100,7 +117,9 @@ const Form = () => {
         value={mobileNumber} 
       />
 
-
+    <div>
+        
+     </div>
     <label>Emergency Contact Full Name:</label>
       <input 
         type="text" 
@@ -108,7 +127,9 @@ const Form = () => {
         value={emergencyContactFullname} 
       />
 
-
+    <div>
+        
+    </div>
     <label>Emergency Contact Mobile Number:</label>
       <input 
         type="number" 

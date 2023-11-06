@@ -91,8 +91,8 @@ console.log('Name:', Name);
               width: "100%"
               }
           }}
-          // onClick={() =>window.location.href=`http://localhost:3000/PatientProfile?Patient=${Patient._id}&&Id=${Id}`}
-          // key={Patient._id}
+           onClick={() =>window.location.href=`http://localhost:3000/PatientProfile?Patient=${Patient._id}&&Id=${Id}`}
+           key={Patient._id}
           >
             <TableCell align="center">{Patient.username}</TableCell>
             <TableCell align="center">{Patient.email}</TableCell>

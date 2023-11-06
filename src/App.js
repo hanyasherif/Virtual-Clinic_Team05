@@ -6,7 +6,7 @@ require("dotenv").config();
 // const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
 const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint} = require("./Routes/userController");
-const {createPres , viewPatientPrescriptions , filterPrescriptions} = require("./Routes/PrescriptionController");
+const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest} = require("./Routes/requestController");
 const{addAppointment} = require("./Routes/appointmentController");
@@ -70,6 +70,8 @@ app.get("/packs", getPacakges);
 app.post("/addPrescription",createPres);
 app.get("/viewPrescription/:username", viewPatientPrescriptions);
 app.get("/filterPrescription", filterPrescriptions);
+app.get("/getPrescription", getPrescription);
+
 /*
                                                   End of your code
 */

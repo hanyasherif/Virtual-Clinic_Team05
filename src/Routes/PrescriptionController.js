@@ -138,5 +138,26 @@ const filterPrescriptions=async(req,res)=>
 }
 
 
+const getPrescription= async(req,res)=>
+{
+  try{
+    let id = req.query.Id;
+    console.log(id);
+    let prescription = await PrescriptionModel.findById(id);
+    if(!prescription)
+    {
+     return res.status(404).json({ message: 'No prescriptions found' });
+    }
+    else{
+     return res.status(200).json(prescription);
+    }
 
-module.exports = {createPres , viewPatientPrescriptions , filterPrescriptions}
+}
+catch (err) {
+    res.status(500).json({ message: err.message });
+ }
+}
+
+
+
+module.exports = {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription}

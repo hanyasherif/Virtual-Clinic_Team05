@@ -10,15 +10,24 @@ const Home = () => {
 
   useEffect(() => {
     const fetchDetails = async () => {
-      const response = await fetch('/createPatient')
-      const json = await response.json()
-
-      if (response.ok) {
-        setpatients(json)
-      }
+        try
+        {
+            const response = await fetch('/createPatient')
+            const json = await response.json()
+      
+            if (response.ok) {
+              setpatients(json)
+              alert(json.message);
+            }
+        }catch (error){
+            alert('An error occurred:', error.message);
+        }
+ 
+          
+      
     }
 
-    fetchDetails()
+    //fetchDetails()
   }, [])
 
   return (

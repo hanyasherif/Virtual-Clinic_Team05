@@ -18,7 +18,7 @@ function AdminAddPackage() {
         setPackages(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching packages:', error);
+            alert('An error occurred:', error.message);
       });
   };
 

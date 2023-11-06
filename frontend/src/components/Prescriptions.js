@@ -19,28 +19,67 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
       fontSize: 14,
     },
   }));
-const { useState } = require("react");
+const { useState , useEffect } = require("react");
 
 
 const Prescriptions = () => { 
     const [prescriptions,setPrescriptions] = useState([]);
     const [filter,setFilter] = useState({name:'', date:'' , doctorId:''});
+    const [doctorNames, setDoctorNames] = useState({});
     const params = new URLSearchParams(window.location.search);
-    const userId = params.get('id');
-    console.log(userId);
- 
-
+    const username = params.get('username');
+    console.log(username);
+    // const getDoctorName = async (doctorId) => {
+    //     try {
+    //       const response = await axios.get(`http://localhost:8000/getDoctorName/${doctorId}`);
+    //       if (response.data && response.data.name) {
+    //         return response.data.name;
+    //       } else {
+    //         return 'Unknown Doctor';
+    //       }
+    //     } catch (error) {
+    //       console.error('Error fetching doctor name:', error);
+    //       return 'Unknown Doctor';
+    //     }
+    //   };
+    // //   const fetchDoctorNames = async () => {
+    // //     try {
+    // //       const doctorNames = {};
+    // //       const appointments = await axios.get('http://localhost:8000/viewAppointments');
+    // //       if (appointments.data) {
+    // //         for (const appointment of appointments.data) {
+    // //           const doctorId = appointment.doctor;
+    // //           if (!doctorNames[doctorId]) {
+    // //             const doctorName = await getDoctorName(doctorId);
+    // //             doctorNames[doctorId] = doctorName;
+    // //           }
+    // //         }
+    // //       }
+    // //       setDoctorNames(doctorNames);
+    // //     } catch (error) {
+    // //       console.error('Error fetching doctor names:', error);
+    // //     }
+    // //   };
+    
+    // //   useEffect(() => {
+    // //     fetchDoctorNames();
+    // //   }, []); 
     const getPrescriptions =  async (filterName) => {
         filter.name=filterName
         console.log(filter.name)
-         await axios.get('http://localhost:3000/filterPrescription?username=KingMohab&name='+filterName +"&date="+filter.date + "&doctorId="+filter.doctorId).then(
-        (res) => { 
-            const prescriptions = res.data
-            console.log(prescriptions)
-            setPrescriptions(prescriptions)
-            
-        }
-         );
+         
+        
+            await axios.get('http://localhost:3000/filterPrescription?username='+username+'&name='+filterName +"&date="+filter.date + "&doctorId="+filter.doctorId).then(
+                    (res) => { 
+                        const prescriptions = res.data
+                        console.log(prescriptions)
+                        setPrescriptions(prescriptions)
+                        
+                    }).catch (error=>{
+                        alert('An error occurred:', error.message);
+             
+                      })
+         
        
     }
     return(
@@ -119,8 +158,9 @@ const Prescriptions = () => {
                 width: "100%"
                 }
             }}
-            
-
+            onClick={() =>window.location.href=`http://localhost:3000/PrescriptionInfo?Id=${prescription._id}`}
+            key={prescription._id}
+                 
               >
                 {/* <PateintProfile/> */}
               <TableCell align="center">{prescription.date}</TableCell>

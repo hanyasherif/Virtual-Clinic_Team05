@@ -70,4 +70,6 @@ header a {
   border-radius: 50%;
   color: #333;
 }
-
+.input-group {
+  margin-bottom: 100px; /* Add vertical margin to create space between each pair */
+}
