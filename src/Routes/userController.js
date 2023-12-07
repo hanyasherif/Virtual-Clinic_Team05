@@ -8,8 +8,8 @@ const familyMemberModel = require('../Models/FamilyMember.js');
 const appointmentsModel = require('../Models/Appointment.js');
 const AppointmentModel = require('../Models/Appointment.js');
  
-//THIS IS THE TASK CODE TO GUIDE YOUUU
-//////////HANYA
+
+//////////////////////HANYA////////////////////////////////////////////
 const addAdministrator = async(req,res) => {
    //add a new user to the database with 
    //Name, Email and Age
@@ -29,11 +29,8 @@ const addAdministrator = async(req,res) => {
 
    const removeUser = async (req, res) => {
       let userID = req.query.userID;
-   //    let userID = await userModel.find(username = username)
-       // const user = await userModel.findOne({ username });
-   
+  
       try {
-        //  const deletedUser = await userModel.findOneAndDelete({ username });
          const deletedUser = await userModel.findByIdAndDelete(userID);
    
          if (!deletedUser) {
@@ -99,8 +96,6 @@ const addAdministrator = async(req,res) => {
         res.status(500).json({ message: err.message });
       }
     };
-    
-    
 
     const searchBySpec = async (req, res) => {
       try {
@@ -119,8 +114,7 @@ const addAdministrator = async(req,res) => {
         res.status(500).json({ message: err.message });
       }
     };
-    
-
+ 
     const searchByNameSpec = async (req, res) => {
       try {
         const { name, speciality } = req.query;
@@ -140,7 +134,6 @@ const addAdministrator = async(req,res) => {
         res.status(500).json({ message: err.message });
       }
     };
-    
 
     const filterSpecs = async(req,res) => {
       
@@ -247,9 +240,16 @@ const addAdministrator = async(req,res) => {
          }
        };
 
-/////////MOHAB
+//////////////////////////////////HANYA SPRINT 2////////////////////////////////////////////
+
+const logout = async (req, res) => {
+  res.clearCookie('jwt');
+  res.status(200).json({message: 'Logout successful'});
+}
+
+//////////////////////////////////MOHAB//////////////////////////////////
 ////// Register Patient 
-//// 
+
 const registerPatient=async (req,res)=>
 {
    try{
@@ -322,30 +322,8 @@ const deleteUser = async (req, res) => {
    }
 }
 
-
-   // const addFamMem=async(req,res)=>
-   // {
-   //       try
-   //       {
-   //          let username=req.params.username
-   //          let user = await userModel.findOneAndUpdate( { username: username },
-   //             { $set: { famMemName: "Mohab Olayan2" } })
-   //             if(!user)
-   //             {
-   //                return res.status(404).json({ message: 'User not found' });
-   //             }
-   //             else
-   //             {
-   //                return res.status(200).send("Successfully");
-   //             }
-   //       } catch (err) {
-   //          res.status(500).json({ message: err.message });
-   //       }
-   // }
-
-  //////// Aseeel 
-  
-  
+//////////////////////////////////Aseeel //////////////////////////////////
+   
   const addFamilyMember = async(req,res)=>{
     let username = req.params.id //bn-pass bl session
    
@@ -363,11 +341,7 @@ const deleteUser = async (req, res) => {
  
     }
     catch(err){
-              res.json({message: err.message})}
- 
- 
-              
-   
+              res.json({message: err.message})}  
  }
  
  const viewRegFamilyMembers = async(req,res)=>{
@@ -433,9 +407,7 @@ const deleteUser = async (req, res) => {
   
  }
 
-
- /////// sherif and momen
-
+//////////////////////////////////sherif and momen//////////////////////////////////
 
  const AddDoctor = async(req,res) => {
   let username = req.body.username
@@ -482,4 +454,4 @@ catch(err){
 
 module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
-   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint}   
+   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint, logout}   

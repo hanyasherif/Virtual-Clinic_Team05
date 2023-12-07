@@ -64,8 +64,25 @@ const AddAdminForm = () => {
                 alert(json.message);
             }
     };
+
+    const handleLogout = async (e) => {
+      try {
+        await fetch(`http://localhost:8000/logout`);
+        window.location.href = 'http://localhost:3000/';
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
   
     return (
+      <div>
+        <header>
+        {/* Your header content */}
+        <h1>El7a2ny</h1>
+
+        {/* Logout and Home buttons */}
+        <button onClick={handleLogout}>Logout</button>
+      </header>
       <form onSubmit={handleSubmit}>
         <label>
           Username:
@@ -82,11 +99,7 @@ const AddAdminForm = () => {
 
         <button type="submit">Add Administrator</button>
       </form>
-
-        // <form action="/">
-
-        // </form>
-
+      </div>
     );
   };
   
