@@ -5,13 +5,13 @@ mongoose.set('strictQuery', false);
 require("dotenv").config();
 // const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
 const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
-   registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint} = require("./Routes/userController");
+   registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint,changePassword} = require("./Routes/userController");
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest} = require("./Routes/requestController");
-const{addAppointment} = require("./Routes/appointmentController");
+const{addAppointment,filterAppointments,viewMyAppointments} = require("./Routes/appointmentController");
 const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData}=require("./Routes/DrController");
-const MongoURI = process.env.MONGO_URI ;
+const MongoURI = process.env.Mongo_URI ;
 
 //App variables
 const app = express();
@@ -24,7 +24,8 @@ app.get('/', (req, res) =>{
 // configurations
 // Mongo DB
 app.use(cors());
-mongoose.connect(MongoURI)
+console.log(MongoURI);
+ mongoose.connect(MongoURI)
 .then(()=>{
   console.log("MongoDB is now connected!")
 // Starting server
@@ -32,7 +33,7 @@ mongoose.connect(MongoURI)
     console.log(`Listening to requests on http://localhost:${port}`);
   })
 })
-.catch(err => console.log(err));
+.catch(err => console.log("HELLOOO" +err));
 /*
                                                     Start of your code
 */
@@ -103,3 +104,8 @@ app.get("/SearchP",SearchPatient);//Searchbyname
 app.post("/Edit",EditMyInfo);
 app.get("/UpcomingAppoint",filteredAppointments);
 app.get("/GetFullData",GetPFullData);
+
+///Menna 
+app.post("/change-password", changePassword);
+app.post("/filter-appointments", filterAppointments);
+app.get("/view-appointments", viewMyAppointments);

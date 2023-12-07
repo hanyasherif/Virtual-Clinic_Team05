@@ -480,6 +480,40 @@ catch(err){
 }
 }
 
+//Menna 
+const changePassword = async (req, res) => {
+  const { username, oldPassword, newPassword } = req.body; //take password from token 
+
+  try {
+    // Find the user by username
+    const user = await userModel.findOne({ username });
+    
+    // Check if the user exists
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    // Check if the current password provided matches the user's current password
+    const auth = await bcrypt.compare(oldPassword, user.password);
+    if(auth){
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
+      user.password = hashedPassword;
+    }
+
+    else{
+      res.status(400).json({message: 'wrong old password!'})
+    }
+
+    await user.save();
+
+    res.status(200).json({ message: 'Password changed successfully' });
+  }
+   catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
 module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
-   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint}   
+   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint,changePassword}   
