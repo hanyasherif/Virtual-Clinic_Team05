@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.set('strictQuery',false);
 const Schema = mongoose.Schema;
 
                         
@@ -32,3 +33,5 @@ const prescriptionSchema = new Schema({
   }, { timestamps: true });
   
   const Prescription = mongoose.model('Prescription', prescriptionSchema);
+
+  module.exports = Prescription;
