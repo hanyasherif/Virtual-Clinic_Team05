@@ -136,20 +136,7 @@ const DoctorsList = () => {
         setDoctors(s);
       });
   };
-
-//   const filterDateSpecs = async (spec) => {
-
-
-    
-//     await axios.get(`http://localhost:8000/filterDateSpecs/${spec}`)
-//       .then((res) => {
-//         const s = res.data;
-//         setDoctors(s);
-//       });
-//   };
-
-
-
+  
   return (
     <div className="DoctorsList">
       <Box sx={{ marginBottom: 2 }}>

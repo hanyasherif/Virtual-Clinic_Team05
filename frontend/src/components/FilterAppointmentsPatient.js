@@ -27,14 +27,9 @@ const FilterAppointmentsPatient = () => {
   const [date, setDate] = useState('')
   const [status, setStatus] = useState('')
   const [doctorNames, setDoctorNames] = useState({});
+  const [appointment,setAppointment] = useState([]);
   
-
-
-    
-   // const params = new URLSearchParams(window.location.search);
-    //const natID = params.get('userId');
-    const [appointment,setAppointment] = useState([]);
-    const handleStatusChange = (e) => {
+  const handleStatusChange = (e) => {
       setStatus(e.target.value);
     };
   //  console.log(userId);
@@ -128,13 +123,7 @@ const FilterAppointmentsPatient = () => {
         }
          );
 }
-    return(
-        /* 
-        1. create a button to load the blogs
-        2. map over the blogs and display them
-        */
-        
-       
+    return(      
         <div className="FilterAppointment">
              <Box sx={{marginBottom: 2}}>
              
