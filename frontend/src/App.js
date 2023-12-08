@@ -28,6 +28,8 @@ import Menu from './components/Main';
 import Meeting from './components/Appointments';
 import UserProfile from './components/Patientinformation'
 import PrescriptionInfo from './components/PrescriptionInfo';
+import PayAppointment from './components/PayAppointment';
+import Wallet from './components/Wallet';
 function App() {
   return (
     <div className="App">
@@ -80,7 +82,12 @@ function App() {
               element={<Menu/>}/>
               <Route path="/PatientProfile"
               element={<UserProfile/>}/>
+              <Route path="/payAppointment"
+              element={<PayAppointment/>}/>
+              <Route path="/wallet"
+              element={<Wallet/>}/>
               </Routes>
+
       </div>
       {/* <UsernameTextBox /> Include TextBoxExample component here */}
       {/* <PasswordTextBox /> */}
