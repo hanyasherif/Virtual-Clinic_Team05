@@ -387,7 +387,7 @@ const deleteUser = async (req, res) => {
  const viewAppointments = async(req,res)=>{
  
      try{
-      const Appointments = await appointmentsModel.find();
+      const Appointments = await appointmentsModel.find({ status: { $ne: 'free' } });
       res.status(200).send(Appointments);
   }
      

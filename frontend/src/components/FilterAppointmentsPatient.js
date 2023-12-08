@@ -151,20 +151,38 @@ const FilterAppointmentsPatient = () => {
             <label>
           <input
             type="radio"
-            value="true"
-            checked={status === 'true'}
+            value="upcoming"
+            checked={status === 'upcoming'}
             onChange={handleStatusChange}
           />
-          True
+          Upcoming
         </label>
       <label>
           <input
             type="radio"
-            value="false"
-            checked={status === 'false'}
+            value="completed"
+            checked={status === 'completed'}
             onChange={handleStatusChange}
           />
-          False
+          Completed
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="cancelled"
+            checked={status === 'cancelled'}
+            onChange={handleStatusChange}
+          />
+          Cancelled
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="rescheduled"
+            checked={status === 'rescheduled'}
+            onChange={handleStatusChange}
+          />
+          Rescheduled
         </label>
             {/* margin */}
             </Box>
