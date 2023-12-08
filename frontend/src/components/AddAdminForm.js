@@ -42,8 +42,7 @@ const AddAdminForm = () => {
         alert('Username must be unique.'); // Provide feedback that the username is not unique
         return;
     }
-  
-    //   try {
+
         const response = await fetch('/addAdministrator', {
           method: 'POST',
           body: JSON.stringify(admin),

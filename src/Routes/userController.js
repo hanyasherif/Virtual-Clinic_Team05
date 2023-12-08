@@ -247,6 +247,18 @@ const logout = async (req, res) => {
   res.status(200).json({message: 'Logout successful'});
 }
 
+const viewAppointmentsOfDoctor = async(req,res) => { 
+
+  try{
+    const doc = await userModel.findById(req.params.docID);
+    const appointments = await appointmentModel.find({doctor:doc});
+    
+    res.status(200).json(appointments)
+  }
+  catch(error){
+    res.status(400).json({message: error.message})
+  }
+}
 //////////////////////////////////MOHAB//////////////////////////////////
 ////// Register Patient 
 
@@ -395,17 +407,15 @@ const deleteUser = async (req, res) => {
         }
   
  }
- const filterAppointmentsStatus = async(req,res)=>{
-   
+const filterAppointmentsStatus = async(req,res)=>{ 
     try{
         const Appointments = await appointmentsModel.find({status :req.params.status})
         res.status(200).json(Appointments)
     }
     catch(error){
         res.status(400).json({message: error.message})
-        }
-  
- }
+        } 
+}
 
 //////////////////////////////////sherif and momen//////////////////////////////////
 
@@ -454,4 +464,4 @@ catch(err){
 
 module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
-   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint, logout}   
+   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor}   

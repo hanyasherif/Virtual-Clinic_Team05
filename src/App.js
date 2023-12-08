@@ -5,7 +5,7 @@ mongoose.set('strictQuery', false);
 require("dotenv").config();
 
 const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
-   registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint, logout} = require("./Routes/userController");
+   registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor} = require("./Routes/userController");
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest} = require("./Routes/requestController");
@@ -56,6 +56,7 @@ app.get("/filterSpecs/:spec", filterSpecs);
 app.get("/filterDate/:date", filterByDate);
 app.get("/filterDateSpecs", filterDateSpecs);
 app.get("/logout", logout);
+app.get("/viewAppointmentsOfDoctor/:docID", viewAppointmentsOfDoctor);
 
 // #Routing to userController here
 ////////////////////////////////mohab/////////////////////////////
