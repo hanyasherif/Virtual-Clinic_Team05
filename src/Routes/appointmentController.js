@@ -46,6 +46,20 @@ const addAppointment = async(req,res)=>{
              
   
 }
+const getAppointmentInfo = async (req, res) => {
+   try {
+     const appointmentId = req.query.appointmentId; // Change from req.params.doctorId to req.query.doctorId
+     console.log(appointmentId);
+     const appointment = await appointmentsModel.findById(appointmentId);
+     if (!appointment) {
+       return res.status(404).json({ message: "appointment not found" });
+     }
+     console.log(appointment);
+     res.status(200).json(appointment);
+   } catch (err) {
+     res.status(500).json({ message: err.message });
+   }
+ };
 
 
-module.exports = {addAppointment}
+module.exports = {addAppointment,getAppointmentInfo}

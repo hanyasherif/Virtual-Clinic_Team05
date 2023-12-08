@@ -82,6 +82,8 @@ function App() {
               element={<Menu/>}/>
               <Route path="/PatientProfile"
               element={<UserProfile/>}/>
+              <Route path="/selectedAppointment"
+              element={<selectedAppointment/>}/>
               <Route path="/payAppointment"
               element={<PayAppointment/>}/>
               <Route path="/wallet"

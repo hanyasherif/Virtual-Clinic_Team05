@@ -9,7 +9,7 @@ const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, sear
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest} = require("./Routes/requestController");
-const{addAppointment} = require("./Routes/appointmentController");
+const{addAppointment,getAppointmentInfo} = require("./Routes/appointmentController");
 const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData}=require("./Routes/DrController");
 const MongoURI = process.env.MONGO_URI ;
 
@@ -92,6 +92,7 @@ app.get("/filterAppointmentsDate/:date",filterAppointmentsDate);
 app.get("/filterAppointmentsStatus/:status",filterAppointmentsStatus);
 app.get("/getDoctorName/:id", getDoctorName);
 app.post("/addAppointment",addAppointment);
+app.get("/getAppointmentInfo",getAppointmentInfo) //query in frontenddd
 
 
 /////////////////// sherif and momen
