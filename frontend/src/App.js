@@ -28,6 +28,8 @@ import Menu from './components/Main';
 import Meeting from './components/Appointments';
 import UserProfile from './components/Patientinformation'
 import PrescriptionInfo from './components/PrescriptionInfo';
+import UploadMedicalHistory from './components/UploadMedicalHistory';
+
 function App() {
   return (
     <div className="App">
@@ -80,7 +82,9 @@ function App() {
               element={<Menu/>}/>
               <Route path="/PatientProfile"
               element={<UserProfile/>}/>
-              </Routes>
+              <Route path="/uploadMedicalHistory"
+              element={<UploadMedicalHistory/>}/>
+              </Routes>       
       </div>
       {/* <UsernameTextBox /> Include TextBoxExample component here */}
       {/* <PasswordTextBox /> */}

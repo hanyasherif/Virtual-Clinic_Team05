@@ -1,11 +1,13 @@
-
 const express = require("express");
 const mongoose = require('mongoose');
+const upload = require('../src/MulterConfig');
+
 mongoose.set('strictQuery', false);
 require("dotenv").config();
 
 const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
-   registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor} = require("./Routes/userController");
+   registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor, uploadMedicalDocument
+  , removeMedicalDocument, getUploaded} = require("./Routes/userController");
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest} = require("./Routes/requestController");
@@ -57,6 +59,9 @@ app.get("/filterDate/:date", filterByDate);
 app.get("/filterDateSpecs", filterDateSpecs);
 app.get("/logout", logout);
 app.get("/viewAppointmentsOfDoctor/:docID", viewAppointmentsOfDoctor);
+app.post( '/upload-document/:id', upload.single('document'), uploadMedicalDocument );
+app.delete('/remove-document/:id/:documentId',removeMedicalDocument);
+app.get('/getUploaded/:id', getUploaded);
 
 // #Routing to userController here
 ////////////////////////////////mohab/////////////////////////////

@@ -15,6 +15,7 @@ function Menu() {
         <Button onClick={() => window.location.href=`http://localhost:3000/docList`}>View Doctors</Button>
         <Button onClick={() => window.location.href=`http://localhost:3000/patient/prescrptions`}>View Prescriptions</Button>
         <Button onClick={() => window.location.href=`http://localhost:3000/FilterAppointmentsPatient`}>Filter Appointments </Button>
+        <Button onClick={() => window.location.href=`http://localhost:3000/uploadMedicalHistory`}>Upload Medical History</Button>
       </div>
       <div className="category-section">
         <h3>Doctor</h3>

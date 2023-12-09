@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 mongoose.set('strictQuery',false);
 const Schema = mongoose.Schema;
 
-                        
+const medicalDocumentSchema = new mongoose.Schema({
+  name: String,
+  path: String,
+}); 
+
 const userSchema = new Schema({
     type: {
         type: String,
@@ -55,10 +59,9 @@ const userSchema = new Schema({
       },
       HealthRecord:{
         type:[String]
-      }
+      },
+      medicalHistory: [medicalDocumentSchema]
   }, { timestamps: true });
-
- 
   
   const User = mongoose.model('User', userSchema);
 

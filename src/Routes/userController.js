@@ -7,6 +7,7 @@ const { default: mongoose } = require('mongoose');
 const familyMemberModel = require('../Models/FamilyMember.js');
 const appointmentsModel = require('../Models/Appointment.js');
 const AppointmentModel = require('../Models/Appointment.js');
+const fs = require('fs');
  
 
 //////////////////////HANYA////////////////////////////////////////////
@@ -149,7 +150,6 @@ const addAdministrator = async(req,res) => {
 
    const filterByDate = async (req, res) => {
       const date = req.params.date;
-      console.log(date);
     
       if (date) {
         // Find appointments for the specified date and populate the 'doctor' field
@@ -205,12 +205,10 @@ const addAdministrator = async(req,res) => {
       const getDoctorInfo = async (req, res) => {
          try {
            const doctorId = req.query.doctorId; // Change from req.params.doctorId to req.query.doctorId
-           console.log(doctorId);
            const doctor = await userModel.findById(doctorId);
            if (!doctor) {
              return res.status(404).json({ message: "Doctor not found" });
            }
-           console.log(doctor);
            res.status(200).json(doctor);
          } catch (err) {
            res.status(500).json({ message: err.message });
@@ -259,33 +257,78 @@ const viewAppointmentsOfDoctor = async(req,res) => {
     res.status(400).json({message: error.message})
   }
 }
+
+const uploadMedicalDocument = async (req, res) => {
+  try {
+
+    const user = await userModel.findById(req.params.id);
+
+    const { originalname, path } = req.file;
+
+    // Save document information to the user's medicalHistory
+    user.medicalHistory.push({ name: originalname, path: path });
+    await user.save();
+
+    res.status(201).json({ message: 'Document uploaded successfully' });
+  } catch (error) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getUploaded = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.params.id);
+    const uploadedFiles = user.medicalHistory
+    res.status(200).json({fileNames: uploadedFiles});
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const removeMedicalDocument = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.params.id);
+    const documentId = req.params.documentId;
+
+    // Find the document in the user's medicalHistory and remove it
+
+    const document = user.medicalHistory.id(documentId);
+
+    if (document) {
+      // Remove the file from the server
+      fs.unlinkSync(/* update with the correct path */ document.path);
+      document.remove();
+      await user.save();
+      res.status(200).json({ message: 'Document removed successfully' });
+    } else {
+      res.status(404).json({ message: 'Document not found' });
+    }
+  } catch (error) {
+    console.error('Error removing medical document:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 //////////////////////////////////MOHAB//////////////////////////////////
 ////// Register Patient 
 
 const registerPatient=async (req,res)=>
 {
    try{
-
-        
-            const att = req.body;
+         const att = req.body;
             const requiredAttributes = ['name', 'email', 'dateOfBirth','gender','mobileNumber','emergencyContactFullname','emergencyContactMobileNumber'];
             const missingAttributes = requiredAttributes.filter(attr => !att[attr]);
              if (missingAttributes.length > 0) {
                   return res.status(400).json({ error: `The following attributes are required: ${missingAttributes.join(', ')}` });
                }
-              
-           
-           
-            
+       
             if(await findPatientByUsername(req.body.username))
             {
                res.status(404).json({ error: 'Username already exists.' });
                return;
             }  
-           
 
-
-            let patient = await userModel.create({type:"Patient", username: req.body.username , name : req.body.name , email: req.body.email , 
+          let patient = await userModel.create({type:"Patient", username: req.body.username , name : req.body.name , email: req.body.email , 
              password: req.body.password , dateOfBirth : req.body.dateOfBirth , gender : req.body.gender, mobileNumber : req.body.mobileNumber,
               emergencyContactFullname:  req.body.emergencyContactFullname,  emergencyContactMobileNumber: req.body.emergencyContactMobileNumber})
              await patient.save();
@@ -294,8 +337,6 @@ const registerPatient=async (req,res)=>
             catch (err) {
                   res.status(500).json({ message: err.message });
             }
-   
-  
 }
 
 
@@ -359,7 +400,6 @@ const deleteUser = async (req, res) => {
  const viewRegFamilyMembers = async(req,res)=>{
  
     const username = req.params.id;
-    console.log("ssa");
     try{
      const famMembers = await familyMemberModel.find({patient: mongoose.Types.ObjectId(username)}).populate({path: 'patient'});
      res.status(200).send(famMembers);
@@ -385,7 +425,6 @@ const deleteUser = async (req, res) => {
   }
  
  const viewAppointments = async(req,res)=>{
- 
      try{
       const Appointments = await appointmentsModel.find({ status: { $ne: 'free' } });
       res.status(200).send(Appointments);
@@ -394,7 +433,6 @@ const deleteUser = async (req, res) => {
       catch(error){
       res.status(400).json({message: error.message})
       }
-  
   }
  
  const filterAppointmentsDate = async(req,res)=>{
@@ -464,4 +502,5 @@ catch(err){
 
 module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
-   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor}   
+   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor, uploadMedicalDocument, removeMedicalDocument
+  , getUploaded}   

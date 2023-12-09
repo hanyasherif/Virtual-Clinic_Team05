@@ -10,28 +10,7 @@ const AddFamilyMember = () => {
    const [famMemRelation, setfamMemRelation] = useState('')
    const [error, setError] = useState('');
    const {id} = useParams();
-    // const checkUniqueUsername = async (username) => {
-    //     try {
-    //       const response = await fetch('/checkUsername', {
-    //         method: 'POST',
-    //         body: JSON.stringify({ username }),
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //         },
-    //       });
-      
-    //       if (response.ok) {
-    //         const data = await response.json();
-    //         return data.isUnique;
-    //       } else {
-    //         console.error('Error checking username uniqueness');
-    //         return false; // Assume not unique in case of an error
-    //       }
-    //     } catch (error) {
-    //       console.error('Network error:', error);
-    //       return false; // Assume not unique in case of a network error
-    //     }
-    //   };
+
     const handleGenderChange = (e) => {
       setfamMemGender(e.target.value);
     };
@@ -46,10 +25,7 @@ const AddFamilyMember = () => {
         alert('Please fill in all fields.');
         return;
       }
-      console.log(FamilyMember)
 
-    
-  
        try {
         const response = await fetch(`http://localhost:8000/addFamilyMember/${id}`, {
           method: 'POST',
