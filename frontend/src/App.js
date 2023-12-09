@@ -29,9 +29,11 @@ import Meeting from './components/Appointments';
 import UserProfile from './components/Patientinformation'
 import PrescriptionInfo from './components/PrescriptionInfo';
 import UploadMedicalHistory from './components/UploadMedicalHistory';
-
 import Login from './components/login';
-import PatientInfoALL from './components/PatientInfoALL';
+import PatientPage from './components/PatientPage';
+import AdminPage from './components/AdminPage'
+import DoctorPage from './components/DoctorPage'
+
 function App() {
   return (
     <div className="App">
@@ -80,16 +82,22 @@ function App() {
               element={<PatientInfo/>}/>
               <Route path="/Meeting"
               element={<Meeting/>}/>
+              <Route path="/AdminPage"
+              element={<AdminPage/>}/>
+              <Route path="/DoctorPage"
+              element={<DoctorPage/>}/>
+              {/* <Route path="/"
+              element={<Menu/>}/> */}
               <Route path="/"
-              element={<Menu/>}/>
+              element={<Login/>}/>
               <Route path="/PatientProfile"
               element={<UserProfile/>}/>
               <Route path="/uploadMedicalHistory"
               element={<UploadMedicalHistory/>}/>      
-              <Route path="/login"
-              element={<Login/>}/>
+              {/* <Route path="/login"
+              element={<Login/>}/> */}
                <Route path="/patient"
-              element={<PatientInfoALL/>}/>
+              element={<PatientPage/>}/>
               </Routes>
       </div>
       {/* <UsernameTextBox /> Include TextBoxExample component here */}

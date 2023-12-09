@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import './LoginForm.css'; // Import your CSS file for styling
+import Header from "./Header";
+
 
 const Login = () => {
    const [userName, setUserName] = useState('');
@@ -32,7 +35,7 @@ const Login = () => {
          switch (data.type) {
             case 'Doctor':
                // Redirect to page
-               window.location.href = "/docprofile";
+               window.location.href = "/DoctorPage";
                break;
             case 'Patient':
                // Redirect to patient page
@@ -40,7 +43,7 @@ const Login = () => {
                break;
             case 'Administrator':
                // Redirect to page
-               window.location.href = "/AdminAddPackage";
+               window.location.href = "/AdminPage";
                break;
             default:
                 window.location.href = "/";
@@ -54,28 +57,37 @@ const Login = () => {
 
    return (
       <div>
-         {/* Login form */}
-         <div>
-            <label htmlFor="userName">Username:</label>
-            <input
-               type="text"
-               id="userName"
-               value={userName}
-               onChange={(e) => setUserName(e.target.value)}
-            />
-         </div>
-         <div>
-            <label htmlFor="password">Password:</label>
-            <input
-               type="password"
-               id="password"
-               value={password}
-               onChange={(e) => setPassword(e.target.value)}
-            />
-         </div>
-         <button onClick={handleLogin}>Login</button>
-      </div>
-   );
+      <Header/>
+      <div className="login-container">
+        
+  <h2>Login</h2>
+  <div className="input-group">
+    <label htmlFor="userName">Username:</label>
+    <input
+      type="text"
+      id="userName"
+      value={userName}
+      onChange={(e) => setUserName(e.target.value)}
+    />
+  </div>
+  <div className="input-group">
+    <label htmlFor="password">Password:</label>
+    <input
+      type="password"
+      id="password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+    />
+  </div>
+  <button className="login-button" onClick={handleLogin}>
+    Login
+  </button>
+  <p>
+    Not signed up yet? <a href="/register">Sign Up</a>
+  </p>
+</div>
+</div>
+  );
 };
 
 export default Login;

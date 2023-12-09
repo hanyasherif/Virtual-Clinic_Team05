@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import Navbar from './navbar';
+import Header from "./Header";
+
 
 // components
 //import Details from "../../../admin/src/components/details"
@@ -28,8 +30,11 @@ const Home = () => {
 
 
   return (
-    <div className="home">
-      <Navbar/>
+    <div>
+      <Header/>
+      <br/>
+    <div>
+      {/* <Navbar/> */}
       <div className="patients">
         {patients && patients.map(patients => (
           <Form patients={patients} key={patients._id} />
@@ -37,7 +42,8 @@ const Home = () => {
                 </div>
             <Form />
     </div>
-  )
-}
+    </div>
+  );
+};
 
 export default Home

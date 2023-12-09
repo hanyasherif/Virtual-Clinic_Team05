@@ -40,15 +40,6 @@ function UploadMedicalHistory() {
     getUploadedFiles(); // Fetch uploaded files when the component mounts
   }, []);
 
-  const handleLogout = async (e) => {
-    try {
-      await fetch(`http://localhost:8000/logout`);
-      window.location.href = 'http://localhost:3000/';
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
   const getUploadedFiles = async () => {
     try {
       const response = await fetch(`http://localhost:8000/getUploaded/${id}`);
@@ -155,7 +146,7 @@ function UploadMedicalHistory() {
 
   return (
     <div className="UploadMedicalHistory">
-    <Header onLogout={handleLogout} />
+    <Header/>
       <h2>My Medical History</h2>
       <input type="file" onChange={handleFileChange} />
       <Button variant="contained" onClick={uploadDocument}>Upload</Button>
