@@ -1,5 +1,7 @@
 // #Task route solution
 const userModel = require('../Models/User.js');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
 const PrescriptionModel = require('../Models/Prescription.js');
 const appointmentModel = require('../Models/Appointment.js');
 const PackageModel = require('../Models/Package.js');
@@ -271,10 +273,12 @@ const registerPatient=async (req,res)=>
                return;
             }  
            
-
+            const salt = await bcrypt.genSalt();
+            const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    
 
             let patient = await userModel.create({type:"Patient", username: req.body.username , name : req.body.name , email: req.body.email , 
-             password: req.body.password , dateOfBirth : req.body.dateOfBirth , gender : req.body.gender, mobileNumber : req.body.mobileNumber,
+             password: hashedPassword , dateOfBirth : req.body.dateOfBirth , gender : req.body.gender, mobileNumber : req.body.mobileNumber,
               emergencyContactFullname:  req.body.emergencyContactFullname,  emergencyContactMobileNumber: req.body.emergencyContactMobileNumber})
              await patient.save();
              res.status(200).json({message: "Patient Registered Succesfully" });
@@ -479,7 +483,56 @@ catch(err){
   res.json({message: err.message})
 }
 }
+const maxAge = 3 * 24 * 60 * 60;
+const createToken = (name) => {
+    return jwt.sign({ name }, 'supersecret', {
+        expiresIn: maxAge
+    });
+};
 
-module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
+const login = async (req, res) => {
+  const { email, password } = req.body;
+    try {
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+      
+        if (!isPasswordValid) {
+            throw new Error('Invalid password');
+        }
+
+        const token = createToken(user.name);
+        console.log(token)
+        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 , sameSite: 'None' ,  secure: true });
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+
+
+  }
+
+const findPatById = async(req,res)=>{
+  try{
+    const patient= await userModel.findById(req.query.Id);
+    if(!patient)
+    {
+        return res.status(404).json({ error: "Patient Not Found" });;
+    }
+    res.status(200).json(patient)
+}
+catch (err) {
+    return false; 
+}
+}
+
+
+ 
+// Return the token and user role
+
+module.exports = { login, addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
-   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint}   
+   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint , findPatById}   

@@ -8,6 +8,7 @@ function Menu() {
     <div>
       <h2>El7an2y Sprint 1</h2>
       <div className="category-section">
+      <Button onClick={() => window.location.href=`http://localhost:3000/login`}>login</Button>
         <h3>Patient</h3>
         <Button onClick={() => window.location.href=`http://localhost:3000/register`}>RegisterPatient</Button>
         <Button onClick={() => window.location.href=`http://localhost:3000/addFamilyMember/:id`}>Add FamilyMember</Button>
@@ -37,3 +38,6 @@ function Menu() {
 }
 
 export default Menu;
+
+
+

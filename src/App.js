@@ -1,10 +1,13 @@
 // External variables
 const express = require("express");
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const path = require('path');
 mongoose.set('strictQuery', false);
 require("dotenv").config();
+const { requireAuth } = require('./Middleware/authMiddleware');
 // const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
-const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
+const { findPatById,login, addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint} = require("./Routes/userController");
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
@@ -15,7 +18,9 @@ const MongoURI = process.env.MONGO_URI ;
 
 //App variables
 const app = express();
+
 const cors = require('cors');
+const { default: test } = require("node:test");
 const port = process.env.PORT || "8000";
 app.get('/', (req, res) =>{
   res.json({mssg: 'Welcome to the app'})
@@ -23,7 +28,7 @@ app.get('/', (req, res) =>{
 
 // configurations
 // Mongo DB
-app.use(cors());
+
 mongoose.connect(MongoURI)
 .then(()=>{
   console.log("MongoDB is now connected!")
@@ -36,13 +41,22 @@ mongoose.connect(MongoURI)
 /*
                                                     Start of your code
 */
+
 app.get("/home", (req, res) => {
     res.status(200).send("You have everything installed!");
   });
 
 // #Routing to userController here
 ///hanya
-app.use(express.json())
+app.use(express.json());
+app.use(cookieParser());
+
+const corsOptions = {
+   //included origin as true
+  credentials: true, //included credentials as true
+};
+
+app.use(cors(corsOptions));
 app.post("/addAdministrator", addAdministrator);
 app.delete("/removeUser", removeUser);
 app.post("/checkUsername", checkUsername);
@@ -60,7 +74,7 @@ app.get("/filterDateSpecs", filterDateSpecs)
 
 // #Routing to userController here
 ///mohab
-app.use(express.json())
+
 app.post("/admin/addPackage", adminAddPackage);
 app.delete("/admin/deletePackage", adminDeletePackage);
 app.put("/admin/updatePackage", adminUpdatePackage);
@@ -71,6 +85,9 @@ app.post("/addPrescription",createPres);
 app.get("/viewPrescription/:username", viewPatientPrescriptions);
 app.get("/filterPrescription", filterPrescriptions);
 app.get("/getPrescription", getPrescription);
+app.post("/login", login);
+app.get("/getPatientById", requireAuth,findPatById);
+
 
 /*
                                                   End of your code
@@ -78,7 +95,7 @@ app.get("/getPrescription", getPrescription);
 
 
 ////wael
-app.use(express.json())
+
 app.post("/addRequest", addRequest);
 app.get("/getRequests", getRequests);
 app.get("/getARequest", getARequest);
