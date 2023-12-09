@@ -6,7 +6,7 @@ function Menu() {
 
   return (
     <div>
-      <h1>El7an2y</h1>
+      <h1>El7a2ny</h1>
       <div className="category-section">
       <Button onClick={() => window.location.href=`http://localhost:3000/login`}>login</Button>
         <h3>Patient</h3>
