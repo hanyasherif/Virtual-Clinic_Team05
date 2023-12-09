@@ -18,18 +18,18 @@ import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem"; // Import Select and MenuItem
 import Box from "@mui/material/Box";
+import Header from "./Header";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
 function UploadMedicalHistory() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -39,6 +39,15 @@ function UploadMedicalHistory() {
   useEffect(() => {
     getUploadedFiles(); // Fetch uploaded files when the component mounts
   }, []);
+
+  const handleLogout = async (e) => {
+    try {
+      await fetch(`http://localhost:8000/logout`);
+      window.location.href = 'http://localhost:3000/';
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   const getUploadedFiles = async () => {
     try {
@@ -50,7 +59,6 @@ function UploadMedicalHistory() {
       if (data && data.fileNames) {
         setUploadedFiles(data.fileNames);
       }
-
     } catch (error) {
       console.error('Error fetching uploaded files:', error);
       toast.error('Failed to fetch uploaded files. Please try again.', {
@@ -64,8 +72,6 @@ function UploadMedicalHistory() {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
-
-
 
   const uploadDocument = async (file) => {
     try {
@@ -96,12 +102,10 @@ function UploadMedicalHistory() {
 
   const removeDocument = async (documentId) => {
     try {
-
-        await fetch(`http://localhost:8000/remove-document/${id}/${documentId}`, {
+      await fetch(`http://localhost:8000/remove-document/${id}/${documentId}`, {
         method: "delete"
       });
 
-  
       await getUploadedFiles();
   
       // Handle success, e.g., show a success toast
@@ -121,25 +125,17 @@ function UploadMedicalHistory() {
 
   const viewDocument = async (filePath) => {
     try {
-      // Replace this URL with the endpoint that serves the file
       const fileEndpoint = `http://localhost:8000/serve-file?filePath=${encodeURIComponent(filePath)}`;
   
-      // Fetch the file
       const response = await fetch(fileEndpoint);
   
       if (!response.ok) {
-        // Handle the case where the file couldn't be fetched
         throw new Error('Failed to fetch the document.');
       }
   
-      // Get the blob representing the file data
       const fileBlob = await response.blob();
-  
-      // Determine the file extension from the file path
       const fileExtension = filePath.split('.').pop().toLowerCase();
-  
-      // Set the content type based on the file extension
-      let contentType = 'application/octet-stream'; // Default to binary data
+      let contentType = 'application/octet-stream';
   
       if (fileExtension === 'pdf') {
         contentType = 'application/pdf';
@@ -147,11 +143,9 @@ function UploadMedicalHistory() {
         contentType = `image/${fileExtension}`;
       }
   
-      // Use FileSaver.js to trigger the download
       saveAs(fileBlob, `document.${fileExtension}`, { type: contentType });
     } catch (error) {
       console.error('Error opening the document:', error);
-      // Handle error, e.g., show an error toast
       toast.error('Failed to open the document. Please try again.', {
         position: 'top-right',
         autoClose: 3000,
@@ -160,58 +154,58 @@ function UploadMedicalHistory() {
   };
 
   return (
-
     <div className="UploadMedicalHistory">
-    <input type="file" onChange={handleFileChange} />
-    <button onClick={uploadDocument}>Upload</button>
-    <br/><br/>
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell align="center">File Name</StyledTableCell>
-            <StyledTableCell align="center">File Path</StyledTableCell>
-            <StyledTableCell align="center">Action</StyledTableCell>
-            <StyledTableCell align="center">Action</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {uploadedFiles.length > 0 ? (
-            uploadedFiles.map((file, index) => (
-              <TableRow
-                hover
-                sx={{
-                  "&:hover": {
-                    cursor: "pointer",
-                    backgroundColor: "#f5f5f5",
-                    width: "100%",
-                  },
-                }}
-                key={file._id}
-              >
-                <TableCell align="center">{file.name}</TableCell>
-                <TableCell align="center">{file.path}</TableCell>
-
-                <TableCell align="center">
-                  <button onClick={() => removeDocument(file._id)}>Remove</button>
-                </TableCell>
-                <TableCell align="center">
-                  <button onClick={() => viewDocument(file._id)}>View</button>
+    <Header onLogout={handleLogout} />
+      <h2>My Medical History</h2>
+      <input type="file" onChange={handleFileChange} />
+      <Button variant="contained" onClick={uploadDocument}>Upload</Button>
+      <br/><br/>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell align="center">File Name</StyledTableCell>
+              <StyledTableCell align="center">File Path</StyledTableCell>
+              <StyledTableCell align="center">Actions</StyledTableCell>
+              <StyledTableCell align="center">Actions</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {uploadedFiles.length > 0 ? (
+              uploadedFiles.map((file, index) => (
+                <TableRow
+                  hover
+                  sx={{
+                    "&:hover": {
+                      cursor: "pointer",
+                      backgroundColor: "#f5f5f5",
+                      width: "100%",
+                    },
+                  }}
+                  key={file._id}
+                >
+                  <TableCell align="center">{file.name}</TableCell>
+                  <TableCell align="center">{file.path}</TableCell>
+                  <TableCell align="center">
+                    <Button variant="contained" onClick={() => removeDocument(file._id)}>Remove</Button>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button variant="contained" onClick={() => viewDocument(file._id)}>View</Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  No files uploaded yet
                 </TableCell>
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={4} align="center">
-                No files uploaded yet
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  </div>
-);
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  );
 }
 
 export default UploadMedicalHistory;
