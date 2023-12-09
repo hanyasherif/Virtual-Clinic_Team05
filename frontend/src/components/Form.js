@@ -42,8 +42,8 @@ const Form = () => {
       setEmergencyname('')
       console.log('New patient added:', json)
       alert(json.message);
+      window.location.href = '/login';
     }
-
   }
 
   return (

@@ -18,17 +18,14 @@ const Home = () => {
             if (response.ok) {
               setpatients(json)
               alert(json.message);
+              
             }
         }catch (error){
             alert('An error occurred:', error.message);
         }
- 
-          
-      
     }
-
-    //fetchDetails()
   }, [])
+
 
   return (
     <div className="home">

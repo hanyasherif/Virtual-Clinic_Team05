@@ -63,7 +63,7 @@ app.use(cors(corsOptions));
 app.post("/addAdministrator", addAdministrator);
 app.delete("/removeUser", removeUser);
 app.post("/checkUsername", checkUsername);
-app.get("/getAllUsers", getUsers);
+app.get("/getAllUsers", requireAuth, getUsers);
 app.get("/searchByName",searchByName);
 app.get("/searchBySpec",searchBySpec);
 app.get("/searchByNameSpec",searchByNameSpec);
@@ -101,7 +101,7 @@ app.get("/getPatientById", requireAuth,findPatById);
 ////wael
 
 app.post("/addRequest", addRequest);
-app.get("/getRequests", getRequests);
+app.get("/getRequests", requireAuth, getRequests);
 app.get("/getARequest", getARequest);
 
 //////////////////////////////////aseel/////////////////////////////

@@ -8,7 +8,7 @@ const familyMemberModel = require('../Models/FamilyMember.js');
 const appointmentsModel = require('../Models/Appointment.js');
 const AppointmentModel = require('../Models/Appointment.js');
 const fs = require('fs');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
  
 
@@ -332,16 +332,19 @@ const registerPatient=async (req,res)=>
            
             const salt = await bcrypt.genSalt();
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    
 
             let patient = await userModel.create({type:"Patient", username: req.body.username , name : req.body.name , email: req.body.email , 
-             password: hashedPassword , dateOfBirth : req.body.dateOfBirth , gender : req.body.gender, mobileNumber : req.body.mobileNumber,
-              emergencyContactFullname:  req.body.emergencyContactFullname,  emergencyContactMobileNumber: req.body.emergencyContactMobileNumber})
-             await patient.save();
-             res.status(200).json({message: "Patient Registered Succesfully" });
+            password: hashedPassword , dateOfBirth : req.body.dateOfBirth , gender : req.body.gender, mobileNumber : req.body.mobileNumber,
+            emergencyContactFullname:  req.body.emergencyContactFullname,  emergencyContactMobileNumber: req.body.emergencyContactMobileNumber})
+            await patient.save();
+
+            const token = createToken(patient.name);
+
+            res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+            res.status(200).json({message: "Patient Registered Succesfully", patient});
             }
             catch (err) {
-                  res.status(500).json({ message: err.message });
+              res.status(500).json({ message: err.message });
             }
 }
 
@@ -516,30 +519,18 @@ const login = async (req, res) => {
   const uName = req.body.username;
   const password = req.body.password;
     try {
-      console.log("ana hena");
-      console.log(uName);
-      console.log(password);
 
         const user = await userModel.findOne({ username: uName });
         if (!user) {
             throw new Error('User not found');
         }
-        console.log("ana hena");
-        console.log(user.username);
-        console.log(user.password);
-        console.log(await bcrypt(user.password));
+        //console.log(await bcrypt(user.password));
         const isPasswordValid = await bcrypt.compare(password, user.password);
-        console.log("anahenaaaaa");
-        console.log(isPasswordValid);
+
         if (!isPasswordValid) {
             throw new Error('Invalid password');
         }
-        console.log("anahenaaaaa");
-
         const token = createToken(user.name);
-        console.log("anahenaaaaa");
-
-        console.log(token)
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 , sameSite: 'None' ,  secure: true });
         res.status(200).json(user);
     } catch (error) {
