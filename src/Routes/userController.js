@@ -1,7 +1,5 @@
 // #Task route solution
 const userModel = require('../Models/User.js');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt')
 const PrescriptionModel = require('../Models/Prescription.js');
 const appointmentModel = require('../Models/Appointment.js');
 const PackageModel = require('../Models/Package.js');
@@ -10,6 +8,8 @@ const familyMemberModel = require('../Models/FamilyMember.js');
 const appointmentsModel = require('../Models/Appointment.js');
 const AppointmentModel = require('../Models/Appointment.js');
 const fs = require('fs');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
  
 
 //////////////////////HANYA////////////////////////////////////////////
@@ -513,28 +513,38 @@ const createToken = (name) => {
 };
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const uName = req.body.username;
+  const password = req.body.password;
     try {
-        const user = await userModel.findOne({ email });
+      console.log("ana hena");
+      console.log(uName);
+      console.log(password);
+
+        const user = await userModel.findOne({ username: uName });
         if (!user) {
             throw new Error('User not found');
         }
-
+        console.log("ana hena");
+        console.log(user.username);
+        console.log(user.password);
+        console.log(await bcrypt(user.password));
         const isPasswordValid = await bcrypt.compare(password, user.password);
-      
+        console.log("anahenaaaaa");
+        console.log(isPasswordValid);
         if (!isPasswordValid) {
             throw new Error('Invalid password');
         }
+        console.log("anahenaaaaa");
 
         const token = createToken(user.name);
+        console.log("anahenaaaaa");
+
         console.log(token)
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 , sameSite: 'None' ,  secure: true });
         res.status(200).json(user);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
-
-
   }
 
 const findPatById = async(req,res)=>{

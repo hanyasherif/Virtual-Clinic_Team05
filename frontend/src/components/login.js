@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 
 const Login = () => {
-   const [email, setEmail] = useState('');
+   const [userName, setUserName] = useState('');
    const [password, setPassword] = useState('');
 
    const handleLogin = async () => {
       try {
+         console.log(userName);
+         console.log(password);
          const response = await fetch('http://localhost:8000/login', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
             },
             credentials: 'include',
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ username: userName, password }),
          });
 
          if (!response.ok) {
@@ -56,12 +58,12 @@ const Login = () => {
       <div>
          {/* Login form */}
          <div>
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="userName">Username:</label>
             <input
                type="text"
-               id="email"
-               value={email}
-               onChange={(e) => setEmail(e.target.value)}
+               id="userName"
+               value={userName}
+               onChange={(e) => setUserName(e.target.value)}
             />
          </div>
          <div>
