@@ -508,6 +508,7 @@ catch(err){
   res.json({message: err.message})
 }
 }
+
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (name) => {
     return jwt.sign({ name }, 'supersecret', {
