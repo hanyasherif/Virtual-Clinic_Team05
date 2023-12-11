@@ -94,7 +94,7 @@ app.get("/filterPrescription", filterPrescriptions);
 app.get("/getPrescription", getPrescription);
 app.post("/login", login);
 app.get("/getPatientById", requireAuth,findPatById);
-app.get("/serveFile/:id/:filePath/:fileName", servefiles);
+app.get("/serveFiles/:id/:filePath/:fileName", servefiles);
 ////wael
 
 app.post("/addRequest", addRequest);
