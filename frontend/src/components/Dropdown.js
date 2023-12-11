@@ -15,7 +15,7 @@ const Dropdown = () => {
          {isOpen && (
            <div className="dropdown-content">
              <a href="viewPackages">View Packages</a>
-             <a href="#">My Package</a>
+             <a href="ViewMyPackage">My Package</a>
              <a href="#"></a>
            </div>
          )}
