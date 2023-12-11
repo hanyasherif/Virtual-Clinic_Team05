@@ -107,4 +107,5 @@ console.log('Name:', Name);
   )
 }
 
+
 export default PatientInfo;

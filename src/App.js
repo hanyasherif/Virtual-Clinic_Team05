@@ -10,6 +10,7 @@ const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescrip
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest} = require("./Routes/requestController");
 const{addAppointment} = require("./Routes/appointmentController");
+const{viewPackages , subscribePackage , viewMyPackage , cancelPackage} = require("./Routes/PatientController");
 const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData}=require("./Routes/DrController");
 const MongoURI = process.env.MONGO_URI ;
 
@@ -103,3 +104,9 @@ app.get("/SearchP",SearchPatient);//Searchbyname
 app.post("/Edit",EditMyInfo);
 app.get("/UpcomingAppoint",filteredAppointments);
 app.get("/GetFullData",GetPFullData);
+
+
+app.get("/viewPackages",viewPackages);
+app.post("/subPackage", subscribePackage);
+app.get("/viewMyPackage",viewMyPackage);
+app.put("/cancelPackage",cancelPackage);

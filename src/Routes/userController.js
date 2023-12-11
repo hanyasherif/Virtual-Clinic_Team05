@@ -432,7 +432,7 @@ const deleteUser = async (req, res) => {
         }
   
  }
-
+ 
 
  /////// sherif and momen
 
@@ -479,6 +479,12 @@ catch(err){
   res.json({message: err.message})
 }
 }
+
+
+
+
+
+
 
 module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,

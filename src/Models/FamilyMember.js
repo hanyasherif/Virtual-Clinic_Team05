@@ -7,6 +7,10 @@ const familyMemberSchema = new Schema({
         type: String,
         required: true
       },
+      username: {
+        type: String,
+        
+      },
     famMemNatID: {
         type: Number,
         required: true

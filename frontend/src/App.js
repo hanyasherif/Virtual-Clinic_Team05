@@ -6,7 +6,7 @@ import { useState } from 'react';
 //Pages & Components
 // import Home from './pages/Home'
 // import Navbar from './components/Navbar'
-import './App.css';
+//import './App.css';
 import AddAdminForm from './components/AddAdminForm'
 import RemoveDoctorPatientAdmin from './components/RemoveDoctorPatientAdmin'
 import DoctorsList from './components/DoctorsList'
@@ -28,6 +28,9 @@ import Menu from './components/Main';
 import Meeting from './components/Appointments';
 import UserProfile from './components/Patientinformation'
 import PrescriptionInfo from './components/PrescriptionInfo';
+import Patient from './components/Patient'
+import ViewPackages from './components/ViewPackages';
+import ViewMyPackage from './components/ViewMyPackage';
 function App() {
   return (
     <div className="App">
@@ -80,6 +83,12 @@ function App() {
               element={<Menu/>}/>
               <Route path="/PatientProfile"
               element={<UserProfile/>}/>
+              <Route path="/patient"
+              element={<Patient/>}/>
+               <Route path="/viewPackages"
+              element={<ViewPackages/>}/>
+               <Route path="/viewMyPackage"
+              element={<ViewMyPackage/>}/>
               </Routes>
       </div>
       {/* <UsernameTextBox /> Include TextBoxExample component here */}
