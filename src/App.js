@@ -5,11 +5,12 @@ mongoose.set('strictQuery', false);
 require("dotenv").config();
 
 const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
-   registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor} = require("./Routes/userController");
+   registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getUserById , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor,
+   getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,getUserByUsername,modifyWallet} = require("./Routes/userController");
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest} = require("./Routes/requestController");
-const{addAppointment,getAppointmentInfo} = require("./Routes/appointmentController");
+const{addAppointment,getAppointmentInfo,modifyAppointment} = require("./Routes/appointmentController");
 const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData}=require("./Routes/DrController");
 const MongoURI = process.env.MONGO_URI ;
 
@@ -17,6 +18,7 @@ const MongoURI = process.env.MONGO_URI ;
 const app = express();
 const cors = require('cors');
 const port = process.env.PORT || "8000";
+
 app.get('/', (req, res) =>{
   res.json({mssg: 'Welcome to the app'})
 })
@@ -73,6 +75,7 @@ app.get("/filterPrescription", filterPrescriptions);
 app.get("/getPrescription", getPrescription);
 
 
+
 /////////////////////////////////wael/////////////////////////////
 app.use(express.json())
 app.post("/addRequest", addRequest);
@@ -85,9 +88,17 @@ app.get("/viewRegFamilyMembers/:id",viewRegFamilyMembers);
 app.get("/viewAppointments",viewAppointments);
 app.get("/filterAppointmentsDate/:date",filterAppointmentsDate); 
 app.get("/filterAppointmentsStatus/:status",filterAppointmentsStatus);
-app.get("/getDoctorName/:id", getDoctorName);
+app.get("/getUserById/:id", getUserById);
 app.post("/addAppointment",addAppointment);
 app.get("/getAppointmentInfo",getAppointmentInfo) //query in frontenddd
+app.get("/getWalletInfo/:id",getWalletInfo);
+app.get("/getFamilyMemberData",getFamilyMemberData);
+app.post('/modifyAppointment', modifyAppointment);
+app.get("/getUserById/:id", getUserById);
+app.get("/getUserByEmail/:email",getUserByEmail);
+app.get("/getUserByPhoneNumber/:phoneNumber",getUserByPhoneNumber);
+app.get("/getUserByUsername/:username", getUserByUsername);
+app.post("/modifyWallet", modifyWallet);
 
 
 ////////////////////////////////////////////////sherif and momen/////////////////////////////

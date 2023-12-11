@@ -32,8 +32,9 @@ const addAppointment = async(req,res)=>{
    let date = req.body.date;
    let status = req.body.status;
    let patient = req.body.patient;
+   let price = req.body.price
    try{
-       const newApp = {date: date, doctor: doctor, patient: patient,status:status}
+       const newApp = {date: date, doctor: doctor, patient: patient,status:status, price: price}
        const Appo = await appointmentsModel.create(newApp);
        await Appo.save();
            res.status(200).json({message: "Appointment created successfully"})
@@ -61,5 +62,33 @@ const getAppointmentInfo = async (req, res) => {
    }
  };
 
+// Add this method in the backend
+const modifyAppointment = async (req, res) => {
+   try {
+     const appointmentId = req.body.appointmentId;
+     const patientId = req.body.patientId;
+ 
+     // Fetch the specific appointment using the appointmentId
+     const appointment = await appointmentsModel.findById(appointmentId);
+ 
+     // Check if the appointment exists
+     if (!appointment) {
+       return res.status(404).json({ message: "Appointment not found" });
+     }
+ 
+     // Update the appointment with the new patientId
+     appointment.patient = patientId;
+     appointment.status = "Upcoming"
+ 
+     // Save the modified appointment
+     await appointment.save();
+ 
+     res.status(200).json({ message: "Appointment updated successfully", appointment });
+   } catch (err) {
+     res.status(500).json({ message: err.message });
+   }
+ };
+ 
 
-module.exports = {addAppointment,getAppointmentInfo}
+ 
+module.exports = {addAppointment,getAppointmentInfo,modifyAppointment}

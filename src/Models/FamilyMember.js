@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 
                         
 const familyMemberSchema = new Schema({
+   username:{
+    type:String
+  },
     famMemName: {
         type: String,
         required: true

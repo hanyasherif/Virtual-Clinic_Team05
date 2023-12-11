@@ -70,6 +70,7 @@ const DocProfile = () => {
             <StyledTableCell align="center">Date</StyledTableCell>
             <StyledTableCell align="center">Doctor</StyledTableCell>
             <StyledTableCell align="center">Status</StyledTableCell>
+            <StyledTableCell align="center">Price</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -82,10 +83,13 @@ const DocProfile = () => {
                 backgroundColor: "#f5f5f5",
                 width: "100%"
                 }
-            }}>      
+            }}
+            onClick={() => window.location.href = `/SApp?appointmentId=${Appointment._id}`}
+                key={appointment._id}>      
               <TableCell align="center">{Appointment.date}</TableCell>
               <TableCell align="center">{doctor.name}</TableCell>
               <TableCell align="center">{Appointment.status}</TableCell>
+              <TableCell align="center">{Appointment.price}</TableCell>
             </TableRow>
           ))}
         </TableBody>

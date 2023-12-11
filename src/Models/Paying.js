@@ -3,10 +3,7 @@ const Schema = mongoose.Schema;
 
                         
 const payingSchema = new Schema({
-    payWith: {
-        type: boolean,
-        required: true
-      },
+    
     cardNumber: {
         type: Number,
         required: true
@@ -15,24 +12,15 @@ const payingSchema = new Schema({
         type: Number,
         required: true
       },
-      walletInfo: {
-        type: Number,
-        required: true
+      expiryDate: {
+        type: Date
       },
-     /* famMemGender:{
-        type: String,
-        required: true
-      },
-      famMemRelation: {
-        type: String,
-        required: true
-      },*/
-      patient:{
+      patientP:{
         type: mongoose.Types.ObjectId,
         ref:'User',
         required: true
       }
   }, { timestamps: true });
   
-  const FamilyMember = mongoose.model('FamilyMember', familyMemberSchema);
-  module.exports = FamilyMember;
+  const Paying = mongoose.model('Paying', payingSchema);
+  module.exports = Paying;

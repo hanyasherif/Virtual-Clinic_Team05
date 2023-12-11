@@ -30,6 +30,9 @@ import UserProfile from './components/Patientinformation'
 import PrescriptionInfo from './components/PrescriptionInfo';
 import PayAppointment from './components/PayAppointment';
 import Wallet from './components/Wallet';
+import SApp from './components/SApp';
+ import { loadStripe } from '@stripe/stripe-js';
+ const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
   return (
     <div className="App">
@@ -82,12 +85,13 @@ function App() {
               element={<Menu/>}/>
               <Route path="/PatientProfile"
               element={<UserProfile/>}/>
-              <Route path="/selectedAppointment"
-              element={<selectedAppointment/>}/>
+              
               <Route path="/payAppointment"
               element={<PayAppointment/>}/>
               <Route path="/wallet"
               element={<Wallet/>}/>
+              <Route path="/SApp"
+              element={<SApp/>}/>
               </Routes>
 
       </div>

@@ -55,6 +55,11 @@ const userSchema = new Schema({
       },
       HealthRecord:{
         type:[String]
+      },
+      walletInfo:{
+        type: Number,
+        default: 0
+      
       }
   }, { timestamps: true });
 

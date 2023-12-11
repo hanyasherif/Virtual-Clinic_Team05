@@ -27,7 +27,7 @@ const ViewFamilyMember = () => {
 
     
    const params = new URLSearchParams(window.location.search);
-    const {id} = useParams();
+    const id = '65735cebad66db980718a14d'; // session
     const [famMem,setFamMem] = useState([]);
 
     const getFamilyMember=  async () => {
