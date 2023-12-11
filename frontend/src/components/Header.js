@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 const Header = ({ onLogout }) => {
   const handleLogout = async (e) => {
     try {
-      await fetch(`http://localhost:8000/logout`);
+      await fetch(`http://localhost:8000/logout`,{credentials: 'include'});
       window.location.href = 'http://localhost:3000/';
     } catch (error) {
       console.error('Error:', error);

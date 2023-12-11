@@ -34,7 +34,10 @@ const requestSchema = new Schema({
     educationalBackground:{
         type: String,
         required: true
+    },status:{
+      type: String
     }
+
   }, { timestamps: true });
   
   const Request = mongoose.model('Request', requestSchema);

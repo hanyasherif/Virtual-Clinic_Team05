@@ -1,11 +1,13 @@
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-
+const jwt = require('jsonwebtoken')
 // Set storage engine
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const username = req.user.username; // 
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, 'supersecret');
+    const username= decodedToken.user.username 
     //const dest = `Uploads/medical-history/${username}`;
     const dest = `Uploads/medical-history/${username}`;
     

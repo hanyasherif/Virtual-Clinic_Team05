@@ -42,7 +42,9 @@ function UploadMedicalHistory() {
 
   const getUploadedFiles = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/getUploaded`);
+      const response = await fetch(`http://localhost:8000/getUploaded`,{
+        credentials: 'include'
+      });
       if (!response.ok) {
         throw new Error('Failed to fetch uploaded files');
       }
@@ -71,7 +73,7 @@ function UploadMedicalHistory() {
   
       await fetch(`http://localhost:8000/upload-document`, {
         method: "POST",
-        body: formData,
+        body: formData,credentials: 'include'
       });
 
       await getUploadedFiles();
@@ -93,8 +95,9 @@ function UploadMedicalHistory() {
 
   const removeDocument = async (documentId) => {
     try {
-      await fetch(`http://localhost:8000/remove-document/${id}/${documentId}`, {
-        method: "delete"
+      await fetch(`http://localhost:8000/remove-document/${documentId}`, {
+        method: "delete",
+        credentials:'include'
       });
 
       await getUploadedFiles();

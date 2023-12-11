@@ -35,7 +35,9 @@ const FilterAppointmentsPatient = () => {
   //  console.log(userId);
   const getDoctorName = async (doctorId) => {
     try {
-      const response = await axios.get(`http://localhost:8000/getDoctorName/${doctorId}`);
+      const response = await axios.get(`http://localhost:8000/getDoctorName/${doctorId}`, {
+        credentials:'include'
+      });
       if (response.data && response.data.name) {
         return response.data.name;
       } else {
@@ -49,7 +51,7 @@ const FilterAppointmentsPatient = () => {
   const fetchDoctorNames = async () => {
     try {
       const doctorNames = {};
-      const appointments = await axios.get('http://localhost:8000/viewAppointments');
+      const appointments = await axios.get('http://localhost:8000/viewAppointments',{credentials: 'include'});
       if (appointments.data) {
         for (const appointment of appointments.data) {
           const doctorId = appointment.doctor;
@@ -75,7 +77,7 @@ const FilterAppointmentsPatient = () => {
         */     
         
 
-        await axios.get('http://localhost:8000/viewAppointments').then(
+        await axios.get('http://localhost:8000/viewAppointments', {credentials: 'include'}).then(
             (res) => { 
                 const appointments = res.data
                 console.log(appointment)
@@ -93,7 +95,7 @@ const FilterAppointmentsPatient = () => {
         return;
       }
 
-      await axios.get(`http://localhost:8000/filterAppointmentsDate/${date}`).then(
+      await axios.get(`http://localhost:8000/filterAppointmentsDate/${date}`, {credentials: 'include'}).then(
           (res) => { 
               const appointments = res.data
               
@@ -113,7 +115,7 @@ const FilterAppointmentsPatient = () => {
       return;
     }
 
-    await axios.get(`http://localhost:8000/filterAppointmentsStatus/${status}`).then(
+    await axios.get(`http://localhost:8000/filterAppointmentsStatus/${status}`, {credentials: 'include'}).then(
         (res) => { 
             const appointments = res.data
             

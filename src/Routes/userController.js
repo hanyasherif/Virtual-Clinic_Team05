@@ -3,15 +3,14 @@ const userModel = require('../Models/User.js');
 const PrescriptionModel = require('../Models/Prescription.js');
 const appointmentModel = require('../Models/Appointment.js');
 const PackageModel = require('../Models/Package.js');
-const { default: mongoose } = require('mongoose');
+const  mongoose  = require('mongoose');
 const familyMemberModel = require('../Models/FamilyMember.js');
 const appointmentsModel = require('../Models/Appointment.js');
 const AppointmentModel = require('../Models/Appointment.js');
 const fs = require('fs');
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
 const path = require('path');
- 
+const jwt = require("jsonwebtoken"); 
 
 //////////////////////HANYA////////////////////////////////////////////
 const addAdministrator = async(req,res) => {
@@ -263,28 +262,29 @@ const viewAppointmentsOfDoctor = async(req,res) => {
 
 const uploadMedicalDocument = async (req, res) => {
   try {
-
+    const token = req.cookies.jwt;
     const decodedToken = jwt.verify(token, 'supersecret');
+    
     const user = decodedToken.user;
-
     const { originalname, path } = req.file;
-
-    // Save document information to the user's medicalHistory
-    user.medicalHistory.push({ name: originalname, path: path });
-    await user.save();
+    const user2= await userModel.findById(user._id);
+    user2.medicalHistory.push({ name: originalname, path: path });
+    await user2.save();
 
     res.status(201).json({ message: 'Document uploaded successfully' });
   } catch (error) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
 const getUploaded = async (req, res) => {
   try {
-    const token = req.cookies.jwt;
-    const decodedToken = jwt.verify(token, 'supersecret');
+      const token = req.cookies.jwt;
+      const decodedToken = jwt.decode(token);
     const user = decodedToken.user;
-    const uploadedFiles = user.medicalHistory
+    const user2= await userModel.findById(user._id);
+    const uploadedFiles = user2.medicalHistory;
+
     res.status(200).json({fileNames: uploadedFiles});
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -293,8 +293,9 @@ const getUploaded = async (req, res) => {
 
 const removeMedicalDocument = async (req, res) => {
   try {
+    const token = req.cookies.jwt;
     const decodedToken = jwt.verify(token, 'supersecret');
-    const user = decodedToken.user;
+    const user = await userModel.findById(decodedToken.user._id);
     const documentId = req.params.documentId;
 
     // Find the document in the user's medicalHistory and remove it
@@ -561,6 +562,7 @@ const login = async (req, res) => {
         }
         const token = createToken(user);
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 , sameSite: 'None' ,  secure: true });
+        console.log(token);
         res.status(200).json(user);
     } catch (error) {
         res.status(400).json({ error: error.message });

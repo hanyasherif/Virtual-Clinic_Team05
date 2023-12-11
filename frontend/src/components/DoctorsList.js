@@ -39,7 +39,7 @@ const DoctorsList = () => {
   }, []);
 
   const getSpec = async () => {
-    axios.get(`http://localhost:8000/getSpecs`)
+    axios.get(`http://localhost:8000/getSpecs`, { withCredentials: true})
       .then((res) => {
         const spec = res.data;
         setSpecs(spec);
@@ -48,9 +48,9 @@ const DoctorsList = () => {
 
   const getDoctors = async () => {
     // Make a request to your backend API to fetch doctors based on search criteria
-    axios
-      .get(`http://localhost:8000/viewDoctors`
-      )
+    axios.get(`http://localhost:8000/viewDoctors`, {
+      withCredentials: true
+      } )
       .then((res) => {
         const doctors = res.data;
         setDoctors(doctors);
@@ -66,7 +66,7 @@ const DoctorsList = () => {
           .get(`http://localhost:8000/searchByName`, {
             params: {
               name: searchName,
-            },
+            },withCredentials: true
           })
           .then((res) => {
             const doctors = res.data;
@@ -77,7 +77,7 @@ const DoctorsList = () => {
         axios.get(`http://localhost:8000/searchBySpec`, {
         params: {
             speciality: searchSpeciality,
-        },
+        },withCredentials: true
       }).then((res) => {
         const doctors = res.data;
         setDoctors(doctors);
@@ -89,7 +89,7 @@ const DoctorsList = () => {
         params: {
           name: searchName,
           speciality: searchSpeciality,
-        },
+        },withCredentials: true
       }).then((res) => {
         const doctors = res.data;
         setDoctors(doctors);
@@ -109,7 +109,7 @@ const DoctorsList = () => {
         params: {
           date: selectedDateTime+':00.000+00:00',
           spec: filterSpec,
-        },
+        },withCredentials: true
       }).then((res) => {
         const doctors = res.data;
         setDoctors(doctors);
@@ -121,7 +121,7 @@ const DoctorsList = () => {
   const filterDate = async (date) => {
     console.log("DAATTEEE");
     console.log(date);
-    await axios.get(`http://localhost:8000/filterDate/${date+':00.000+00:00'}`)
+    await axios.get(`http://localhost:8000/filterDate/${date+':00.000+00:00'}`,{withCredentials: true})
     .then((res) => {
       const s = res.data;
       setDoctors(s);
@@ -130,7 +130,7 @@ const DoctorsList = () => {
   };
 
   const filterSpecs = async (spec) => {
-    await axios.get(`http://localhost:8000/filterSpecs/${spec}`)
+    await axios.get(`http://localhost:8000/filterSpecs/${spec}`,{withCredentials: true})
       .then((res) => {
         const s = res.data;
         setDoctors(s);

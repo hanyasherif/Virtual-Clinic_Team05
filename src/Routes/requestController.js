@@ -3,10 +3,36 @@ const requestModel = require('../Models/Request.js');
 const mongoose = require('mongoose');
 const userModel = require('../Models/User');
 const { collection } = require('../Models/User');
-
-
+const fs = require('fs');
+const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt')
+const path = require('path');
 //THIS IS THE TASK CODE TO GUIDE YOUUU
-
+const getUploaded = async (req, res) => {
+   try {
+     console.log("mohab222");
+ 
+     let decodedToken; // Declare the variable outside the try block
+ 
+     try {
+       const token = req.cookies.jwt;
+  
+      console.log('Token:', token);
+       decodedToken = jwt.verify(token, 'supersecret');
+       console.log("ssssss" + decodedToken.user._id);
+     } catch (error) {
+       console.error('Error verifying token:', error.message);
+       return res.status(401).json({ message: 'jwt must be provided' });
+     }
+ 
+     const user = decodedToken.user;
+     const uploadedFiles = user.medicalHistory;
+     res.status(200).json({ fileNames: uploadedFiles });
+   } catch (error) {
+     res.status(500).json({ message: error.message });
+   }
+ };
+ 
 const addRequest = async(req,res) => {
    //add a new user to the database with 
    //Name, Email and Age
@@ -39,7 +65,7 @@ const addRequest = async(req,res) => {
 
 const removeUser = async (req, res) => {
    let username = req.body.username;
-//    let userID = await userModel.find(username = username)
+    //    let userID = await userModel.find(username = username)
     // const user = await userModel.findOne({ username });
 
    try {
@@ -69,15 +95,54 @@ const getARequest = async (req,res) => {
 
 const getRequests = async (req,res) => {
    try{
-      //console.log(req.cookies.jwt.name);
+      const token = req.cookies.jwt;
       const decodedToken = jwt.verify(token, 'supersecret');
+   
       const requests = await requestModel.find();
       res.status(200).json(requests);
    }catch(err){
        res.status(400).json({message: err.message})
    }
 }
+const handleAccept = async (req, res) => {
+   try {
+       const requestId = req.params.requestId; // Assuming the request ID is passed as a parameter
 
+       // Update the request status to 'accepted'
+       const updatedRequest = await requestModel.findByIdAndUpdate(
+           requestId,
+           { status: 'accepted' },
+           { new: true }
+       );
+
+       if (!updatedRequest) {
+           return res.status(404).json({ error: 'Request not found' });
+       }
+       res.status(200).json({ message: 'Request accepted', request: updatedRequest });
+   } catch (err) {
+       res.status(500).json({ error: 'Internal server error' });
+   }
+};
+
+const handleReject = async (req, res) => {
+  try {
+      const requestId = req.params.requestId; // Assuming the request ID is passed as a parameter
+
+      // Update the request status to 'accepted'
+      const updatedRequest = await requestModel.findByIdAndUpdate(
+          requestId,
+          { status: 'rejected' },
+          { new: true }
+      );
+
+      if (!updatedRequest) {
+          return res.status(404).json({ error: 'Request not found' });
+      }
+      res.status(200).json({ message: 'Request rejected', request: updatedRequest });
+  } catch (err) {
+      res.status(500).json({ error: 'Internal server error' });
+   }
+};
 // const id = req.query.id
 //    try{
 //     const blogs =await blogModel.find({author:mongoose.Types.ObjectId(id)}).populate({
@@ -142,4 +207,4 @@ const getRequests = async (req,res) => {
 // 
 // module.exports = {createUser, getUsers, updateUser, deleteUser};
 
-module.exports = {addRequest, getRequests, getARequest}
+module.exports = {addRequest, getRequests, getARequest , getUploaded , handleReject, handleAccept}

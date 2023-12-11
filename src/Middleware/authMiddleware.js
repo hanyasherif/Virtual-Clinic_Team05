@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
-    
+
   // check json web token exists & is verified
   if (token) {
     jwt.verify(token, 'supersecret', (err, decodedToken) => {
@@ -12,7 +12,7 @@ const requireAuth = (req, res, next) => {
         res.status(401).json({message:"You are not logged in."})
         // res.redirect('/login');
       } else {
-        console.log(decodedToken);
+        //console.log(decodedToken);
         next();
       }
     });
