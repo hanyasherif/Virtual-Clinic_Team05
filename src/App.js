@@ -67,7 +67,7 @@ app.get("/getAllUsers", requireAuth, getUsers);
 app.get("/searchByName",searchByName);
 app.get("/searchBySpec",searchBySpec);
 app.get("/searchByNameSpec",searchByNameSpec);
-app.get("/viewDoctors", viewDoctors);
+app.get("/viewDoctors",requireAuth, viewDoctors);
 app.get("/getDoctorInfo", getDoctorInfo);
 app.get("/getSpecs", getSpecs);
 app.get("/filterSpecs/:spec", filterSpecs);
@@ -75,9 +75,10 @@ app.get("/filterDate/:date", filterByDate);
 app.get("/filterDateSpecs", filterDateSpecs);
 app.get("/logout", logout);
 app.get("/viewAppointmentsOfDoctor/:docID", viewAppointmentsOfDoctor);
-app.post( '/upload-document/:id', upload.single('document'), uploadMedicalDocument );
-app.delete('/remove-document/:id/:documentId',removeMedicalDocument);
-app.get('/getUploaded/:id', getUploaded);
+app.post( '/upload-document', upload.single('document'), requireAuth, uploadMedicalDocument );
+app.delete('/remove-document/:documentId', requireAuth, removeMedicalDocument);
+app.get('/getUploaded',requireAuth, getUploaded);
+app.get("/serveFile/:id/:filePath/:fileName",requireAuth, servefiles);
 
 // #Routing to userController here
 ///mohab
@@ -94,7 +95,6 @@ app.get("/filterPrescription", filterPrescriptions);
 app.get("/getPrescription", getPrescription);
 app.post("/login", login);
 app.get("/getPatientById", requireAuth,findPatById);
-app.get("/serveFiles/:id/:filePath/:fileName", servefiles);
 ////wael
 
 app.post("/addRequest", addRequest);

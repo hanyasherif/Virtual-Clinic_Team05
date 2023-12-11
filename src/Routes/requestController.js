@@ -2,6 +2,7 @@
 const requestModel = require('../Models/Request.js');
 const mongoose = require('mongoose');
 const userModel = require('../Models/User');
+const { collection } = require('../Models/User');
 
 
 //THIS IS THE TASK CODE TO GUIDE YOUUU
@@ -68,8 +69,10 @@ const getARequest = async (req,res) => {
 
 const getRequests = async (req,res) => {
    try{
-       const requests = await requestModel.find();
-       res.status(200).json(requests);
+      //console.log(req.cookies.jwt.name);
+      const decodedToken = jwt.verify(token, 'supersecret');
+      const requests = await requestModel.find();
+      res.status(200).json(requests);
    }catch(err){
        res.status(400).json({message: err.message})
    }

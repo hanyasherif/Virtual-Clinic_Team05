@@ -264,7 +264,8 @@ const viewAppointmentsOfDoctor = async(req,res) => {
 const uploadMedicalDocument = async (req, res) => {
   try {
 
-    const user = await userModel.findById(req.params.id);
+    const decodedToken = jwt.verify(token, 'supersecret');
+    const user = decodedToken.user;
 
     const { originalname, path } = req.file;
 
@@ -280,7 +281,9 @@ const uploadMedicalDocument = async (req, res) => {
 
 const getUploaded = async (req, res) => {
   try {
-    const user = await userModel.findById(req.params.id);
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, 'supersecret');
+    const user = decodedToken.user;
     const uploadedFiles = user.medicalHistory
     res.status(200).json({fileNames: uploadedFiles});
   } catch (error) {
@@ -290,7 +293,8 @@ const getUploaded = async (req, res) => {
 
 const removeMedicalDocument = async (req, res) => {
   try {
-    const user = await userModel.findById(req.params.id);
+    const decodedToken = jwt.verify(token, 'supersecret');
+    const user = decodedToken.user;
     const documentId = req.params.documentId;
 
     // Find the document in the user's medicalHistory and remove it
@@ -534,8 +538,8 @@ catch(err){
 }
 
 const maxAge = 3 * 24 * 60 * 60;
-const createToken = (name) => {
-    return jwt.sign({ name }, 'supersecret', {
+const createToken = (user) => {
+    return jwt.sign({ user }, 'supersecret', {
         expiresIn: maxAge
     });
 };
@@ -555,7 +559,7 @@ const login = async (req, res) => {
         if (!isPasswordValid) {
             throw new Error('Invalid password');
         }
-        const token = createToken(user.name);
+        const token = createToken(user);
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 , sameSite: 'None' ,  secure: true });
         res.status(200).json(user);
     } catch (error) {

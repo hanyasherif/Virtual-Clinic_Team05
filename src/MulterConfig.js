@@ -5,9 +5,9 @@ const fs = require('fs');
 // Set storage engine
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    //const username = req.user.Username; // 
+    const username = req.user.username; // 
     //const dest = `Uploads/medical-history/${username}`;
-    const dest = `Uploads/medical-history/${'hanyasherif'}`;
+    const dest = `Uploads/medical-history/${username}`;
     
     // Check if the folder exists, create it if not
     if (!fs.existsSync(dest)) {

@@ -42,7 +42,7 @@ function UploadMedicalHistory() {
 
   const getUploadedFiles = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/getUploaded/${id}`);
+      const response = await fetch(`http://localhost:8000/getUploaded`);
       if (!response.ok) {
         throw new Error('Failed to fetch uploaded files');
       }
@@ -69,7 +69,7 @@ function UploadMedicalHistory() {
       const formData = new FormData();
       formData.append('document', selectedFile);
   
-      await fetch(`http://localhost:8000/upload-document/${id}`, {
+      await fetch(`http://localhost:8000/upload-document`, {
         method: "POST",
         body: formData,
       });
@@ -133,7 +133,7 @@ function UploadMedicalHistory() {
     try {
       const encodedFilePath = encodeURIComponent(filePath);
       const encodedFileName = encodeURIComponent(fileName);
-      const response = await fetch(`http://localhost:8000/serveFile/${id}/${encodedFilePath}/${encodedFileName}`);
+      const response = await fetch(`http://localhost:8000/serveFiles/${id}/${encodedFilePath}/${encodedFileName}`);
       const fileBlob = await response.blob();
       // Use FileSaver or any other method to save the blob as a file
     } catch (error) {
