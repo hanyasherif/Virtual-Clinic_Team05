@@ -114,36 +114,33 @@ function UploadMedicalHistory() {
     }
   };
 
-  const viewDocument = async (filePath) => {
-    try {
-      const fileEndpoint = `http://localhost:8000/serve-file?filePath=${encodeURIComponent(filePath)}`;
+  const viewDocument = (filePath, fileName) => {
+    const fileExtension = fileName.split('.').pop().toLowerCase();
   
-      const response = await fetch(fileEndpoint);
-  
-      if (!response.ok) {
-        throw new Error('Failed to fetch the document.');
-      }
-  
-      const fileBlob = await response.blob();
-      const fileExtension = filePath.split('.').pop().toLowerCase();
-      let contentType = 'application/octet-stream';
-  
-      if (fileExtension === 'pdf') {
-        contentType = 'application/pdf';
-      } else if (['jpeg', 'jpg', 'png'].includes(fileExtension)) {
-        contentType = `image/${fileExtension}`;
-      }
-  
-      saveAs(fileBlob, `document.${fileExtension}`, { type: contentType });
-    } catch (error) {
-      console.error('Error opening the document:', error);
-      toast.error('Failed to open the document. Please try again.', {
-        position: 'top-right',
-        autoClose: 3000,
-      });
+    if (['jpg', 'jpeg', 'png'].includes(fileExtension)) {
+      // For images: Open in a new tab
+      window.open(filePath, '_blank');
+    } else if (fileExtension === 'pdf') {
+      fetchAndDownloadPDF(filePath, fileName);
+    } else {
+      // Handle other file types or display a message for unsupported formats
+      console.log('File format not supported for preview/download.');
+      // Display a message or handle differently for unsupported file types
     }
   };
-
+  
+  const fetchAndDownloadPDF = async (filePath, fileName) => {
+    try {
+      const encodedFilePath = encodeURIComponent(filePath);
+      const encodedFileName = encodeURIComponent(fileName);
+      const response = await fetch(`http://localhost:8000/serveFile/${id}/${encodedFilePath}/${encodedFileName}`);
+      const fileBlob = await response.blob();
+      // Use FileSaver or any other method to save the blob as a file
+    } catch (error) {
+      console.error('Error fetching file:', error);
+    }
+  };
+  
   return (
     <div className="UploadMedicalHistory">
     <Header/>
@@ -181,7 +178,7 @@ function UploadMedicalHistory() {
                     <Button variant="contained" onClick={() => removeDocument(file._id)}>Remove</Button>
                   </TableCell>
                   <TableCell align="center">
-                    <Button variant="contained" onClick={() => viewDocument(file._id)}>View</Button>
+                    <Button variant="contained" onClick={() => viewDocument(file.path, file.name)}>View</Button>
                   </TableCell>
                 </TableRow>
               ))

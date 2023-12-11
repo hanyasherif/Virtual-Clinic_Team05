@@ -10,6 +10,7 @@ const AppointmentModel = require('../Models/Appointment.js');
 const fs = require('fs');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
+const path = require('path');
  
 
 //////////////////////HANYA////////////////////////////////////////////
@@ -311,6 +312,33 @@ const removeMedicalDocument = async (req, res) => {
   }
 }
 
+const servefiles = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const fullPath = decodeURIComponent(req.params.filePath);
+    // console.log(filePath);
+    // Assuming `filePath` contains both the path and filename
+    const oldpath = path.join(__dirname, fullPath);
+    const filePath = oldpath.replace(/\\/g, '/');
+    console.log(filePath);
+    // Check if the file exists
+    if (fs.existsSync(fullPath)) {
+      // Set the content-disposition header to trigger a download
+      res.setHeader('Content-Disposition', `attachment; filename=${path.basename(filePath)}`);
+      
+      // Read the file and send it as a response
+      const fileStream = fs.createReadStream(fullPath);
+      fileStream.pipe(res);
+    } else {
+      // If the file doesn't exist, send a 404 response
+      res.status(404).json({ error: 'File not found' });
+    }
+  } catch (error) {
+    console.error('Error serving file:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 //////////////////////////////////MOHAB//////////////////////////////////
 ////// Register Patient 
 
@@ -338,9 +366,6 @@ const registerPatient=async (req,res)=>
             emergencyContactFullname:  req.body.emergencyContactFullname,  emergencyContactMobileNumber: req.body.emergencyContactMobileNumber})
             await patient.save();
 
-            const token = createToken(patient.name);
-
-            res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
             res.status(200).json({message: "Patient Registered Succesfully", patient});
             }
             catch (err) {
@@ -360,7 +385,6 @@ const findPatientByUsername= async(username)=>
         else
         {
             return true;
-
         }
     }
     catch (err) {
@@ -560,4 +584,4 @@ catch (err) {
 module.exports = { login, addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
    filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor, uploadMedicalDocument, removeMedicalDocument
-  , getUploaded, findPatById}   
+  , getUploaded, findPatById, servefiles}   

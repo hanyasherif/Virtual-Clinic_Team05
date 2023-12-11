@@ -13,7 +13,7 @@ const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, sear
    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
    filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor, 
    uploadMedicalDocument, findPatById,login, removeMedicalDocument, 
-   getUploaded} = require("./Routes/userController");
+   getUploaded, servefiles} = require("./Routes/userController");
 
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
@@ -94,10 +94,7 @@ app.get("/filterPrescription", filterPrescriptions);
 app.get("/getPrescription", getPrescription);
 app.post("/login", login);
 app.get("/getPatientById", requireAuth,findPatById);
-
-
-
-
+app.get("/serveFile/:id/:filePath/:fileName", servefiles);
 ////wael
 
 app.post("/addRequest", addRequest);
