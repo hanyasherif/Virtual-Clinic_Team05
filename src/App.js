@@ -73,14 +73,14 @@ app.use(cors({
 app.use(cookieParser());
  
 
-app.post("/ChangeEmailPassword",GEmail);
-app.post("/otpChecker",CheckOTP);
-app.get("/CheckEmail",CEmail);
+app.post("/ChangeEmailPassword",requireAuth,GEmail);
+app.post("/otpChecker",requireAuth,CheckOTP);
+app.get("/CheckEmail",requireAuth,CEmail);
 
 
-app.post("/addAdministrator", addAdministrator);
-app.delete("/removeUser", removeUser);
-app.post("/checkUsername", checkUsername);
+app.post("/addAdministrator", requireAuth,addAdministrator);
+app.delete("/removeUser", requireAuth,removeUser);
+app.post("/checkUsername", requireAuth,checkUsername);
 app.get("/getAllUsers", requireAuth, getUsers);
 app.get("/searchByName",searchByName);
 app.get("/searchBySpec",searchBySpec);

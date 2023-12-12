@@ -27,7 +27,7 @@ const RemoveDoctorPatientAdmin = () => {
     const [users,setUsers] = useState([]);
     
     const getUsers =  async () => {
-         await axios.get('http://localhost:8000/getAllUsers').then((res) => { 
+         await axios.get('http://localhost:8000/getAllUsers',{withCredentials:true}).then((res) => { 
             const usersList = res.data
             console.log(users)
             setUsers(usersList)
@@ -44,7 +44,7 @@ const RemoveDoctorPatientAdmin = () => {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
-            },
+            },credentials:'include'
           });
       
           if (response.ok) {
