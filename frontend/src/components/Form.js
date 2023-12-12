@@ -30,7 +30,7 @@ const Form = () => {
 
     if (!response.ok) {
       setError(json.error)
-      
+      //alert(json.error.message);
     }
     if (response.ok) {
       setError(null)

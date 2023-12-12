@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 
-const requireAuth = (req, res, next) => {
+const requireAuth =(role) =>{return (req, res, next) => {
   const token = req.cookies.jwt;
-
+  console.log(role);
   // check json web token exists & is verified
   if (token) {
     jwt.verify(token, 'supersecret', (err, decodedToken) => {
@@ -12,13 +12,24 @@ const requireAuth = (req, res, next) => {
         res.status(401).json({message:"You are not logged in."})
         // res.redirect('/login');
       } else {
+        console.log(decodedToken.user.type);
+        if(role==decodedToken.user.type || role=='ALL')
+        {
+          console.log("yes")
+          next();
+        }
+        else{
+          console.log("no")
+          res.status(401).json({message:"You are not Authorized to access this webpage."})
+        }
         //console.log(decodedToken);
-        next();
+        
       }
     });
   } else {
     res.status(401).json({message:"You are not logged in."})
   }
+}
 };
 
 

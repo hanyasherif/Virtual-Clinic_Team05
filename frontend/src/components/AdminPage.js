@@ -57,6 +57,7 @@ function PatientPage() {
         <Button onClick={() => window.location.href=`http://localhost:3000/admin`}>Add Packages and Delete</Button>
         <Button onClick={() => window.location.href=`http://localhost:3000/admin/update`}>Update PackageS</Button>
         <Button onClick={() => window.location.href=`http://localhost:3000/CreateContract`}>Create Contract</Button>
+        <Button onClick={() => window.location.href=`http://localhost:3000/ChangeMyPassword`}>ChangeMyPassword</Button>
       </div>
     </div>
   );

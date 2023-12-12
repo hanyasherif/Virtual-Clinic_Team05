@@ -48,7 +48,8 @@ import ViewHealthRecords from './components/ViewHealthRecords';
 import CreateContract from './components/CreateContract';
 import ViewAcceptContract from './components/ViewAcceptContract';
 import AddAppointment from './components/AddAppointments';
- //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
+import ChangePassword from './components/ChangePassword'; 
+//const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
   return (
     <div className="App">
@@ -138,7 +139,8 @@ function App() {
               element={<AddHealthRecord/>}/>
               <Route path="/Schedule"
               element={<ScheduleFollowUp/>}/>
-
+               <Route path="/ChangeMyPassword"
+              element={<ChangePassword/>}/>
               </Routes>
 
       </div>

@@ -20,7 +20,7 @@ const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, sear
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest,  handleReject, handleAccept } = require("./Routes/requestController");
-const{viewPackages , subscribePackage , viewMyPackage , cancelPackage , CheckOTP , CEmail , GEmail  } = require("./Routes/PatientController");
+const{viewPackages , subscribePackage , viewMyPackage , cancelPackage , CheckOTP , CEmail , GEmail ,changePassword } = require("./Routes/PatientController");
 // const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
 //    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getUserById , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor,
 //    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor} = require("./Routes/userController");
@@ -73,38 +73,38 @@ app.use(cors({
 app.use(cookieParser());
  
 
-app.post("/ChangeEmailPassword",requireAuth,GEmail);
-app.post("/otpChecker",requireAuth,CheckOTP);
-app.get("/CheckEmail",requireAuth,CEmail);
+app.post("/ChangeEmailPassword",GEmail);
+app.post("/otpChecker",CheckOTP);
+app.get("/CheckEmail",CEmail);
+app.post("/ChangePassword",requireAuth("ALL"),changePassword);
 
-
-app.post("/addAdministrator", requireAuth,addAdministrator);
-app.delete("/removeUser", requireAuth,removeUser);
+app.post("/addAdministrator", requireAuth("Administrator"),addAdministrator);
+app.delete("/removeUser", requireAuth("Administrator"),removeUser);
 app.post("/checkUsername", requireAuth,checkUsername);
-app.get("/getAllUsers", requireAuth, getUsers);
-app.get("/searchByName",searchByName);
-app.get("/searchBySpec",searchBySpec);
-app.get("/searchByNameSpec",searchByNameSpec);
-app.get("/viewDoctors",requireAuth, viewDoctors);
-app.get("/getDoctorInfo", getDoctorInfo);
-app.get("/getSpecs", getSpecs);
-app.get("/filterSpecs/:spec", filterSpecs);
-app.get("/filterDate/:date", filterByDate);
-app.get("/filterDateSpecs", filterDateSpecs);
-app.put("/logout", logout);
+app.get("/getAllUsers", requireAuth("Administrator"), getUsers);
+app.get("/searchByName",requireAuth("Patient"),searchByName);
+app.get("/searchBySpec",requireAuth("Patient"),searchBySpec);
+app.get("/searchByNameSpec",requireAuth("Patient"),searchByNameSpec);
+app.get("/viewDoctors",requireAuth("Patient"), viewDoctors);
+app.get("/getDoctorInfo",requireAuth("Patient"), getDoctorInfo);
+app.get("/getSpecs",requireAuth("Patient"), getSpecs);
+app.get("/filterSpecs/:spec",requireAuth("Patient"), filterSpecs);
+app.get("/filterDate/:date",requireAuth("Patient"), filterByDate);
+app.get("/filterDateSpecs",requireAuth("Patient"), filterDateSpecs);
+app.put("/logout", requireAuth("ALL"),logout);
 app.get("/viewAppointmentsOfDoctor/:docID", viewAppointmentsOfDoctor);
-app.post( '/upload-document', upload.single('document'), requireAuth,uploadMedicalDocument );
-app.delete('/remove-document/:documentId',requireAuth,  removeMedicalDocument);
-app.get('/getUploaded', requireAuth,getUploaded);
+app.post( '/upload-document', upload.single('document'), requireAuth("Patient"),uploadMedicalDocument );
+app.delete('/remove-document/:documentId',requireAuth("Patient"),  removeMedicalDocument);
+app.get('/getUploaded', requireAuth("Patient"),getUploaded);
 app.get("/serveFile/:id/:filePath/:fileName", servefiles);
 
 // #Routing to userController here
 ///mohab
 
-app.post("/admin/addPackage", adminAddPackage);
-app.delete("/admin/deletePackage", adminDeletePackage);
-app.put("/admin/updatePackage", adminUpdatePackage);
-app.delete("/deleteUser/:username", deleteUser);
+app.post("/admin/addPackage", requireAuth("Administrator"), adminAddPackage);
+app.delete("/admin/deletePackage", requireAuth("Administrator"), adminDeletePackage);
+app.put("/admin/updatePackage", requireAuth("Administrator"), adminUpdatePackage);
+app.delete("/deleteUser/:username", requireAuth("Administrator"), deleteUser);
 app.post("/createPatient",registerPatient);
 app.get("/packs", getPacakges);
 app.post("/addPrescription",createPres);
@@ -115,13 +115,13 @@ app.post("/login", login);
 app.get("/getPatientById",findPatById);
 ////wael
 
-app.post("/addRequest", addRequest);
-app.get("/getRequests", requireAuth, getRequests);
+app.post("/addRequest", requireAuth("Doctor"), addRequest);
+app.get("/getRequests", requireAuth("Administrator"), getRequests);
 app.get("/getARequest", getARequest);
 
 //////////////////////////////////aseel/////////////////////////////
-app.post("/addFamilyMember",addFamilyMember); //no /:id(username) 3shan ana 7atah alreadyf body((or not?))
-app.get("/viewRegFamilyMembers",viewRegFamilyMembers);
+app.post("/addFamilyMember",requireAuth("Patient"),addFamilyMember); //no /:id(username) 3shan ana 7atah alreadyf body((or not?))
+app.get("/viewRegFamilyMembers",requireAuth("Patient"),viewRegFamilyMembers);
 app.get("/viewAppointments",requireAuth,viewAppointments);
 app.get("/filterAppointmentsDate/:date",filterAppointmentsDate); 
 app.get("/filterAppointmentsStatus/:status",filterAppointmentsStatus);
@@ -129,8 +129,8 @@ app.get("/getUserById/:id", getUserById);
 app.get("/getUserByTokenId", getUserByTokenId);
 app.post("/addAppointment",addAppointment);
 app.get("/getAppointmentInfo",getAppointmentInfo) //query in frontenddd
-app.get("/getWalletInfo",getWalletInfo);
-app.get("/getFamilyMemberData",getFamilyMemberData);
+app.get("/getWalletInfo",requireAuth("Patient"),getWalletInfo);
+app.get("/getFamilyMemberData",requireAuth("Patient"),getFamilyMemberData);
 app.post('/modifyAppointment', modifyAppointment);
 app.get("/getUserById/:id", getUserById);
 app.get("/getUserByEmail/:email",getUserByEmail);
@@ -140,10 +140,10 @@ app.post("/modifyWallet", modifyWallet);
 app.post("/modifyWalletDoctor", modifyWalletDoctor);
 
 
-app.post("/createContract", createContract);
-app.put("/acceptContract", acceptContract);
-app.put("/rejectContract", rejectContract);
-app.get("/getContract", getContract);
+app.post("/createContract", requireAuth("Administrator"), createContract);
+app.put("/acceptContract", requireAuth("Doctor"), acceptContract);
+app.put("/rejectContract", requireAuth("Doctor"), rejectContract);
+app.get("/getContract", requireAuth("Doctor"), getContract);
 
 app.post("/createAppointment",createAppointment);
 
@@ -156,16 +156,16 @@ app.get("/SearchP",SearchPatient);//Searchbyname
 app.post("/Edit",EditMyInfo);
 app.get("/UpcomingAppoint",filteredAppointments);
 app.get("/GetFullData",GetPFullData);
-app.put("/handleAccept/:requestId", handleAccept);
-app.put("/handleReject/:requestId", handleReject);
+app.put("/handleAccept/:requestId", requireAuth("Administrator"), handleAccept);
+app.put("/handleReject/:requestId", requireAuth("Administrator"), handleReject);
 
 
-app.get("/viewPackages",requireAuth,viewPackages);
-app.post("/subPackage", requireAuth,subscribePackage);
-app.get("/viewMyPackage",requireAuth,viewMyPackage);
-app.put("/cancelPackage",requireAuth,cancelPackage);
+app.get("/viewPackages",requireAuth("Patient"),viewPackages);
+app.post("/subPackage",requireAuth("Patient"),subscribePackage);
+app.get("/viewMyPackage",requireAuth("Patient"),viewMyPackage);
+app.put("/cancelPackage",requireAuth("Patient"),cancelPackage);
 
 
 app.post("/AddNewHR",AddNewHR);
 app.get("/ViewUpdatedHRforD",ViewUpdatedHRforD);
-app.post("/scheduleFollowUp",scheduleFollowUp);
+app.post("/scheduleFollowUp", requireAuth("Doctor"),scheduleFollowUp);

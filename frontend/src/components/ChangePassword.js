@@ -2,33 +2,23 @@ import React, { useState } from 'react';
 import axios from 'axios';
 let email='';
 
-const OtpVerification = () => {
+const ChangePassword = () => {
   const [otp, setOtp] = useState('');
   const [verified, setVerified] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
   const handleOtpChange = (e) => {
     setOtp(e.target.value);
   };
 
-  const handleVerifyOtp = async() => {
-    // Replace this logic with your actual OTP verification logic
-    try {
-      const res = await axios.post(`http://localhost:8000/otpChecker?numO=${otp}`);
-      email=res.data.Useremail;
-      if (email != null) {
-        setVerified(true);
-      } else {  
-        alert('Invalid OTP');
-      }
-    } catch (error) {
-        alert('invalid email', error.message);
-      }
-  };
+  
   const handleNewPasswordChange = (e) => {
     setNewPassword(e.target.value);
   };
-
+  const handleCurrentPasswordChange = (e) => {
+    setCurrentPassword(e.target.value);
+  };
   const handleConfirmedPasswordChange = (e) => {
     setConfirmedPassword(e.target.value);
   };
@@ -36,9 +26,9 @@ const OtpVerification = () => {
   const handleSetNewPassword = async() => {
     if (newPassword.trim() !== '' &&  newPassword === confirmedPassword ) {
       try {
-        const res = await axios.post(`http://localhost:8000/ChangeEmailPassword`, {
-        Useremail: email,
-        password: newPassword});
+        const res = await axios.post(`http://localhost:8000/ChangePassword`, {
+        currentPassword:currentPassword,
+        password: newPassword},{withCredentials:true});
         alert("Password Changed");
         window.location.href='/';
       } catch (error) {
@@ -51,14 +41,15 @@ const OtpVerification = () => {
 
   return (
     <div>
-      {!verified ? (
+         
         <div>
-          <h2>OTP Verification</h2>
-          <input type="text" value={otp} onChange={handleOtpChange} placeholder="Enter OTP" />
-          <button onClick={handleVerifyOtp}>Verify OTP</button>
-        </div>
-      ) : (
-        <div>
+        <h2>Old Password</h2>
+          <input
+            type="password"
+            value={currentPassword}
+            onChange={handleCurrentPasswordChange}
+            placeholder="Enter Current Password"
+          />
           <h2>Set New Password</h2>
           <input
             type="password"
@@ -74,9 +65,9 @@ const OtpVerification = () => {
           />
           <button onClick={handleSetNewPassword}>Set New Password</button>
         </div>
-      )}
+      
     </div>
   );
 };
 
-export default OtpVerification;
+export default ChangePassword;

@@ -175,6 +175,10 @@ const GEmail = async (req, res) => {//Changing password
   try {
     let newpassword=req.body.password
     let userEmail = req.body.Useremail;
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+          if (!passwordRegex.test(req.body.password)) {
+               return res.status(500).json({ error: 'New password must have at least 8 characters, including 1 capital letter and 1 number' });
+          }
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(req.body.password, salt); 
     lowercaseUserEmail=userEmail.toLowerCase();
@@ -187,6 +191,7 @@ const GEmail = async (req, res) => {//Changing password
     res.status(500).json({ message: err.message });
   }
 };
+
 
 
 
@@ -258,5 +263,33 @@ throw err;
 };
 
 
+const changePassword = async (req, res) => {//Changing password
+  try {
+    let newpassword=req.body.password
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, 'supersecret');
+    const patId= decodedToken.user._id
+    let currentPassword=req.body.currentPassword;
+    const isPasswordValid = await bcrypt.compare(currentPassword, decodedToken.user.password);
+      if (!isPasswordValid) {
+        return res.status(400).json({ error: 'Current password is incorrect' });
+      }
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+          if (!passwordRegex.test(req.body.password)) {
+               return res.status(500).json({ error: 'New password must have at least 8 characters, including 1 capital letter and 1 number' });
+          }
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(req.body.password, salt); 
+   
+    let newuser = await userModel.findOneAndUpdate(
+      { _id: patId},
+      { $set: { password: hashedPassword } }
+    );
+    res.status(200).json({ message: "Password Changed"});
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
   
-module.exports = {viewPackages ,subscribePackage , viewMyPackage ,cancelPackage  ,GEmail ,CEmail,CheckOTP}; 
+module.exports = {viewPackages ,subscribePackage , viewMyPackage ,cancelPackage  ,GEmail ,CEmail,CheckOTP,changePassword}; 

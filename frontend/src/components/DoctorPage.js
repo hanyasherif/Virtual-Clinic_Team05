@@ -62,6 +62,7 @@ function PatientPage() {
       <Button onClick={() => window.location.href=`http://localhost:3000/ViewHealthRecords`}>ViewHealthRecords</Button>
       <Button onClick={() => window.location.href=`http://localhost:3000/AddNewHR`}>AddNewHR</Button>
       <Button onClick={() => window.location.href=`http://localhost:3000/Schedule`}>ScheduleFollowUp</Button>
+      <Button onClick={() => window.location.href=`http://localhost:3000/ChangeMyPassword`}>ChangeMyPassword</Button>
       
    
       </div>
