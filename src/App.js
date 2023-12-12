@@ -19,7 +19,7 @@ const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescrip
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest,  handleReject, handleAccept } = require("./Routes/requestController");
 const{addAppointment} = require("./Routes/appointmentController");
-const{viewPackages , subscribePackage , viewMyPackage , cancelPackage} = require("./Routes/PatientController");
+const{viewPackages , subscribePackage , viewMyPackage , cancelPackage , CheckOTP , CEmail , GEmail  } = require("./Routes/PatientController");
 const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData}=require("./Routes/DrController");
 const MongoURI = process.env.MONGO_URI ;
 
@@ -64,6 +64,12 @@ app.use(cors({
  credentials: true, //included credentials as true
 }));
 app.use(cookieParser());
+ 
+
+app.post("/ChangeEmailPassword",GEmail);
+app.post("/otpChecker",CheckOTP);
+app.get("/CheckEmail",CEmail);
+
 
 app.post("/addAdministrator", addAdministrator);
 app.delete("/removeUser", removeUser);
@@ -95,7 +101,7 @@ app.delete("/deleteUser/:username", deleteUser);
 app.post("/createPatient",registerPatient);
 app.get("/packs", getPacakges);
 app.post("/addPrescription",createPres);
-app.get("/viewPrescription/:username", viewPatientPrescriptions);
+app.get("/viewPrescription/:username", viewPatientPrescriptions)
 app.get("/filterPrescription", filterPrescriptions);
 app.get("/getPrescription", getPrescription);
 app.post("/login", login);
@@ -129,7 +135,7 @@ app.put("/handleAccept/:requestId", handleAccept);
 app.put("/handleReject/:requestId", handleReject);
 
 
-app.get("/viewPackages",viewPackages);
-app.post("/subPackage", subscribePackage);
-app.get("/viewMyPackage",viewMyPackage);
-app.put("/cancelPackage",cancelPackage);
+app.get("/viewPackages",requireAuth,viewPackages);
+app.post("/subPackage", requireAuth,subscribePackage);
+app.get("/viewMyPackage",requireAuth,viewMyPackage);
+app.put("/cancelPackage",requireAuth,cancelPackage);

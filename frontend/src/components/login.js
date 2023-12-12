@@ -82,6 +82,7 @@ const Login = () => {
   <button className="login-button" onClick={handleLogin}>
     Login
   </button>
+  <button onClick={() => window.location.href=`http://localhost:3000/reset-password-email`}>Forgot Password?</button>
   <p>
     Not signed up yet? <a href="/register">Sign Up</a>
   </p>

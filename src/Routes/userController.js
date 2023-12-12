@@ -362,7 +362,12 @@ const registerPatient=async (req,res)=>
                res.status(404).json({ error: 'Username already exists.' });
                return;
             }  
-           
+            const patientEmail= await userModel.findOne({email: req.body.email});
+            if(patientEmail)
+            {
+              res.status(404).json({ error: 'Email already exists.' });
+               return;
+            }
             const salt = await bcrypt.genSalt();
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
 

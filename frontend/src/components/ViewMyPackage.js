@@ -10,7 +10,7 @@ const ViewMyPackage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/viewMyPackage?patId='+patId);
+        const response = await axios.get("/viewMyPackage",{withCredentials:true});
         setPackageData(response.data);
       } catch (error) {
         console.error('Error fetching package data:', error.message);
@@ -24,7 +24,7 @@ const ViewMyPackage = () => {
 
   const handleCancel = async () => {
     try {
-      await axios.put('/cancelPackage?patId='+patId); // Adjust the URL as needed
+      await axios.put("/cancelPackage" ,{withCredentials:true}); // Adjust the URL as needed
       console.log('Package cancelled successfully');
       const response = await axios.get('/viewMyPackage?patId='+patId);
         setPackageData(response.data);

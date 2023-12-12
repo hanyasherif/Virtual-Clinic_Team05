@@ -37,6 +37,8 @@ import DoctorPage from './components/DoctorPage'
 import Patient from './components/Patient'
 import ViewPackages from './components/ViewPackages';
 import ViewMyPackage from './components/ViewMyPackage';
+import OTPSender from './components/OTPSender';
+import OtpVerification from './components/OtpVerification';
 function App() {
   return (
     <div className="App">
@@ -105,6 +107,8 @@ function App() {
               element={<ViewPackages/>}/>
                <Route path="/viewMyPackage"
               element={<ViewMyPackage/>}/>
+              <Route path="/reset-password-email" element = {<OTPSender />}/>
+               <Route path="/ChangePassword" element = {<OtpVerification/>}/>
               </Routes>
       </div>
       {/* <UsernameTextBox /> Include TextBoxExample component here */}

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Button } from '@mui/material';
 import './LoginForm.css'; // Import your CSS file for styling
 import Header from "./Header";
-
+import Dropdown from './Dropdown';
 
 function PatientPage() {
     const [showMore, setShowMore] = useState(false);
@@ -57,6 +57,7 @@ function PatientPage() {
         <Button onClick={() => window.location.href='http://localhost:3000/patient/prescrptions'}>View Prescriptions</Button>
         <Button onClick={() => window.location.href='http://localhost:3000/FilterAppointmentsPatient'}>Filter Appointments</Button>
         <Button onClick={() => window.location.href='http://localhost:3000/uploadMedicalHistory'}>Upload Medical History</Button>
+        <Dropdown/>
       </div>
     </div>
   );
