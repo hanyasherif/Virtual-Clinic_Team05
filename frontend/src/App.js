@@ -6,7 +6,7 @@ import { useState } from 'react';
 //Pages & Components
 // import Home from './pages/Home'
 // import Navbar from './components/Navbar'
-import './App.css';
+//import './App.css';
 import AddAdminForm from './components/AddAdminForm'
 import RemoveDoctorPatientAdmin from './components/RemoveDoctorPatientAdmin'
 import DoctorsList from './components/DoctorsList'
@@ -34,6 +34,9 @@ import PatientPage from './components/PatientPage';
 import AdminPage from './components/AdminPage'
 import DoctorPage from './components/DoctorPage'
 
+import Patient from './components/Patient'
+import ViewPackages from './components/ViewPackages';
+import ViewMyPackage from './components/ViewMyPackage';
 function App() {
   return (
     <div className="App">
@@ -98,6 +101,10 @@ function App() {
               element={<Login/>}/> */}
                <Route path="/patient"
               element={<PatientPage/>}/>
+               <Route path="/viewPackages"
+              element={<ViewPackages/>}/>
+               <Route path="/viewMyPackage"
+              element={<ViewMyPackage/>}/>
               </Routes>
       </div>
       {/* <UsernameTextBox /> Include TextBoxExample component here */}

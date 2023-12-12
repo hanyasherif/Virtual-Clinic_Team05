@@ -57,6 +57,15 @@ const userSchema = new Schema({
      package: {
         type: String
       },
+      startDate: {
+        type: Date
+      },
+      endDate: {
+        type: Date
+      },
+      packageStatus: {
+        type: String
+      },
       HealthRecord:{
         type:[String]
       },
