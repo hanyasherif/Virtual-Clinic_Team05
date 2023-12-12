@@ -3,6 +3,7 @@ const userModel = require('../Models/User.js');
 const { default: mongoose } = require('mongoose');
 const familyMemberModel = require('../Models/FamilyMember.js');
 const appointmentsModel = require('../Models/Appointment.js');
+const contractModel = require('../Models/EmploymentContract.js');
 
 //THIS IS THE TASK CODE TO GUIDE YOUUU
 
@@ -32,7 +33,7 @@ const addAppointment = async(req,res)=>{
    let date = req.body.date;
    let status = req.body.status;
    let patient = req.body.patient;
-   let price = req.body.price
+   let price = doctor.hourlyRate;
    try{
        const newApp = {date: date, doctor: doctor, patient: patient,status:status, price: price}
        const Appo = await appointmentsModel.create(newApp);
@@ -89,6 +90,30 @@ const modifyAppointment = async (req, res) => {
    }
  };
  
-
+ const createAppointment = async (req, res) => {
+  const doctorId = req.params.id;
+  const contract = await contractModel.findOne({doctorId:doctorId})
+  const doctor = await userModel.findById(doctorId);
+  if(!contract || contract.status === "REJECTED" || contract.status === 'PENDING'){
+     
+      res.status(200).json({message:"You can't add appointment, your contract is not accepted"})
+      return;
+  }
  
-module.exports = {addAppointment,getAppointmentInfo,modifyAppointment}
+ 
+
+  let date = req.body.date;
+  let price = doctor.hourlyRate + contract.markup;
+  try{
+    const newApp = {date: date, doctor: doctorId,  price: price}
+    const Appo = await appointmentsModel.create(newApp);
+    await Appo.save();
+        res.status(200).json({message: "Appointment created successfully"})
+
+}
+catch(err){
+          res.json({message: err.message})}
+
+};
+ 
+module.exports = {addAppointment,createAppointment,getAppointmentInfo,modifyAppointment}

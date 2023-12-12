@@ -19,7 +19,7 @@ const appointmentSchema = new Schema({
     },
     status: {
         type: String,
-        required: true
+        default:"free"
     },
     price: {
         type: Number,

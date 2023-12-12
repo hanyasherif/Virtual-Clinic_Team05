@@ -514,7 +514,7 @@ const modifyWallet = async (req, res) => {
 
     // Check if the appointment exists
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "patient not found" });
     }
 
     // Update the appointment with the new patientId
@@ -524,12 +524,36 @@ const modifyWallet = async (req, res) => {
     // Save the modified appointment
     await user.save();
 
-    res.status(200).json({ message: "user wallet updated successfully", user });
+    res.status(200).json({ message: "patient wallet updated successfully", user });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
+const modifyWalletDoctor = async (req, res) => {
+  try {
+    const price = req.body.price;
+    const doctorId = req.body.id;
 
+    // Fetch the specific appointment using the appointmentId
+    const user = await userModel.findById(doctorId);
+
+    // Check if the appointment exists
+    if (!user) {
+      return res.status(404).json({ message: "doctor not found" });
+    }
+
+    // Update the appointment with the new patientId
+    user.walletInfo = user.walletInfo + price;
+    
+
+    // Save the modified appointment
+    await user.save();
+
+    res.status(200).json({ message: "doctor wallet updated successfully", user });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
 //////////////////////////////////sherif and momen//////////////////////////////////
 
@@ -580,4 +604,4 @@ catch(err){
 module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
    filterAppointmentsStatus,getUserById  , AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor,getWalletInfo,getFamilyMemberData,
-   getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet}   
+   getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor}   

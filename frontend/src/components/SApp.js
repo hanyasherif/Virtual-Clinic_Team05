@@ -10,6 +10,7 @@ const SApp = () => {
 
   const [appointment, setAppointment] = useState({});
  // const[patientId, setPatientId] = useState([]);
+ const [amount, setAmount] = useState('');
   
   let patientId= "";
   const [cardNumber,setcardNumber] = useState('');
@@ -25,6 +26,7 @@ const SApp = () => {
   const[familyMember, setFamilyMember] = useState([]); 
   const [selectedFamilyMember, setSelectedFamilyMember] = useState(null);
   
+  const [isPriceVisible, setIsPriceVisible] = useState(false);
   const id = '65735cebad66db980718a14d'; // session
   
   useEffect(() => {
@@ -95,6 +97,30 @@ const SApp = () => {
           const response = await axios.get(`http://localhost:8000/getUserById/${id}`);
           const user = response.data;
           setWalletInfo(user.walletInfo);
+          console.log("Wallet Infoaa:", walletInfo);
+        } catch (error) {
+          setError('No Wallet assigned');
+        }
+      };
+      const fetchAmount = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8000/getUserById/${id}`);
+          const user = response.data;
+          if(user.package){
+            if(user.package ==="Silver")
+              setAmount(appointment.price- (appointment.price * 0.4));
+            
+            else if(user.package ==="Gold")
+            setAmount(appointment.price- (appointment.price * 0.6));
+
+            else
+            setAmount(appointment.price- (appointment.price * 0.8));
+
+
+            
+          }
+          else
+            setAmount(appointment.price);
           console.log("Wallet Info:", walletInfo);
         } catch (error) {
           setError('No Wallet assigned');
@@ -103,12 +129,38 @@ const SApp = () => {
       if (appointmentId) {
         fetchAppointmentData();
         fetchDoctorNames();
+        fetchAmount();
         fetchPatientNames(id);
         fetchWalletInfo(id);
+        
         
       }
       
     }, [appointmentId]);
+    useEffect(() => {
+        const fetchAmount = async () => {
+          try {
+            const response = await axios.get(`http://localhost:8000/getUserById/${id}`);
+            const user = response.data;
+    
+            if (user.package) {
+              if (user.package === "Silver") setAmount(appointment.price - appointment.price * 0.4);
+              else if (user.package === "Gold") setAmount(appointment.price - appointment.price * 0.6);
+              else setAmount(appointment.price - appointment.price * 0.8);
+            } else {
+              setAmount(appointment.price);
+            }
+    
+            console.log("Amount:", amount);
+          } catch (error) {
+            setError('Error fetching amount:', error);
+          }
+        };
+    
+        if (appointmentId) {
+          fetchAmount();
+        }
+      }, [appointment, appointmentId, id]);
 
     const fetchID = async (username) =>{
         try {
@@ -185,7 +237,9 @@ const SApp = () => {
     
         // Add your logic here to handle the reservation for yourself
       };
-
+      const handleViewPriceClick = () => {
+        setIsPriceVisible(!isPriceVisible);
+      };
     /////submitting
       const handlePaymentSubmit = async (e) => {
         e.preventDefault();
@@ -200,7 +254,7 @@ const SApp = () => {
         }
     }//pay with wallet
     else
-        if(walletInfo < appointment.price){
+        if(amount < appointment.price){
         alert('You do not have enough money in the wallet to pay');
         return;
         }
@@ -220,7 +274,8 @@ const SApp = () => {
             else{ // reserve for myself
                 patientId = id;
             }
-           modifyPatientWallet(appointment.price, id);
+           modifyPatientWallet(amount, id);
+           modifyDoctorWallet(amount,appointment.doctorId);
 
         }
         modifyAppointmentStatus(appointmentId,patientId);
@@ -243,7 +298,17 @@ const SApp = () => {
             console.log(response.data.message);
             setWalletInfo(walletInfo-price);
         } catch (error) {
-          console.error('Error updating User wallet:', error);
+          console.error('Error updating PAtient wallet:', error);
+        }
+     
+    };
+    const modifyDoctorWallet = async (price,  id) =>{
+        try {
+            const response = await axios.post(`http://localhost:8000/modifyWalletDoctor`, {price,id,  });
+        
+            console.log(response.data.message);
+        } catch (error) {
+          console.error('Error updating Doctor wallet:', error);
         }
      
     };
@@ -254,7 +319,15 @@ const SApp = () => {
       <p>Date: {appointment.date}</p>
       <p>Doctor Name: {doctorName[appointment.doctor]}</p> 
       <p>Status: {appointment.status}</p>
-      <p>Price: {appointment.price}</p>
+      <button onClick={handleViewPriceClick}>View Price</button>
+      <br />
+      {isPriceVisible && (
+        <>
+          <label>Price:</label>
+          <br />
+          <input type="text" value={amount} readOnly />
+        </>
+      )}
 
 
      <br/>

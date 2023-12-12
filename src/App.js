@@ -6,12 +6,13 @@ require("dotenv").config();
 
 const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getUserById , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor,
-   getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,getUserByUsername,modifyWallet} = require("./Routes/userController");
+   getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor} = require("./Routes/userController");
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest} = require("./Routes/requestController");
-const{addAppointment,getAppointmentInfo,modifyAppointment} = require("./Routes/appointmentController");
+const{addAppointment,getAppointmentInfo,modifyAppointment,createAppointment} = require("./Routes/appointmentController");
 const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData}=require("./Routes/DrController");
+const {createContract, acceptContract,   rejectContract,   getContract}= require("./Routes/employmentController");
 const MongoURI = process.env.MONGO_URI ;
 
 //App variables
@@ -99,7 +100,15 @@ app.get("/getUserByEmail/:email",getUserByEmail);
 app.get("/getUserByPhoneNumber/:phoneNumber",getUserByPhoneNumber);
 app.get("/getUserByUsername/:username", getUserByUsername);
 app.post("/modifyWallet", modifyWallet);
+app.post("/modifyWalletDoctor", modifyWalletDoctor);
 
+
+app.post("/createContract", createContract);
+app.post("/acceptContract/:doctorId", acceptContract);
+app.post("/rejectContract/:doctorId", rejectContract);
+app.get("/getContract/:doctorId", getContract);
+
+app.post("/createAppointment/:id",createAppointment);
 
 ////////////////////////////////////////////////sherif and momen/////////////////////////////
 app.post("/Addpatient", AddPatient);
