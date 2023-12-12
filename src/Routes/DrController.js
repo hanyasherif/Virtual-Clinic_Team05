@@ -203,9 +203,9 @@ const AddNewHR = async (req, res) => {
 
 const scheduleFollowUp = async (req, res) => {
   try {
-      const doctorId = req.body.doctorId;
+      const doctorId = req.body.Doctor;
       let followUpDate = new Date(req.body.followUpDate);
-      const patientId = req.body.patientId;
+      const patientId = req.body.Patient;
 
       let appointment = await AppointmentModel.findOne({
         $or: [
@@ -260,94 +260,84 @@ const scheduleFollowUp = async (req, res) => {
 
 
 
-const ViewUpdatedHR = async(req,res) =>{
-  const Id = req.body.Id;
+const ViewUpdatedHRforD = async (req, res) => {
+  const Id = req.params.id;
 
-    try {
-      const user = await userModel.findById(Id);
-  
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      if (user.type === 'Patient') {
-        try {
-          const patientId = req.body.Id;
-  
-          // Retrieve the user (patient) by ID
-          const patient = await userModel.findById(patientId);
-  
-          if (!patient) {
-              return res.status(404).json({ error: 'Patient not found' });
-          }
-  
-          // Check if the user has health records
-          if (!patient.HealthRecord || patient.HealthRecord.length === 0) {
-              return res.json({ message: 'No health records found for the patient' });
-          }
-  
-          // Send the health records as JSON
-          res.json({
-              name:patient.name,
-              patientId: patient._id,
-              healthRecords: patient.HealthRecord
-          });
-      } catch (error) {
-          console.error('Error:', error);
-          res.status(500).json({ error: 'Internal Server Error' });
-      }
-      }
-  
-      if (user.type === 'Doctor') {
-       
-        try {
-          const doctorId = req.body.Id;
-  
-          // Retrieve all appointments with the specified doctor
-          const appointments = await AppointmentModel.find({ doctor: doctorId });
-  
-          if (!appointments || appointments.length === 0) {
-              return res.json({ message: 'No appointments found for the doctor' });
-          }
-  
-          // Extract unique patient IDs from the appointments
-          const patientIds = Array.from(new Set(appointments.map(appointment => appointment.patient)));
-  
-          // Retrieve health records for each patient
-          const healthRecordsByPatient = [];
-          for (const patientId of patientIds) {
-              const patient = await userModel.findById(patientId);
-              if (patient && patient.HealthRecord && patient.HealthRecord.length > 0 ) {
-                  healthRecordsByPatient.push({
-                    name:patient.name,
-                      patientId: patient._id,
-                      healthRecords: Array.from(new Set(patient.HealthRecord))  
+  try {
+    const user = await userModel.findById(Id);
 
-                  });
-              }
-          }
-  
-          res.json({ healthRecordsByPatient });
-      } catch (error) {
-          console.error('Error:', error);
-          res.status(500).json({ error: 'Internal Server Error' });
-      }
-     
-      
-      }
-  
-      return res.status(404).json({ message: 'Invalid user type' });
-
-    } catch (error) {
-      console.error('Error checking if user can view health records:', error);
-      res.status(400).json({ error: err.message });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
+
+    if (user.type === 'Patient') {
+      try {
+        const patientId = req.params.id;
+
+        const patient = await userModel.findById(patientId);
+
+        if (!patient) {
+          return res.status(404).json({ error: 'Patient not found' });
+        }
+
+        if (!patient.HealthRecord || patient.HealthRecord.length === 0) {
+          return res.json({ message: 'No health records found for the patient' });
+        }
+
+        res.json({
+          name: patient.name,
+          patientId: patient._id,
+          healthRecords: patient.HealthRecord
+        });
+      } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+    }
+
+    if (user.type === 'Doctor') {
+      try {
+        const doctorId = req.params.id;
+
+        const appointments = await AppointmentModel.find({ doctor: doctorId });
+
+        if (!appointments || appointments.length === 0) {
+          return res.json({ message: 'No appointments found for the doctor' });
+        }
+
+        const patientIds = Array.from(new Set(appointments.map(appointment => appointment.patient)));
+
+        const healthRecordsByPatient = [];
+        for (const patientId of patientIds) {
+          const patient = await userModel.findById(patientId);
+          if (patient && patient.HealthRecord && patient.HealthRecord.length > 0) {
+            healthRecordsByPatient.push({
+              name: patient.name,
+              patientId: patient._id,
+              healthRecords: Array.from(new Set(patient.HealthRecord))
+            });
+          }
+        }
+
+        res.json({ healthRecordsByPatient });
+      } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+    }
+
+    //return res.status(404).json({ message: 'Invalid user type' });
+
+  } catch (error) {
+    console.error('Error checking if user can view health records:', error);
+    res.status(400).json({ error: error.message });
   }
-  
+};
+
  
 
 
 
 
 
-module.exports = {ViewPatients,EditMyInfo,SearchPatient,filteredAppointments,GetPFullData,AddNewHR,scheduleFollowUp,ViewUpdatedHR}
+module.exports = {ViewPatients,EditMyInfo,SearchPatient,filteredAppointments,GetPFullData,AddNewHR,scheduleFollowUp,ViewUpdatedHRforD}

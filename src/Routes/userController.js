@@ -480,6 +480,70 @@ catch(err){
 }
 }
 
+
+
+
+
+const ViewUpdatedHRforP = async(req,res) =>{
+  
+  const Id = req.body.Id;
+
+    try {
+      const user = await userModel.findById(Id);
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+    
+       
+        try {
+          if (user.type === 'Patient') {
+            try {
+              const patientId = req.body.Id;
+      
+              // Retrieve the user (patient) by ID
+              const patient = await userModel.findById(patientId);
+      
+              if (!patient) {
+                  return res.status(404).json({ error: 'Patient not found' });
+              }
+      
+              // Check if the user has health records
+              if (!patient.HealthRecord || patient.HealthRecord.length === 0) {
+                  return res.json({ message: 'No health records found for the patient' });
+              }
+      
+              // Send the health records as JSON
+              res.json({
+                  name:patient.name,
+                  patientId: patient._id,
+                  healthRecords: patient.HealthRecord
+              });
+          } catch (error) {
+              console.error('Error:', error);
+              res.status(500).json({ error: 'Internal Server Error' });
+          }
+          }
+    
+      } catch (error) {
+          console.error('Error:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      }
+     
+      
+      
+  
+      return res.status(404).json({ message: 'Invalid user type' });
+
+    } catch (error) {
+      console.error('Error checking if user can view health records:', error);
+      res.status(400).json({ error: err.message });
+    }
+  }
+  
+ 
+
 module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
-   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint}   
+   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint,ViewUpdatedHRforP}   

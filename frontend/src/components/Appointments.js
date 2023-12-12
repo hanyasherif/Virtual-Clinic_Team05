@@ -25,16 +25,17 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const Meeting = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const Id = searchParams.get('Id');
+  const DoctorId = searchParams.get('Id');
       const [Meetings,SetAppointments] = useState([]);
       const getAppointments =  async () => {
         try {
-          const response = await axios.get(`http://localhost:8000/UpcomingAppoint?Id=${Id}`);
+          const response = await axios.get(`http://localhost:8000/UpcomingAppoint?Id=${DoctorId}`);
           const meeting = response.data;
           SetAppointments(meeting);
         } catch (error) {
           alert('An error occurred:', error.message);
         }
+  
     }
     return(
        <div className="UsersList">
@@ -67,21 +68,20 @@ const Meeting = () => {
         </TableHead>
         <TableBody>
           {Meetings.map((meet) => (
-            <TableRow
-            hover
-            sx={{
-                "&:hover":{
-                cursor: "pointer",
-                backgroundColor: "#f5f5f5",
-                width: "100%"
-                }
-            }}
-            key={meet._id}
-
-              >
-              <TableCell align="center">{meet.date}</TableCell>
-              <TableCell align="center">{}</TableCell>
-            </TableRow>
+            <TableRow key={meet._id}>
+            <TableCell align="center">{meet.date}</TableCell>
+            <TableCell align="right">
+              <Button
+        variant="contained"
+        onClick={() =>
+          (window.location.href = `http://localhost:3000/ScheduleFollowUp?Appointment=${meet._id}&&Doctor=${DoctorId}`)
+        }
+        disabled={new Date(meet.date) > new Date()}
+      >
+        Schedule FollowUp
+      </Button>
+            </TableCell>
+          </TableRow>
           ))}
         </TableBody>
       </Table>

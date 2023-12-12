@@ -5,12 +5,12 @@ mongoose.set('strictQuery', false);
 require("dotenv").config();
 // const {createMedicine, getMedicine, updateMedicine} = require("./Routes/MedicineController");
 const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
-   registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint} = require("./Routes/userController");
+   registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint, ViewUpdatedHRforP} = require("./Routes/userController");
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest} = require("./Routes/requestController");
 const{addAppointment} = require("./Routes/appointmentController");
-const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData,AddNewHR,scheduleFollowUp,ViewUpdatedHR}=require("./Routes/DrController");
+const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData,AddNewHR,scheduleFollowUp,ViewUpdatedHR, ViewUpdatedHRforD}=require("./Routes/DrController");
 const MongoURI = process.env.MONGO_URI ;
 
 //App variables
@@ -105,5 +105,6 @@ app.get("/UpcomingAppoint",filteredAppointments);
 app.get("/GetFullData",GetPFullData);
                       //m2
 app.post("/AddNewHR",AddNewHR);
-app.get("/ViewUpdatedHR",ViewUpdatedHR);
+app.get("/ViewUpdatedHRforD/:id",ViewUpdatedHRforD);
+app.get("/ViewUpdatedHRforP",ViewUpdatedHRforP);
 app.post("/scheduleFollowUp",scheduleFollowUp);
