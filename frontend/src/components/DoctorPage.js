@@ -59,6 +59,9 @@ function PatientPage() {
       <Button onClick={() => window.location.href=`http://localhost:3000/ViewAcceptContract`}>View Contracts</Button>
       <Button onClick={() => window.location.href=`http://localhost:3000/wallet`}>View My Wallet</Button>
       <Button onClick={() => window.location.href=`http://localhost:3000/AddAppointment`}>AddAppointment</Button>
+      <Button onClick={() => window.location.href=`http://localhost:3000/ViewHealthRecords`}>ViewHealthRecords</Button>
+      <Button onClick={() => window.location.href=`http://localhost:3000/AddNewHR`}>AddNewHR</Button>
+      <Button onClick={() => window.location.href=`http://localhost:3000/Schedule`}>ScheduleFollowUp</Button>
       
    
       </div>

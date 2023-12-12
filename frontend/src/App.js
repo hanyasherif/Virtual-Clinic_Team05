@@ -33,7 +33,7 @@ import Login from './components/login';
 import PatientPage from './components/PatientPage';
 import AdminPage from './components/AdminPage'
 import DoctorPage from './components/DoctorPage'
-
+import ScheduleFollowUp from './components/ScheduleFollowUp'
 import Patient from './components/Patient'
 import ViewPackages from './components/ViewPackages';
 import ViewMyPackage from './components/ViewMyPackage';
@@ -42,6 +42,8 @@ import OtpVerification from './components/OtpVerification';
 import PayAppointment from './components/PayAppointment';
 import Wallet from './components/Wallet';
 import SApp from './components/SApp';
+import AddHealthRecord from './components/AddHealthRecord';
+import ViewHealthRecords from './components/ViewHealthRecords';
  //import { loadStripe } from '@stripe/stripe-js';
 import CreateContract from './components/CreateContract';
 import ViewAcceptContract from './components/ViewAcceptContract';
@@ -130,6 +132,13 @@ function App() {
               element={<ViewAcceptContract/>}/>
               <Route path="/AddAppointment"
               element={<AddAppointment/>}/>
+              <Route path="/ViewHealthRecords"
+              element={<ViewHealthRecords/>}/>
+              <Route path="/AddNewHR"
+              element={<AddHealthRecord/>}/>
+              <Route path="/Schedule"
+              element={<ScheduleFollowUp/>}/>
+
               </Routes>
 
       </div>

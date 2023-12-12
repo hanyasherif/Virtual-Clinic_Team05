@@ -25,7 +25,7 @@ const{viewPackages , subscribePackage , viewMyPackage , cancelPackage , CheckOTP
 //    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getUserById , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor,
 //    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor} = require("./Routes/userController");
 const{addAppointment,getAppointmentInfo,modifyAppointment,createAppointment} = require("./Routes/appointmentController");
-const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData}=require("./Routes/DrController");
+const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData , AddNewHR , ViewUpdatedHRforD ,scheduleFollowUp}=require("./Routes/DrController");
 const {createContract, acceptContract,   rejectContract,   getContract}= require("./Routes/employmentController");
 const MongoURI = process.env.MONGO_URI ;
 
@@ -164,3 +164,8 @@ app.get("/viewPackages",requireAuth,viewPackages);
 app.post("/subPackage", requireAuth,subscribePackage);
 app.get("/viewMyPackage",requireAuth,viewMyPackage);
 app.put("/cancelPackage",requireAuth,cancelPackage);
+
+
+app.post("/AddNewHR",AddNewHR);
+app.get("/ViewUpdatedHRforD",ViewUpdatedHRforD);
+app.post("/scheduleFollowUp",scheduleFollowUp);
