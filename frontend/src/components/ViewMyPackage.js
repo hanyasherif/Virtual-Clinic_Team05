@@ -13,6 +13,7 @@ const ViewMyPackage = () => {
         const response = await axios.get("/viewMyPackage",{withCredentials:true});
         setPackageData(response.data);
       } catch (error) {
+        alert('An error occurred: '+ error.response.data.error);
         console.error('Error fetching package data:', error.message);
       } finally {
         setLoading(false);

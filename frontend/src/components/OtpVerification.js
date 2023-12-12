@@ -22,7 +22,7 @@ const OtpVerification = () => {
         alert('Invalid OTP');
       }
     } catch (error) {
-        alert('invalid email', error.message);
+      alert("TryAgain Later:"+error.response.data.error);
       }
   };
   const handleNewPasswordChange = (e) => {
@@ -42,7 +42,7 @@ const OtpVerification = () => {
         alert("Password Changed");
         window.location.href='/';
       } catch (error) {
-          alert('TryAgain Later:', error.response.data.error);
+        alert("TryAgain Later:"+error.response.data.error);
         }
     } else {
       alert('Passwords do not match');

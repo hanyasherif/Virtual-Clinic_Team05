@@ -18,7 +18,7 @@ const OTPSender = () => {
      alert('email Sent');
 
     } catch (error) {
-       alert('invalid email:', error.message);
+      alert("TryAgain Later:"+error.response.data.error);
  }
     // Reset the email field after sending OTP
     setEmail('');

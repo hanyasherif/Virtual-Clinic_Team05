@@ -17,7 +17,7 @@ function ViewPackages() {
         setPackages(response.data);
       })
       .catch((error) => {
-        alert('An error occurred:', error.message);
+        alert('An error occurred: '+ error.response.data.error);
       });
   };
 

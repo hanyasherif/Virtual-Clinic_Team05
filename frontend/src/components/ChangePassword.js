@@ -32,7 +32,8 @@ const ChangePassword = () => {
         alert("Password Changed");
         window.location.href='/';
       } catch (error) {
-          alert('TryAgain Later:', error.response.data.error);
+        console.log("ero"+error.response.data.error);
+          alert("TryAgain Later:"+error.response.data.error);
         }
     } else {
       alert('Passwords do not match');
