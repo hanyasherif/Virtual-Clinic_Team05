@@ -69,7 +69,12 @@ const userSchema = new Schema({
       HealthRecord:{
         type:[String]
       },
-      medicalHistory: [medicalDocumentSchema]
+      medicalHistory: [medicalDocumentSchema],
+      walletInfo:{
+        type: Number,
+        default: 0
+      
+      }
   }, { timestamps: true });
   
   const User = mongoose.model('User', userSchema);

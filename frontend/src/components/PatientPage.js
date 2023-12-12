@@ -57,6 +57,7 @@ function PatientPage() {
         <Button onClick={() => window.location.href='http://localhost:3000/patient/prescrptions'}>View Prescriptions</Button>
         <Button onClick={() => window.location.href='http://localhost:3000/FilterAppointmentsPatient'}>Filter Appointments</Button>
         <Button onClick={() => window.location.href='http://localhost:3000/uploadMedicalHistory'}>Upload Medical History</Button>
+        <Button onClick={() => window.location.href=`http://localhost:3000/wallet`}>View My Wallet</Button>
         <Dropdown/>
       </div>
     </div>

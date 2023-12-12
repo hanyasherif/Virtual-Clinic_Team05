@@ -11,16 +11,22 @@ const bodyParser = require("body-parser");
 const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, 
   viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
-   filterAppointmentsStatus,getDoctorName , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor, 
+   filterAppointmentsStatus, AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor, 
    uploadMedicalDocument, findPatById,login, removeMedicalDocument, 
-    servefiles ,getUploaded} = require("./Routes/userController");
+    servefiles ,getUploaded ,    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,
+    getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId} 
+    = require("./Routes/userController");
 
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest,  handleReject, handleAccept } = require("./Routes/requestController");
-const{addAppointment} = require("./Routes/appointmentController");
 const{viewPackages , subscribePackage , viewMyPackage , cancelPackage , CheckOTP , CEmail , GEmail  } = require("./Routes/PatientController");
+// const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
+//    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getUserById , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor,
+//    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor} = require("./Routes/userController");
+const{addAppointment,getAppointmentInfo,modifyAppointment,createAppointment} = require("./Routes/appointmentController");
 const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData}=require("./Routes/DrController");
+const {createContract, acceptContract,   rejectContract,   getContract}= require("./Routes/employmentController");
 const MongoURI = process.env.MONGO_URI ;
 
 //App variables
@@ -29,6 +35,7 @@ const app = express();
 const cors = require('cors');
 const { default: test } = require("node:test");
 const port = process.env.PORT || "8000";
+
 app.get('/', (req, res) =>{
   res.json({mssg: 'Welcome to the app'})
 })
@@ -113,14 +120,32 @@ app.get("/getRequests", requireAuth, getRequests);
 app.get("/getARequest", getARequest);
 
 //////////////////////////////////aseel/////////////////////////////
-app.post("/addFamilyMember/:id",addFamilyMember); //no /:id(username) 3shan ana 7atah alreadyf body((or not?))
-app.get("/viewRegFamilyMembers/:id",viewRegFamilyMembers);
+app.post("/addFamilyMember",addFamilyMember); //no /:id(username) 3shan ana 7atah alreadyf body((or not?))
+app.get("/viewRegFamilyMembers",viewRegFamilyMembers);
 app.get("/viewAppointments",requireAuth,viewAppointments);
 app.get("/filterAppointmentsDate/:date",filterAppointmentsDate); 
 app.get("/filterAppointmentsStatus/:status",filterAppointmentsStatus);
-app.get("/getDoctorName/:id", getDoctorName);
+app.get("/getUserById/:id", getUserById);
+app.get("/getUserByTokenId", getUserByTokenId);
 app.post("/addAppointment",addAppointment);
+app.get("/getAppointmentInfo",getAppointmentInfo) //query in frontenddd
+app.get("/getWalletInfo",getWalletInfo);
+app.get("/getFamilyMemberData",getFamilyMemberData);
+app.post('/modifyAppointment', modifyAppointment);
+app.get("/getUserById/:id", getUserById);
+app.get("/getUserByEmail/:email",getUserByEmail);
+app.get("/getUserByPhoneNumber/:phoneNumber",getUserByPhoneNumber);
+app.get("/getUserByUsername/:username", getUserByUsername);
+app.post("/modifyWallet", modifyWallet);
+app.post("/modifyWalletDoctor", modifyWalletDoctor);
 
+
+app.post("/createContract", createContract);
+app.put("/acceptContract", acceptContract);
+app.put("/rejectContract", rejectContract);
+app.get("/getContract", getContract);
+
+app.post("/createAppointment",createAppointment);
 
 ////////////////////////////////////////////////sherif and momen/////////////////////////////
 app.post("/Addpatient", AddPatient);

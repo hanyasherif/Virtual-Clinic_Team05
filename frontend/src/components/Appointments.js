@@ -29,7 +29,7 @@ const Meeting = () => {
       const [Meetings,SetAppointments] = useState([]);
       const getAppointments =  async () => {
         try {
-          const response = await axios.get(`http://localhost:8000/UpcomingAppoint?Id=${Id}`);
+          const response = await axios.get(`http://localhost:8000/UpcomingAppoint`,{withCredentials:true});
           const meeting = response.data;
           SetAppointments(meeting);
         } catch (error) {

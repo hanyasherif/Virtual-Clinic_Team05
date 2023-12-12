@@ -27,7 +27,7 @@ const ViewFamilyMember = () => {
 
     
    const params = new URLSearchParams(window.location.search);
-    const {id} = useParams();
+    const id = '65735cebad66db980718a14d'; // session
     const [famMem,setFamMem] = useState([]);
 
     const getFamilyMember=  async () => {
@@ -36,7 +36,7 @@ const ViewFamilyMember = () => {
         */     
         
 
-        await axios.get(`http://localhost:8000/viewRegFamilyMembers/${id}`).then(
+        await axios.get(`http://localhost:8000/viewRegFamilyMembers`, {withCredentials:true}).then(
             (res) => { 
                 const famMems = res.data
                 console.log(famMem)

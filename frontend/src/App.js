@@ -39,6 +39,14 @@ import ViewPackages from './components/ViewPackages';
 import ViewMyPackage from './components/ViewMyPackage';
 import OTPSender from './components/OTPSender';
 import OtpVerification from './components/OtpVerification';
+import PayAppointment from './components/PayAppointment';
+import Wallet from './components/Wallet';
+import SApp from './components/SApp';
+ //import { loadStripe } from '@stripe/stripe-js';
+import CreateContract from './components/CreateContract';
+import ViewAcceptContract from './components/ViewAcceptContract';
+import AddAppointment from './components/AddAppointments';
+ //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
   return (
     <div className="App">
@@ -109,7 +117,21 @@ function App() {
               element={<ViewMyPackage/>}/>
               <Route path="/reset-password-email" element = {<OTPSender />}/>
                <Route path="/ChangePassword" element = {<OtpVerification/>}/>
+              
+              <Route path="/payAppointment"
+              element={<PayAppointment/>}/>
+              <Route path="/wallet"
+              element={<Wallet/>}/>
+              <Route path="/CreateContract"
+              element={<CreateContract/>}/>
+              <Route path="/SApp"
+              element={<SApp/>}/>
+              <Route path="/ViewAcceptContract"
+              element={<ViewAcceptContract/>}/>
+              <Route path="/AddAppointment"
+              element={<AddAppointment/>}/>
               </Routes>
+
       </div>
       {/* <UsernameTextBox /> Include TextBoxExample component here */}
       {/* <PasswordTextBox /> */}

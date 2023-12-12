@@ -1,6 +1,7 @@
 const userModel = require('../Models/User.js');
 const AppointmentModel = require('../Models/Appointment.js');
 const { default: mongoose } = require('mongoose');
+const jwt = require("jsonwebtoken");
 const ViewPatients = async(req,res) => {
 let DoctorId=req.query.Id;
 AppointmentModel.find({ doctor: DoctorId })
@@ -133,7 +134,10 @@ try {
 }
 const filteredAppointments = async (req, res) => {
   const currentDate = new Date();
-  const doctorId = req.query.Id;
+  const token = req.cookies.jwt;
+  const decodedToken = jwt.verify(token, 'supersecret');
+    const doctorId= decodedToken.user._id
+  
 
   try {
     const AllNewAppointments = await AppointmentModel.find({

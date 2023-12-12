@@ -251,7 +251,7 @@ const viewAppointmentsOfDoctor = async(req,res) => {
 
   try{
     const doc = await userModel.findById(req.params.docID);
-    const appointments = await appointmentModel.find({doctor:doc});
+    const appointments = await appointmentModel.find({ doctor: doc, status: "free" });
     
     res.status(200).json(appointments)
   }
@@ -420,31 +420,46 @@ const deleteUser = async (req, res) => {
 
 //////////////////////////////////Aseeel //////////////////////////////////
    
-  const addFamilyMember = async(req,res)=>{
-    let username = req.params.id //bn-pass bl session
-   
+const addFamilyMember = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, 'supersecret');
+    const patientId = decodedToken.user._id
+
     let famMemName = req.body.famMemName;
     let famMemNatID = req.body.famMemNatID;
     let famMemAge = req.body.famMemAge;
     let famMemGender = req.body.famMemGender;
     let famMemRelation = req.body.famMemRelation;
-    try{
-        const newfamilyMember = {famMemName: famMemName, famMemNatID: famMemNatID,famMemAge: famMemAge,
-            famMemGender: famMemGender,famMemRelation:famMemRelation, patient : username}
-        const familyMember = await familyMemberModel.create(newfamilyMember);
-        await familyMember.save();
-            res.status(200).json({message: "Family member created successfully"})
- 
+    console.log(req.body.username);
+    let newfamilyMember;
+
+    if (req.body.username) {
+      let username = req.body.username;
+      newfamilyMember = { username: username, famMemName: famMemName, famMemNatID: famMemNatID, famMemAge: famMemAge,
+        famMemGender: famMemGender, famMemRelation: famMemRelation, patient: patientId }
+    } else {
+      newfamilyMember = { famMemName: famMemName, famMemNatID: famMemNatID, famMemAge: famMemAge,
+        famMemGender: famMemGender, famMemRelation: famMemRelation, patient: patientId }
     }
-    catch(err){
-              res.json({message: err.message})}  
- }
+
+    const familyMember = await familyMemberModel.create(newfamilyMember);
+    await familyMember.save();
+    res.status(200).json({ success: true, message: "Family member created successfully" });
+  } catch (err) {
+    console.error('Error:', err);
+    res.status(500).json({ success: false, message: "Failed to create family member", error: err.message });
+  }
+};
+
  
  const viewRegFamilyMembers = async(req,res)=>{
- 
+  const token = req.cookies.jwt;
+  const decodedToken = jwt.verify(token, 'supersecret');
+  const patientId = decodedToken.user._id
     const username = req.params.id;
     try{
-     const famMembers = await familyMemberModel.find({patient: mongoose.Types.ObjectId(username)}).populate({path: 'patient'});
+     const famMembers = await familyMemberModel.find({patient: patientId}).populate({path: 'patient'});
      res.status(200).send(famMembers);
  }
     
@@ -453,17 +468,49 @@ const deleteUser = async (req, res) => {
      }
  
  }
- const getDoctorName = async(req,res)=>{
+ const getUserById = async(req,res)=>{
  
-     const username = req.params.id;
+     const id = req.params.id;
      try{
-      const doctor = await userModel.findById(username);
-      res.status(200).send(doctor);
+      const user = await userModel.findById(id);
+      res.status(200).send(user);
   }
      
       catch(error){
       res.status(400).json({message: error.message})
       }
+  
+  }
+
+  const getUserByTokenId = async(req,res)=>{
+ 
+     const token = req.cookies.jwt;
+  const decodedToken = jwt.verify(token, 'supersecret');
+  const id = decodedToken.user._id
+    try{
+     const user = await userModel.findById(id);
+     res.status(200).send(user);
+ }
+    
+     catch(error){
+     res.status(400).json({message: error.message})
+     }
+ 
+ }
+  const getUserByUsername = async(req,res)=>{
+ 
+    const username = req.params.username;
+  
+    try {
+      const user = await userModel.findOne({ username: username });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
   
   }
  
@@ -497,6 +544,125 @@ const filterAppointmentsStatus = async(req,res)=>{
         res.status(400).json({message: error.message})
         } 
 }
+const getWalletInfo = async (req, res) => {
+  const token = req.cookies.jwt;
+  const decodedToken = jwt.verify(token, 'supersecret');
+    const userId= decodedToken.user._id
+
+
+  try {
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    
+    res.status(200).json(user.walletInfo);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getFamilyMemberData = async (req, res) => {
+  const token = req.cookies.jwt;
+  const decodedToken = jwt.verify(token, 'supersecret');
+  const patientId = decodedToken.user._id
+
+  try {
+    // Find all family members that reference the user with the provided ID
+    const familyMembers = await familyMemberModel.find({ patient: patientId });
+
+    res.status(200).json({ familyMemberData: familyMembers });
+  } catch (error) {
+    console.error('Error fetching family member data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+const getUserByEmail = async(req,res)=>{
+ 
+  const email = req.params.email;
+
+  try {
+    const user = await userModel.findOne({ email: email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+
+}
+const getUserByPhoneNumber = async(req,res)=>{
+ 
+  const phoneNumber = req.params.phoneNumber;
+
+  try {
+    const user = await userModel.findOne({ mobileNumber: phoneNumber });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+
+}
+const modifyWallet = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, 'supersecret');
+      const patientId= decodedToken.user._id
+    const price = req.body.price;
+  
+
+    // Fetch the specific appointment using the appointmentId
+    const user = await userModel.findById(patientId);
+
+    // Check if the appointment exists
+    if (!user) {
+      return res.status(404).json({ message: "patient not found" });
+    }
+
+    // Update the appointment with the new patientId
+    user.walletInfo = user.walletInfo- price;
+    
+
+    // Save the modified appointment
+    await user.save();
+
+    res.status(200).json({ message: "patient wallet updated successfully", user });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+const modifyWalletDoctor = async (req, res) => {
+  try {
+    const price = req.body.price;
+    const doctorId = req.body.id;
+
+    // Fetch the specific appointment using the appointmentId
+    const user = await userModel.findById(doctorId);
+
+    // Check if the appointment exists
+    if (!user) {
+      return res.status(404).json({ message: "doctor not found" });
+    }
+
+    // Update the appointment with the new patientId
+    user.walletInfo = user.walletInfo + price;
+    
+
+    // Save the modified appointment
+    await user.save();
+
+    res.status(200).json({ message: "doctor wallet updated successfully", user });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
 //////////////////////////////////sherif and momen//////////////////////////////////
 
@@ -594,5 +760,11 @@ catch (err) {
 
 module.exports = { login, addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
-   filterAppointmentsStatus,getDoctorName  , AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor, uploadMedicalDocument, removeMedicalDocument
-  , getUploaded, findPatById, servefiles}   
+   filterAppointmentsStatus, AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor, uploadMedicalDocument, removeMedicalDocument
+  , getUploaded, findPatById, servefiles ,getUserById  ,getWalletInfo,getFamilyMemberData,
+  getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor, getUserByTokenId}   
+
+// module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
+//    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
+//    filterAppointmentsStatus,getUserById  , AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor,getWalletInfo,getFamilyMemberData,
+//    getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor}   

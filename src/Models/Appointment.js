@@ -15,11 +15,14 @@ const appointmentSchema = new Schema({
     },
     patient: {
         type: mongoose.Types.ObjectId,
-        ref:'User',
-        required: true
+        ref:'User'
     },
     status: {
         type: String,
+        default:"free"
+    },
+    price: {
+        type: Number,
         required: true
     }
   }, { timestamps: true });
