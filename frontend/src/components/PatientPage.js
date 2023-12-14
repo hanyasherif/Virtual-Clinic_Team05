@@ -51,8 +51,8 @@ function PatientPage() {
       <h2>Hello 3ayan</h2>
       <br/>
       <div className="button-container" style={buttonContainerStyle}>
-        <Button onClick={() => window.location.href='http://localhost:3000/addFamilyMember/:id'}>Add Family Member</Button>
-        <Button onClick={() => window.location.href='http://localhost:3000/viewFamilyMember/:id'}>View Family Member</Button>
+        <Button onClick={() => window.location.href='http://localhost:3000/addFamilyMember'}>Add Family Member</Button>
+        <Button onClick={() => window.location.href='http://localhost:3000/viewFamilyMember'}>View Family Member</Button>
         <Button onClick={() => window.location.href='http://localhost:3000/docList'}>View Doctors</Button>
         <Button onClick={() => window.location.href='http://localhost:3000/patient/prescrptions'}>View Prescriptions</Button>
         <Button onClick={() => window.location.href='http://localhost:3000/FilterAppointmentsPatient'}>Filter Appointments</Button>

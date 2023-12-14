@@ -84,9 +84,9 @@ function App() {
               element={<SubmitRequest/>}></Route>
               <Route path="/requests"
               element={<Requests/>}></Route>
-              <Route  path='/viewFamilyMember/:id' 
+              <Route  path='/viewFamilyMember' 
               element = {<ViewFamilyMember />} />
-              <Route  path='/addFamilyMember/:id' 
+              <Route  path='/addFamilyMember' 
               element = {<AddFamilyMember />} />
               <Route  path='/FilterAppointmentsPatient' 
               element = {<FilterAppointmentsPatient />} />
