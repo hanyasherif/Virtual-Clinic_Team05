@@ -8,6 +8,9 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const { requireAuth } = require('./Middleware/authMiddleware');
 const bodyParser = require("body-parser");
+
+const uploadPh = require('./multerConfigV2');
+
 const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, 
   viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
@@ -27,6 +30,22 @@ const{viewPackages , subscribePackage , viewMyPackage , cancelPackage , CheckOTP
 const{addAppointment,getAppointmentInfo,modifyAppointment,createAppointment} = require("./Routes/appointmentController");
 const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData , AddNewHR , ViewUpdatedHRforD ,scheduleFollowUp}=require("./Routes/DrController");
 const {createContract, acceptContract,   rejectContract,   getContract}= require("./Routes/employmentController");
+
+//////PHARMA OLAYAN
+const { createMedicine, getMedicine, updateMedicine, searchMedicine, filterMedicine } = require("./RoutesPh/MedicineController");
+const { addRequestPH, getRequestsPH, getARequestPH, handleAcceptPH, handleRejectPH } = require("./RoutesPh/requestController");
+const { loginPH, CEmailPH,GEmailPH,CheckOTPPH, changePasswordPH } = require("./RoutesPh/userController");
+
+const { addAdministratorPH, removeUserPH, checkUsernamePH, getUsersPH, registerPatientPH,
+   deleteUserPH, adminViewPharmacists, adminViewPatients, logoutPH } = require("./RoutesPh/userController");
+
+const { addAddress, searchAddress } = require("./RoutesPh/AddressController");
+
+const {addToCart, viewCart, removeFromCart, 
+  changeCartItemQuantity, 
+  checkout, createPaymentIntent} = require("./RoutesPh/cartController");
+
+const {viewOrders, cancelOrder} = require("./RoutesPh/orderController");
 const MongoURI = process.env.MONGO_URI ;
 
 //App variables
@@ -71,7 +90,13 @@ app.use(cors({
  credentials: true, //included credentials as true
 }));
 app.use(cookieParser());
- 
+ // Example route that uses multer for file uploads
+app.post('/upload', uploadPh.single('picture'), (req, res) => {
+  // Handle the uploaded file here and return the file path
+  const filePath = req.file ? req.file.path : '';
+  res.json({ message: 'File uploaded successfully!', filePath });
+});
+
 
 app.post("/ChangeEmailPassword",GEmail);
 app.post("/otpChecker",CheckOTP);
@@ -169,3 +194,92 @@ app.put("/cancelPackage",requireAuth("Patient"),cancelPackage);
 app.post("/AddNewHR",AddNewHR);
 app.get("/ViewUpdatedHRforD",ViewUpdatedHRforD);
 app.post("/scheduleFollowUp", requireAuth("Doctor"),scheduleFollowUp);
+
+
+
+
+///////PHARMA
+
+
+app.post('/addMedicine', upload.single('picture'), createMedicine);
+
+
+
+
+
+//mangOOOOOOO
+// #Routing to userController here
+
+//app.use(express.json())
+// app.post("/addMedicine",createMedicine);
+app.get("/medicines", getMedicine);
+app.put("/updateMedicine/:id", updateMedicine);
+app.get("/Search", searchMedicine);
+app.get("/filterMedicine", filterMedicine);
+app.post("/addAdministrator", addAdministrator);
+app.delete("/removeUser", removeUser);
+app.post("/checkUsername", checkUsername);
+app.get("/getAllUsers", getUsers);
+app.post("/addRequest", addRequest);
+app.get("/getRequests", getRequests);
+app.get("/getARequest", getARequest);
+app.post("/registerPatient",registerPatient);
+app.delete("/deleteUser/:username", deleteUser);
+app.get("/admin/pharmicsts", adminViewPharmacists)
+app.get("/admin/patients", adminViewPatients)
+
+
+
+//sp2 routes
+
+// app.post("/addToCart", addToCart);
+// app.get("/viewCart", viewCart);
+// app.delete("/removeFromCart", removeFromCart);
+// app.put("/changeCartItemQuantity", changeCartItemQuantity);
+// app.post("/checkout", checkout);
+// app.get("/orders", viewOrders);
+// app.put("/cancelOrder", cancelOrder);
+
+// app.post("/addAddress", addAddress);
+// app.get("/searchAddress", searchAddress);
+
+//const jwt = require('jsonwebtoken');
+
+//const {requireAuth} = require('./Middleware/authMiddleware');
+//Middleware for JWT authentication
+
+
+app.get("/logout", logout);
+app.post("/login", login);
+
+// Apply JWT authentication middleware to protected routes
+app.post("/addToCart", addToCart);
+app.get("/viewCart", viewCart);
+app.delete("/removeFromCart", removeFromCart);
+app.put("/changeCartItemQuantity", requireAuth, changeCartItemQuantity);
+app.post("/checkout", requireAuth, checkout);
+app.get("/orders", requireAuth, viewOrders);
+app.put("/cancelOrder", requireAuth, cancelOrder);
+
+app.post("/addAddress", requireAuth, addAddress);
+app.get("/searchAddress", requireAuth, searchAddress);
+
+app.put("/handleAccept/:requestId", handleAccept);
+app.put("/handleReject/:requestId", handleReject);
+
+app.post("/create-payment-intent", requireAuth, createPaymentIntent);
+// app.post("/create-payment-intent", createPaymentIntent);
+
+
+app.post('/addMedicine', upload.single('picture'), createMedicine);
+
+
+app.post("/ChangeEmailPassword",requireAuth,GEmail);
+app.post("/otpChecker",requireAuth,CheckOTP);
+app.get("/CheckEmail",requireAuth,CEmail);
+
+app.post("/ChangePassword",requireAuth,changePassword);
+
+/*
+                                                    End of your code
+*/

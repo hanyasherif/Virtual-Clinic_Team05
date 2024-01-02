@@ -2,7 +2,38 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React from 'react';
 import { useState } from 'react';
 
+//Pharma
 
+
+
+import HomePH from "./pages/HomeKO";
+import LoginAsPH from "./pages/LoginAs";
+import NavbarPH from './componenetsPh/Navbar';
+import PatientPagePH from './pages/PatientPage';
+import PharmacistPagePH from './pages/PharmacistPage';
+import AdminPagePH from './pages/AdminPage';
+import AddAdminPagePH from './pages/AddAdminPage';
+import RemovePharPatPagePH from './pages/RemovePharPatPage';
+import GuestPagePH from './pages/GuestPage';
+import PatRegPH from './pages/PatReg';
+import PharRegPH from './pages/PharReg';
+import RequestsPH from './componentsPh/Requests';
+import SubmitRequestPH from './pages/SubmitRequest';
+import PatientInfoPH from './pages/PatientInfo';
+import PharmacistInfoPH from './pages/PharmacistInfo';
+
+import CartPagePH from './pages/sp2/CartPage';
+import CheckoutPagePH from './pages/sp2/CheckoutPage';
+import CancelOrderPH from './pages/sp2/CancelOrder';
+import OrderDetailsPH from './pages/sp2/OrderDetails';
+import SuccessOrderPH from './pages/sp2/SuccessOrder';
+import LoginPH from './pages/Login';
+import ChangePasswPH from './pages/sp2/ChangePassw';
+import ForgotPasswPH from './pages/sp2/ForgotPassw';
+import OTPSenderPH from './pages/sp2/OTPsender'; 
+import OtpVerificationPH from './pages/sp2/OTPVerification';
+import ChangePasswordPH from './pages/sp2/ChangePass';
+///
 //Pages & Components
 // import Home from './pages/Home'
 // import Navbar from './components/Navbar'
@@ -15,9 +46,9 @@ import Home from './components/Home';
 import AdminAddPackage from './components/AdminAddPackage';
 import AdminUpdatePackage from './components/AdminUpdatePackage';
 import Prescriptions from './components/Prescriptions';
-import Requests from './pages/Requests';
+import Requests from './pagesCl/Requests';
 //import Navbar from './components/Navbar1';
-import SubmitRequest from './pages/SubmitRequest';
+import SubmitRequest from './pagesCl/SubmitRequest';
 import ViewFamilyMember from './components/ViewFamilyMember';
 import AddFamilyMember from './components/AddFamilyMember';
 import FilterAppointmentsPatient from './components/FilterAppointmentsPatient';
@@ -55,7 +86,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
       {/* <Navbar /> */}
-      <div className="pages">
+      <div className="pagesCl">
       <Routes>
       <Route 
               path = "/register"
@@ -141,6 +172,93 @@ function App() {
               element={<ScheduleFollowUp/>}/>
                <Route path="/ChangeMyPassword"
               element={<ChangePassword/>}/>
+              {/*SS*/}
+            <Route
+              path="/PH"
+              element={<LoginPH/>}
+            />
+            <Route
+              path="/patientPagePH"
+              element={<PatientPagePH/>}
+            />
+            <Route
+              path="/pharmacistPagePH"
+              element={<PharmacistPagePH/>}
+            />
+            <Route
+              path="/adminPagePH"
+              element={<AdminPagePH/>}
+            />
+            <Route 
+              path="/addAdminPagePH"
+              element={<AddAdminPagePH/>}
+            />
+            <Route 
+              path="/removePharPatPagePH"
+              element={<RemovePharPatPagePH/>}
+            />
+            <Route 
+              path="/guestPagePH"
+              element={<GuestPagePH/>}
+            />
+            <Route 
+              path="/patRegPH"
+              element={<PatRegPH/>}
+            />
+            <Route 
+              path="/pharRegPH"
+              element={<PharRegPH/>}
+            />
+            <Route
+             path = "/admin/patientPH"
+              element = {<PatientInfoPH/>}
+             /> 
+              <Route
+               path = "/admin/pharmacistPH"
+              element = {<PharmacistInfoPH/>}
+             />
+             
+             {/* sp2 */}
+
+            <Route
+              path="/cancelOrderPH"
+              element={<CancelOrderPH/>}
+            />
+            <Route
+              path="/cartPagePH"
+              element={<CartPagePH/>} 
+            />
+            <Route
+              path="/orderDetailsPH"
+              element={<OrderDetailsPH/>} 
+            />
+            <Route
+              path="/checkoutPagePH"
+              element={<CheckoutPagePH/>}
+            />
+            <Route
+              path="/successOrderPH"
+              element={<SuccessOrderPH/>}
+            />
+             <Route
+              path="/checkoutPagePH"
+              element={<SuccessOrderPH/>}
+            />
+            <Route
+              path="/ChangePasswPH"
+              element={<ChangePasswordPH/>}
+            />
+            <Route
+              path="/ForgotPasswPH"
+              element={<OTPSenderPH/>}
+            />
+            <Route path="/reset-password-emailPH" element = {<OTPSenderPH/>}/>
+               <Route path="/ChangePasswordPH" element = {<OtpVerificationPH/>}/>
+            
+            
+               <Route path="/ChangeMyPasswordPH"
+              element={<ChangePasswordPH/>}/>
+              
               </Routes>
 
       </div>

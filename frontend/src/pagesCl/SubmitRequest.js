@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import RequestForm from '../componentsPh/RequestForm'
+import RequestForm from '../components/RequestForm'
 
 function SubmitRequest() {
     
