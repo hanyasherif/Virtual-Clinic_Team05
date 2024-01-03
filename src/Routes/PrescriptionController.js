@@ -1,7 +1,7 @@
 const userModel = require('../Models/User.js');
 const PrescriptionModel = require('../Models/Prescription.js');
 const { default: mongoose } = require('mongoose');
-
+const jwt = require("jsonwebtoken");
 const createPres=async(req,res)=>
 {
    try{
@@ -51,11 +51,16 @@ const viewPatientPrescriptions=async(req,res)=>
 const filterPrescriptions=async(req,res)=>
 {
     try{
-        let username=req.query.username
+      const token = req.cookies.jwt;
+      const decodedToken = jwt.verify(token, 'supersecret');
+      //const user = await userModel.findById(decodedToken.user._id);
+        const patId= decodedToken.user._id
+        const patient = await userModel.findById(patId)
+        let username=patient.username;
 
         let filter = req.query.name
         console.log(filter)
-        let doctorId   = req.query.doctorId;
+        let doctorId = req.query.doctorId;
         let date = req.query.date
         let user = await userModel.findOne({username:username})
     

@@ -30,7 +30,7 @@ const UsersList = () => {
       const [Patients,SetPatients] = useState([]);
       const getPatient =  async () => {
         // try {
-           await axios.get(`http://localhost:8000/getC?Id=${Id}`).then((res)=>{
+           await axios.get(`http://localhost:8000/getC?Id=${Id}`,{withCredentials:true}).then((res)=>{
              const patients = res.data;
              console.log(patients)
              SetPatients(patients);

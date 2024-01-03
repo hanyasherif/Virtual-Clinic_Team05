@@ -34,7 +34,7 @@ const Id = searchParams.get('Id')
         console.log('Id:', Id);
 console.log('Name:', Name);
 
-         await axios.get(`http://localhost:8000/SearchP?Id=${Id}&name=${Name}`).then((res)=>{
+         await axios.get(`http://localhost:8000/SearchP?Id=${Id}&name=${Name}`,{withCredentials:true}).then((res)=>{
            const patients = res.data;
            SetPatients(patients);
            

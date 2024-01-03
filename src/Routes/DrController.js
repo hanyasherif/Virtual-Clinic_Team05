@@ -3,7 +3,9 @@ const AppointmentModel = require('../Models/Appointment.js');
 const { default: mongoose } = require('mongoose');
 const jwt = require("jsonwebtoken");
 const ViewPatients = async(req,res) => {
-let DoctorId=req.query.Id;
+  const token = req.cookies.jwt;
+  const decodedToken = jwt.verify(token, 'supersecret');
+  let DoctorId= decodedToken.user._id
 AppointmentModel.find({ doctor: DoctorId })
   .populate({
     path:'patient',
@@ -15,8 +17,9 @@ AppointmentModel.find({ doctor: DoctorId })
        return  res.status(400).json({error:err.message})
     }
     else{
-      //console.log(appointments.patient)
-        const patientDetails = appointments.map(appointment => ({
+      console.log('Appointments before population:', appointments);
+        const patientDetails = appointments.filter((appointment) => appointment.patient).map(appointment => ({
+          
           _id:appointment.patient._id,  
         username: appointment.patient.username,
         dateOfBirth: appointment.patient.dateOfBirth,
@@ -30,45 +33,73 @@ AppointmentModel.find({ doctor: DoctorId })
           emergencyContactMobileNumber:appointment.patient.emergencyContactMobileNumber,
           HealthRecord:appointment.patient.HealthRecord,
           }));   
+         
           return res.json(patientDetails);
     }
 }
-    )
+   )
+
 }
-const SearchPatient = async(req,res) =>{//SearchByName
-   
-  let doctorId=req.query.Id;
-  const patientName = req.query.name;
-  AppointmentModel.findOne({ doctor: doctorId })
-  .populate({
-    path: 'patient',
-    select:'_id username name email dateOfBirth emergencyContactFullname emergencyContactMobileNumber gender famMemName famMemNatID famMemAge famMemRelation HealthRecord',
-    match: { name: { $regex: `^${patientName}$`, $options: 'i' },}
-  }).exec((err, appointment) => {
-      if (err) {
-          return  res.status(400).json({error:err.message})
-      }
-      const patientDetails = ({
-        _id:appointment.patient._id,  
-        username: appointment.patient.username,
-        dateOfBirth: appointment.patient.dateOfBirth,
-        email:appointment.patient.email,
-        gender: appointment.patient.gender,
-        famMemName: appointment.patient.famMemName,
-        famMemNatID: appointment.patient.famMemNatID,
-        famMemRelation: appointment.patient.famMemRelation,
-        famMemAge: appointment.patient.famMemAge,
-        emergencyContactFullname:appointment.patient.emergencyContactFullname,
-        emergencyContactMobileNumber:appointment.patient.emergencyContactMobileNumber,
-        HealthRecord:appointment.patient.HealthRecord,
-        });
-      return res.json([patientDetails]);
+const SearchPatient = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, 'supersecret');
+    const doctorId = decodedToken.user._id;
+    const patientName = req.query.name;
+
+    // Step 1: Find patient ID based on patient name
+    const patient = await userModel.findOne({
+      name: { $regex: new RegExp(`^${patientName}$`, 'i') }
     });
-   
- }
+
+    if (!patient) {
+      return res.status(404).json({ error: 'Patient not found.' });
+    }
+
+    const patientId = patient._id;
+
+    // Step 2: Retrieve appointment based on doctor ID and patient ID
+    const appointment = await AppointmentModel.findOne({
+      doctor: doctorId,
+      patient: patientId
+    }).populate({
+      path: 'patient',
+      select: '_id username name email dateOfBirth emergencyContactFullname emergencyContactMobileNumber gender famMemName famMemNatID famMemAge famMemRelation HealthRecord'
+    }).exec();
+
+    if (!appointment) {
+      return res.status(404).json({ error: 'Appointment not found.' });
+    }
+
+    const patientDetails = {
+      _id: appointment.patient._id,
+      username: appointment.patient.username,
+      dateOfBirth: appointment.patient.dateOfBirth,
+      email: appointment.patient.email,
+      gender: appointment.patient.gender,
+      famMemName: appointment.patient.famMemName,
+      famMemNatID: appointment.patient.famMemNatID,
+      famMemRelation: appointment.patient.famMemRelation,
+      famMemAge: appointment.patient.famMemAge,
+      emergencyContactFullname: appointment.patient.emergencyContactFullname,
+      emergencyContactMobileNumber: appointment.patient.emergencyContactMobileNumber,
+      HealthRecord: appointment.patient.HealthRecord,
+    };
+
+    return res.json([patientDetails]);
+  } catch (err) {
+    console.error('Error searching for patient:', err);
+    return res.status(500).json({ error: 'Internal server error.' });
+  }
+};
+
 const GetPFullData = async (req, res) => {//for Getting All Info
   try {
-    const doctorId = req.query.Id;
+ 
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, 'supersecret');
+   
+    let doctorId= decodedToken.user._id
     const patientId = req.query.Id1;
     if (!doctorId || !patientId) {
       return res.status(400).json({ error: 'Missing doctorId or patientId in the query parameters' });
@@ -110,7 +141,11 @@ const GetPFullData = async (req, res) => {//for Getting All Info
 };
 
 const EditMyInfo = async(req,res) =>{
-    let DoctorId=req.query.Id;
+   
+  const token = req.cookies.jwt;
+  const decodedToken = jwt.verify(token, 'supersecret');
+ 
+  let DoctorId= decodedToken.user._id
     const updatedDoc = {};
 
 if (req.query.email) {

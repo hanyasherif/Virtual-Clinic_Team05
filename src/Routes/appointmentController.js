@@ -70,13 +70,10 @@ const getAppointmentInfo = async (req, res) => {
 const modifyAppointment = async (req, res) => {
    try {
      const appointmentId = req.body.appointmentId;
-     const patientId = req.body.patientId;
-     if(patientId=='6543f2e0d09148f82f46195d')
-     {
-      const token = req.cookies.jwt;
-      const decodedToken = jwt.verify(token, 'supersecret');
-        const patientId= decodedToken.user._id
-     }
+     const token = req.cookies.jwt;
+     const decodedToken = jwt.verify(token, 'supersecret');
+       const patientId= decodedToken.user._id
+     
  
      // Fetch the specific appointment using the appointmentId
      const appointment = await appointmentsModel.findById(appointmentId);
