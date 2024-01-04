@@ -100,8 +100,9 @@ app.post("/addAppointment",addAppointment);
 
 /////////////////// sherif and momen
 
-app.post("/ChangeEmailPassword",GEmail)
-app.post("/otpChecker",CheckOTP)
+app.post("/ChangeEmailPassword",GEmail);
+app.post("/otpChecker",CheckOTP);
+app.get("/CheckEmail",CEmail);
 app.post("/Addpatient", AddPatient);
 app.post("/Adddoctor", AddDoctor);
 app.post("/AddC", CreatAppoint);
@@ -110,4 +111,4 @@ app.get("/SearchP",SearchPatient);//Searchbyname
 app.post("/Edit",EditMyInfo);
 app.get("/UpcomingAppoint",filteredAppointments);
 app.get("/GetFullData",GetPFullData);
-app.get("/CheckEmail",CEmail);
+
