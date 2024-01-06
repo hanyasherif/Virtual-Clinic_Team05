@@ -257,12 +257,12 @@ app.post("/addToCart", addToCart);
 app.get("/viewCart", viewCart);
 app.delete("/removeFromCart", removeFromCart);
 app.put("/changeCartItemQuantity", requireAuth, changeCartItemQuantity);
-app.post("/checkout", requireAuth, checkout);
-app.get("/orders", requireAuth, viewOrders);
-app.put("/cancelOrder", requireAuth, cancelOrder);
+app.post("/checkout", requireAuth("Patient"), checkout);
+app.get("/orders", requireAuth("Patient"), viewOrders);
+app.put("/cancelOrder", requireAuth("Patient"), cancelOrder);
 
-app.post("/addAddress", requireAuth, addAddress);
-app.get("/searchAddress", requireAuth, searchAddress);
+app.post("/addAddress", requireAuth("Patient"), addAddress);
+app.get("/searchAddress", requireAuth("Patient"), searchAddress);
 
 app.put("/handleAccept/:requestId", handleAccept);
 app.put("/handleReject/:requestId", handleReject);

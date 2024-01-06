@@ -168,6 +168,14 @@ const checkout = async (req, res) => {
   
       // Save the order to the database
       await order.save();
+
+       // Decrease the medicine's available quantity
+    for (const item of cart.items) {
+      const medicineId = item.medicine._id;
+      const quantity = item.quantity;
+
+      await Medicine.findByIdAndUpdate(medicineId, { $inc: { availableQuantity: -quantity } });
+    }
   
       // Clear the cart for the user
       await Cart.findOneAndRemove({ patient: patientId });
