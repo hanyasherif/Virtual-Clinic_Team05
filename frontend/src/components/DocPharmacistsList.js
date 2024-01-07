@@ -23,7 +23,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 
-const PharmacistsList = () => {
+const DocPharmacistsList = () => {
 const location = useLocation();
 const searchParams = new URLSearchParams(location.search);
 const Id = searchParams.get('Id')
@@ -32,7 +32,7 @@ const Id = searchParams.get('Id')
 
     const getPharmacists= async () => {
         // Make a request to your backend API to fetch doctors based on search criteria
-        axios.get(`http://localhost:8000/viewPharmacists`, {
+        axios.get(`http://localhost:8000/docviewPharmacists`, {
           withCredentials: true
           } )
           .then((res) => {
@@ -106,7 +106,7 @@ const Id = searchParams.get('Id')
 }
 
 
-export default PharmacistsList;
+export default DocPharmacistsList;
 
 
 

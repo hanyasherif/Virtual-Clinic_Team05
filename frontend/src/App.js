@@ -83,6 +83,7 @@ import ChangePassword from './components/ChangePassword';
 import ChatPage from './pages/ChatPage'; 
 import PatientsList from './components/PatientsList';
 import PharmacistsList from './components/PharmacistsList';
+import DocPharmacistsList from './components/DocPharmacistsList';
 
 
 
@@ -273,6 +274,9 @@ function App() {
 
               <Route path="/Pharmacistslist"
               element={<PharmacistsList/>}/>
+
+              <Route path="/DocPharmacistslist"
+              element={<DocPharmacistsList/>}/>
               </Routes>
 
       </div>
