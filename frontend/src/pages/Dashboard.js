@@ -27,6 +27,8 @@ import PatientPagePH from './PatientPage';
 import FilterMedicine from '../componenetsPh/FilterMedicine';
 import Search from '../componenetsPh/Search';
 import cart from '../assets/cart.jpg';
+import Button from '@mui/material/Button';
+
 
 function Copyright(props) {
   return (
@@ -51,6 +53,8 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  backgroundColor: '#004E64', // New background color
+
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -92,7 +96,22 @@ const defaultTheme = createTheme();
 
 // ... (imports)
 
+// // TODO remove, this demo shouldn't need to reset the theme.
+// const defaultTheme = createTheme();
+
+// // ... (imports)
+
 export default function Dashboard() {
+
+  const handleLogout = async (e) => {
+    try {
+      await fetch('http://localhost:8000/logout');
+      window.location.href = 'http://localhost:3000/';
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -130,7 +149,9 @@ export default function Dashboard() {
               Welcome, Patient!
 
               </Typography>
-            {/* Cart Button */}
+
+              <Button color="inherit" onClick={handleLogout}>Logout</Button>
+            {/* Cart Button
             <Link to="/CartPage" style={{ textDecoration: 'none', color: 'inherit' }}>
               <img
                 id="cartImage"
@@ -138,7 +159,7 @@ export default function Dashboard() {
                 alt="Cart Image"
                 style={{ width: '30px', height: '30px', cursor: 'pointer' }}
               />
-            </Link>
+            </Link> */}
             {/* cart button here!!!! */}
 
 

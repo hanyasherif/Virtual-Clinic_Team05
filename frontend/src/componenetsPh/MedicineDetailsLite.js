@@ -27,7 +27,19 @@ const MedicineDetailsLite = ({ medicine, addToCart }) => {
       <Typography><strong>Active Ingredients: </strong>{medicine.activeIngredients}</Typography>
       <Typography><strong>Medicinal Use: </strong>{medicine.medicinalUse}</Typography>
       {/* Button to add the medicine to the cart */}
-      <Button variant="contained" onClick={() => handleAddToCart(medicine._id)} disableRipple>Add to Cart</Button>
+      <Button type="submit" variant="contained" color="primary" 
+        sx={{
+          color: 'white',
+          backgroundColor: '#25A18E',
+          '&:hover': {
+              backgroundColor: '#20756c', // Change color on hover if desired
+          },
+          }}
+        onClick={() => handleAddToCart(medicine._id)}
+        disableRipple
+      >
+        Add to Cart
+      </Button>
       {/* Feedback Snackbar */}
       <Snackbar open={feedbackOpen} autoHideDuration={3000} onClose={handleFeedbackClose}>
         <MuiAlert onClose={handleFeedbackClose} severity="success" sx={{ width: '100%' }}>

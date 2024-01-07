@@ -86,6 +86,7 @@ import ChangePassword from './components/ChangePassword';
 import Dashboard from './pages/Dashboard';
 import DashboardCart from './pages/DashboardCart';
 import DashboardCheckout from './pages/DashboardCheckout';
+import SignIn from './pages/SignIn';
 
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
@@ -182,7 +183,7 @@ function App() {
               {/*SS*/}
             <Route
               path="/PH"
-              element={<LoginPH/>}
+              element={<SignIn/>}
             />
             <Route
               path="/patientPagePH"
