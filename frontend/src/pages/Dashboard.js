@@ -21,6 +21,7 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import PatientPagePH from './PatientPage';
 
 function Copyright(props) {
   return (
@@ -160,6 +161,7 @@ export default function Dashboard() {
             overflow: 'auto',
           }}
         >
+          
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
@@ -170,10 +172,14 @@ export default function Dashboard() {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 240,
+                    height: 300,
                   }}
                 >
-                  <Chart />
+                  {/* <Chart /> */}
+                  <PatientPagePH />
+                  
+                  
+
                 </Paper>
               </Grid>
               {/* Recent Deposits */}
