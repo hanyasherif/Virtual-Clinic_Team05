@@ -89,7 +89,7 @@ const Id = searchParams.get('Id')
               width: "100%"
               }
           }}
-           onClick={() =>window.location.href=`http://localhost:3000/PatientProfile?Patient=${Pharmacist._id}&&Id=${Id}`}
+           onClick={() =>window.location.href=`http://localhost:3000/ChatPatientProfile?Patient=${Pharmacist._id}&&Id=${Id}`}
            key={Pharmacist._id}
           >
             <TableCell align="center">{Pharmacist.username}</TableCell>

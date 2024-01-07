@@ -84,6 +84,7 @@ import ChatPage from './pages/ChatPage';
 import PatientsList from './components/PatientsList';
 import PharmacistsList from './components/PharmacistsList';
 import DocPharmacistsList from './components/DocPharmacistsList';
+import ChatUserProfile from './components/ChatPatientInformation'
 
 
 
@@ -277,6 +278,9 @@ function App() {
 
               <Route path="/DocPharmacistslist"
               element={<DocPharmacistsList/>}/>
+
+              <Route path="/ChatPatientProfile"
+              element={<ChatUserProfile/>}/>
               </Routes>
 
       </div>
