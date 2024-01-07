@@ -39,7 +39,7 @@ const Login = () => {
                break;
             case 'Patient':
                // Redirect to patient page
-               window.location.href = `/patient`;
+               window.location.href = `/Dashboard`;
                break;
             case 'Administrator':
                // Redirect to page

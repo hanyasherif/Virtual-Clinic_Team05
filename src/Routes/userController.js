@@ -521,8 +521,21 @@ const addFamilyMember = async (req, res) => {
  
  const viewAppointments = async(req,res)=>{
      try{
-      const Appointments = await appointmentsModel.find({ status: { $ne: 'free' } });
-      res.status(200).send(Appointments);
+      const token = req.cookies.jwt;
+      const decodedToken = jwt.verify(token, 'supersecret');
+      const patientId = decodedToken.user._id;
+      const Appointments = await appointmentsModel.find({ patient: patientId });
+      const doctorNames = [];
+      for(let i = 0; i<Appointments.length; i++){
+        doctorNames.push((await userModel.findById(Appointments[i].doctor)).name);
+      }
+      // for(let i = 0; i<Appointments.length; i++){
+      //   console.log(doctorNames[i]);
+      //   console.log(Appointments[i].doctor);
+      //   Appointments[i].doctor = doctorNames[i];
+      //   console.log(Appointments[i].doctor);
+      // }
+      res.status(200).json({Appointments, doctorNames});
   }
      
       catch(error){
@@ -532,7 +545,10 @@ const addFamilyMember = async (req, res) => {
  
  const filterAppointmentsDate = async(req,res)=>{
     try{
-        const Appointments = await appointmentsModel.find({date :req.params.date})
+      const token = req.cookies.jwt;
+      const decodedToken = jwt.verify(token, 'supersecret');
+      const patientId = decodedToken.user._id;
+        const Appointments = await appointmentsModel.find({patient: patientId, date :req.params.date})
         res.status(200).json(Appointments)
     }
     catch(error){
@@ -542,7 +558,10 @@ const addFamilyMember = async (req, res) => {
  }
 const filterAppointmentsStatus = async(req,res)=>{ 
     try{
-        const Appointments = await appointmentsModel.find({status :req.params.status})
+      const token = req.cookies.jwt;
+      const decodedToken = jwt.verify(token, 'supersecret');
+      const patientId = decodedToken.user._id;
+        const Appointments = await appointmentsModel.find({patient: patientId, status :req.params.status})
         res.status(200).json(Appointments)
     }
     catch(error){

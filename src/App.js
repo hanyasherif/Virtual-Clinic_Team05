@@ -147,7 +147,7 @@ app.get("/getARequest", getARequest);
 //////////////////////////////////aseel/////////////////////////////
 app.post("/addFamilyMember",requireAuth("Patient"),addFamilyMember); //no /:id(username) 3shan ana 7atah alreadyf body((or not?))
 app.get("/viewRegFamilyMembers",requireAuth("Patient"),viewRegFamilyMembers);
-app.get("/viewAppointments",requireAuth,viewAppointments);
+app.get("/viewAppointments",requireAuth("Patient"),viewAppointments);
 app.get("/filterAppointmentsDate/:date",filterAppointmentsDate); 
 app.get("/filterAppointmentsStatus/:status",filterAppointmentsStatus);
 app.get("/getUserById/:id", getUserById);

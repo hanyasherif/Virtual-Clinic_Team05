@@ -431,7 +431,7 @@ export default function AddFamilyMember () {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              El7a2ny Clinic Patient Page
+              Add Family Member Patient Page
             </Typography>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
             <IconButton color="inherit">
@@ -477,12 +477,20 @@ export default function AddFamilyMember () {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
 
-            <Grid item xs={12} md={4} lg={6}>
+            <Grid item xs={12} md={4} lg={6}                
+              sx={{
+                '&:hover > div': {
+                  transform: 'scale(1.01)',
+                  transition: 'transform 0.3s ease-in-out',
+                },
+              }}
+            >
           <Paper
            sx={{
               p: 2,
               display: 'flex',
               flexDirection: 'column',
+              transition: 'transform 0.3s ease-in-out',
               height: 605,
             }}
           >
@@ -683,12 +691,20 @@ export default function AddFamilyMember () {
           </Paper>
         </Grid>
 
-              <Grid item xs={12} md={4} lg={6} >
+              <Grid item xs={12} md={4} lg={6} 
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
                     height: 605,
                   }}
                 >

@@ -187,12 +187,20 @@ export default function Dashboard() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
+              <Grid item xs={12} md={8} lg={9} 
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
                     // height: 200,
                   }}
                 >
@@ -201,12 +209,20 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
               {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
+              <Grid item xs={12} md={4} lg={3}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.02)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
                     // height: 200,
                   }}
                 >
@@ -214,12 +230,20 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} md={4} lg={2}>
+              <Grid item xs={12} md={4} lg={2}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
                     // height: 200,
                   }}
                 >
@@ -227,18 +251,40 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} lg={10}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: 200 }}>
+              <Grid item xs={12} lg={10}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
+                <Paper 
+                sx={{ 
+                  p: 2, 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  transition: 'transform 0.3s ease-in-out',
+                  height: 200, 
+                }}>
                   <ViewFamilyMember />
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} md={8} lg={13}>
+              <Grid item xs={12} md={8} lg={13}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
                     // height: 200,
                   }}
                 >
@@ -246,18 +292,39 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
 
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+              <Grid item xs={12}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
+                <Paper 
+                sx={{ 
+                  p: 2, 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  transition: 'transform 0.3s ease-in-out',
+                }}>
                   <ViewPackages />
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} md={4} lg={4}>
+              <Grid item xs={12} md={4} lg={4}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
                     // height: 240,
                   }}
                 >
