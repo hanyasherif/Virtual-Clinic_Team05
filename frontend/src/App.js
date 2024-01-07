@@ -183,7 +183,7 @@ function App() {
             />
             <Route
               path="/patientPagePH"
-              element={<Dashboard/>}
+              element={<PatientPagePH/>}
             />
             <Route
               path="/pharmacistPagePH"

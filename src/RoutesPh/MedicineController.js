@@ -2,6 +2,7 @@
 const medicineModel = require('../Models/Medicine.js');
 const { default: mongoose } = require('mongoose');
 const jwt = require('jsonwebtoken');
+const Prescription = require('../Models/Prescription.js'); // Adjust the path as needed
 
 
 const createMedicine = async (req, res) => {
@@ -108,10 +109,74 @@ const filterMedicine = async (req, res) => {
    }
 };
 
+//new sp3
+
+const prescriptionMedicine = async (req, res) => {
+  try {
+   //  const token = req.cookies.jwt;
+   //  const decodedToken = jwt.verify(token, 'supersecret');
+   //  const patientId = decodedToken.user._id;
+
+      const patientId = req.query.patientId; // Access data from the query parameters
+
+    // Use Mongoose to find prescriptions by patient ID
+    const prescriptions = await Prescription.find({ patient: patientId });
+
+    // Create an array to store the medicines from prescriptions
+    const medicines = [];
+
+    // Iterate through each prescription to get associated medicines
+    for (const prescription of prescriptions) {
+      const medicineIds = prescription.medicine; // Assuming medicine field in prescription contains names
+
+      // Use Mongoose to find medicines by IDs
+      const medicinesForPrescription = await medicineModel.find({
+        name: { $in: medicineIds },
+      });
+
+      // Add medicines to the array
+      medicines.push(...medicinesForPrescription);
+    }
+
+    // Send the medicines as the response
+    res.status(200).json({ medicines });
+  } catch (error) {
+    // Handle errors, e.g., invalid token or database error
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+const findAlternativeMedicines = async (req, res) => {
+    try {
+       const { medicineName } = req.query;
+ 
+       // Find the medicine with the provided name
+       const targetMedicine = await medicineModel.findOne({ name: medicineName });
+ 
+       if (!targetMedicine) {
+          return res.status(404).json({ error: 'Medicine not found' });
+       }
+ 
+       // Find alternatives with the same active ingredient and in stock
+       const alternatives = await medicineModel.find({
+          activeIngredients: targetMedicine.activeIngredients,
+          availableQuantity: { $gt: 0 },
+       });
+
+       if (alternatives.length === 0) {
+          return res.status(404).json({ error: 'No alternatives found' });
+       }
+ 
+       res.status(200).json({ alternatives });
+    } catch (error) {
+       console.error(error);
+       res.status(500).json({ error: 'Internal Server Error' });
+    }
+ };
+
 
  
-
- 
-module.exports = {createMedicine, getMedicine, updateMedicine,searchMedicine, filterMedicine};
+module.exports = {createMedicine, getMedicine, updateMedicine,searchMedicine, filterMedicine, prescriptionMedicine,findAlternativeMedicines};
 
 
