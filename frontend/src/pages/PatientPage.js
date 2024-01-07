@@ -16,7 +16,8 @@ const PatientPage = () => {
         const json = await response.json();
 
         if (response.ok) {
-          setMedicines(json);
+          const nonArchivedMedicines = json.filter(medicine => !medicine.isArchived);
+          setMedicines(nonArchivedMedicines);
         }
       } catch (error) {
         console.error('Error fetching medicines:', error);
@@ -44,8 +45,8 @@ const PatientPage = () => {
   };
 
   return (
-    <div className="patientPage">
-      <div>Welcome, Patient!</div>
+    <div className="patientPage">            
+      <div>Welcome, Patient!</div>    
       <div className="medicines">
         {medicines &&
           medicines.map((medicine) => (
@@ -65,4 +66,4 @@ const PatientPage = () => {
   );
 };
 
-export default PatientPage;
+export default PatientPage;     

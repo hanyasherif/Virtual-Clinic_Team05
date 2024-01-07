@@ -74,18 +74,22 @@ const MedicineDetails = ({medicine}) => {
                 {/* Add a radio button for isArchived */}
       <div>
         <label>
-          Archive Medicine:
+          un-archive Medicine:
           <input
             type="radio"
             name="isArchived"
             checked={isArchived}
-            onChange={() => setIsArchived(true)}
+            onChange={() => setIsArchived(false)}
           />
         </label>
       </div>
       <button type="submit">Edit</button>
             </form>
+
+
+
             </div>
+
             </div>
        
     )

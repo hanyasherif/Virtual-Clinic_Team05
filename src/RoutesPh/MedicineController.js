@@ -109,9 +109,27 @@ const filterMedicine = async (req, res) => {
 };
 
 
+const archiveMedicine = async (medicineId) => {
+   try {
+     const updatedMedicine = await Medicine.findByIdAndUpdate(
+       medicineId,
+       { isArchived: true },
+       { new: true }
+     );
+ 
+     // Handle the updated medicine (you can send it to the client or perform other actions)
+     return updatedMedicine;
+   } catch (error) {
+     // Handle errors
+     console.error(error);
+     throw error;
+   }
+ };
+
+
  
 
  
-module.exports = {createMedicine, getMedicine, updateMedicine,searchMedicine, filterMedicine};
+module.exports = {createMedicine, getMedicine, updateMedicine,searchMedicine, filterMedicine, archiveMedicine};
 
 

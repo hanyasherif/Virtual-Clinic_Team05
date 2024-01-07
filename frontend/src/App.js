@@ -21,6 +21,7 @@ import RequestsPH from './componentsPh/Requests';
 import SubmitRequestPH from './pages/SubmitRequest';
 import PatientInfoPH from './pages/PatientInfo';
 import PharmacistInfoPH from './pages/PharmacistInfo';
+import PharmacistArch from './pages/PharmacistArch';
 
 import CartPagePH from './pages/sp2/CartPage';
 import CheckoutPagePH from './pages/sp2/CheckoutPage';
@@ -183,7 +184,7 @@ function App() {
             />
             <Route
               path="/patientPagePH"
-              element={<Dashboard/>}
+              element={<PatientPagePH/>}
             />
             <Route
               path="/pharmacistPagePH"
@@ -262,6 +263,10 @@ function App() {
             
                <Route path="/ChangeMyPasswordPH"
               element={<ChangePasswordPH/>}/>
+
+              <Route path="/PharmacistArch"
+              element={<PharmacistArch/>}/>
+              {/* sp3 */}
               
               </Routes>
 

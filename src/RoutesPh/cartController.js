@@ -174,7 +174,10 @@ const checkout = async (req, res) => {
       const medicineId = item.medicine._id;
       const quantity = item.quantity;
 
-      await Medicine.findByIdAndUpdate(medicineId, { $inc: { availableQuantity: -quantity } });
+      await Medicine.findByIdAndUpdate(medicineId, 
+      { $inc: { availableQuantity: -quantity } },
+       {$inc: {sales: +quantity}}
+        );
     }
   
       // Clear the cart for the user

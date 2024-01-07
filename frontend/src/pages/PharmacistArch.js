@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 //components
-import MedicineDetails from '../componenetsPh/MedicineDetails'
+import MedicineDetails from '../componenetsPh/MedicineDetailsArch'
 import CreateMedicine from '../componenetsPh/CreateMedicine'
 
 
@@ -19,7 +19,7 @@ const PharmacistPage = () => {
 
             if (response.ok) {
                 if (response.ok) {
-                    const nonArchivedMedicines = json.filter(medicine => !medicine.isArchived);
+                    const nonArchivedMedicines = json.filter(medicine => medicine.isArchived);
                     setMedicines(nonArchivedMedicines);
                   }
             }
@@ -40,7 +40,7 @@ const PharmacistPage = () => {
             </div>  
             <CreateMedicine />
 
-            <Link to="/PharmacistArch">
+            <Link to="/archive">
   <button>Go to Archive</button>
 </Link>
 
