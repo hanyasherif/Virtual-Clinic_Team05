@@ -8,6 +8,14 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const { requireAuth } = require('./Middleware/authMiddleware');
 const bodyParser = require("body-parser");
+const app = express();
+const http = require('http');
+
+const socketio =  require('socket.io');
+
+//const server = http.createServer(app);
+
+
 
 const uploadPh = require('./multerConfigV2');
 
@@ -49,7 +57,6 @@ const {viewOrders, cancelOrder} = require("./RoutesPh/orderController");
 const MongoURI = process.env.MONGO_URI ;
 
 //App variables
-const app = express();
 
 const cors = require('cors');
 const { default: test } = require("node:test");
@@ -62,13 +69,38 @@ app.get('/', (req, res) =>{
 // configurations
 // Mongo DB
 
+
+
 mongoose.connect(MongoURI)
 .then(()=>{
   console.log("MongoDB is now connected!")
 // Starting server
- app.listen(port, () => {
-    console.log(`Listening to requests on http://localhost:${port}`);
-  })
+const server=app.listen(port, () => {
+  console.log(`Listening to requests on http://localhost:${port}`);
+})
+const io = require('socket.io')(server,{cors: {
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST"]
+  
+}});
+io.on("connection", (socket) => {
+  console.log("SUCCESSSS");
+	socket.emit("me", socket.id)
+
+	socket.on("disconnect", () => {
+		socket.broadcast.emit("callEnded")
+	})
+
+	socket.on("callUser", (data) => {
+		io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
+	})
+
+	socket.on("answerCall", (data) => {
+		io.to(data.to).emit("callAccepted", data.signal)
+	})
+})
+
+
 })
 .catch(err => console.log(err));
 
@@ -80,10 +112,11 @@ app.use(bodyParser.json());
 ////////////////////////////////////////////////hanya//////////////////////////////////////////////////////////
 app.use(express.static('public'));
 
-const corsOptions = {
-   origin:"http://localhost:3000",//included origin as true
-  credentials: true, //included credentials as true
-};
+
+// const corsOptions = {
+//    origin:"http://localhost:3000",//included origin as true
+//   credentials: true, //included credentials as true
+// };
 
 app.use(cors({
   origin:"http://localhost:3000",//included origin as true
@@ -97,7 +130,12 @@ app.post('/upload', uploadPh.single('picture'), (req, res) => {
   res.json({ message: 'File uploaded successfully!', filePath });
 });
 
+//video
 
+
+
+
+///
 app.post("/ChangeEmailPassword",GEmail);
 app.post("/otpChecker",CheckOTP);
 app.get("/CheckEmail",CEmail);
@@ -280,6 +318,3 @@ app.get("/CheckEmail",requireAuth,CEmail);
 
 app.post("/ChangePassword",requireAuth,changePassword);
 
-/*
-                                                    End of your code
-*/

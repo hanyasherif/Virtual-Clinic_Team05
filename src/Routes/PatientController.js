@@ -276,7 +276,7 @@ const changePassword = async (req, res) => {//Changing password
       }
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
           if (!passwordRegex.test(req.body.password)) {
-               return res.status(500).json({ error: 'New password must have at least 8 characters, including 1 capital letter and 1 number' });
+               return res.status(400).json({ error: 'New password must have at least 8 characters, including 1 capital letter and 1 number' });
           }
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(req.body.password, salt); 

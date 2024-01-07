@@ -6,7 +6,10 @@ import Header from "./Header";
 const Login = () => {
    const [userName, setUserName] = useState('');
    const [password, setPassword] = useState('');
-
+   const goToVideoChat = () => {
+      // Assuming you trigger this function when you want to navigate to the video chat
+      window.location.href = "/video"
+    };
    const handleLogin = async () => {
       try {
          const response = await fetch('http://localhost:8000/login', {
@@ -82,12 +85,14 @@ const Login = () => {
   <button className="login-button" onClick={handleLogin}>
     Login
   </button>
+  <button onClick={goToVideoChat}>Go to Video Chat</button>
   <button onClick={() => window.location.href=`http://localhost:3000/reset-password-email`}>Forgot Password?</button>
   <p>
     Not signed up yet? <a href="/register">Sign Up</a>
   </p>
 </div>
 </div>
+
   );
 };
 
