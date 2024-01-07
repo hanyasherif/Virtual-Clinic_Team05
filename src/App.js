@@ -282,7 +282,7 @@ app.get("/CheckEmail",requireAuth,CEmail);
 app.post("/ChangePassword",requireAuth,changePassword);
 
 //new sp3
-app.get("/prescriptions",  prescriptionMedicine);
+app.get("/prescriptions",requireAuth("Patient"),  prescriptionMedicine);
 app.get("/alternativeMedicines", findAlternativeMedicines);
 
 

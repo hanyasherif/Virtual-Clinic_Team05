@@ -29,6 +29,8 @@ import Search from '../componenetsPh/Search';
 import cart from '../assets/cart.jpg';
 import Button from '@mui/material/Button';
 
+import PateintPagePrescription from './PatientPagePrescription';
+
 
 function Copyright(props) {
   return (
@@ -218,7 +220,7 @@ export default function Dashboard() {
                   }}
                 >
                   
-                  <PatientPagePH />
+                  <PateintPagePrescription />
                 </Paper>
               </Grid>
               {/* Filter Medicines */}
