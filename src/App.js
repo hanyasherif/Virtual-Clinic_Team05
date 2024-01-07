@@ -11,13 +11,98 @@ const bodyParser = require("body-parser");
 
 const uploadPh = require('./multerConfigV2');
 
+const MongoURI = process.env.MONGO_URI ;
+
+//App variables
+const app = express();
+
+
+const { default: test } = require("node:test");
+const port = process.env.PORT || "8000";
+
+app.get('/', (req, res) =>{
+  res.json({mssg: 'Welcome to the app'})
+})
+
+
+
+
+app.get("/home", (req, res) => {
+  res.status(200).send("You have everything installed!");
+});
+app.use(bodyParser.json());
+// #Routing to userController here
+////////////////////////////////////////////////hanya//////////////////////////////////////////////////////////
+app.use(express.static('public'));
+const http = require("http");
+
+const { Server } = require("socket.io");
+const cors = require('cors');
+
+const corsOptions = {
+  origin:"http://localhost:3000",//included origin as true
+  credentials: true, //included credentials as true
+};
+
+app.use(cors({
+  origin:"http://localhost:3000",//included origin as true
+  credentials: true, //included credentials as true
+}));
+app.use(cookieParser());
+// Example route that uses multer for file uploads
+app.post('/upload', uploadPh.single('picture'), (req, res) => {
+  // Handle the uploaded file here and return the file path
+  const filePath = req.file ? req.file.path : '';
+  res.json({ message: 'File uploaded successfully!', filePath });
+});
+
+// chat
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(`User Connected: ${socket.id}`);
+  
+  socket.on("join_room", (data) => {
+    socket.join(data);
+    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  });
+  
+  socket.on("send_message", (data) => {
+    socket.to(data.room).emit("receive_message", data);
+  });
+  
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
+});
+
+// configurations
+// Mongo DB
+
+mongoose.connect(MongoURI)
+.then(()=>{
+  console.log("MongoDB is now connected!")
+  // Starting server
+  server.listen(port, () => {
+    console.log(`Listening to requests on http://localhost:${port}`);
+  })
+})
+.catch(err => console.log(err));
+
 const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, 
   viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
    filterAppointmentsStatus, AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor, 
    uploadMedicalDocument, findPatById,login, removeMedicalDocument, 
     servefiles ,getUploaded ,    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,
-    getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId} 
+    getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId, getRoom} 
     = require("./Routes/userController");
 
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
@@ -46,57 +131,6 @@ const {addToCart, viewCart, removeFromCart,
   checkout, createPaymentIntent} = require("./RoutesPh/cartController");
 
 const {viewOrders, cancelOrder} = require("./RoutesPh/orderController");
-const MongoURI = process.env.MONGO_URI ;
-
-//App variables
-const app = express();
-
-const cors = require('cors');
-const { default: test } = require("node:test");
-const port = process.env.PORT || "8000";
-
-app.get('/', (req, res) =>{
-  res.json({mssg: 'Welcome to the app'})
-})
-
-// configurations
-// Mongo DB
-
-mongoose.connect(MongoURI)
-.then(()=>{
-  console.log("MongoDB is now connected!")
-// Starting server
- app.listen(port, () => {
-    console.log(`Listening to requests on http://localhost:${port}`);
-  })
-})
-.catch(err => console.log(err));
-
-app.get("/home", (req, res) => {
-    res.status(200).send("You have everything installed!");
-  });
-app.use(bodyParser.json());
-// #Routing to userController here
-////////////////////////////////////////////////hanya//////////////////////////////////////////////////////////
-app.use(express.static('public'));
-
-const corsOptions = {
-   origin:"http://localhost:3000",//included origin as true
-  credentials: true, //included credentials as true
-};
-
-app.use(cors({
-  origin:"http://localhost:3000",//included origin as true
- credentials: true, //included credentials as true
-}));
-app.use(cookieParser());
- // Example route that uses multer for file uploads
-app.post('/upload', uploadPh.single('picture'), (req, res) => {
-  // Handle the uploaded file here and return the file path
-  const filePath = req.file ? req.file.path : '';
-  res.json({ message: 'File uploaded successfully!', filePath });
-});
-
 
 app.post("/ChangeEmailPassword",GEmail);
 app.post("/otpChecker",CheckOTP);
@@ -279,6 +313,8 @@ app.post("/otpChecker",requireAuth,CheckOTP);
 app.get("/CheckEmail",requireAuth,CEmail);
 
 app.post("/ChangePassword",requireAuth,changePassword);
+
+app.get("/getRoom",getRoom)
 
 /*
                                                     End of your code

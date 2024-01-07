@@ -7,6 +7,8 @@ const  mongoose  = require('mongoose');
 const familyMemberModel = require('../Models/FamilyMember.js');
 const appointmentsModel = require('../Models/Appointment.js');
 const AppointmentModel = require('../Models/Appointment.js');
+const RoomModel = require('../Models/Room.js');
+
 const fs = require('fs');
 const bcrypt = require('bcrypt')
 const path = require('path');
@@ -491,7 +493,7 @@ const addFamilyMember = async (req, res) => {
  
      const token = req.cookies.jwt;
   const decodedToken = jwt.verify(token, 'supersecret');
-  const id = decodedToken.user._id
+  const id = decodedToken.user._id;
     try{
      const user = await userModel.findById(id);
      res.status(200).send(user);
@@ -759,7 +761,32 @@ catch (err) {
 }
 }
 
-
+const getRoom = async (req, res) => {
+  const token = req.cookies.jwt;
+  const decodedToken = jwt.verify(token, 'supersecret');
+  const partner1Id =decodedToken.user._id;
+  console.log(partner1Id)
+  const partner2Id = req.query.partner;
+  console.log(partner2Id)
+  try {
+  
+    let room = await RoomModel.findOne({
+      $or: [
+        { $and: [{ partner1Id :partner1Id}, { partner2Id :partner2Id}] },
+        { $and: [{ partner1Id: partner2Id }, { partner2Id: partner1Id }] }, 
+      ],
+    });
+    
+    if (!room && partner1Id !== partner2Id) {
+      room = await RoomModel.create({ partner1Id, partner2Id });
+    }
+    console.log(room)
+    res.json(room);
+    
+  } catch (error) {
+    res.status(500).json({ error: 'Error retrieving chat room', message: error.message });
+  }
+};
  
 // Return the token and user role
 
@@ -767,7 +794,7 @@ module.exports = { login, addAdministrator, removeUser, getUsers,registerPatient
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
    filterAppointmentsStatus, AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor, uploadMedicalDocument, removeMedicalDocument
   , getUploaded, findPatById, servefiles ,getUserById  ,getWalletInfo,getFamilyMemberData,
-  getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor, getUserByTokenId}   
+  getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor, getUserByTokenId, getRoom}   
 
 // module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
 //    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,

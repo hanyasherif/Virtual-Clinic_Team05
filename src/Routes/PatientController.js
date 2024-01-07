@@ -291,5 +291,7 @@ const changePassword = async (req, res) => {//Changing password
   }
 };
 
+
+
   
 module.exports = {viewPackages ,subscribePackage , viewMyPackage ,cancelPackage  ,GEmail ,CEmail,CheckOTP,changePassword}; 
