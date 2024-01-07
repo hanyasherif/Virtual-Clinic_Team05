@@ -32,7 +32,7 @@ const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData 
 const {createContract, acceptContract,   rejectContract,   getContract}= require("./Routes/employmentController");
 
 //////PHARMA OLAYAN
-const { createMedicine, getMedicine, updateMedicine, searchMedicine, filterMedicine } = require("./RoutesPh/MedicineController");
+const { createMedicine, getMedicine, updateMedicine, searchMedicine, filterMedicine, prescriptionMedicine, findAlternativeMedicines } = require("./RoutesPh/MedicineController");
 const { addRequestPH, getRequestsPH, getARequestPH, handleAcceptPH, handleRejectPH } = require("./RoutesPh/requestController");
 const { loginPH, CEmailPH,GEmailPH,CheckOTPPH, changePasswordPH } = require("./RoutesPh/userController");
 
@@ -261,6 +261,7 @@ app.post("/checkout", requireAuth("Patient"), checkout);
 app.get("/orders", requireAuth("Patient"), viewOrders);
 app.put("/cancelOrder", requireAuth("Patient"), cancelOrder);
 
+
 app.post("/addAddress", requireAuth("Patient"), addAddress);
 app.get("/searchAddress", requireAuth("Patient"), searchAddress);
 
@@ -279,6 +280,12 @@ app.post("/otpChecker",requireAuth,CheckOTP);
 app.get("/CheckEmail",requireAuth,CEmail);
 
 app.post("/ChangePassword",requireAuth,changePassword);
+
+//new sp3
+app.get("/prescriptions",  prescriptionMedicine);
+app.get("/alternativeMedicines", findAlternativeMedicines);
+
+
 
 /*
                                                     End of your code

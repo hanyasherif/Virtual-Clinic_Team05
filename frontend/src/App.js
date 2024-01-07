@@ -83,7 +83,7 @@ import AddAppointment from './components/AddAppointments';
 import ChangePassword from './components/ChangePassword'; 
 
 
-import Dashboard from './pages/sp3/Dashboard';
+import Dashboard from './pages/Dashboard';
 
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
