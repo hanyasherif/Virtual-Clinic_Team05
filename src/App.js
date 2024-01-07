@@ -102,7 +102,8 @@ const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, sear
    filterAppointmentsStatus, AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor, 
    uploadMedicalDocument, findPatById,login, removeMedicalDocument, 
     servefiles ,getUploaded ,    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,
-    getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId, getRoom} 
+    getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId, getRoom, phviewPatients,
+     viewPharmacists} 
     = require("./Routes/userController");
 
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
@@ -145,6 +146,10 @@ app.get("/searchByName",requireAuth("Patient"),searchByName);
 app.get("/searchBySpec",requireAuth("Patient"),searchBySpec);
 app.get("/searchByNameSpec",requireAuth("Patient"),searchByNameSpec);
 app.get("/viewDoctors",requireAuth("Patient"), viewDoctors);
+app.get("/pharmacistviewDoctors",requireAuth("Pharmacist"), viewDoctors); //chat
+app.get("/pharmacistViewPatients",requireAuth("Pharmacist"), phviewPatients); //chat
+app.get("/viewPharmacists",requireAuth("Patient"), viewPharmacists); //chat
+app.get("/docviewPharmacists",requireAuth("Doctor"), viewPharmacists); //chat
 app.get("/getDoctorInfo",requireAuth("Patient"), getDoctorInfo);
 app.get("/getSpecs",requireAuth("Patient"), getSpecs);
 app.get("/filterSpecs/:spec",requireAuth("Patient"), filterSpecs);

@@ -35,6 +35,7 @@ const DoctorsList = () => {
 
   useEffect(() => {
     getDoctors();
+    phgetDoctors();
     getSpec();
   }, []);
 
@@ -57,7 +58,16 @@ const DoctorsList = () => {
       });
   };
 
-
+  const phgetDoctors = async () => {
+    // Make a request to your backend API to fetch doctors based on search criteria
+    axios.get(`http://localhost:8000/pharmacistviewDoctors`, {
+      withCredentials: true
+      } )
+      .then((res) => {
+        const doctors = res.data;
+        setDoctors(doctors);
+      });
+  };
 
   const searchDoctors = async () => {
     // Make a request to your backend API to fetch doctors based on search criteria

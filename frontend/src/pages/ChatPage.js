@@ -22,15 +22,16 @@ function ChatPage() {
   };
 useEffect(() => {
   const id = localStorage.getItem('partner');
+  console.log(id)
   setPartner(id)
 }, []);
   return (
     <div className="Chat">
       {!showChat ? (
         <div className="joinChatContainer">
-          <h3>Join A Chat</h3>
+          <h3>Start Chat</h3>
            
-          <button onClick={joinRoom}>Join A Room</button>
+          <button onClick={joinRoom}>Join</button>
         </div>
       ) : (
         <Chat socket={socket} partner={partner} room={room} />

@@ -19,6 +19,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
+
+
 const DocProfile = () => {
 
     const params = new URLSearchParams(window.location.search);
@@ -50,6 +52,11 @@ const DocProfile = () => {
 
       
   }, [doctorId]);
+
+  const chat= async() =>{
+    localStorage.setItem('partner', params.get('doctorId'));
+    window.location.href='http://localhost:3000/ChatPage'
+  }
   return (
     <div className="doctor-profile">
       <div>
@@ -61,6 +68,11 @@ const DocProfile = () => {
       <p>Date of Birth: {doctor.dateOfBirth}</p>
       <p>Hourly Rate: ${doctor.hourlyRate}</p>
       <p>Affiliation: {doctor.affiliation}</p>
+      </div>
+      <div>
+      <button  onClick={chat}>
+           Chat
+      </button>
       </div>
       <br/>
      <TableContainer component={Paper}>

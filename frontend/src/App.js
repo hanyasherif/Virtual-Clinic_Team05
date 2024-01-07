@@ -81,6 +81,10 @@ import ViewAcceptContract from './components/ViewAcceptContract';
 import AddAppointment from './components/AddAppointments';
 import ChangePassword from './components/ChangePassword'; 
 import ChatPage from './pages/ChatPage'; 
+import PatientsList from './components/PatientsList';
+import PharmacistsList from './components/PharmacistsList';
+
+
 
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
@@ -264,6 +268,11 @@ function App() {
               <Route path="/chatpage"
               element={<ChatPage/>}/>
               
+              <Route path="/patientslist"
+              element={<PatientsList/>}/>
+
+              <Route path="/Pharmacistslist"
+              element={<PharmacistsList/>}/>
               </Routes>
 
       </div>

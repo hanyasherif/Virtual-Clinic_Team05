@@ -28,6 +28,10 @@ const PharmacistPage = () => {
            
             <div className="medicines">
             <div>Welcome, Pharmacist!</div>
+            <div>
+                <button onClick={() => window.location.href='http://localhost:3000/docList'}>Doctors Chat List</button>
+                <button onClick={() => window.location.href='http://localhost:3000/patientslist'}>Patients Chat List</button>
+            </div>
                 {medicines &&
                     medicines.map((medicine) => 
                         <MedicineDetails key={medicine._id} medicine={medicine} />)}   

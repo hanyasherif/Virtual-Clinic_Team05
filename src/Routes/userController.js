@@ -197,7 +197,8 @@ const addAdministrator = async(req,res) => {
            const doctors = await userModel.find({ type: "Doctor" });
        
            // Filter out doctors with null or undefined docSpeciality
-           const filteredDoctors = doctors.filter((doctor) => doctor.docSpeciality !== null && doctor.docSpeciality !== undefined);
+           const filteredDoctors = doctors.filter((doctor) => doctor.docSpeciality !== null 
+           && doctor.docSpeciality !== undefined);
        
            res.status(200).json(filteredDoctors);
          } catch (err) {
@@ -205,6 +206,33 @@ const addAdministrator = async(req,res) => {
          }
        };
        
+       const phviewPatients = async (req, res) => {
+        try {
+          const patients = await userModel.find({ type: "Patient" });
+      
+          // // Filter out doctors with null or undefined docSpeciality
+          // const filteredDoctors = doctors.filter((doctor) => doctor.docSpeciality !== null 
+          // && doctor.docSpeciality !== undefined);
+      
+          res.status(200).json(patients);
+        } catch (err) {
+          res.status(500).json({ message: err.message });
+        }
+      };
+
+      const viewPharmacists = async (req, res) => {
+        try {
+          const pharmacists = await userModel.find({ type: "Pharmacist" });
+      
+          // // Filter out doctors with null or undefined docSpeciality
+          // const filteredDoctors = doctors.filter((doctor) => doctor.docSpeciality !== null 
+          // && doctor.docSpeciality !== undefined);
+      
+          res.status(200).json(pharmacists);
+        } catch (err) {
+          res.status(500).json({ message: err.message });
+        }
+      };
 
       const getDoctorInfo = async (req, res) => {
          try {
@@ -794,7 +822,7 @@ module.exports = { login, addAdministrator, removeUser, getUsers,registerPatient
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
    filterAppointmentsStatus, AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor, uploadMedicalDocument, removeMedicalDocument
   , getUploaded, findPatById, servefiles ,getUserById  ,getWalletInfo,getFamilyMemberData,
-  getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor, getUserByTokenId, getRoom}   
+  getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor, getUserByTokenId, getRoom, phviewPatients, viewPharmacists}   
 
 // module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
 //    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
