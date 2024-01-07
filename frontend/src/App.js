@@ -23,8 +23,8 @@ import PatientInfoPH from './pages/PatientInfo';
 import PharmacistInfoPH from './pages/PharmacistInfo';
 import PharmacistArch from './pages/PharmacistArch';
 
-import CartPagePH from './pages/sp2/CartPage';
-import CheckoutPagePH from './pages/sp2/CheckoutPage';
+import CartPagePH from './pages/CartPage';
+import CheckoutPagePH from './pages/CheckoutPage';
 import CancelOrderPH from './pages/sp2/CancelOrder';
 import OrderDetailsPH from './pages/sp2/OrderDetails';
 import SuccessOrderPH from './pages/sp2/SuccessOrder';
@@ -84,6 +84,8 @@ import ChangePassword from './components/ChangePassword';
 
 
 import Dashboard from './pages/Dashboard';
+import Dashboard2 from './pages/Dashboard2';
+import Dashboard3 from './pages/Dashboard3';
 
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
@@ -184,7 +186,7 @@ function App() {
             />
             <Route
               path="/patientPagePH"
-              element={<PatientPagePH/>}
+              element={<Dashboard/>}
             />
             <Route
               path="/pharmacistPagePH"
@@ -231,7 +233,7 @@ function App() {
             />
             <Route
               path="/cartPagePH"
-              element={<CartPagePH/>} 
+              element={<Dashboard2/>} 
             />
             <Route
               path="/orderDetailsPH"
@@ -239,7 +241,7 @@ function App() {
             />
             <Route
               path="/checkoutPagePH"
-              element={<CheckoutPagePH/>}
+              element={<Dashboard3/>}
             />
             <Route
               path="/successOrderPH"

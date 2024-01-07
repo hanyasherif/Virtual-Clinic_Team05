@@ -23,7 +23,7 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
-import PatientPagePH from './PatientPage';
+import CartPagePH from './CartPage';
 import FilterMedicine from '../componenetsPh/FilterMedicine';
 import Search from '../componenetsPh/Search';
 import cart from '../assets/cart.jpg';
@@ -127,7 +127,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Welcome, Patient!
+              My Cart
 
               </Typography>
             {/* Cart Button */}
@@ -197,7 +197,7 @@ export default function Dashboard() {
                   }}
                 >
                   {/* <Chart /> */}
-                  <PatientPagePH />
+                  <CartPagePH />
                 </Paper>
               </Grid>
               {/* Recent Deposits */}

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'; // Add this import statement
 //import jwt from 'jsonwebtoken'; // Add this import statement
 //import Cookies from 'js-cookie'; // Add this import statement
+import emptyCart from '../assets/emptyCart.jpg';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -54,9 +55,14 @@ const CartPage = () => {
   
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div>
+        <img src={emptyCart} alt="Empty Cart" />
+        <p>Your cart is empty!</p>
+      </div>
+    );
   }
-
+  
   return (
     <div>
       <h2>Cart Page</h2>

@@ -23,10 +23,72 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
-import PatientPagePH from './PatientPage';
+import CartPagePH from './CartPage';
 import FilterMedicine from '../componenetsPh/FilterMedicine';
 import Search from '../componenetsPh/Search';
 import cart from '../assets/cart.jpg';
+// import IconButton from '@mui/material/IconButton';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+
+
+
+
+// Placeholder for AddAddressForm
+const AddAddressForm = () => {
+  // Replace with your actual implementation
+  return (
+    <div>
+      <h3>Add Address Form</h3>
+      {/* Your add address form implementation here */}
+    </div>
+  );
+};
+
+
+
+const AddressesList = () => {
+    // Replace with your actual implementation
+    return (
+      <div>
+        <h3>Addresses List</h3>
+        {/* Your addresses list implementation here */}
+      </div>
+    );
+  };
+
+  
+// Placeholder for ExpandLessIcon and ExpandMoreIcon
+const ExpandLessIcon = ({ onClick }) => {
+    return (
+      <IconButton onClick={onClick} aria-label="expand-less">
+        <ExpandLess />
+      </IconButton>
+    );
+  };
+
+  const ExpandMoreIcon = ({ onClick }) => {
+    return (
+      <IconButton onClick={onClick} aria-label="expand-more">
+        <ExpandMore />
+      </IconButton>
+    );
+  };
+
+  // Placeholder for PaymentMethodDropdown
+const PaymentMethodDropdown = () => {
+    // Replace with your actual implementation
+    return (
+      <div>
+        <h3>Select Payment Method</h3>
+        {/* Your dropdown implementation here */}
+      </div>
+    );
+  };
+  
+
 
 function Copyright(props) {
   return (
@@ -92,10 +154,17 @@ const defaultTheme = createTheme();
 
 // ... (imports)
 
+// ... (imports)
+
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
+  const [showAddAddressForm, setShowAddAddressForm] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const toggleAddAddressForm = () => {
+    setShowAddAddressForm(!showAddAddressForm);
   };
 
   return (
@@ -127,10 +196,8 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Welcome, Patient!
-
-              </Typography>
-            {/* Cart Button */}
+              Check Out!
+            </Typography>
             <Link to="/CartPage" style={{ textDecoration: 'none', color: 'inherit' }}>
               <img
                 id="cartImage"
@@ -139,9 +206,6 @@ export default function Dashboard() {
                 style={{ width: '30px', height: '30px', cursor: 'pointer' }}
               />
             </Link>
-            {/* cart button here!!!! */}
-
-
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -186,7 +250,7 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flex: 1, display: 'flex' }}>
             <Grid container spacing={3}>
-              {/* Chart (PatientPagePH) */}
+              {/* Grid 1 - Drop-down list for payment method */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
@@ -196,32 +260,25 @@ export default function Dashboard() {
                     height: '100%',
                   }}
                 >
-                  {/* <Chart /> */}
-                  <PatientPagePH />
+                  <PaymentMethodDropdown />
                 </Paper>
               </Grid>
-              {/* Recent Deposits */}
+              {/* Grid 2 - Addresses (Toggle Add Address Form) */}
               <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 240,
+                    height: showAddAddressForm ? 'auto' : 240,
                   }}
                 >
-                  <FilterMedicine />
+                  {showAddAddressForm ? <AddAddressForm /> : <AddressesList />}
+                  <IconButton onClick={toggleAddAddressForm}>
+                    {showAddAddressForm ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  </IconButton>
                 </Paper>
               </Grid>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper
-                sx={{ p: 2, display: 'flex', flexDirection: 'column', flex: 1 }}
-              >
-                <Search />
-                {/* <Orders /> */}
-              </Paper>
             </Grid>
           </Container>
           <Copyright sx={{ pt: 4 }} />
