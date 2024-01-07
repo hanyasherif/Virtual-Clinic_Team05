@@ -86,6 +86,7 @@ import ChangePassword from './components/ChangePassword';
 import Dashboard from './pages/Dashboard';
 import DashboardCart from './pages/DashboardCart';
 import DashboardCheckout from './pages/DashboardCheckout';
+import DashboardPrescription from './pages/DashboardPrescription';
 import SignIn from './pages/SignIn';
 
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
@@ -270,6 +271,11 @@ function App() {
               <Route path="/PharmacistArch"
               element={<PharmacistArch/>}/>
               {/* sp3 */}
+
+              <Route
+              path="/PrescriptionMedicines"
+              element={<DashboardPrescription/>}
+            />
               
               </Routes>
 

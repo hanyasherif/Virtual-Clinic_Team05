@@ -113,11 +113,11 @@ const filterMedicine = async (req, res) => {
 
 const prescriptionMedicine = async (req, res) => {
   try {
-   //  const token = req.cookies.jwt;
-   //  const decodedToken = jwt.verify(token, 'supersecret');
-   //  const patientId = decodedToken.user._id;
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, 'supersecret');
+    const patientId = decodedToken.user._id;
 
-      const patientId = req.query.patientId; // Access data from the query parameters
+      //const patientId = req.query.patientId; // Access data from the query parameters
 
     // Use Mongoose to find prescriptions by patient ID
     const prescriptions = await Prescription.find({ patient: patientId });
@@ -139,7 +139,7 @@ const prescriptionMedicine = async (req, res) => {
     }
 
     // Send the medicines as the response
-    res.status(200).json({ medicines });
+    res.status(200).json( medicines );
   } catch (error) {
     // Handle errors, e.g., invalid token or database error
     console.error(error);
@@ -195,6 +195,6 @@ const archiveMedicine = async (medicineId) => {
 
 
  
-module.exports = {createMedicine, getMedicine, updateMedicine,searchMedicine, filterMedicine, prescriptionMedicine,findAlternativeMedicines};
+module.exports = {createMedicine, getMedicine, updateMedicine,searchMedicine, filterMedicine, prescriptionMedicine,findAlternativeMedicines, archiveMedicine};
 
 

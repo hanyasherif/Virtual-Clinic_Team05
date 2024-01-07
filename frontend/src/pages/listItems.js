@@ -10,6 +10,8 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import DescriptionIcon from '@mui/icons-material/Description';
+
 
 
 
@@ -21,17 +23,17 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Dashboard"/>
     </ListItemButton>
-    <ListItemButton onClick={() => { window.location.href = '/addFamilyMember'; }}>
+    <ListItemButton onClick={() => { window.location.href = '/PrescriptionMedicines'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
-        <PeopleIcon />
+      <DescriptionIcon />
       </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Add Family Member" />
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Prescription Medicines" />
     </ListItemButton>
-    <ListItemButton onClick={() => { window.location.href = '/FilterAppointmentsPatient'; }}>
+    <ListItemButton onClick={() => { window.location.href = '/cartPagePH'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
         <DateRangeIcon />
       </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Filter Appointments" />
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Cart" />
     </ListItemButton>
     <ListItemButton onClick={() => { window.location.href = '/uploadMedicalHistory'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
