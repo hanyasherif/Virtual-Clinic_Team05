@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { Button } from '@mui/material';
 import MedicineDetailsLite from './MedicineDetailsLite';
 
 const MedicineFilter = ({ filterMedicine }) => {
-  const medicinalUses = ["Allergy Relief", "Pain Relief", "Digestive Health", "Immune Support","Supplement","Skin Care","Other"];  const [medicines, setMedicines] = useState([]); // State to store filter results  const [medicines, setMedicines] = useState([]); // State to store filter results
+  const medicinalUses = ["Allergy Relief", "Pain Relief", "Digestive Health", "Immune Support","Supplement","Skin Care","Other"];
+  const [medicines, setMedicines] = useState([]);
 
   const handleFilter = (medicinalUse) => {
-    // Send a Get request to the backend with the selected medicinal use as a query parameter
     fetch(`/filterMedicine?medicinalUse=${medicinalUse}`, {
       method: 'GET',
       headers: {
@@ -19,7 +20,6 @@ const MedicineFilter = ({ filterMedicine }) => {
         return response.json();
       })
       .then((data) => {
-        // Store filter results in state
         setMedicines(data);
       })
       .catch((error) => {
@@ -32,9 +32,9 @@ const MedicineFilter = ({ filterMedicine }) => {
       <p>Filter by Medicinal Use:</p>
       <div>
         {medicinalUses.map((medicinalUse, index) => (
-          <button key={index} onClick={() => handleFilter(medicinalUse)}>
+          <Button key={index} onClick={() => handleFilter(medicinalUse)} variant="contained" color="primary">
             {medicinalUse}
-          </button>
+          </Button>
         ))}
       </div>
 

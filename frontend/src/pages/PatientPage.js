@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Button, Grid } from '@mui/material';
 import MedicineDetailsLite from '../componenetsPh/MedicineDetailsLite';
-//import Cookies from 'js-cookie';
 import axios from 'axios';
-
 
 const PatientPage = () => {
   const [medicines, setMedicines] = useState(null);
@@ -45,25 +44,28 @@ const PatientPage = () => {
   };
 
   return (
-    <div className="patientPage">            
-      <div>Welcome, Patient!</div>    
-      <div className="medicines">
+    <div className="patientPage">
+      <div>Welcome, Patient!</div>
+      <Grid container spacing={2} className="medicines">
         {medicines &&
           medicines.map((medicine) => (
-            <MedicineDetailsLite
-              key={medicine._id}
-              medicine={medicine}
-              addToCart={addToCart}
-            />
+            <Grid item key={medicine._id} xs={12} sm={6} md={4} lg={3}>
+              <MedicineDetailsLite
+                medicine={medicine}
+                addToCart={addToCart}
+              />
+            </Grid>
           ))}
-      </div>
+      </Grid>
 
       {/* Add button to route to CartPage */}
       <Link to="/CartPagePH">
-        <button>Go to Cart</button>
+        <Button variant="contained" color="primary">
+          Go to Cart
+        </Button>
       </Link>
     </div>
   );
 };
 
-export default PatientPage;     
+export default PatientPage;

@@ -84,8 +84,8 @@ import ChangePassword from './components/ChangePassword';
 
 
 import Dashboard from './pages/Dashboard';
-import Dashboard2 from './pages/Dashboard2';
-import Dashboard3 from './pages/Dashboard3';
+import DashboardCart from './pages/DashboardCart';
+import DashboardCheckout from './pages/DashboardCheckout';
 
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
@@ -233,7 +233,7 @@ function App() {
             />
             <Route
               path="/cartPagePH"
-              element={<Dashboard2/>} 
+              element={<DashboardCart/>} 
             />
             <Route
               path="/orderDetailsPH"
@@ -241,7 +241,7 @@ function App() {
             />
             <Route
               path="/checkoutPagePH"
-              element={<Dashboard3/>}
+              element={<DashboardCheckout/>}
             />
             <Route
               path="/successOrderPH"

@@ -15,7 +15,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton onClick={() => { window.location.href = '/LandingPage'; }}>
+    <ListItemButton onClick={() => { window.location.href = '/patientPagePH'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
         <DashboardIcon />
       </ListItemIcon>
