@@ -24,6 +24,10 @@ function UserProfile() {
       alert('An error occurred:', error);
     }
   }
+  const chat= async() =>{
+        localStorage.setItem('partner', searchParams.get('Patient'));
+        window.location.href='http://localhost:3000/ChatPage'
+  }
 
 
 
@@ -62,6 +66,9 @@ function UserProfile() {
           <div style={containerStyle}>
           <button  onClick={getPatientData}>
            Patient Data
+          </button>
+          <button  onClick={ chat}>
+           Chat
           </button>
           <button style={buttonStyle} onClick={toggleShowMore}>
             {showMore ? 'Show Less' : 'Show More'}

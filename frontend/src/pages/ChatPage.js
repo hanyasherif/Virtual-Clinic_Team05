@@ -1,6 +1,6 @@
 import "../Chat.css";
 import io from "socket.io-client";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import Chat from "../components/Chat";
 import axios from "axios"
 
@@ -12,28 +12,24 @@ function ChatPage() {
   const [showChat, setShowChat] = useState(false);
 
   const joinRoom = async () => {
-    if (partner !== "") {
       const response =  await axios.get('/getRoom', { params: {partner:partner} });
       const data=response.data;
       setRoom(data._id)
       socket.emit("join_room", data._id);
       console.log(socket)
       setShowChat(true);
-    }
+    
   };
-
+useEffect(() => {
+  const id = localStorage.getItem('partner');
+  setPartner(id)
+}, []);
   return (
     <div className="Chat">
       {!showChat ? (
         <div className="joinChatContainer">
           <h3>Join A Chat</h3>
-          <input
-            type="text"
-            placeholder="John..."
-            onChange={(event) => {
-              setPartner(event.target.value);
-            }}
-          />
+           
           <button onClick={joinRoom}>Join A Room</button>
         </div>
       ) : (
