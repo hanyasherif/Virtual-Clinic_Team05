@@ -1,7 +1,6 @@
-/* google font */
+/*
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
-/* layout */
 :root {
   --primary: #1aac83;
   --error: #e7195a;
@@ -33,10 +32,9 @@ header a {
 }
 .center{
   display: flex;
-  align-items: center; /* Center vertically */
+  align-items: center; 
   justify-content: center;
 }
-/* homepage */
 .home {
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -71,5 +69,6 @@ header a {
   color: #333;
 }
 .input-group {
-  margin-bottom: 100px; /* Add vertical margin to create space between each pair */
+  margin-bottom: 100px; 
 }
+*/

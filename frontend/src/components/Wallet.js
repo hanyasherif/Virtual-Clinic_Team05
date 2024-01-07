@@ -1,11 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import * as React from 'react';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
+import Title from './Title';
 
 const Wallet = () => {
   const [walletInfo, setWalletInfo] = useState('');
   const [error, setError] = useState('');
-  const id = '65735cebad66db980718a14d'; // session
+
+  function preventDefault(event) {
+    event.preventDefault();
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,18 +30,37 @@ const Wallet = () => {
   }, []); // The empty dependency array ensures that this effect runs only once, equivalent to componentDidMount
 
   return (
-    <div>
-      <label htmlFor="amount">Amount:</label>
+
+  <React.Fragment>
+      <Title style={{ color: '#25A18E' , fontSize: 23}}>My Wallet amount</Title>
+      <Typography component="p" variant="h4" fontSize={18}>
+        {walletInfo}
+      </Typography>
+       {/* <input type="text" value={walletInfo} readOnly /> */}
+
+    </React.Fragment>
+
+    // <div>
+    //   <label htmlFor="amount">Amount:</label>
 
       
-      <div>
-        <br />
-        <input type="text" value={walletInfo} readOnly />
-      </div>
+    //   <div>
+    //     <br />
+    //     <input type="text" value={walletInfo} readOnly />
+    //   </div>
 
-      {error && <p>{error}</p>}
-    </div>
+    //   {error && <p>{error}</p>}
+    // </div>
   );
 };
 
 export default Wallet;
+
+
+
+
+// export default function Deposits() {
+//   return (
+    
+//   );
+// }

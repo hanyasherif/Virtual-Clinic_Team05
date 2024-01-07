@@ -45,6 +45,22 @@ const Login = () => {
                // Redirect to page
                window.location.href = "/AdminPage";
                break;
+            case 'Pharmacist':
+               // Redirect to page
+               window.location.href = "/pharmacistPagePh";
+             break;
+                  // case 'Patient':
+                  //    // Redirect to patient page
+                  //    window.location.href = `/patientPagePH`;
+                  //    break;
+                  // case 'Administrator':
+                  //    // Redirect to page
+                  //    window.location.href = "/adminPagePH";
+                  //    break;
+                  // default:
+                  //     window.location.href = "/PH";
+                      
+                  //    break;
             default:
                 window.location.href = "/";
                 

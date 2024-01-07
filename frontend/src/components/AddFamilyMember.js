@@ -1,110 +1,179 @@
+import * as React from 'react';
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiDrawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Badge from '@mui/material/Badge';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Link from '@mui/material/Link';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { mainListItems, secondaryListItems } from './listItems';
+import Button from "@mui/material/Button";
+import Wallet from './Wallet';
+import ViewHealthRecords from './ViewHealthRecords';
 import { useState } from 'react'
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from "axios";
+import Title from './Title';
+import { TextField, FormControlLabel, Radio } from '@mui/material';
 
-const AddFamilyMember = () => {
-    const [famMemName, setfamMemName] = useState('')
-    const [famMemNatID, setfamMemNatID] = useState('')
-    const [famMemAge, setfamMemAge] = useState('')
-   const [famMemGender, setfamMemGender] = useState('')
-   const [famMemRelation, setfamMemRelation] = useState('')
-   const [error, setError] = useState('');
 
-   const [newFamMem, setNewFamMem] = useState(false);
-   const [linkFamMem, setLinkFamMem] = useState(false);
+function Copyright(props) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="http://localhost:3000">
+        El7a2ny
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>   
+  );
+}
 
-   //linking
-   const [email, setEmail] = useState('')
-   const [phoneNumber, setPhoneNumber] = useState('')
+const drawerWidth = 240;
 
-  
-   const [username, setUsername] = useState('')
-   
-   //wife/husband
-   const [username2, setUsername2] = useState('')
-   const [famMemNatID2, setfamMemNatID2] = useState('') //my nationalId to be linked to other family member as a family member
-   const [famMemName2, setfamMemName2] = useState('')
-   const [famMemGender2, setfamMemGender2] = useState('')
-   const [famMemAge2, setfamMemAge2] = useState('')
-   const [idGenerated, setIdGenerated] = useState('')
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  backgroundColor: '#004E64', // New background color
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
 
-   const id = '65735cebad66db980718a14d';
-    // const checkUniqueUsername = async (username) => {
-    //     try {
-    //       const response = await fetch('/checkUsername', {
-    //         method: 'POST',
-    //         body: JSON.stringify({ username }),
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //         },
-    //       });
-      
-    //       if (response.ok) {
-    //         const data = await response.json();
-    //         return data.isUnique;
-    //       } else {
-    //         console.error('Error checking username uniqueness');
-    //         return false; // Assume not unique in case of an error
-    //       }
-    //     } catch (error) {
-    //       console.error('Network error:', error);
-    //       return false; // Assume not unique in case of a network error
-    //     }
-    //   };
-    const handleGenderChange = (e) => {
-      setfamMemGender(e.target.value);
-    };
-    const handleRelationChange = (e) => {
-      setfamMemRelation(e.target.value);
-    };
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      const params = new URLSearchParams(window.location.search);
-      const FamilyMember = {famMemName, famMemNatID, famMemAge, famMemGender, famMemRelation };
-      if (!famMemName || !famMemNatID || !famMemAge || !famMemGender || !famMemRelation) {
-        alert('Please fill in all fields.');
-        return;
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    '& .MuiDrawer-paper': {
+      position: 'relative',
+      whiteSpace: 'nowrap',
+      width: drawerWidth,
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      boxSizing: 'border-box',
+      ...(!open && {
+        overflowX: 'hidden',
+        transition: theme.transitions.create('width', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        width: theme.spacing(7),
+        [theme.breakpoints.up('sm')]: {
+          width: theme.spacing(9),
+        },
+      }),
+    },
+  }),
+);
+
+// TODO remove, this demo shouldn't need to reset the theme.
+const defaultTheme = createTheme();
+
+export default function AddFamilyMember () {
+
+  const [famMemName, setfamMemName] = useState('');
+  const [famMemNatID, setfamMemNatID] = useState('');
+  const [famMemAge, setfamMemAge] = useState('');
+  const [famMemGender, setfamMemGender] = useState('');
+  const [famMemRelation, setfamMemRelation] = useState('');
+  const [error, setError] = useState('');
+
+  const [newFamMem, setNewFamMem] = useState(false);
+  const [linkFamMem, setLinkFamMem] = useState(false);
+
+  //linking
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [username, setUsername] = useState('');
+
+  //wife/husband
+  const [username2, setUsername2] = useState('');
+  const [famMemNatID2, setfamMemNatID2] = useState(''); //my nationalId to be linked to other family member as a family member
+  const [famMemName2, setfamMemName2] = useState('');
+  const [famMemGender2, setfamMemGender2] = useState('');
+  const [famMemAge2, setfamMemAge2] = useState('');
+  const [famMemRelation2, setfamMemRelation2] = useState('');
+  const [idGenerated, setIdGenerated] = useState('');
+
+  const id = '65735cebad66db980718a14d';
+
+  const handleGenderChange = (e) => {
+    setfamMemGender(e.target.value);
+  };
+  const handleRelationChange = (e) => {
+    setfamMemRelation(e.target.value);
+  };
+  const handleRelationChange2 = (e) => {
+    setfamMemRelation2(e.target.value);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const params = new URLSearchParams(window.location.search);
+    const FamilyMember = {famMemName, famMemNatID, famMemAge, famMemGender, famMemRelation };
+    if (!famMemName || !famMemNatID || !famMemAge || !famMemGender || !famMemRelation) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8000/addFamilyMember`, {
+        method: 'POST',
+        body: JSON.stringify(FamilyMember),
+        headers: {
+         'Content-Type': 'application/json',
+        },credentials:'include'
+      });
+      const json = await response.json();
+
+      if(!response.ok){
+        alert(json.message);
+          return;
       }
-
-       try {
-        const response = await fetch(`http://localhost:8000/addFamilyMember`, {
-          method: 'POST',
-          body: JSON.stringify(FamilyMember),
-          headers: {
-            'Content-Type': 'application/json',
-          },credentials:'include'
-        });
-        const json = await response.json();
-
-        if(!response.ok){
-            alert(json.message);
-                return;
-            }
-            else{
-              setfamMemName("");
-              setfamMemNatID("");
-              setfamMemAge("");
-              setfamMemGender("");
-              setfamMemRelation("");
-              setError("");
-                console.log(json.message);
-                alert(json.message);
-            }}
-            catch (error) {
-              console.error('Error:', error);
-            }
-    };
+      else{
+        setfamMemName("");
+        setfamMemNatID("");
+        setfamMemAge("");
+        setfamMemGender("");
+        setfamMemRelation("");
+        setError("");
+        console.log(json.message);
+        alert(json.message);
+      }}
+    catch (error) {
+      console.error('Error:', error);
+    }
+  };
     const handleAddFamilyMemberClick = () => {
       setNewFamMem(true);
       setLinkFamMem(false); // Close the link to existing user form
     };
-  
     const handleLinkToExistingUserClick = () => {
       setLinkFamMem(true);
       setNewFamMem(false); // Close the family member form
     };
-
     const getUserName = async (userId) => {
       try {
         const response = await axios.get(`http://localhost:8000/getUserById/${userId}`,{withCredentials:true});
@@ -120,91 +189,38 @@ const AddFamilyMember = () => {
     };
 
     const handleSubmit2 = async (e) => {
-     
-
       e.preventDefault();
       const params = new URLSearchParams(window.location.search);
       if (!email && !phoneNumber) {
         alert('Please fill in at least one of the email or phone number fields');
         return;
       }
-      if(!famMemNatID|| !famMemRelation)
+      if(!famMemNatID|| !famMemRelation2)
       {
         alert('Please fill in national ID and Relation fields');
         return;
       }
       fetchUser(email,phoneNumber);
-      
-      // if(email){
-      // const response = await fetch(`/getUserByEmail/${email}`);
-     
-      //   if (!response.ok) {
-      //     alert("email not found")
-      //     console.error('Failed to fetch user information');
-      //     return;
-      //   }
-         
-      // assignFamilyMemberValuesEmail(email);
-      
-     
-
-      // }
-      // else{
-      //   const response = await fetch(`/getUserByPhoneNumber/${phoneNumber}`);
-     
-      //   if (!response.ok) {
-      //     alert("Phone number not found")
-      //     console.error('Failed to fetch user information');
-      //     return;
-      //   }
-          
-      // assignFamilyMemberValuesPhoneNumber(phoneNumber);
-      
-      //      }
-  
-       
-            if (famMemRelation === "wife/husband"){
-             // idGenerated = getId(username);
-              const idUsername =getUserName(id)  //bta3ty ana elly wa5daha mn el session
-              assignFamilyMemberValues(idUsername) 
+      if (famMemRelation2 === "wife/husband"){
+      // idGenerated = getId(username);
+      const idUsername =getUserName(id)  //bta3ty ana elly wa5daha mn el session
+      assignFamilyMemberValues(idUsername) 
               
-              if(!famMemNatID2){
-                alert('Please Provide your National ID');
-              }
-
+      if(!famMemNatID2){
+        alert('Please Provide your National ID');
+      }
               
-            }
-    };
-    // const getId = async(username)  =>{
-    //   try {
-    //     const x = {};
-    //     const appointments = await axios.get('http://localhost:8000/viewAppointments');
-    //     if (appointments.data) {
-    //       for (const appointment of appointments.data) {
-    //         const doctorId = appointment.doctor;
-    //         if (!doctorNames[doctorId]) {
-    //           const doctorName = await getName(doctorId);
-    //           doctorNames[doctorId] = doctorName;
-    //         }
-    //       }
-    //     }
-    //     setIdGenerated(doctorNames);
-    //   } catch (error) {
-    //     console.error('Error fetching doctor names:', error);
-    //   }
-    // };
+    }
+  };
     const assignFamilyMemberValues = async (username) => {
       try {
         const response = await fetch(`/getUserByUsername/${username}`,{credentials:'include'});
-        
         if (!response.ok) {
           
           console.error('Failed to fetch user information');
           return;
         }
-    
         const user = await response.json();
-    
         // Extract user information and assign it to state variables
         setUsername2(username);
         setfamMemName2(user.name); // Assuming 'name' is a property of the user object
@@ -311,33 +327,8 @@ const AddFamilyMember = () => {
       } catch (error) {
         console.error('Error:', error);
       }
-      // if(username2){
-      //   const FamilyMember2 = {username2, famMemName2,famMemNatID2,famMemAge2, famMemGender2, famMemRelation};
-      // console.log("2nd Family Member",FamilyMember2);
-  
-      // try {
-      //   const response = await fetch(`http://localhost:8000/addFamilyMember/${idGenerated}`, {
-      //     method: 'POST',
-      //     body: JSON.stringify(FamilyMember2),
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //   });
-      //   const json = await response.json();
-  
-      //   if (!response.ok) {
-      //     alert(json.message);
-      //     return;
-      //   }
-      // } catch (error) {
-      //   console.error('Error:', error);
-      // }
-      // }
     }
-    };
-   
-   
-   
+    };  
     const fetchUser = async (email, phoneNumber) => {
       if(email){
       try {
@@ -391,140 +382,479 @@ const AddFamilyMember = () => {
 
     }
     };
-    useEffect(() => {
-      
-      
-      addFamilyMember(); // Call the function
-    }, [username]); 
-    return (
-      <div>
-        {error && <p>{error}</p>}
-        
-        <button onClick={handleAddFamilyMemberClick}>Add New Family Member</button>
-        <button onClick={handleLinkToExistingUserClick}>Link to an Existing User</button>
 
-     {  linkFamMem && (
-             <form onSubmit={handleSubmit2}>
-              
+  useEffect(() => {    
+    addFamilyMember(); // Call the function
+  }, [username]);
 
-             <label>
-                 Email:
-             <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
 
-             </label>
-             <br />
-             <label>
-                 Phone Number:
-             <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+  const [open, setOpen] = React.useState(true);
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
 
-             </label>
-             <br />
-            <label>
-              National ID:
-              <input type="number" value={famMemNatID} onChange={(e) => setfamMemNatID(e.target.value)} />
-            </label>
-              
-              <br/>
-              <label>Relation:</label>
-            <label>
-              <input
-                type="radio"
-                value="wife/husband"
-                checked={famMemRelation === 'wife/husband'}
-                onChange={handleRelationChange}
-              />
-              Wife/Husband
-            </label>
-            {famMemRelation === 'wife/husband' && (
-      <div>
-        <label>Please provide your National ID:</label>
-        <input
+  const handleLogout = async (e) => {
+    try {
+      await fetch(`http://localhost:8000/logout`,{credentials: 'include'});
+      window.location.href = 'http://localhost:3000/';
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="absolute" open={open}>
+          <Toolbar
+            sx={{
+              pr: '24px', // keep right padding when drawer closed
+            }}
+          >
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={toggleDrawer}
+              sx={{
+                marginRight: '36px',
+                ...(open && { display: 'none' }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              El7a2ny Clinic Patient Page
+            </Typography>
+            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+            <IconButton color="inherit">
+              <Badge badgeContent={0} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Drawer variant="permanent" open={open}>
+          <Toolbar
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              px: [1],
+            }}
+          >
+            <IconButton onClick={toggleDrawer}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </Toolbar>
+          <Divider />
+          <List component="nav">
+            {mainListItems}
+            <Divider sx={{ my: 1 }} />
+            {secondaryListItems}
+          </List>
+        </Drawer>
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === 'light'
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: '100vh',
+            overflow: 'auto',
+          }}
+        >
+          <Toolbar />
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+
+            <Grid item xs={12} md={4} lg={6}>
+          <Paper
+           sx={{
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              height: 605,
+            }}
+          >
+
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+            <Title style={{ color: '#25A18E', fontSize: 23, textAlign: 'center' }}>
+              Add Family Member Details
+            </Title>
+            <br/>
+            <TextField
+              label="Name"
+              type="text"
+              value={famMemName}
+              onChange={(e) => setfamMemName(e.target.value)}
+              fullWidth
+              sx={{
+                marginBottom: '20px', // Adjust the margin as needed
+                '& .MuiInputLabel-root': {
+                  color: '#25A18E', // Change label color if necessary
+                },
+                '& .MuiInputLabel-shrink': {
+                  color: '#25A18E', // Change label color while shrinking (on input)
+                },
+                '& .MuiOutlinedInput-root': {
+                  '&:hover fieldset': {
+                    borderColor: '#25A18E', // Change border color on hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#25A18E', // Change border color on focus
+                  },
+                }
+              }}      
+            />
+            <TextField
+              label="Age"
+              type="number"
+              value={famMemAge}
+              onChange={(e) => setfamMemAge(e.target.value)}
+              fullWidth
+              sx={{
+                marginBottom: '20px', // Adjust the margin as needed
+                '& .MuiInputLabel-root': {
+                  color: '#25A18E', // Change label color if necessary
+                },
+                '& .MuiInputLabel-shrink': {
+                  color: '#25A18E', // Change label color while shrinking (on input)
+                },
+                '& .MuiOutlinedInput-root': {
+                  '&:hover fieldset': {
+                    borderColor: '#25A18E', // Change border color on hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#25A18E', // Change border color on focus
+                  },
+                }
+              }}           
+            />
+            <TextField
+             label="National ID"
+              type="number"
+              value={famMemNatID}
+              onChange={(e) => setfamMemNatID(e.target.value)}
+              fullWidth
+              sx={{
+                marginBottom: '20px', // Adjust the margin as needed
+                '& .MuiInputLabel-root': {
+                  color: '#25A18E', // Change label color if necessary
+                },
+                '& .MuiInputLabel-shrink': {
+                  color: '#25A18E', // Change label color while shrinking (on input)
+                },
+                '& .MuiOutlinedInput-root': {
+                  '&:hover fieldset': {
+                    borderColor: '#25A18E', // Change border color on hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#25A18E', // Change border color on focus
+                  },
+                }
+              }}            
+            />
+          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <FormControlLabel
+              control={
+                <Radio
+                  value="female"
+                  checked={famMemGender === 'female'}
+                  onChange={handleGenderChange}
+                   sx={{
+                     color: '#25A18E', // Adjust color as needed
+                     '&.Mui-checked': {
+                      color: '#25A18E', // Adjust color for checked state
+                      },
+                  }}
+                />
+              }
+              label="Female"
+              sx={{
+                // color: '#25A18E', // Adjust label color if needed
+                marginBottom: '8px',
+                display: 'block',
+             }}
+            />
+            <FormControlLabel
+              control={
+                <Radio
+                  value="male"
+                  checked={famMemGender === 'male'}
+                  onChange={handleGenderChange}
+                  sx={{
+                    color: '#25A18E', // Adjust color as needed
+                    '&.Mui-checked': {
+                    color: '#25A18E', // Adjust color for checked state
+                     },
+                  }}
+                />
+              }
+              label="Male"
+              sx={{
+              // color: '#25A18E', // Adjust label color if needed
+              marginBottom: '8px',
+              display: 'block',
+              }}
+            />
+          </Box>
+
+      <FormControlLabel
+        control={
+          <Radio
+            value="wife/husband"
+            checked={famMemRelation === 'wife/husband'}
+            onChange={handleRelationChange}
+            sx={{
+              color: '#25A18E', // Adjust color as needed
+              '&.Mui-checked': {
+               color: '#25A18E', // Adjust color for checked state
+               },
+           }}
+          />
+        }
+        label="Wife/Husband"
+      />
+      {famMemRelation === 'wife/husband' && (
+        <TextField
+          label="Please provide your Wife/Husband's National ID"
           type="number"
           value={famMemNatID2}
           onChange={(e) => setfamMemNatID2(e.target.value)}
+          fullWidth
+          sx={{
+            marginBottom: '20px', // Adjust the margin as needed
+            '& .MuiInputLabel-root': {
+              color: '#25A18E', // Change label color if necessary
+            },
+            '& .MuiOutlinedInput-root': {
+              '&:hover fieldset': {
+                borderColor: '#25A18E', // Change border color on hover
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#25A18E', // Change border color on focus
+              },
+            }
+          }}      
         />
-      </div>
-    )}
-            <label>
-              <input
-                type="radio"
-                value="child"
-                checked={famMemRelation === 'child'}
-                onChange={handleRelationChange}
-              />
-              Child
-            </label>
+      )} 
+      <FormControlLabel
+        control={
+          <Radio
+            value="child"
+            checked={famMemRelation === 'child'}
+            onChange={handleRelationChange}
+            sx={{
+              color: '#25A18E', // Adjust color as needed
+              '&.Mui-checked': {
+               color: '#25A18E', // Adjust color for checked state
+               },
+           }}
+          />
+        }
+        label="Child"
+      />
+      <Button type="submit" variant="contained" color="primary" 
+      style={{ 
+        marginTop: 20, width: '50%' , marginLeft: 110
+      }}
+      sx={{
+        color: 'white',
+        backgroundColor: '#25A18E',
+        '&:hover': {
+            backgroundColor: '#20756c', // Change color on hover if desired
+        },
+        }} >
+        Add Family Member
+      </Button>
+    </form>
+    {error && <p>{error}</p>}  
+
+          </Paper>
+        </Grid>
+
+              <Grid item xs={12} md={4} lg={6} >
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 605,
+                  }}
+                >
+            {error && <p>{error}</p>}
+            <form onSubmit={handleSubmit2} style={{ display: 'flex', flexDirection: 'column' }}>
+
+            {/* <form onSubmit={handleSubmit2}> */}
+            <Title style={{ color: '#25A18E', fontSize: 23, textAlign: 'center' }}>
+            Link To An Existing Family Member
+            </Title>
             <br/>
-              <button type="submit">Add Family Member</button>
-             </form>
-)}  
-        {newFamMem && (
-          <form onSubmit={handleSubmit}>
-            <label>
-              Name:
-              <input type="text" value={famMemName} onChange={(e) => setfamMemName(e.target.value)} />
-            </label>
-            <br />
-            <label>
-              National ID:
-              <input type="number" value={famMemNatID} onChange={(e) => setfamMemNatID(e.target.value)} />
-            </label>
-            <br />
-            <label>Age:</label>
-            <input 
-              type="number" 
-              onChange={(e) => setfamMemAge(e.target.value)} 
-              value={famMemAge} 
+            <TextField
+              label="Email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              fullWidth
+              sx={{
+                marginBottom: '20px', // Adjust the margin as needed
+                '& .MuiInputLabel-root': {
+                  color: '#25A18E', // Change label color if necessary
+                },
+                '& .MuiInputLabel-shrink': {
+                  color: '#25A18E', // Change label color while shrinking (on input)
+                },
+                '& .MuiOutlinedInput-root': {
+                  '&:hover fieldset': {
+                    borderColor: '#25A18E', // Change border color on hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#25A18E', // Change border color on focus
+                  },
+                }
+              }}                  />
+            <TextField
+             label="Phone Number"
+              type="text"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              fullWidth
+              sx={{
+                marginBottom: '20px', // Adjust the margin as needed
+                '& .MuiInputLabel-root': {
+                  color: '#25A18E', // Change label color if necessary
+                },
+                '& .MuiInputLabel-shrink': {
+                  color: '#25A18E', // Change label color while shrinking (on input)
+                },
+                '& .MuiOutlinedInput-root': {
+                  '&:hover fieldset': {
+                    borderColor: '#25A18E', // Change border color on hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#25A18E', // Change border color on focus
+                  },
+                }
+              }}      
             />
-            <br/>
-            <label>Gender:</label>
-            <label>
-              <input
-                type="radio"
-                value="female"
-                checked={famMemGender === 'female'}
-                onChange={handleGenderChange}
-              />
-              Female
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="male"
-                checked={famMemGender === 'male'}
-                onChange={handleGenderChange}
-              />
-              Male
-            </label>
-            <br/>
-            <label>Relation:</label>
-            <label>
-              <input
-                type="radio"
-                value="wife/husband"
-                checked={famMemRelation === 'wife/husband'}
-                onChange={handleRelationChange}
-              />
-              Wife/Husband
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="child"
-                checked={famMemRelation === 'child'}
-                onChange={handleRelationChange}
-              />
-              Child
-            </label>
-            <br/>
-            <button type="submit">Add Family Member</button>
-          </form>
-        )}
-        
-        {error && <p>{error}</p>}
-      </div>
-    );
-    
-  };
-  
-  export default AddFamilyMember;
+            <TextField
+             label="National ID"
+              type="number"
+              value={famMemNatID}
+              onChange={(e) => setfamMemNatID(e.target.value)}
+              fullWidth
+              sx={{
+                marginBottom: '20px', // Adjust the margin as needed
+                '& .MuiInputLabel-root': {
+                  color: '#25A18E', // Change label color if necessary
+                },
+                '& .MuiInputLabel-shrink': {
+                  color: '#25A18E', // Change label color while shrinking (on input)
+                },
+                '& .MuiOutlinedInput-root': {
+                  '&:hover fieldset': {
+                    borderColor: '#25A18E', // Change border color on hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#25A18E', // Change border color on focus
+                  },
+                }
+              }}      
+            />
+
+      <FormControlLabel
+        control={
+          <Radio
+            value="wife/husband"
+            checked={famMemRelation2 === 'wife/husband'}
+            onChange={handleRelationChange2}
+            sx={{
+              color: '#25A18E', // Adjust color as needed
+              '&.Mui-checked': {
+               color: '#25A18E', // Adjust color for checked state
+               },
+           }}
+          />
+        }
+        label="Wife/Husband"
+      />
+      {famMemRelation2 === 'wife/husband' && (
+        <TextField
+          label="Please provide your Wife/Husband's National ID"
+          type="number"
+          value={famMemNatID2}
+          onChange={(e) => setfamMemNatID2(e.target.value)}
+          fullWidth
+          sx={{
+            marginBottom: '20px', // Adjust the margin as needed
+            '& .MuiInputLabel-root': {
+              color: '#25A18E', // Change label color if necessary
+            },
+            '& .MuiInputLabel-shrink': {
+              color: '#25A18E', // Change label color while shrinking (on input)
+            },
+            '& .MuiOutlinedInput-root': {
+              '&:hover fieldset': {
+                borderColor: '#25A18E', // Change border color on hover
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#25A18E', // Change border color on focus
+              },
+            }
+          }}      
+        />
+      )} 
+      <FormControlLabel
+        control={
+          <Radio
+            value="child"
+            checked={famMemRelation2 === 'child'}
+            onChange={handleRelationChange2}
+            sx={{
+              color: '#25A18E', // Adjust color as needed
+              '&.Mui-checked': {
+               color: '#25A18E', // Adjust color for checked state
+               },
+           }}
+          />
+        }
+        label="Child"
+      />
+      <Button type="submit" variant="contained" color="primary" 
+      style={{ 
+        marginTop: 20, width: '50%' , marginLeft: 110
+      }}
+      sx={{
+        color: 'white',
+        backgroundColor: '#25A18E',
+        '&:hover': {
+            backgroundColor: '#20756c', // Change color on hover if desired
+        },
+        }} >
+        Link Family Member
+      </Button>
+    </form>
+
+    </Paper>
+      </Grid>
+
+      </Grid>
+            <Copyright sx={{ pt: 4 }} />
+          </Container>
+        </Box>
+      </Box>
+
+      
+    </ThemeProvider>
+  );
+}

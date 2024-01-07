@@ -33,6 +33,9 @@ import ForgotPasswPH from './pages/sp2/ForgotPassw';
 import OTPSenderPH from './pages/sp2/OTPsender'; 
 import OtpVerificationPH from './pages/sp2/OTPVerification';
 import ChangePasswordPH from './pages/sp2/ChangePass';
+import Dashboard from './components/Dashboard';
+import LandingPage from './components/LandingPage';
+
 ///
 //Pages & Components
 // import Home from './pages/Home'
@@ -85,8 +88,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      {/* <Navbar /> */}
-      <div className="pagesCl">
+      <div >
       <Routes>
       <Route 
               path = "/register"
@@ -256,10 +258,16 @@ function App() {
                <Route path="/ChangePasswordPH" element = {<OtpVerificationPH/>}/>
             
             
-               <Route path="/ChangeMyPasswordPH"
-              element={<ChangePasswordPH/>}/>
-              
-              </Routes>
+            <Route path="/ChangeMyPasswordPH"
+            element={<ChangePasswordPH/>}/>
+
+            <Route path="/Dashboard"
+            element={<Dashboard/>}/>
+          
+          <Route path="/LandingPage"
+            element={<LandingPage/>}/>
+          </Routes>
+          
 
       </div>
       {/* <UsernameTextBox /> Include TextBoxExample component here */}

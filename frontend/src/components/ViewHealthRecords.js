@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import Typography from '@mui/material/Typography';
+import Title from './Title';
 
 const ViewHealthRecordsForDoctor = ({ doctorId }) => {
   const [healthRecords, setHealthRecords] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  function preventDefault(event) {
+    event.preventDefault();
+  }
+
   useEffect(() => {
-    const id = '6543e673eff0e09fab8d7124';
     const fetchData = async () => {
         try {
           const response = await fetch(`http://localhost:8000/ViewUpdatedHRforD`, {
@@ -33,29 +38,34 @@ const ViewHealthRecordsForDoctor = ({ doctorId }) => {
           console.error('Error fetching health records:', error.message);
         }
       };
-      
-
     fetchData();
   }, [doctorId]);
 
   if (loading) {
-    return <p>Loading health records...</p>;
+    return <Title style={{ color: '#25A18E' , fontSize: 23}}>Loading health records...</Title>;
   }
 
   return (
-    <div>
-      <h2>Health Records for Patients</h2>
-      {healthRecords.map((record) => (
-        <div key={record.patientId}>
-          <h3>{record.name}</h3>
-          <ul>
-            {record.healthRecords.map((hr, index) => (
-              <li key={index}>{hr}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
+
+<React.Fragment>
+  <Title style={{ color: '#25A18E', fontSize: 23 }}>My Health Records</Title>
+  {healthRecords.map((record) => (
+    <div key={record.patientId}>
+      {/* <Typography component="h3" variant="h5" style={{ color: '#25A18E', fontSize: 18 }}>
+        {record.name}
+      </Typography> */}
+      <ul>
+        {record.healthRecords.map((hr, index) => (
+          <Typography key={index} component="li" variant="subtitle1">
+            {hr}
+          </Typography>
+        ))}
+      </ul>
     </div>
+  ))}
+</React.Fragment>
+
+
   );
 };
 
