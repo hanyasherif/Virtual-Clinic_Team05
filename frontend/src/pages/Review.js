@@ -7,24 +7,19 @@ import Grid from '@mui/material/Grid';
 
 const products = [
   {
-    name: 'Product 1',
-    desc: 'A nice thing',
-    price: '$9.99',
+    name: 'Paracetamol',
+    desc: 'Fever and pain relief',
+    price: '$4.99',
   },
   {
-    name: 'Product 2',
-    desc: 'Another thing',
-    price: '$3.45',
+    name: 'Advil',
+    desc: 'Pain and inflammation relief',
+    price: '$7.45',
   },
   {
-    name: 'Product 3',
-    desc: 'Something else',
-    price: '$6.51',
-  },
-  {
-    name: 'Product 4',
-    desc: 'Best thing of all',
-    price: '$14.11',
+    name: 'Brufen',
+    desc: 'Anti-inflammatory medication',
+    price: '$12.51',
   },
   { name: 'Shipping', desc: '', price: 'Free' },
 ];

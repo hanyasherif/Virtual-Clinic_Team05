@@ -12,11 +12,8 @@ import {
   Paper,
 } from '@material-ui/core';
 import emptyCart from '../assets/emptyCart.jpg';
-//import { makeStyles } from '@material-ui/core/styles';
-
 
 const CartPage = () => {
-  //const classes = useStyles();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,7 +22,7 @@ const CartPage = () => {
       try {
         const response = await axios.get('/viewCart');
         setCartItems(response.data.items);
-        setLoading(false);
+        setLoading(response.data.items.length === 0);
       } catch (error) {
         console.error('Error fetching cart items:', error);
       }
@@ -50,40 +47,37 @@ const CartPage = () => {
 
   const changeQuantity = async (itemId, newQuantity) => {
     try {
+      console.log('Changing quantity:', itemId, newQuantity);
+  
       const response = await axios.put('/changeCartItemQuantity', {
         itemId,
         quantity: newQuantity,
       });
-
+  
+      console.log('Response from server:', response.data);
+  
       setCartItems(response.data.items);
     } catch (error) {
       console.error('Error changing item quantity:', error);
     }
   };
+  
 
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
         const response = await axios.get('/viewCart');
         setCartItems(response.data.items);
-        setLoading(response.data.items.length === 0); // Set loading to false if the cart is empty
+        setLoading(response.data.items.length === 0);
       } catch (error) {
         console.error('Error fetching cart items:', error);
       }
     };
-  
+
     fetchCartItems();
   }, []);
-  
 
-  if (loading) {
-    return (
-      <div >
-        <img src={emptyCart} alt="Empty Cart" />
-        <Typography variant="body1">Your cart is empty!</Typography>
-      </div>
-    );
-  }
+  const totalCartPrice = cartItems.reduce((total, item) => total + item.totalPrice, 0);
 
   return (
     <div>
@@ -110,25 +104,22 @@ const CartPage = () => {
               />
             </Grid>
             <Grid item xs={12} sm={3}>
-            <Button
-  onClick={() => removeFromCart(item._id)}
-  variant="contained"
-  color="#911A20"
-
->
-  Remove
-</Button>
-
+              <Button
+                onClick={() => removeFromCart(item._id)}
+                variant="contained"
+                color="secondary"
+              >
+                Remove
+              </Button>
             </Grid>
           </Grid>
         </Paper>
       ))}
+      <Typography variant="h6" style={{ marginTop: '10px' }}>
+        Total Cart Price: {totalCartPrice}
+      </Typography>
       <Link to="/CheckoutPagePH">
-        <Button
-          variant="contained"
-          color= 'black'
-          
-        >
+        <Button variant="contained" color="primary" style={{ marginTop: '10px' }}>
           Proceed to Checkout
         </Button>
       </Link>

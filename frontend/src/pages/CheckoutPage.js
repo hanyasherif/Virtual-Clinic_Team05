@@ -101,7 +101,7 @@ const CheckoutPage = () => {
 
   return (
     <div>
-      <h2>CHECKOUT PAGE</h2>
+      <h2>CHECKOUT PAGE lol</h2>
 
       {/* Payment Method Selection */}
       <FormControl>
@@ -164,16 +164,40 @@ const CheckoutPage = () => {
       )}
 
       {/* Existing Addresses Selection */}
-      <AddressSelectionComponent addresses={addresses} handleSelectAddress={handleSelectAddress} />
+      <div>
+  <h3>Existing Addresses:</h3>
+  <FormControl sx={{ width: 200, marginBottom: 2 }}>
+    <InputLabel sx={{ marginTop: 1 }}>Select Address</InputLabel>
+    <Select
+      value={selectedAddressId || ''}
+      onChange={(e) => handleSelectAddress(e.target.value)}
+    >
+      {addresses.map((address) => (
+        <MenuItem key={address._id} value={address._id}>
+          {`${address.addressLine1}, ${address.city}, ${address.country}`}
+        </MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+</div>
 
-      {/* Proceed to success order page */}
-      <Link to="/SuccessOrder">
-        <Button variant="contained">Success Order</Button>
-      </Link>
+  
 
       {/* Perform checkout button */}
-      <Button variant="contained" onClick={handleCheckout}>
-        Perform Checkout
+      <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          onClick = {handleCheckout}
+          style={{ marginTop: 20, width: '70%' }}
+          sx={{
+            color: 'white',
+            backgroundColor: '#25A18E',
+            '&:hover': {
+              backgroundColor: '#20756c',
+            },
+          }}
+        >        Perform Checkout
       </Button>
     </div>
   );

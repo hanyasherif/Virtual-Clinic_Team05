@@ -22,7 +22,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="https://mui.com/">ce
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -31,7 +31,7 @@ function Copyright() {
   );
 }
 
-const steps = ['Add new address', 'Choose Address', 'Review order'];
+const steps = ['Add new address', 'Choose Address and Pay', 'Review order'];
 
 function getStepContent(step) {
   switch (step) {
@@ -105,23 +105,43 @@ export default function Checkout() {
               {getStepContent(activeStep)}
               <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                 {activeStep !== 0 && (
-                  <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                    Back
+                  <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          onClick = {handleBack}
+          style={{ marginTop: 20, width: '10%' }}
+          sx={{
+            color: 'white',
+            backgroundColor: '#25A18E',
+            '&:hover': {
+              backgroundColor: '#20756c',
+            },
+          }}
+        >                    Back
                   </Button>
                 )}
 
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                >
+<Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          onClick = {handleNext}
+          style={{ marginTop: 20, width: '10%' }}
+          sx={{
+            color: 'white',
+            backgroundColor: '#25A18E',
+            '&:hover': {
+              backgroundColor: '#20756c',
+            },
+          }}
+        >
                   {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                 </Button>
               </Box>
             </React.Fragment>
           )}
         </Paper>
-        <Copyright />
       </Container>
     </React.Fragment>
     
