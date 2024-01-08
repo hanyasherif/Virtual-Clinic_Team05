@@ -4,20 +4,21 @@ import { Button, Grid } from '@mui/material';
 import MedicineDetailsLite from '../componenetsPh/MedicineDetailsLite';
 import axios from 'axios';
 
-const PatientPagePrescription = () => {
+const PatientPage = () => {
   const [medicines, setMedicines] = useState(null);
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const fetchMedicine = async () => {
       try {
-        const response = await fetch('/prescriptions');
+        const response = await fetch('/medicines');
         const json = await response.json();
-        console.log(json);
 
         if (response.ok) {
           const nonArchivedMedicines = json.filter(medicine => !medicine.isArchived);
-          setMedicines(nonArchivedMedicines);
+          const paracetamolMedicines = nonArchivedMedicines.filter(medicine => medicine.activeIngredients === 'Paracetamol');
+          console.log(paracetamolMedicines);
+          setMedicines(paracetamolMedicines);
         }
       } catch (error) {
         console.error('Error fetching medicines:', error);
@@ -26,6 +27,7 @@ const PatientPagePrescription = () => {
 
     fetchMedicine();
   }, []);
+
   const addToCart = async (medicineId, quantity) => {
     try {
       const response = await axios.post('/addToCart', {
@@ -43,11 +45,9 @@ const PatientPagePrescription = () => {
     }
   };
 
-
-
   return (
     <div className="patientPage">
-      <div>Prescription Medicines</div>
+      <div>Welcome, Manar!</div>
       <Grid container spacing={2} className="medicines">
         {medicines &&
           medicines.map((medicine) => (
@@ -61,9 +61,13 @@ const PatientPagePrescription = () => {
       </Grid>
 
       {/* Add button to route to CartPage */}
-     
+      <Link to="/CartPagePH">
+        <Button variant="contained" color="primary">
+          Go to Cart
+        </Button>
+      </Link>
     </div>
   );
 };
 
-export default PatientPagePrescription;
+export default PatientPage;

@@ -18,6 +18,10 @@ const MedicineDetailsLite = ({ medicine, addToCart }) => {
     setFeedbackOpen(false);
   };
 
+  const handleRedirectToAlternatives = () => {
+    window.location.href = '/AlternativesMedicines';
+  };
+
   return (
     <div className="medicine-description">
       <Typography variant="h4">{medicine.name}</Typography>
@@ -27,19 +31,37 @@ const MedicineDetailsLite = ({ medicine, addToCart }) => {
       <Typography><strong>Active Ingredients: </strong>{medicine.activeIngredients}</Typography>
       <Typography><strong>Medicinal Use: </strong>{medicine.medicinalUse}</Typography>
       {/* Button to add the medicine to the cart */}
-      <Button type="submit" variant="contained" color="primary" 
+      {medicine.availableQuantity !== 0 ? (
+        <Button type="submit" variant="contained" color="primary" 
+          sx={{
+            color: 'white',
+            backgroundColor: '#25A18E',
+            '&:hover': {
+                backgroundColor: '#20756c', // Change color on hover if desired
+            },
+            }}
+          onClick={() => handleAddToCart(medicine._id)}
+          disableRipple
+        >
+          Add to Cart
+        </Button>
+      ) : (
+
+        <Button type="submit" variant="contained" color="primary"
         sx={{
           color: 'white',
-          backgroundColor: '#25A18E',
+          backgroundColor: '#880808',
           '&:hover': {
-              backgroundColor: '#20756c', // Change color on hover if desired
+              backgroundColor: '#880808', // Change color on hover if desired
           },
           }}
-        onClick={() => handleAddToCart(medicine._id)}
+        onClick={handleRedirectToAlternatives}
         disableRipple
       >
-        Add to Cart
-      </Button>
+View Alternatives      </Button>
+        
+        
+      )}
       {/* Feedback Snackbar */}
       <Snackbar open={feedbackOpen} autoHideDuration={3000} onClose={handleFeedbackClose}>
         <MuiAlert onClose={handleFeedbackClose} severity="success" sx={{ width: '100%' }}>
