@@ -29,6 +29,8 @@ import Search from '../componenetsPh/Search';
 import cart from '../assets/cart.jpg';
 import Button from '@mui/material/Button';
 
+///mangaa
+
 
 function Copyright(props) {
   return (
@@ -146,7 +148,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Welcome, Manar!
+             El7a2ny!
 
               </Typography>
 
@@ -208,13 +210,23 @@ export default function Dashboard() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flex: 1, display: 'flex' }}>
             <Grid container spacing={3}>
               {/*PatientPagePH */}
-              <Grid item xs={12} md={8} lg={9}>
+              <Grid item xs={50} md={8} lg={20}
+              sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                  
+                }}
+              >
                 <Paper
                   sx={{
-                    p: 2,
+                    p: 1,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '100%',
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 290,
+                    borderRadius: 3,
                   }}
                 >
                   
@@ -222,28 +234,56 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
               {/* Filter Medicines */}
-              <Grid item xs={12} md={4} lg={3}>
+              <Grid item xs={12} md={4} lg={15} 
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                  
+                }}
+              >
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 240,
+                    transition: 'transform 0.3s ease-in-out',
+                     height: 290,
+                    borderRadius: 3,
                   }}
                 >
+                  {/* <Chart /> */}
                   <FilterMedicine />
                 </Paper>
-              </Grid>
+              </Grid>
             </Grid>
             {/* Search */}
-            <Grid item xs={12}>
-              <Paper
-                sx={{ p: 2, display: 'flex', flexDirection: 'column', flex: 1 }}
+            <Grid item xs={12} md={4} lg={3} 
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                  
+                }}
               >
-                <Search />
-                {/* Search */}
-              </Paper>
-            </Grid>
+                <Paper
+                  sx={{
+                    marginLeft: '50px', // Adjust the initial left margin
+
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 290,
+                    borderRadius: 3,
+                  }}
+                >
+                  {/* <Chart /> */}
+                  <Search />
+                </Paper>
+              </Grid>
           </Container>
           <Copyright sx={{ pt: 4 }} />
         </Box>

@@ -16,6 +16,8 @@ import PaymentForm from './PaymentForm';
 import Review from './Review';
 import CheckoutPage from './CheckoutPage';
 
+import Layout from './Layout';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -56,6 +58,8 @@ export default function Checkout() {
   };
 
   return (
+    
+
     <React.Fragment>
       <CssBaseline />
       <AppBar
@@ -69,7 +73,7 @@ export default function Checkout() {
       >
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
-            Company name
+        
           </Typography>
         </Toolbar>
       </AppBar>
@@ -120,5 +124,6 @@ export default function Checkout() {
         <Copyright />
       </Container>
     </React.Fragment>
+    
   );
 }

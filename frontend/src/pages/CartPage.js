@@ -86,6 +86,21 @@ const CartPage = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const response = await axios.get('/viewCart');
+        setCartItems(response.data.items);
+        setLoading(response.data.items.length === 0); // Set loading to false if the cart is empty
+      } catch (error) {
+        console.error('Error fetching cart items:', error);
+      }
+    };
+  
+    fetchCartItems();
+  }, []);
+  
+
   if (loading) {
     return (
       <div className={classes.root}>

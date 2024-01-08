@@ -38,7 +38,7 @@ const MedicineDetails = ({medicine}) => {
         else{
             setName(medicine.name);
             // setPicture(medicine.picture);
-            setMedicineImage(medicine.picture);
+            // setMedicineImage(medicine.picture);
             setPrice(medicine.price);
             setDescription(medicine.description);
             setAvailableQuantity(medicine.availableQuantity);
@@ -53,7 +53,7 @@ const MedicineDetails = ({medicine}) => {
     return(
         <div className="medicine-description">
             <h4> {medicine.name}</h4>
-       < img id="imageDisplay" src={medicineImage} alt="Medicine Image" />
+       {/* < img id="imageDisplay" src={medicineImage} alt="Medicine Image" /> */}
 
             <p><strong>Available Quantity: </strong> {medicine.availableQuantity}</p>
             <p><strong>Sales: </strong> {medicine.sales}</p>

@@ -29,6 +29,7 @@ import Search from '../componenetsPh/Search';
 import cart from '../assets/cart.jpg';  
 import MedicineDetails from '../componenetsPh/MedicineDetailsArch';
 import PharmacistPage from './PharmacistPage';
+import PharmacistPage2 from './PharmacistPage2';
 
 function Copyright(props) {
   return (
@@ -189,19 +190,53 @@ export default function Dashboard() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flex: 1, display: 'flex' }}>
             <Grid container spacing={3}>
               {/* Cart */}
-              <Grid item xs={12} md={8} lg={9}>
+              <Grid item xs={12} md={4} lg={6} 
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                  
+                }}
+              >
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '100%',
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 290,
+                    borderRadius: 3,
                   }}
                 >
-                  {/* Pharmacist Page */}
+                  {/* <Chart /> */}
                   <PharmacistPage />
                 </Paper>
-              </Grid>
+              </Grid>
+
+     <Grid item xs={12} md={4} lg={6} 
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                  
+                }}
+              >
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 290,
+                    borderRadius: 3,
+                  }}
+                >
+                  {/* <Chart /> */}
+                  <PharmacistPage2 />
+                </Paper>
+              </Grid>
               {/* filter */}
               {/* <Grid item xs={12} md={4} lg={3}>
                 <Paper

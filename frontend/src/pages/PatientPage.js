@@ -45,7 +45,7 @@ const PatientPage = () => {
 
   return (
     <div className="patientPage">
-      <div>Welcome, Patient!</div>
+      <div>Welcome, Manar!</div>
       <Grid container spacing={2} className="medicines">
         {medicines &&
           medicines.map((medicine) => (

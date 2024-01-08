@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import MedicineDetailsLite from './MedicineDetailsLite';
 
 const MedicineFilter = ({ filterMedicine }) => {
-  const medicinalUses = ["Pain and Fever", "Infections", "Relief", "Stomach"];
+  const medicinalUses = ["Pain and Fever", "Infections", "Relief", "Infections"];
   const [medicines, setMedicines] = useState([]);
 
   const handleFilter = (medicinalUse) => {

@@ -19,17 +19,18 @@ import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItemsPharmacist';
+import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
-import CartPagePH from './CartPage';
+import PatientPagePH from './PatientPage';
 import FilterMedicine from '../componenetsPh/FilterMedicine';
 import Search from '../componenetsPh/Search';
-import cart from '../assets/cart.jpg';  
-import MedicineDetails from '../componenetsPh/MedicineDetailsArch';
-import PharmacistPage from './PharmacistPage';
-import PharmacistArch from './PharmacistArch';
+import cart from '../assets/cart.jpg';
+import Button from '@mui/material/Button';
+
+///mangaa
+
 
 function Copyright(props) {
   return (
@@ -54,6 +55,8 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  backgroundColor: '#004E64', // New background color
+
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -95,7 +98,22 @@ const defaultTheme = createTheme();
 
 // ... (imports)
 
+// // TODO remove, this demo shouldn't need to reset the theme.
+// const defaultTheme = createTheme();
+
+// // ... (imports)
+
 export default function Dashboard() {
+
+  const handleLogout = async (e) => {
+    try {
+      await fetch('http://localhost:8000/logout');
+      window.location.href = 'http://localhost:3000/';
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -130,10 +148,12 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              My Cart
+             El7a2ny!
 
               </Typography>
-            {/* Cart Button */}
+
+              <Button color="inherit" onClick={handleLogout}>Logout</Button>
+            {/* Cart Button
             <Link to="/CartPage" style={{ textDecoration: 'none', color: 'inherit' }}>
               <img
                 id="cartImage"
@@ -141,7 +161,7 @@ export default function Dashboard() {
                 alt="Cart Image"
                 style={{ width: '30px', height: '30px', cursor: 'pointer' }}
               />
-            </Link>
+            </Link> */}
             {/* cart button here!!!! */}
 
 
@@ -189,10 +209,33 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flex: 1, display: 'flex' }}>
             <Grid container spacing={3}>
-              {/* Cart */}
-              <Grid item xs={12} md={4} lg={10} 
+              {/*PatientPagePH */}
+              <Grid item xs={50} md={8} lg={20}
+              sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                  
+                }}
+              >
+                <Paper
+                  sx={{
+                    p: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 290,
+                    borderRadius: 3,
+                  }}
+                >
+                  
+                  <adminPagePH />
+                </Paper>
+              </Grid>
+              {/* Filter Medicines */}
+              <Grid item xs={12} md={4} lg={15} 
                 sx={{
-                  marginLeft: '70px',
                   '&:hover > div': {
                     transform: 'scale(1.01)',
                     transition: 'transform 0.3s ease-in-out',
@@ -206,30 +249,40 @@ export default function Dashboard() {
                     display: 'flex',
                     flexDirection: 'column',
                     transition: 'transform 0.3s ease-in-out',
+                     height: 290,
+                    borderRadius: 3,
+                  }}
+                >
+                  {/* <Chart 1/> */}
+                </Paper>
+              </Grid>
+            </Grid>
+            {/* Search */}
+            <Grid item xs={12} md={4} lg={3} 
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                  
+                }}
+              >
+                <Paper
+                  sx={{
+                    marginLeft: '50px', // Adjust the initial left margin
+
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
                     // height: 290,
                     borderRadius: 3,
                   }}
                 >
                   {/* <Chart /> */}
-                  <PharmacistArch />
+                  <adminPagePH />
                 </Paper>
               </Grid>
-              {/* filter */}
-              {/* <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <FilterMedicine />
-                </Paper>
-              </Grid> */}
-            </Grid>
-            {/* search */}
-          
           </Container>
           <Copyright sx={{ pt: 4 }} />
         </Box>

@@ -6,7 +6,7 @@ import { Typography, Button } from '@mui/material';
 import MedicineDetails from '../componenetsPh/MedicineDetails'
 import CreateMedicine from '../componenetsPh/CreateMedicine'
 
-const PharmacistPage = () => {
+const PharmacistPage2 = () => {
     const [medicines, setMedicines] = useState(null);
 
     useEffect(() => {
@@ -24,21 +24,12 @@ const PharmacistPage = () => {
     }, []);
 
     return (
-        <div className="pharmacistPage">
-            <Typography variant="h5">Edit Medicine</Typography>
+        <div className="pharmacistPage">    
+          <Typography variant="h5">Add new medicine</Typography>
             <br/>
-            <Link to="/PharmacistArch">
-                <Button variant="contained" color="primary">Go to Archive</Button>
-            </Link>
-            <div className="medicines">
-                {medicines &&
-                    medicines.map((medicine) => 
-                        <MedicineDetails key={medicine._id} medicine={medicine} />)}   
-            </div>  
-          
-            
+            <CreateMedicine />
         </div>
     );
 };
 
-export default PharmacistPage;
+export default PharmacistPage2;

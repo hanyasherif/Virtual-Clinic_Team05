@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 //components
 import MedicineDetails from '../componenetsPh/MedicineDetailsArch'
 import CreateMedicine from '../componenetsPh/CreateMedicine'
+import { Typography } from '@mui/material';
 
 
 
@@ -30,19 +31,17 @@ const PharmacistPage = () => {
 
     return (
         <div className="pharmacistPage">
-           
-            <div className="medicines">
-            <div>Welcome, Pharmacist!</div>
+             <div className="medicines">
+
+                <Typography variant="h4" component="h2" gutterBottom>
+            <div>Medicines Archive:</div>
+            </Typography>
                 {medicines &&
                     medicines.map((medicine) => 
                         <MedicineDetails key={medicine._id} medicine={medicine} />)}   
            
             </div>  
-            <CreateMedicine />
 
-            <Link to="/archive">
-  <button>Go to Archive</button>
-</Link>
 
         </div>
     
