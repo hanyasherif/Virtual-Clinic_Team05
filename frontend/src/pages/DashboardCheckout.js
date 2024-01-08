@@ -32,18 +32,35 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import TextField from '@mui/material/TextField'; // Import TextField here
+import FormControlLabel from '@mui/material/FormControlLabel'; // Import FormControlLabel
+import Checkbox from '@mui/material/Checkbox'; // Import Checkbox
+import Checkout from './Checkout';
+import AddressForm from './AddressForm';
 
 
 
 
-// Placeholder for AddAddressForm
-const AddAddressForm = () => {
-  // Replace with your actual implementation
+
+// // Placeholder for AddAddressForm
+// const AddAddressForm = () => {
+//   // Replace with your actual implementation
+//   return (
+//     <div>
+//       <h3>Add Address Form</h3>
+//       {/* Your add address form implementation here */}
+//     </div>
+//   );
+// };
+
+const AddAddressForm = ({ newAddress, handleInputChange }) => {
   return (
-    <div>
-      <h3>Add Address Form</h3>
-      {/* Your add address form implementation here */}
-    </div>
+    <React.Fragment>
+      <Typography variant="h6" gutterBottom>
+        Shipping address
+      </Typography>
+      
+    </React.Fragment>
   );
 };
 
@@ -53,8 +70,8 @@ const AddressesList = () => {
     // Replace with your actual implementation
     return (
       <div>
-        <h3>Addresses List</h3>
-        {/* Your addresses list implementation here */}
+        <h3>Add new Address</h3>
+        <AddressForm/>
       </div>
     );
   };
@@ -260,25 +277,11 @@ export default function Dashboard() {
                     height: '100%',
                   }}
                 >
-                  <PaymentMethodDropdown />
+                  <Checkout />
                 </Paper>
               </Grid>
               {/* Grid 2 - Addresses (Toggle Add Address Form) */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: showAddAddressForm ? 'auto' : 240,
-                  }}
-                >
-                  {showAddAddressForm ? <AddAddressForm /> : <AddressesList />}
-                  <IconButton onClick={toggleAddAddressForm}>
-                    {showAddAddressForm ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                  </IconButton>
-                </Paper>
-              </Grid>
+             
             </Grid>
           </Container>
           <Copyright sx={{ pt: 4 }} />

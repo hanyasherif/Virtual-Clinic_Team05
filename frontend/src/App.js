@@ -28,7 +28,7 @@ import CheckoutPagePH from './pages/CheckoutPage';
 import CancelOrderPH from './pages/sp2/CancelOrder';
 import OrderDetailsPH from './pages/sp2/OrderDetails';
 import SuccessOrderPH from './pages/sp2/SuccessOrder';
-import LoginPH from './pages/Login';
+import LoginPH from './pages/Login'; //old pharmacy login here
 import ChangePasswPH from './pages/sp2/ChangePassw';
 import ForgotPasswPH from './pages/sp2/ForgotPassw';
 import OTPSenderPH from './pages/sp2/OTPsender'; 
@@ -61,7 +61,8 @@ import Meeting from './components/Appointments';
 import UserProfile from './components/Patientinformation'
 import PrescriptionInfo from './components/PrescriptionInfo';
 import UploadMedicalHistory from './components/UploadMedicalHistory';
-import Login from './components/login';
+// import Login from './components/login'; 
+//old clinic login here
 import PatientPage from './components/PatientPage';
 import AdminPage from './components/AdminPage'
 import DoctorPage from './components/DoctorPage'
@@ -88,6 +89,10 @@ import DashboardCart from './pages/DashboardCart';
 import DashboardCheckout from './pages/DashboardCheckout';
 import DashboardPrescription from './pages/DashboardPrescription';
 import SignIn from './pages/SignIn';
+
+// import ChooseMode from './pages/chooseMode';
+
+import ChoosePath from './pages/ChoosePath';
 
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
@@ -144,8 +149,13 @@ function App() {
               element={<DoctorPage/>}/>
               {/* <Route path="/"
               element={<Menu/>}/> */}
+
+
               <Route path="/"
-              element={<Login/>}/>
+              element={<SignIn/>}/> 
+              {/* login here */}
+
+
               <Route path="/PatientProfile"
               element={<UserProfile/>}/>
               <Route path="/uploadMedicalHistory"
@@ -275,6 +285,11 @@ function App() {
               <Route
               path="/PrescriptionMedicines"
               element={<DashboardPrescription/>}
+            />
+
+              <Route
+              path="/ChoosePath"
+              element={<ChoosePath/>}
             />
               
               </Routes>
