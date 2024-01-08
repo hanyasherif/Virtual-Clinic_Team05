@@ -89,6 +89,8 @@ import DashboardCart from './pages/DashboardCart';
 import DashboardCheckout from './pages/DashboardCheckout';
 import DashboardPrescription from './pages/DashboardPrescription';
 import SignIn from './pages/SignIn';
+import DashboardPharmacist from './pages/DashboardPharmacist';
+import DashboardPharmacistArchive from './pages/DashboardPharmacistArchive';
 
 // import ChooseMode from './pages/chooseMode';
 
@@ -202,7 +204,7 @@ function App() {
             />
             <Route
               path="/pharmacistPagePH"
-              element={<PharmacistPagePH/>}
+              element={<DashboardPharmacist/>}
             />
             <Route
               path="/adminPagePH"
@@ -279,7 +281,7 @@ function App() {
               element={<ChangePasswordPH/>}/>
 
               <Route path="/PharmacistArch"
-              element={<PharmacistArch/>}/>
+              element={<DashboardPharmacistArchive/>}/>
               {/* sp3 */}
 
               <Route
