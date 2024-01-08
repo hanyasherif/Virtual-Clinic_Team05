@@ -28,6 +28,8 @@ import FilterMedicine from '../componenetsPh/FilterMedicine';
 import Search from '../componenetsPh/Search';
 import cart from '../assets/cart.jpg';
 import Button from '@mui/material/Button';
+import Logo from '../assets/Logo.png';
+
 
 ///mangaa
 
@@ -148,7 +150,8 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-             El7a2ny!
+
+              <img src={Logo} alt="Logo" width="50" height="50" />
 
               </Typography>
 

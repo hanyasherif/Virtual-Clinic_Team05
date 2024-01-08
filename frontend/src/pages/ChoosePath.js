@@ -22,7 +22,7 @@ function WelcomePage() {
               <CardMedia component="img" height="140" image={logo} alt="LOL Image 1" />
             </Card>
             <Button component={Link} to="/patient" variant="contained" color="primary" size="large">
-              Proceed to Clnic From Here
+               Click Here to Proceed to Clinic
             </Button>
           </Grid>
 
@@ -31,8 +31,7 @@ function WelcomePage() {
               <CardMedia component="img" height="140" image={logo} alt="LOL Image 2" />
             </Card>
             <Button component={Link} to="/patientPagePH" variant="contained" color="primary" size="large">
-            Proceed to Pharmacy From Here
-            </Button>
+            Click Here to Proceed to Pharmacy            </Button>
           </Grid>
         </Grid>
       </Container>

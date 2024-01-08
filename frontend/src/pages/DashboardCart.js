@@ -23,10 +23,17 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
-import CartPagePH from './CartPage';
+import PatientPagePH from './PatientPage';
 import FilterMedicine from '../componenetsPh/FilterMedicine';
 import Search from '../componenetsPh/Search';
 import cart from '../assets/cart.jpg';
+import Button from '@mui/material/Button';
+import Logo from '../assets/Logo.png';
+import CartPagePH from './CartPage';
+
+
+///mangaa
+
 
 function Copyright(props) {
   return (
@@ -51,6 +58,8 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  backgroundColor: '#004E64', // New background color
+
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -92,7 +101,22 @@ const defaultTheme = createTheme();
 
 // ... (imports)
 
+// // TODO remove, this demo shouldn't need to reset the theme.
+// const defaultTheme = createTheme();
+
+// // ... (imports)
+
 export default function Dashboard() {
+
+  const handleLogout = async (e) => {
+    try {
+      await fetch('http://localhost:8000/logout');
+      window.location.href = 'http://localhost:3000/';
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -127,20 +151,12 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              My Cart
+
+              <img src={Logo} alt="Logo" width="50" height="50" />
 
               </Typography>
-            {/* Cart Button */}
-            <Link to="/CartPage" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <img
-                id="cartImage"
-                src={cart}
-                alt="Cart Image"
-                style={{ width: '30px', height: '30px', cursor: 'pointer' }}
-              />
-            </Link>
-            {/* cart button here!!!! */}
 
+              <Button color="inherit" onClick={handleLogout}>Logout</Button>
 
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -186,36 +202,59 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flex: 1, display: 'flex' }}>
             <Grid container spacing={3}>
-              {/* Cart */}
-              <Grid item xs={12} md={8} lg={9}>
+              {/*PatientPagePH */}
+              <Grid item xs={50} md={8} lg={18}
+              sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                  
+                }}
+              >
                 <Paper
                   sx={{
-                    p: 2,
+                    p: 1,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '100%',
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 290,
+                    borderRadius: 3,
                   }}
                 >
-                  {/* <Cart /> */}
+                  
                   <CartPagePH />
                 </Paper>
               </Grid>
-              {/* filter */}
-              {/* <Grid item xs={12} md={4} lg={3}>
+              {/* Filter Medicines */}
+              
+            </Grid>
+            {/* Search */}
+            <Grid item xs={12} md={4} lg={5} 
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                  
+                }}
+              >
                 <Paper
                   sx={{
+                    marginLeft: '50px', // Adjust the initial left margin
+
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 240,
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 290,
+                    borderRadius: 3,
                   }}
                 >
-                  <FilterMedicine />
+                  {/* <Chart /> */}
+                  <Search />
                 </Paper>
-              </Grid> */}
-            </Grid>
-            {/* search */}
-          
+              </Grid>
           </Container>
           <Copyright sx={{ pt: 4 }} />
         </Box>

@@ -23,88 +23,17 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
-import CartPagePH from './CartPage';
+import PatientPagePH from './PatientPage';
 import FilterMedicine from '../componenetsPh/FilterMedicine';
 import Search from '../componenetsPh/Search';
 import cart from '../assets/cart.jpg';
-// import IconButton from '@mui/material/IconButton';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
-import TextField from '@mui/material/TextField'; // Import TextField here
-import FormControlLabel from '@mui/material/FormControlLabel'; // Import FormControlLabel
-import Checkbox from '@mui/material/Checkbox'; // Import Checkbox
+import Button from '@mui/material/Button';
+import Logo from '../assets/Logo.png';
+import CartPagePH from './CartPage';
 import Checkout from './Checkout';
-import AddressForm from './AddressForm';
 
 
-
-
-
-// // Placeholder for AddAddressForm
-// const AddAddressForm = () => {
-//   // Replace with your actual implementation
-//   return (
-//     <div>
-//       <h3>Add Address Form</h3>
-//       {/* Your add address form implementation here */}
-//     </div>
-//   );
-// };
-
-const AddAddressForm = ({ newAddress, handleInputChange }) => {
-  return (
-    <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Shipping address
-      </Typography>
-      
-    </React.Fragment>
-  );
-};
-
-
-
-const AddressesList = () => {
-    // Replace with your actual implementation
-    return (
-      <div>
-        <h3>Add new Address</h3>
-        <AddressForm/>
-      </div>
-    );
-  };
-
-  
-// Placeholder for ExpandLessIcon and ExpandMoreIcon
-const ExpandLessIcon = ({ onClick }) => {
-    return (
-      <IconButton onClick={onClick} aria-label="expand-less">
-        <ExpandLess />
-      </IconButton>
-    );
-  };
-
-  const ExpandMoreIcon = ({ onClick }) => {
-    return (
-      <IconButton onClick={onClick} aria-label="expand-more">
-        <ExpandMore />
-      </IconButton>
-    );
-  };
-
-  // Placeholder for PaymentMethodDropdown
-const PaymentMethodDropdown = () => {
-    // Replace with your actual implementation
-    return (
-      <div>
-        <h3>Select Payment Method</h3>
-        {/* Your dropdown implementation here */}
-      </div>
-    );
-  };
-  
+///mangaa
 
 
 function Copyright(props) {
@@ -130,6 +59,8 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  backgroundColor: '#004E64', // New background color
+
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -171,17 +102,25 @@ const defaultTheme = createTheme();
 
 // ... (imports)
 
-// ... (imports)
+// // TODO remove, this demo shouldn't need to reset the theme.
+// const defaultTheme = createTheme();
+
+// // ... (imports)
 
 export default function Dashboard() {
-  const [open, setOpen] = React.useState(true);
-  const [showAddAddressForm, setShowAddAddressForm] = React.useState(false);
-  const toggleDrawer = () => {
-    setOpen(!open);
+
+  const handleLogout = async (e) => {
+    try {
+      await fetch('http://localhost:8000/logout');
+      window.location.href = 'http://localhost:3000/';
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
-  const toggleAddAddressForm = () => {
-    setShowAddAddressForm(!showAddAddressForm);
+  const [open, setOpen] = React.useState(true);
+  const toggleDrawer = () => {
+    setOpen(!open);
   };
 
   return (
@@ -213,16 +152,13 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Check Out!
-            </Typography>
-            <Link to="/CartPage" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <img
-                id="cartImage"
-                src={cart}
-                alt="Cart Image"
-                style={{ width: '30px', height: '30px', cursor: 'pointer' }}
-              />
-            </Link>
+
+              <img src={Logo} alt="Logo" width="50" height="50" />
+
+              </Typography>
+
+              <Button color="inherit" onClick={handleLogout}>Logout</Button>
+
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -267,22 +203,35 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flex: 1, display: 'flex' }}>
             <Grid container spacing={3}>
-              {/* Grid 1 - Drop-down list for payment method */}
-              <Grid item xs={12} md={8} lg={9}>
+              {/*PatientPagePH */}
+              <Grid item xs={50} md={8} lg={18}
+              sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                  
+                }}
+              >
                 <Paper
                   sx={{
-                    p: 2,
+                    p: 1,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '100%',
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 290,
+                    borderRadius: 3,
                   }}
                 >
+                  
                   <Checkout />
                 </Paper>
               </Grid>
-              {/* Grid 2 - Addresses (Toggle Add Address Form) */}
-             
+              {/* Filter Medicines */}
+              
             </Grid>
+            {/* Search */}
+           
           </Container>
           <Copyright sx={{ pt: 4 }} />
         </Box>

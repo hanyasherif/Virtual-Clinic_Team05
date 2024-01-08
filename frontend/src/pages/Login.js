@@ -104,31 +104,45 @@ const Login = () => {
       </form>
 
       {/* Buttons for Change Password and Forgot Password */}
-      <Grid container spacing={2} style={{ width: '50%', marginTop: 20 }}>
-        <Grid item xs={6}>
-          <Link to="/ChangeMyPassword">
-            <Button variant="contained" fullWidth>
-              Change Password
-            </Button>
-          </Link>
-        </Grid>
-
+      <Grid container spacing={2} style={{ width: '100%', marginTop: 1, marginLeft:180, marginBottom: 10}}>
+      
         <Grid item xs={6}>
           <Link to="/ForgotPasswPH">
-            <Button variant="contained" fullWidth>
+          <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginTop: 20, width: '50%' }}
+          sx={{
+            color: 'white',
+            backgroundColor: '#25A18E',
+            '&:hover': {
+              backgroundColor: '#20756c',
+            },
+          }}
+        >
               Forgot Password
-            </Button>
+        </Button>
           </Link>
         </Grid>
       </Grid>
-
       {/* Not a user? Register! button */}
       <Link to="/guestPagePH">
-        <Button variant="contained" style={{ marginTop: 20, width: '50%' }}>
-          Not a user? Register!
-        </Button>
+     
+Not a user? Register      
       </Link>
+
+        {/* Not a user? Register! button */}
+        <Link to="/addRequest">
+     
+Wanna Register as a doctor?        
+      </Link>
+
     </div>
+
+    
+
+    
   );
 };
 

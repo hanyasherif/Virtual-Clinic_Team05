@@ -96,12 +96,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-// ... (imports)
-
-// // TODO remove, this demo shouldn't need to reset the theme.
-// const defaultTheme = createTheme();
-
-// // ... (imports)
 
 export default function Dashboard() {
 
@@ -148,23 +142,12 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Welcome, Patient!
+              El7a2ny!
 
               </Typography>
 
               <Button color="inherit" onClick={handleLogout}>Logout</Button>
-            {/* Cart Button
-            <Link to="/CartPage" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <img
-                id="cartImage"
-                src={cart}
-                alt="Cart Image"
-                style={{ width: '30px', height: '30px', cursor: 'pointer' }}
-              />
-            </Link> */}
-            {/* cart button here!!!! */}
-
-
+          
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -210,7 +193,7 @@ export default function Dashboard() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flex: 1, display: 'flex' }}>
             <Grid container spacing={3}>
               {/*PatientPagePH */}
-              <Grid item xs={12} md={8} lg={9}>
+              <Grid item xs={12} md={8} lg={15}>
                 <Paper
                   sx={{
                     p: 2,
@@ -224,28 +207,10 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
               {/* Filter Medicines */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <FilterMedicine />
-                </Paper>
-              </Grid>
+              
             </Grid>
             {/* Search */}
-            <Grid item xs={12}>
-              <Paper
-                sx={{ p: 2, display: 'flex', flexDirection: 'column', flex: 1 }}
-              >
-                <Search />
-                {/* Search */}
-              </Paper>
-            </Grid>
+            
           </Container>
           <Copyright sx={{ pt: 4 }} />
         </Box>
