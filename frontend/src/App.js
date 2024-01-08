@@ -145,7 +145,7 @@ function App() {
               element={<UploadMedicalHistory/>}/>      
               {/* <Route path="/login"
               element={<Login/>}/> */}
-               <Route path="/patient"
+               <Route path="/Dashboard"
               element={<PatientPage/>}/>
                <Route path="/viewPackages"
               element={<ViewPackages/>}/>
@@ -261,7 +261,7 @@ function App() {
             <Route path="/ChangeMyPasswordPH"
             element={<ChangePasswordPH/>}/>
 
-            <Route path="/Dashboard"
+            <Route path="/patient"
             element={<Dashboard/>}/>
           
           <Route path="/LandingPage"
