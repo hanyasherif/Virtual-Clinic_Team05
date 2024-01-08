@@ -65,10 +65,10 @@ export const secondaryListItems = (
       {/* Personal Details */}
     </ListSubheader>   
     <ListItemButton onClick={() => { window.location.href = '/ChangeMyPassword'; }}>
-    <ListItemIcon sx={{ color: '#8B0000' }}>
+    <ListItemIcon sx={{ color: '#25A18E' }}>
         <LockIcon />
       </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ style: { color: 'darkred' } }} primary="Change Password" />
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Change Password" />
     </ListItemButton>
     {/* <ListItemButton>
       <ListItemIcon>

@@ -12,36 +12,11 @@ import {
   Paper,
 } from '@material-ui/core';
 import emptyCart from '../assets/emptyCart.jpg';
-import { makeStyles } from '@material-ui/core/styles';
+//import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: theme.spacing(2),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    width: '100%', // Make each medicine component the same width
-  },
-  cartItem: {
-    marginBottom: theme.spacing(2),
-  },
-  quantityInput: {
-    marginLeft: theme.spacing(2),
-  },
-  proceedButton: {
-    marginTop: theme.spacing(2),
-  },
-  removeButton: {
-    marginLeft: 'auto', // Move the Remove button to the right
-  },
-}));
 
 const CartPage = () => {
-  const classes = useStyles();
+  //const classes = useStyles();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -103,7 +78,7 @@ const CartPage = () => {
 
   if (loading) {
     return (
-      <div className={classes.root}>
+      <div >
         <img src={emptyCart} alt="Empty Cart" />
         <Typography variant="body1">Your cart is empty!</Typography>
       </div>
@@ -111,12 +86,12 @@ const CartPage = () => {
   }
 
   return (
-    <div className={classes.root}>
+    <div>
       <Typography variant="h4" gutterBottom>
         Your Cart
       </Typography>
       {cartItems.map((item) => (
-        <Paper key={item._id} elevation={3} className={classes.paper}>
+        <Paper key={item._id} elevation={3}>
           <Grid container alignItems="center">
             <Grid item xs={12} sm={6}>
               <Typography variant="h6">{item.medicine.name}</Typography>
@@ -129,21 +104,21 @@ const CartPage = () => {
             </Grid>
             <Grid item xs={12} sm={3}>
               <Input
-                className={classes.quantityInput}
                 type="number"
                 value={item.quantity}
                 onChange={(e) => changeQuantity(item._id, e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={3}>
-              <Button
-                onClick={() => removeFromCart(item._id)}
-                variant="contained"
-                color="secondary"
-                className={classes.removeButton}
-              >
-                Remove
-              </Button>
+            <Button
+  onClick={() => removeFromCart(item._id)}
+  variant="contained"
+  color="#911A20"
+
+>
+  Remove
+</Button>
+
             </Grid>
           </Grid>
         </Paper>
@@ -151,8 +126,8 @@ const CartPage = () => {
       <Link to="/CheckoutPagePH">
         <Button
           variant="contained"
-          color="primary"
-          className={classes.proceedButton}
+          color= 'black'
+          
         >
           Proceed to Checkout
         </Button>

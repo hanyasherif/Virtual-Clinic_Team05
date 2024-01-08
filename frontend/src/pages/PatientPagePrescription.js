@@ -27,44 +27,24 @@ const PatientPagePrescription = () => {
     fetchMedicine();
   }, []);
 
-  const addToCart = async (medicineId, quantity) => {
-    try {
-      const response = await axios.post('/addToCart', {
-        medicineId,
-        quantity,
-      });
 
-      const json = response.data;
-
-      if (response.status === 200) {
-        setCartItems(json.items);
-      }
-    } catch (error) {
-      console.error('Error adding to cart:', error);
-    }
-  };
 
   return (
     <div className="patientPage">
-      <div>Welcome, Patient!</div>
+      <div>Prescription Medicines</div>
       <Grid container spacing={2} className="medicines">
         {medicines &&
           medicines.map((medicine) => (
             <Grid item key={medicine._id} xs={12} sm={6} md={4} lg={3}>
               <MedicineDetailsLite
                 medicine={medicine}
-                addToCart={addToCart}
               />
             </Grid>
           ))}
       </Grid>
 
       {/* Add button to route to CartPage */}
-      <Link to="/CartPagePH">
-        <Button variant="contained" color="primary">
-          Go to Cart
-        </Button>
-      </Link>
+     
     </div>
   );
 };
