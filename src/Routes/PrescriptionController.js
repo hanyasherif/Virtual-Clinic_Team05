@@ -66,8 +66,8 @@ const filterPrescriptions=async(req,res)=>
     
         if(filter=="doctor")
         {
-            
-            let result = await PrescriptionModel.find({doctor:doctorId , patient:user.id});
+            console.log(doctorId);
+            let result = await PrescriptionModel.find({doctorName:doctorId , patient:user.id});
             //let doctor = await userModel.findById(result.doctor);
             const resultWithNames = result.map((prescription) => {
                 return {

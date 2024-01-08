@@ -102,6 +102,9 @@ const Login = () => {
   <p>
     Not signed up yet? <a href="/register">Sign Up</a>
   </p>
+  <p>
+    Wanna register as a doctor? <a href="/addRequest">Request Here</a>
+  </p>
 </div>
 </div>
   );

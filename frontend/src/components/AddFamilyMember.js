@@ -109,13 +109,15 @@ export default function AddFamilyMember () {
   //wife/husband
   const [username2, setUsername2] = useState('');
   const [famMemNatID2, setfamMemNatID2] = useState(''); //my nationalId to be linked to other family member as a family member
+  const [famMemNatID3, setfamMemNatID3] = useState('');
+  const [famMemNatID4, setfamMemNatID4] = useState('');
   const [famMemName2, setfamMemName2] = useState('');
   const [famMemGender2, setfamMemGender2] = useState('');
   const [famMemAge2, setfamMemAge2] = useState('');
   const [famMemRelation2, setfamMemRelation2] = useState('');
   const [idGenerated, setIdGenerated] = useState('');
 
-  const id = '65735cebad66db980718a14d';
+  // const id = '65735cebad66db980718a14d';
 
   const handleGenderChange = (e) => {
     setfamMemGender(e.target.value);
@@ -171,9 +173,9 @@ export default function AddFamilyMember () {
       setLinkFamMem(true);
       setNewFamMem(false); // Close the family member form
     };
-    const getUserName = async (userId) => {
+    const getUserName = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/getUserById/${userId}`,{withCredentials:true});
+        const response = await axios.get(`http://localhost:8000/getUserByTokenId`,{withCredentials:true});
         if (response.data && response.data.username) {
           return response.data.username;
         } else {
@@ -192,7 +194,7 @@ export default function AddFamilyMember () {
         alert('Please fill in at least one of the email or phone number fields');
         return;
       }
-      if(!famMemNatID|| !famMemRelation2)
+      if(!famMemNatID2|| !famMemRelation2)
       {
         alert('Please fill in national ID and Relation fields');
         return;
@@ -200,7 +202,7 @@ export default function AddFamilyMember () {
       fetchUser(email,phoneNumber);
       if (famMemRelation2 === "wife/husband"){
       // idGenerated = getId(username);
-      const idUsername =getUserName(id)  //bta3ty ana elly wa5daha mn el session
+      const idUsername =getUserName()  //bta3ty ana elly wa5daha mn el session
       assignFamilyMemberValues(idUsername) 
               
       if(!famMemNatID2){
@@ -488,7 +490,7 @@ export default function AddFamilyMember () {
               display: 'flex',
               flexDirection: 'column',
               transition: 'transform 0.3s ease-in-out',
-              height: 605,
+              height: 570,
               borderRadius: 3,
 
             }}
@@ -571,7 +573,11 @@ export default function AddFamilyMember () {
                 }
               }}            
             />
-          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+          {/* <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}> */}
+          <Box component="main" sx={{marginTop: 2}}>
+      <Typography>
+        Gender:
+      </Typography>
             <FormControlLabel
               control={
                 <Radio
@@ -589,8 +595,8 @@ export default function AddFamilyMember () {
               label="Female"
               sx={{
                 // color: '#25A18E', // Adjust label color if needed
-                marginBottom: '8px',
-                display: 'block',
+                // marginBottom: '8px',
+                // display: 'block',
              }}
             />
             <FormControlLabel
@@ -610,12 +616,15 @@ export default function AddFamilyMember () {
               label="Male"
               sx={{
               // color: '#25A18E', // Adjust label color if needed
-              marginBottom: '8px',
-              display: 'block',
+              // marginBottom: '8px',
+              // display: 'block',
               }}
             />
           </Box>
-
+    <Box component="main" sx={{marginTop: 1}}>
+      <Typography>
+        Relation to you:
+      </Typography>
       <FormControlLabel
         control={
           <Radio
@@ -632,7 +641,7 @@ export default function AddFamilyMember () {
         }
         label="Wife/Husband"
       />
-      {famMemRelation === 'wife/husband' && (
+      {/* {famMemRelation === 'wife/husband' && (
         <TextField
           label="Please provide your Wife/Husband's National ID"
           type="number"
@@ -654,7 +663,7 @@ export default function AddFamilyMember () {
             }
           }}      
         />
-      )} 
+      )}  */}
       <FormControlLabel
         control={
           <Radio
@@ -671,6 +680,7 @@ export default function AddFamilyMember () {
         }
         label="Child"
       />
+      </Box>
       <Button type="submit" variant="contained" color="primary" 
       style={{ 
         marginTop: 20, width: '50%' , marginLeft: 110
@@ -704,7 +714,7 @@ export default function AddFamilyMember () {
                     display: 'flex',
                     flexDirection: 'column',
                     transition: 'transform 0.3s ease-in-out',
-                    height: 605,
+                    height: 570,
                     borderRadius: 3,
 
                   }}
@@ -767,8 +777,8 @@ export default function AddFamilyMember () {
             <TextField
              label="National ID"
               type="number"
-              value={famMemNatID}
-              onChange={(e) => setfamMemNatID(e.target.value)}
+              value={famMemNatID2}
+              onChange={(e) => setfamMemNatID2(e.target.value)}
               fullWidth
               sx={{
                 marginBottom: '20px', // Adjust the margin as needed
@@ -788,7 +798,10 @@ export default function AddFamilyMember () {
                 }
               }}      
             />
-
+    <Box component="main">
+      <Typography>
+        Relation to you:
+      </Typography>
       <FormControlLabel
         control={
           <Radio
@@ -805,12 +818,13 @@ export default function AddFamilyMember () {
         }
         label="Wife/Husband"
       />
-      {famMemRelation2 === 'wife/husband' && (
+
+      {/* {famMemRelation2 === 'wife/husband' && (
         <TextField
           label="Please provide your Wife/Husband's National ID"
           type="number"
-          value={famMemNatID2}
-          onChange={(e) => setfamMemNatID2(e.target.value)}
+          value={famMemNatID4}
+          onChange={(e) => setfamMemNatID4(e.target.value)}
           fullWidth
           sx={{
             marginBottom: '20px', // Adjust the margin as needed
@@ -830,7 +844,7 @@ export default function AddFamilyMember () {
             }
           }}      
         />
-      )} 
+      )}  */}
       <FormControlLabel
         control={
           <Radio
@@ -847,6 +861,7 @@ export default function AddFamilyMember () {
         }
         label="Child"
       />
+      </Box>
       <Button type="submit" variant="contained" color="primary" 
       style={{ 
         marginTop: 20, width: '50%' , marginLeft: 110
