@@ -340,9 +340,9 @@ export default function FilterAppointmentsPatient() {
               </Box>
             </Grid>
 
-  <Grid item xs={12}>
+  <Grid >
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+      <Table sx={{ minWidth: 1200 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <StyledTableCell align="center">Date</StyledTableCell>
