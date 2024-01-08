@@ -25,13 +25,97 @@ const socketio =  require('socket.io');
 
 const uploadPh = require('./multerConfigV2');
 
+const MongoURI = process.env.MONGO_URI ;
+
+
+
+const { default: test } = require("node:test");
+
+
+app.get('/', (req, res) =>{
+  res.json({mssg: 'Welcome to the app'})
+})
+
+
+
+
+app.get("/home", (req, res) => {
+  res.status(200).send("You have everything installed!");
+});
+app.use(bodyParser.json());
+// #Routing to userController here
+////////////////////////////////////////////////hanya//////////////////////////////////////////////////////////
+app.use(express.static('public'));
+const http = require("http");
+
+const { Server } = require("socket.io");
+const cors = require('cors');
+
+const corsOptions = {
+  origin:"http://localhost:3000",//included origin as true
+  credentials: true, //included credentials as true
+};
+
+app.use(cors({
+  origin:"http://localhost:3000",//included origin as true
+  credentials: true, //included credentials as true
+}));
+app.use(cookieParser());
+// Example route that uses multer for file uploads
+app.post('/upload', uploadPh.single('picture'), (req, res) => {
+  // Handle the uploaded file here and return the file path
+  const filePath = req.file ? req.file.path : '';
+  res.json({ message: 'File uploaded successfully!', filePath });
+});
+
+// chat
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(`User Connected: ${socket.id}`);
+  
+  socket.on("join_room", (data) => {
+    socket.join(data);
+    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  });
+  
+  socket.on("send_message", (data) => {
+    socket.to(data.room).emit("receive_message", data);
+  });
+  
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
+});
+
+// configurations
+// Mongo DB
+
+mongoose.connect(MongoURI)
+.then(()=>{
+  console.log("MongoDB is now connected!")
+  // Starting server
+  server.listen(port, () => {
+    console.log(`Listening to requests on http://localhost:${port}`);
+  })
+})
+.catch(err => console.log(err));
+
 const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, 
   viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
    filterAppointmentsStatus, AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor, 
    uploadMedicalDocument, findPatById,login, removeMedicalDocument, 
     servefiles ,getUploaded ,    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,
-    getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId} 
+    getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId, getRoom, phviewPatients,
+     viewPharmacists} 
     = require("./Routes/userController");
 
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
@@ -61,7 +145,7 @@ const {addToCart, viewCart, removeFromCart,
   checkout, createPaymentIntent} = require("./RoutesPh/cartController");
 
 const {viewOrders, cancelOrder} = require("./RoutesPh/orderController");
-const MongoURI = process.env.MONGO_URI ;
+
 
 //App variables
 
@@ -78,40 +162,7 @@ app.get('/', (req, res) =>{
 
 
 
-const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
 
-io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
-  
-  socket.on("join_room", (data) => {
-    socket.join(data);
-    socket.to(data).emit("joined_user",{socketId: socket.id});
-    console.log(`User with ID: ${socket.id} joined room: ${data}`);
-  });
-  
-
-	
-
-	socket.on("disconnect", () => {
-		socket.broadcast.emit("callEnded")
-	})
-
-	
-	socket.on("callUser", (data) => {
-		io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
-	})
-
-	socket.on("answerCall", (data) => {
-		io.to(data.to).emit("callAccepted", data.signal)
-	})
-
-});
 mongoose.connect(MongoURI)
 .then(()=>{
   console.log("MongoDB is now connected!")
@@ -167,6 +218,10 @@ app.get("/searchByName",requireAuth("Patient"),searchByName);
 app.get("/searchBySpec",requireAuth("Patient"),searchBySpec);
 app.get("/searchByNameSpec",requireAuth("Patient"),searchByNameSpec);
 app.get("/viewDoctors",requireAuth("Patient"), viewDoctors);
+app.get("/pharmacistviewDoctors",requireAuth("Pharmacist"), viewDoctors); //chat
+app.get("/pharmacistViewPatients",requireAuth("Pharmacist"), phviewPatients); //chat
+app.get("/viewPharmacists",requireAuth("Patient"), viewPharmacists); //chat
+app.get("/docviewPharmacists",requireAuth("Doctor"), viewPharmacists); //chat
 app.get("/getDoctorInfo",requireAuth("Patient"), getDoctorInfo);
 app.get("/getSpecs",requireAuth("Patient"), getSpecs);
 app.get("/filterSpecs/:spec",requireAuth("Patient"), filterSpecs);

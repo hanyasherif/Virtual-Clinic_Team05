@@ -83,6 +83,12 @@ import ViewAcceptContract from './components/ViewAcceptContract';
 import AddAppointment from './components/AddAppointments';
 import ChangePassword from './components/ChangePassword'; 
 import VideoChatPage from './pages/VideoChatPage'; 
+import ChatPage from './pages/ChatPage'; 
+import PatientsList from './components/PatientsList';
+import PharmacistsList from './components/PharmacistsList';
+import DocPharmacistsList from './components/DocPharmacistsList';
+import ChatUserProfile from './components/ChatPatientInformation'
+
 
 
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
@@ -277,8 +283,25 @@ function App() {
           
           <Route path="/LandingPage"
             element={<LandingPage/>}/>
+             <Route path="/chatpage"
+              element={<ChatPage/>}/>
+              
+              <Route path="/patientslist"
+              element={<PatientsList/>}/>
+
+              <Route path="/Pharmacistslist"
+              element={<PharmacistsList/>}/>
+
+              <Route path="/DocPharmacistslist"
+              element={<DocPharmacistsList/>}/>
+
+              <Route path="/ChatPatientProfile"
+              element={<ChatUserProfile/>}/>
           </Routes>
           
+
+             
+              
 
       </div>
       {/* <UsernameTextBox /> Include TextBoxExample component here */}

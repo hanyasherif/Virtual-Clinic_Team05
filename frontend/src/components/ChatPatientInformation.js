@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 
-function UserProfile() {
+function ChatUserProfile() {
     const [showMore, setShowMore] = useState(false);
     const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -28,12 +28,6 @@ function UserProfile() {
         localStorage.setItem('partner', searchParams.get('Patient'));
         window.location.href='http://localhost:3000/ChatPage'
   }
-
-  const chat= async() =>{
-    localStorage.setItem('partner', searchParams.get('Patient'));
-    window.location.href='http://localhost:3000/VideoChatPage'
-}
-
 
 
 
@@ -70,17 +64,8 @@ function UserProfile() {
           <p>name: {Patient.username}</p>
           <p>Email: {Patient.email}</p>
           <div style={containerStyle}>
-          <button  onClick={getPatientData}>
-           Patient Data
-          </button>
           <button  onClick={ chat}>
            Chat
-          </button>
-          <button style={buttonStyle} onClick={toggleShowMore}>
-            {showMore ? 'Show Less' : 'Show More'}
-          </button>
-          <button  onClick={ chat}>
-          VideoChat
           </button>
         </div>
         {showMore && (
@@ -100,4 +85,4 @@ function UserProfile() {
     );
   }
 
-export default UserProfile;
+export default ChatUserProfile;
