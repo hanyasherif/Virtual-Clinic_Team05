@@ -33,7 +33,7 @@ import ForgotPasswPH from './pages/sp2/ForgotPassw';
 import OTPSenderPH from './pages/sp2/OTPsender'; 
 import OtpVerificationPH from './pages/sp2/OTPVerification';
 import ChangePasswordPH from './pages/sp2/ChangePass';
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/PatClinicDashboard';
 import LandingPage from './components/LandingPage';
 
 ///

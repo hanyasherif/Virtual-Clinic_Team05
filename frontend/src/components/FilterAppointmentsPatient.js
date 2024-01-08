@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -19,28 +18,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import Chart from '../pages/sp3/Chart';
-import Deposits from '../pages/sp3/Deposits';
-import Orders from '../pages/sp3/Orders';
-import Button from "@mui/material/Button";
-import ViewDocPat from './ViewDocPat';
-import Wallet from './Wallet';
-import ViewFamilyMember from './ViewFamilyMember';
-import PatPrescView from './PatPrescView';
-import ViewHealthRecords from './ViewHealthRecords';
-import ViewPackages from './ViewPackages';
-import ViewMyPackage from './ViewMyPackage'
 import axios from 'axios';
-// import Button from '@mui/material/Button';
-import Table from '@mui/material/Table';
-// import Box from '@mui/material/Box';
-// import { styled } from '@mui/material/styles';  
+import Table from '@mui/material/Table';  
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-// import Paper from '@mui/material/Paper';
+import { InputLabel, MenuItem, Select } from '@mui/material';
+import { Box, Button, TextField, FormControl} from '@mui/material';
+
 
 function Copyright(props) {
   return (
@@ -106,7 +93,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: "#25A18E",
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -140,98 +127,76 @@ export default function FilterAppointmentsPatient() {
   
   const handleStatusChange = (e) => {
       setStatus(e.target.value);
+      getAppointmentStatus(e.target.value);
     };
-  //  console.log(userId);
-  const getDoctorName = async (doctorId) => {
-    try {
-      const response = await axios.get(`http://localhost:8000/getDoctorName/${doctorId}`, {
-        withCredentials:'true'
-      });
-      if (response.data && response.data.name) {
-        return response.data.name;
-      } else {
-        return 'Unknown Doctor';
-      }
-    } catch (error) {
-      console.error('Error fetching doctor name:', error);
-      return 'Unknown Doctor';
-    }
-  };
-  const fetchDoctorNames = async () => {
-    try {
-      const doctorNames = {};
-      const appointments = await axios.get('http://localhost:8000/viewAppointments',{withCredentials: 'true'});
-      if (appointments.data) {
-        for (const appointment of appointments.data) {
-          const doctorId = appointment.doctor;
-          if (!doctorNames[doctorId]) {
-            const doctorName = await getDoctorName(doctorId);
-            doctorNames[doctorId] = doctorName;
-          }
-        }
-      }
-      setDoctorNames(doctorNames);
-    } catch (error) {
-      console.error('Error fetching doctor names:', error);
-    }
-  };
 
   useEffect(() => {
-    // fetchDoctorNames();
-    // getAppointment();
+    getAppointment();
   }, []); 
 
-    const getAppointment=  async () => {
-
-      await axios.get('http://localhost:8000/viewAppointments', {withCredentials: 'true'}).then(
-         (res) => { 
-            const appointments = res.data.Appointments;
-            const docNames = res.data.doctorNames;
-            console.log("HHEERREE"+appointments[0].doctor);
-            setAppointment(appointments);
-            setDoctorNames(docNames);
+    const getAppointment = async () => {
+      await axios.get('http://localhost:8000/viewAppointments', { withCredentials: 'true' }).then(
+        (res) => {
+          const appointments = res.data.Appointments;
+          const docNames = res.data.doctorNames;
+          const doctorMap = {};
+          for (let i = 0; i < docNames.length; i++) {
+            const doctorId = appointments[i].doctor;
+            const doctorName = docNames[i];
+            doctorMap[doctorId] = doctorName;
           }
+          setAppointment(appointments);
+          setDoctorNames(doctorMap);
+        }
+      );
+    };
+    
+    const dateChange = async (d) => {
+      setDate(d);
+      getAppointmentDate(d);
+    }
+
+  const getAppointmentDate=  async (date) => {
+    if (!date) {
+      alert('Please enter a valid Date');
+      return;
+    }
+    await axios.get(`http://localhost:8000/filterAppointmentsDate/${date}`, {withCredentials: 'true'}).then(
+      (res) => { 
+        const appointments = res.data.Appointments;
+        const docNames = res.data.doctorNames;
+        const doctorMap = {};
+        for (let i = 0; i < docNames.length; i++) {
+          const doctorId = appointments[i].doctor;
+          const doctorName = docNames[i];
+          doctorMap[doctorId] = doctorName;
+        }
+        setAppointment(appointments);
+        setDoctorNames(doctorMap);       
+        }
       );
     }
-    const getAppointmentDate=  async (date) => {
-      /*
-      get the blogs from the backend  
-      */     
-      if (!date) {
-        alert('Please enter a valid Date');
-        return;
-      }
 
-      await axios.get(`http://localhost:8000/filterAppointmentsDate/${date}`, {credentials: 'include'}).then(
-          (res) => { 
-              const appointments = res.data
-              
-              console.log(appointments)
-              setAppointment(appointments)
-              
-          }
-           );
-  }
-
-  const getAppointmentStatus=  async (status) => {
-    /*
-    get the blogs from the backend  
-    */     
+  const getAppointmentStatus=  async (status) => {   
     if (!status) {
       alert('Please enter a valid status');
       return;
     }
-
-    await axios.get(`http://localhost:8000/filterAppointmentsStatus/${status}`, {credentials: 'include'}).then(
+    await axios.get(`http://localhost:8000/filterAppointmentsStatus/${status}`, {withCredentials: 'true'}).then(
         (res) => { 
-            const appointments = res.data
-            
-            console.log(appointments)
-            setAppointment(appointments)
-            
+          const appointments = res.data.Appointments;
+          const docNames = res.data.doctorNames;
+          const doctorMap = {};
+          for (let i = 0; i < docNames.length; i++) {
+            const doctorId = appointments[i].doctor;
+            const doctorName = docNames[i];
+            doctorMap[doctorId] = doctorName;
+          }
+          setAppointment(appointments);
+          setDoctorNames(doctorMap);
         }
          );
-}
+    }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -307,74 +272,75 @@ export default function FilterAppointmentsPatient() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-            <div className="FilterAppointment">
-             <Box sx={{marginBottom: 2}}>
-             
-            <Button variant="contained"
-            onClick={getAppointment}
-            margin="normal"
-            padding="normal"
-            
-            >Load Appointments 
-            </Button>
+              <Grid item xs={12}>
 
-             <input
-             type="text"
-             onChange={(e) => setDate(e.target.value)}
-              value={date}/>
-            <Button variant="contained"
-            onClick={() => getAppointmentDate(date)}
-            margin="normal"
-            padding="normal"
-            
-            >Filter by Date</Button>
-            <Button variant="contained"
-            onClick={() => getAppointmentStatus(status)}
-            margin="normal"
-            padding="normal"
-            >Filter by Status</Button>
-            <label>
-          <input
-            type="radio"
-            value="upcoming"
-            checked={status === 'upcoming'}
-            onChange={handleStatusChange}
-          />
-          Upcoming
-        </label>
-      <label>
-          <input
-            type="radio"
-            value="completed"
-            checked={status === 'completed'}
-            onChange={handleStatusChange}
-          />
-          Completed
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="cancelled"
-            checked={status === 'cancelled'}
-            onChange={handleStatusChange}
-          />
-          Cancelled
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="rescheduled"
-            checked={status === 'rescheduled'}
-            onChange={handleStatusChange}
-          />
-          Rescheduled
-        </label>
-            {/* margin */}
-            </Box>
-            
-        
-        
-            
+
+                
+                <Box sx={{ marginBottom: 2 }}>
+                  <Typography
+                  // component="h3"
+                  // variant="h6"
+                  // color="inherit"
+                  // noWrap
+                  // sx={{ flexGrow: 1 }}
+                  >
+                    Filter By:
+                  </Typography>
+                <FormControl sx={{  minWidth: 200 , marginRight: 2, marginLeft: 0, marginTop: 2}}>
+      <InputLabel id="status-label" >
+        {/* <FilterListIcon sx={{marginRight:1.5}}/> */}
+         Status
+      </InputLabel>
+      <Select
+        label = "Status"
+        // labelId="status-label"
+        id="status-select"
+        value={status}
+        sx={{
+          // marginBottom: '10px',
+          '& .MuiOutlinedInput-root': {
+          },
+          '& .MuiSelect-icon': {
+            color: '#25A18E', // Change dropdown arrow color
+          },
+          '&:hover': {
+            backgroundColor: '#E5E5E5', // Change color on hover if desired
+        },
+        }} 
+        onChange={handleStatusChange}
+      >
+        <MenuItem value="Upcoming">Upcoming</MenuItem>
+        <MenuItem value="Completed">Completed</MenuItem>
+        <MenuItem value="Cancelled">Cancelled</MenuItem>
+        <MenuItem value="Rescheduled">Rescheduled</MenuItem>
+      </Select>
+    </FormControl>
+
+        <TextField
+          type="date"
+          variant="outlined"
+          margin="normal"
+          value={date}
+          sx={{
+            // marginBottom: '10px',
+            marginLeft: 1,
+            marginTop: 2,
+            minWidth: 200,
+            '& .MuiOutlinedInput-root': {
+            },
+            '& .MuiSelect-icon': {
+              color: '#25A18E', // Change dropdown arrow color
+            },
+            '&:hover': {
+              backgroundColor: '#E5E5E5', // Change color on hover if desired
+          },
+          }}   
+          onChange={(e) => dateChange(e.target.value)}
+          />                
+              </Box>
+            </Grid>
+
+  <Grid item xs={12}>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
@@ -395,11 +361,9 @@ export default function FilterAppointmentsPatient() {
                 width: "100%"
                 }
             }}
-            onClick={() => window.location.href = `/selectedAppointment?appointmentId=${Appointment._id}`}
+            // onClick={() => window.location.href = `/selectedAppointment?appointmentId=${Appointment._id}`}
             key={Appointment._id}
-
-              >
-                
+              >             
               <TableCell align="center">{Appointment.date}</TableCell>
               <TableCell align="center">{doctorNames[Appointment.doctor]}</TableCell>
               <TableCell align="center">{Appointment.status}</TableCell>
@@ -409,9 +373,8 @@ export default function FilterAppointmentsPatient() {
       </Table>
     </TableContainer>
           
-        </div>
             </Grid>
-
+            </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>

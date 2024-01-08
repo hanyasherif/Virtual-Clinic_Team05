@@ -19,11 +19,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import Button from "@mui/material/Button";
-import Wallet from './Wallet';
-import ViewHealthRecords from './ViewHealthRecords';
 import { useState } from 'react'
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from "axios";
 import Title from './Title';
 import { TextField, FormControlLabel, Radio } from '@mui/material';
@@ -492,6 +489,8 @@ export default function AddFamilyMember () {
               flexDirection: 'column',
               transition: 'transform 0.3s ease-in-out',
               height: 605,
+              borderRadius: 3,
+
             }}
           >
 
@@ -508,9 +507,9 @@ export default function AddFamilyMember () {
               fullWidth
               sx={{
                 marginBottom: '20px', // Adjust the margin as needed
-                '& .MuiInputLabel-root': {
-                  color: '#25A18E', // Change label color if necessary
-                },
+                // '& .MuiInputLabel-root': {
+                //   color: '#25A18E', // Change label color if necessary
+                // },
                 '& .MuiInputLabel-shrink': {
                   color: '#25A18E', // Change label color while shrinking (on input)
                 },
@@ -532,9 +531,9 @@ export default function AddFamilyMember () {
               fullWidth
               sx={{
                 marginBottom: '20px', // Adjust the margin as needed
-                '& .MuiInputLabel-root': {
-                  color: '#25A18E', // Change label color if necessary
-                },
+                // '& .MuiInputLabel-root': {
+                //   color: '#25A18E', // Change label color if necessary
+                // },
                 '& .MuiInputLabel-shrink': {
                   color: '#25A18E', // Change label color while shrinking (on input)
                 },
@@ -555,10 +554,10 @@ export default function AddFamilyMember () {
               onChange={(e) => setfamMemNatID(e.target.value)}
               fullWidth
               sx={{
-                marginBottom: '20px', // Adjust the margin as needed
-                '& .MuiInputLabel-root': {
-                  color: '#25A18E', // Change label color if necessary
-                },
+                // marginBottom: '20px', // Adjust the margin as needed
+                // '& .MuiInputLabel-root': {
+                //   color: '#25A18E', // Change label color if necessary
+                // },
                 '& .MuiInputLabel-shrink': {
                   color: '#25A18E', // Change label color while shrinking (on input)
                 },
@@ -642,9 +641,9 @@ export default function AddFamilyMember () {
           fullWidth
           sx={{
             marginBottom: '20px', // Adjust the margin as needed
-            '& .MuiInputLabel-root': {
-              color: '#25A18E', // Change label color if necessary
-            },
+            // '& .MuiInputLabel-root': {
+            //   color: '#25A18E', // Change label color if necessary
+            // },
             '& .MuiOutlinedInput-root': {
               '&:hover fieldset': {
                 borderColor: '#25A18E', // Change border color on hover
@@ -706,6 +705,8 @@ export default function AddFamilyMember () {
                     flexDirection: 'column',
                     transition: 'transform 0.3s ease-in-out',
                     height: 605,
+                    borderRadius: 3,
+
                   }}
                 >
             {error && <p>{error}</p>}
@@ -724,9 +725,9 @@ export default function AddFamilyMember () {
               fullWidth
               sx={{
                 marginBottom: '20px', // Adjust the margin as needed
-                '& .MuiInputLabel-root': {
-                  color: '#25A18E', // Change label color if necessary
-                },
+                // '& .MuiInputLabel-root': {
+                //   color: '#25A18E', // Change label color if necessary
+                // },
                 '& .MuiInputLabel-shrink': {
                   color: '#25A18E', // Change label color while shrinking (on input)
                 },
@@ -747,9 +748,9 @@ export default function AddFamilyMember () {
               fullWidth
               sx={{
                 marginBottom: '20px', // Adjust the margin as needed
-                '& .MuiInputLabel-root': {
-                  color: '#25A18E', // Change label color if necessary
-                },
+                // '& .MuiInputLabel-root': {
+                //   color: '#25A18E', // Change label color if necessary
+                // },
                 '& .MuiInputLabel-shrink': {
                   color: '#25A18E', // Change label color while shrinking (on input)
                 },
@@ -771,9 +772,9 @@ export default function AddFamilyMember () {
               fullWidth
               sx={{
                 marginBottom: '20px', // Adjust the margin as needed
-                '& .MuiInputLabel-root': {
-                  color: '#25A18E', // Change label color if necessary
-                },
+                // '& .MuiInputLabel-root': {
+                //   color: '#25A18E', // Change label color if necessary
+                // },
                 '& .MuiInputLabel-shrink': {
                   color: '#25A18E', // Change label color while shrinking (on input)
                 },
@@ -813,9 +814,9 @@ export default function AddFamilyMember () {
           fullWidth
           sx={{
             marginBottom: '20px', // Adjust the margin as needed
-            '& .MuiInputLabel-root': {
-              color: '#25A18E', // Change label color if necessary
-            },
+            // '& .MuiInputLabel-root': {
+            //   color: '#25A18E', // Change label color if necessary
+            // },
             '& .MuiInputLabel-shrink': {
               color: '#25A18E', // Change label color while shrinking (on input)
             },

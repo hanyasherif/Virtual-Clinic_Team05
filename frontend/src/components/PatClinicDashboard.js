@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState, useEffect } from "react";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -19,9 +18,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import Chart from '../pages/sp3/Chart';
-import Deposits from '../pages/sp3/Deposits';
-import Orders from '../pages/sp3/Orders';
 import Button from "@mui/material/Button";
 import ViewDocPat from './ViewDocPat';
 import Wallet from './Wallet';
@@ -96,7 +92,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
+export default function PatClinicDashboard() {
 
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -186,13 +182,13 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
               <Grid item xs={12} md={8} lg={9} 
                 sx={{
                   '&:hover > div': {
                     transform: 'scale(1.01)',
                     transition: 'transform 0.3s ease-in-out',
                   },
+                  
                 }}
               >
                 <Paper
@@ -202,6 +198,7 @@ export default function Dashboard() {
                     flexDirection: 'column',
                     transition: 'transform 0.3s ease-in-out',
                     // height: 200,
+                    borderRadius: 3,
                   }}
                 >
                   {/* <Chart /> */}
@@ -224,6 +221,7 @@ export default function Dashboard() {
                     flexDirection: 'column',
                     transition: 'transform 0.3s ease-in-out',
                     // height: 200,
+                    borderRadius: 3,
                   }}
                 >
                   <Wallet />
@@ -245,6 +243,7 @@ export default function Dashboard() {
                     flexDirection: 'column',
                     transition: 'transform 0.3s ease-in-out',
                     // height: 200,
+                    borderRadius: 3,
                   }}
                 >
                   <ViewHealthRecords />
@@ -266,6 +265,7 @@ export default function Dashboard() {
                   flexDirection: 'column', 
                   transition: 'transform 0.3s ease-in-out',
                   height: 200, 
+                  borderRadius: 3,
                 }}>
                   <ViewFamilyMember />
                 </Paper>
@@ -286,6 +286,7 @@ export default function Dashboard() {
                     flexDirection: 'column',
                     transition: 'transform 0.3s ease-in-out',
                     // height: 200,
+                    borderRadius: 3,
                   }}
                 >
                   <PatPrescView />
@@ -306,6 +307,7 @@ export default function Dashboard() {
                   display: 'flex', 
                   flexDirection: 'column', 
                   transition: 'transform 0.3s ease-in-out',
+                  borderRadius: 3,
                 }}>
                   <ViewPackages />
                 </Paper>
@@ -326,13 +328,13 @@ export default function Dashboard() {
                     flexDirection: 'column',
                     transition: 'transform 0.3s ease-in-out',
                     // height: 240,
+                    borderRadius: 3,
                   }}
                 >
                   <ViewMyPackage />
                 </Paper>
               </Grid>
             </Grid>
-
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>

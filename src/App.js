@@ -121,7 +121,7 @@ app.get("/viewAppointmentsOfDoctor/:docID", viewAppointmentsOfDoctor);
 app.post( '/upload-document', upload.single('document'), requireAuth("Patient"),uploadMedicalDocument );
 app.delete('/remove-document/:documentId',requireAuth("Patient"),  removeMedicalDocument);
 app.get('/getUploaded', requireAuth("Patient"),getUploaded);
-app.get("/serveFile/:id/:filePath/:fileName", servefiles);
+app.get("/serveFile/:filePath/:fileName", servefiles);
 
 // #Routing to userController here
 ///mohab
@@ -149,7 +149,7 @@ app.post("/addFamilyMember",requireAuth("Patient"),addFamilyMember); //no /:id(u
 app.get("/viewRegFamilyMembers",requireAuth("Patient"),viewRegFamilyMembers);
 app.get("/viewAppointments",requireAuth("Patient"),viewAppointments);
 app.get("/filterAppointmentsDate/:date",filterAppointmentsDate); 
-app.get("/filterAppointmentsStatus/:status",filterAppointmentsStatus);
+app.get("/filterAppointmentsStatus/:status",requireAuth("Patient"),filterAppointmentsStatus);
 app.get("/getUserById/:id", getUserById);
 app.get("/getUserByTokenId", getUserByTokenId);
 app.post("/addAppointment",addAppointment);

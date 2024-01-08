@@ -319,7 +319,6 @@ const removeMedicalDocument = async (req, res) => {
 
 const servefiles = async (req, res) => {
   try {
-    const id = req.params.id;
     const fullPath = decodeURIComponent(req.params.filePath);
     // console.log(filePath);
     // Assuming `filePath` contains both the path and filename
@@ -529,12 +528,6 @@ const addFamilyMember = async (req, res) => {
       for(let i = 0; i<Appointments.length; i++){
         doctorNames.push((await userModel.findById(Appointments[i].doctor)).name);
       }
-      // for(let i = 0; i<Appointments.length; i++){
-      //   console.log(doctorNames[i]);
-      //   console.log(Appointments[i].doctor);
-      //   Appointments[i].doctor = doctorNames[i];
-      //   console.log(Appointments[i].doctor);
-      // }
       res.status(200).json({Appointments, doctorNames});
   }
      
@@ -548,10 +541,14 @@ const addFamilyMember = async (req, res) => {
       const token = req.cookies.jwt;
       const decodedToken = jwt.verify(token, 'supersecret');
       const patientId = decodedToken.user._id;
-        const Appointments = await appointmentsModel.find({patient: patientId, date :req.params.date})
-        res.status(200).json(Appointments)
-    }
-    catch(error){
+      const Appointments = await appointmentsModel.find({patient: patientId, date :req.params.date})
+      const doctorNames = [];
+      for(let i = 0; i<Appointments.length; i++){
+        doctorNames.push((await userModel.findById(Appointments[i].doctor)).name);
+      }
+      res.status(200).json({Appointments, doctorNames});
+      }
+      catch(error){
         res.status(400).json({message: error.message})
         }
   
@@ -561,12 +558,19 @@ const filterAppointmentsStatus = async(req,res)=>{
       const token = req.cookies.jwt;
       const decodedToken = jwt.verify(token, 'supersecret');
       const patientId = decodedToken.user._id;
-        const Appointments = await appointmentsModel.find({patient: patientId, status :req.params.status})
-        res.status(200).json(Appointments)
+      console.log(patientId);
+      console.log(req.params.status);
+      const Appointments = await appointmentsModel.find({patient: patientId, status :req.params.status})
+      console.log(Appointments);
+      const doctorNames = [];
+      for(let i = 0; i<Appointments.length; i++){
+        doctorNames.push((await userModel.findById(Appointments[i].doctor)).name);
+      }
+      res.status(200).json({Appointments, doctorNames});    
     }
     catch(error){
-        res.status(400).json({message: error.message})
-        } 
+      res.status(400).json({message: error.message})
+    } 
 }
 const getWalletInfo = async (req, res) => {
   const token = req.cookies.jwt;
