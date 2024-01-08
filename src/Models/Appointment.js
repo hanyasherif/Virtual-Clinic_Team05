@@ -24,6 +24,9 @@ const appointmentSchema = new Schema({
     price: {
         type: Number,
         required: true
+    },
+    followUp:{
+        type:Boolean
     }
   }, { timestamps: true });
   
