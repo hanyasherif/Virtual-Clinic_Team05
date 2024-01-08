@@ -153,17 +153,6 @@ export default function Dashboard() {
               </Typography>
 
               <Button color="inherit" onClick={handleLogout}>Logout</Button>
-            {/* Cart Button
-            <Link to="/CartPage" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <img
-                id="cartImage"
-                src={cart}
-                alt="Cart Image"
-                style={{ width: '30px', height: '30px', cursor: 'pointer' }}
-              />
-            </Link> */}
-            {/* cart button here!!!! */}
-
 
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">

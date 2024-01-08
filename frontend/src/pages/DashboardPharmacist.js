@@ -30,6 +30,7 @@ import cart from '../assets/cart.jpg';
 import MedicineDetails from '../componenetsPh/MedicineDetailsArch';
 import PharmacistPage from './PharmacistPage';
 import PharmacistPage2 from './PharmacistPage2';
+import { Button } from '@mui/material';
 
 function Copyright(props) {
   return (
@@ -54,6 +55,8 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  backgroundColor: '#004E64', // New background color
+
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -100,6 +103,14 @@ export default function Dashboard() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const handleLogout = async (e) => {
+    try {
+      await fetch('http://localhost:8000/logout');
+      window.location.href = 'http://localhost:3000/';
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -130,21 +141,22 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              My Cart
+              Welcome Manar!
+              
 
               </Typography>
             {/* Cart Button */}
-            <Link to="/CartPage" style={{ textDecoration: 'none', color: 'inherit' }}>
+            {/* <Link to="/CartPage" style={{ textDecoration: 'none', color: 'inherit' }}>
               <img
                 id="cartImage"
                 src={cart}
                 alt="Cart Image"
                 style={{ width: '30px', height: '30px', cursor: 'pointer' }}
               />
-            </Link>
+            </Link> */}
             {/* cart button here!!!! */}
 
-
+            <Button color="inherit" onClick={handleLogout}>Logout</Button>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
