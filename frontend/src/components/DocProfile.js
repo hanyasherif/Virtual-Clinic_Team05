@@ -25,8 +25,12 @@ const DocProfile = () => {
     const doctorId = params.get('doctorId');
     const [appointment,setAppointment] = useState([]);
     const [doctor, setDoctor] = useState({});
-
+    const chat= async() =>{
+      localStorage.setItem('partner', params.get('doctorId'));
+      window.location.href='http://localhost:3000/VideoChatPage'
+    }
     useEffect(() => {
+      
       const fetchDoctorData = async () => {
           try {
               const res = await axios.get(`http://localhost:8000/getDoctorInfo?doctorId=${doctorId}`);
@@ -44,7 +48,7 @@ const DocProfile = () => {
               console.log(err.message);
           }
       };
-
+    
       fetchDoctorData();
       fetchAppointments();
 
@@ -62,6 +66,9 @@ const DocProfile = () => {
       <p>Hourly Rate: ${doctor.hourlyRate}</p>
       <p>Affiliation: {doctor.affiliation}</p>
       </div>
+      <button  onClick={chat}>
+           VideoChat
+          </button>
       <br/>
      <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">

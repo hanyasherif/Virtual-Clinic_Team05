@@ -3,18 +3,19 @@ import IconButton from "@material-ui/core/IconButton"
 import TextField from "@material-ui/core/TextField"
 import AssignmentIcon from "@material-ui/icons/Assignment"
 import PhoneIcon from "@material-ui/icons/Phone"
+import { set } from "mongoose"
 import React, { useEffect, useRef, useState } from "react"
 import { CopyToClipboard } from "react-copy-to-clipboard"
 import Peer from "simple-peer"
 import io from "socket.io-client"
-import "./V.css"
 
 
-const socket = io.connect('http://localhost:8000')
-function VideoChat() {
+
+function VideoChat({socket,room,partner}) {
 	const [ me, setMe ] = useState("")
 	const [ stream, setStream ] = useState()
 	const [ receivingCall, setReceivingCall ] = useState(false)
+	const [ userJoined, setUserJoined ] = useState(false)
 	const [ caller, setCaller ] = useState("")
 	const [ callerSignal, setCallerSignal ] = useState()
 	const [ callAccepted, setCallAccepted ] = useState(false)
@@ -24,19 +25,22 @@ function VideoChat() {
 	const myVideo = useRef()
 	const userVideo = useRef()
 	const connectionRef= useRef()
-
+ 
 	useEffect(() => {
-        
-		navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
+    setMe(socket.id)
+    console.log("Use2222r" + socket.id);
+    socket.emit("join_user", socket.id )
+    socket.on("joined_user", (userId) => {
+      setIdToCall(userId.socketId)
+	  setUserJoined(true);
+      console.log("User" + userId.socketId);
+    })
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
 			setStream(stream)
-          //  initializeRefs(); 
-          myVideo.current.srcObject = stream;
-            
+				myVideo.current.srcObject = stream
 		})
 
-	socket.on("me", (id) => {
-			setMe(id)
-		})
+
 
 		socket.on("callUser", (data) => {
 			setReceivingCall(true)
@@ -61,7 +65,7 @@ function VideoChat() {
 			})
 		})
 		peer.on("stream", (stream) => {
-			
+			console.log("r"+stream)
 				userVideo.current.srcObject = stream
 			
 		})
@@ -74,13 +78,6 @@ function VideoChat() {
 	}
 
 	const answerCall =() =>  {
-        console.log('userVideo.current:', userVideo.current);
-        console.log('stream:', stream);
-        console.log('callerSignal:', callerSignal);
-
-
-
-        
 		setCallAccepted(true)
 		const peer = new Peer({
 			initiator: false,
@@ -91,6 +88,7 @@ function VideoChat() {
 			socket.emit("answerCall", { signal: data, to: caller })
 		})
 		peer.on("stream", (stream) => {
+			console.log("Send"+stream)
 			userVideo.current.srcObject = stream
 		})
 
@@ -109,7 +107,7 @@ function VideoChat() {
 		<div className="container">
 			<div className="video-container">
 				<div className="video">
-					{stream && <video playsInline  ref={myVideo} autoPlay style={{ width: "300px" }} />}
+					{stream &&  <video playsInline muted ref={myVideo} autoPlay style={{ width: "300px" }} />}
 				</div>
 				<div className="video">
 					{callAccepted && !callEnded ?
@@ -126,19 +124,27 @@ function VideoChat() {
 					onChange={(e) => setName(e.target.value)}
 					style={{ marginBottom: "20px" }}
 				/>
-				<CopyToClipboard text={me} style={{ marginBottom: "2rem" }}>
-					<Button variant="contained" color="primary" startIcon={<AssignmentIcon fontSize="large" />}>
-						Copy ID
-					</Button>
-				</CopyToClipboard>
+				
+				<div>
+				{!callAccepted ?(
+					<div>
+					{userJoined ? (
+						 
+						 <p>You can call now</p>
+					 ): (
+						 <p>You can't call now</p>
+					 
 
-				<TextField
-					id="filled-basic"
-					label="ID to call"
-					variant="filled"
-					value={idToCall}
-					onChange={(e) => setIdToCall(e.target.value)}
-				/>
+				 )}
+				  </div>
+				 )
+				:
+				 
+				 (null)}
+				</div>
+				
+					
+
 				<div className="call-button">
 					{callAccepted && !callEnded ? (
 						<Button variant="contained" color="secondary" onClick={leaveCall}>

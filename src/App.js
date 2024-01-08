@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const upload = require('../src/MulterConfig');
-
+// from 'uuid';
 mongoose.set('strictQuery', false);
 require("dotenv").config();
 const cookieParser = require('cookie-parser');
@@ -10,6 +10,12 @@ const { requireAuth } = require('./Middleware/authMiddleware');
 const bodyParser = require("body-parser");
 const app = express();
 const http = require('http');
+
+
+const { Server } = require("socket.io");
+const { v4: uuidv4 } = require('uuid');
+const SimplePeer =require('simple-peer');
+
 
 const socketio =  require('socket.io');
 
@@ -29,6 +35,7 @@ const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, sear
     = require("./Routes/userController");
 
 const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
+const {sendEmail,getRoom} = require("./Routes/VideoChatController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest,  handleReject, handleAccept } = require("./Routes/requestController");
 const{viewPackages , subscribePackage , viewMyPackage , cancelPackage , CheckOTP , CEmail , GEmail ,changePassword } = require("./Routes/PatientController");
@@ -71,26 +78,31 @@ app.get('/', (req, res) =>{
 
 
 
-mongoose.connect(MongoURI)
-.then(()=>{
-  console.log("MongoDB is now connected!")
-// Starting server
-const server=app.listen(port, () => {
-  console.log(`Listening to requests on http://localhost:${port}`);
-})
-const io = require('socket.io')(server,{cors: {
-  origin: "http://localhost:3000",
-  methods: ["GET", "POST"]
-  
-}});
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
 io.on("connection", (socket) => {
-  console.log("SUCCESSSS");
-	socket.emit("me", socket.id)
+  console.log(`User Connected: ${socket.id}`);
+  
+  socket.on("join_room", (data) => {
+    socket.join(data);
+    socket.to(data).emit("joined_user",{socketId: socket.id});
+    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  });
+  
+
+	
 
 	socket.on("disconnect", () => {
 		socket.broadcast.emit("callEnded")
 	})
 
+	
 	socket.on("callUser", (data) => {
 		io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
 	})
@@ -98,8 +110,15 @@ io.on("connection", (socket) => {
 	socket.on("answerCall", (data) => {
 		io.to(data.to).emit("callAccepted", data.signal)
 	})
-})
 
+});
+mongoose.connect(MongoURI)
+.then(()=>{
+  console.log("MongoDB is now connected!")
+// Starting server
+server.listen(port, () => {
+  console.log(`Listening to requests on http://localhost:${port}`);
+})
 
 })
 .catch(err => console.log(err));
@@ -111,7 +130,6 @@ app.use(bodyParser.json());
 // #Routing to userController here
 ////////////////////////////////////////////////hanya//////////////////////////////////////////////////////////
 app.use(express.static('public'));
-
 
 // const corsOptions = {
 //    origin:"http://localhost:3000",//included origin as true
@@ -234,6 +252,7 @@ app.get("/ViewUpdatedHRforD",ViewUpdatedHRforD);
 app.post("/scheduleFollowUp", requireAuth("Doctor"),scheduleFollowUp);
 
 
+app.post('/sendEmail',sendEmail);
 
 
 ///////PHARMA
@@ -318,3 +337,6 @@ app.get("/CheckEmail",requireAuth,CEmail);
 
 app.post("/ChangePassword",requireAuth,changePassword);
 
+
+
+app.get("/getRoom",getRoom)

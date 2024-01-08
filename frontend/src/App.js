@@ -5,7 +5,6 @@ import { useState } from 'react';
 //Pharma
 
 
-
 import HomePH from "./pages/HomeKO";
 import LoginAsPH from "./pages/LoginAs";
 import NavbarPH from './componenetsPh/Navbar';
@@ -80,11 +79,9 @@ import CreateContract from './components/CreateContract';
 import ViewAcceptContract from './components/ViewAcceptContract';
 import AddAppointment from './components/AddAppointments';
 import ChangePassword from './components/ChangePassword'; 
-import VideoChat from './components/VideoChat'; 
-import Test from './components/Test'; 
-import Sidebar from './components/Sidebar'; 
-import Notifications from './components/Notifications'; 
-import VideoPlayer from './components/VideoPlayer'; 
+import VideoChatPage from './pages/VideoChatPage'; 
+
+
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
   return (
@@ -178,9 +175,12 @@ function App() {
                <Route path="/ChangeMyPassword"
               element={<ChangePassword/>}/>
 
-            <Route path="/video"
-            element={<VideoChat/>}/>
-            
+          
+              <Route path="/videochatpage"
+              element={<VideoChatPage/>}/>
+              
+          
+              
           
             
               {/*SS*/}

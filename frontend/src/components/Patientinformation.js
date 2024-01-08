@@ -25,6 +25,12 @@ function UserProfile() {
     }
   }
 
+  const chat= async() =>{
+    localStorage.setItem('partner', searchParams.get('Patient'));
+    window.location.href='http://localhost:3000/VideoChatPage'
+}
+
+
 
 
   const toggleShowMore = () => {
@@ -65,6 +71,9 @@ function UserProfile() {
           </button>
           <button style={buttonStyle} onClick={toggleShowMore}>
             {showMore ? 'Show Less' : 'Show More'}
+          </button>
+          <button  onClick={ chat}>
+          VideoChat
           </button>
         </div>
         {showMore && (
