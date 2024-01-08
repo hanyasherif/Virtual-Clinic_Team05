@@ -29,7 +29,7 @@ const MongoURI = process.env.MONGO_URI ;
 
 
 
-const { default: test } = require("node:test");
+//const { default: test } = require("node:test");
 
 
 app.get('/', (req, res) =>{
@@ -46,9 +46,9 @@ app.use(bodyParser.json());
 // #Routing to userController here
 ////////////////////////////////////////////////hanya//////////////////////////////////////////////////////////
 app.use(express.static('public'));
-const http = require("http");
 
-const { Server } = require("socket.io");
+
+
 const cors = require('cors');
 
 const corsOptions = {
@@ -114,7 +114,7 @@ const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, sear
    filterAppointmentsStatus, AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor, 
    uploadMedicalDocument, findPatById,login, removeMedicalDocument, 
     servefiles ,getUploaded ,    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,
-    getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId, getRoom, phviewPatients,
+    getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId, phviewPatients,
      viewPharmacists} 
     = require("./Routes/userController");
 
@@ -149,8 +149,8 @@ const {viewOrders, cancelOrder} = require("./RoutesPh/orderController");
 
 //App variables
 
-const cors = require('cors');
-const { default: test } = require("node:test");
+//const cors = require('cors');
+//const { default: test } = require("node:test");
 const port = process.env.PORT || "8000";
 
 app.get('/', (req, res) =>{
@@ -163,16 +163,7 @@ app.get('/', (req, res) =>{
 
 
 
-mongoose.connect(MongoURI)
-.then(()=>{
-  console.log("MongoDB is now connected!")
-// Starting server
-server.listen(port, () => {
-  console.log(`Listening to requests on http://localhost:${port}`);
-})
 
-})
-.catch(err => console.log(err));
 
 app.get("/home", (req, res) => {
     res.status(200).send("You have everything installed!");

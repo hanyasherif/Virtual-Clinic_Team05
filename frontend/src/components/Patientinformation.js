@@ -29,7 +29,7 @@ function UserProfile() {
         window.location.href='http://localhost:3000/ChatPage'
   }
 
-  const chat= async() =>{
+  const Videochat= async() =>{
     localStorage.setItem('partner', searchParams.get('Patient'));
     window.location.href='http://localhost:3000/VideoChatPage'
 }
@@ -79,7 +79,7 @@ function UserProfile() {
           <button style={buttonStyle} onClick={toggleShowMore}>
             {showMore ? 'Show Less' : 'Show More'}
           </button>
-          <button  onClick={ chat}>
+          <button  onClick={ Videochat}>
           VideoChat
           </button>
         </div>
