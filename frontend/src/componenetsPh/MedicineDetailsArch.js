@@ -77,7 +77,9 @@ const MedicineDetails = ({medicine}) => {
           un-archive Medicine:
           <input
             type="radio"
-            name="isArchived"
+            name="
+            
+            ived"
             checked={isArchived}
             onChange={() => setIsArchived(false)}
           />
