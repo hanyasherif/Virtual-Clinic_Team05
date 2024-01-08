@@ -17,15 +17,10 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItemsCl';
+import { mainListItems, secondaryListItems } from './listItemsDoc';
 import Button from "@mui/material/Button";
-import ViewDocPat from './ViewDocPat';
-import Wallet from './Wallet';
-import ViewFamilyMember from './ViewFamilyMember';
-import PatPrescView from './PatPrescView';
-import ViewHealthRecords from './ViewHealthRecords';
-import ViewPackages from './ViewPackages';
-import ViewMyPackage from './ViewMyPackage'
+import UsersList from './UsersList';
+import Meeting from './Appointments';
 
 function Copyright(props) {
   return (
@@ -92,7 +87,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function PatClinicDashboard() {
+export default function DoctorDashboard() {
 
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -137,7 +132,7 @@ export default function PatClinicDashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              El7a2ny Clinic Patient Page
+              El7a2ny Clinic Doctor Page
             </Typography>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
             <IconButton color="inherit">
@@ -182,7 +177,7 @@ export default function PatClinicDashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={8} lg={9} 
+               <Grid item xs={12} md={8} lg={9} 
                 sx={{
                   '&:hover > div': {
                     transform: 'scale(1.01)',
@@ -199,35 +194,12 @@ export default function PatClinicDashboard() {
                     transition: 'transform 0.3s ease-in-out',
                     // height: 200,
                     borderRadius: 3,
+                    width: 1150,
                   }}
                 >
-                  {/* <Chart /> */}
-                  <ViewDocPat />
+                  <UsersList />
                 </Paper>
               </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}
-                sx={{
-                  '&:hover > div': {
-                    transform: 'scale(1.02)',
-                    transition: 'transform 0.3s ease-in-out',
-                  },
-                }}
-              >
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'transform 0.3s ease-in-out',
-                    // height: 200,
-                    borderRadius: 3,
-                  }}
-                >
-                  <Wallet />
-                </Paper>
-              </Grid>
-
               <Grid item xs={12} md={4} lg={2}
                 sx={{
                   '&:hover > div': {
@@ -246,9 +218,10 @@ export default function PatClinicDashboard() {
                     borderRadius: 3,
                   }}
                 >
-                  <ViewHealthRecords />
+                  <Meeting />
                 </Paper>
               </Grid>
+              {/*
 
               <Grid item xs={12} lg={10}
                 sx={{
@@ -333,7 +306,7 @@ export default function PatClinicDashboard() {
                 >
                   <ViewMyPackage />
                 </Paper>
-              </Grid>
+              </Grid> */}
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>

@@ -3,21 +3,20 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import LockIcon from '@mui/icons-material/Lock';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
-
+import HomeIcon from '@mui/icons-material/Home';
 
 
 export const mainListItems = (
   <React.Fragment>
     <ListItemButton onClick={() => { window.location.href = '/patient'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
-        <DashboardIcon />
+        <HomeIcon />
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Dashboard"/>
     </ListItemButton>

@@ -81,15 +81,17 @@ import ViewHealthRecords from './components/ViewHealthRecords';
 import CreateContract from './components/CreateContract';
 import ViewAcceptContract from './components/ViewAcceptContract';
 import AddAppointment from './components/AddAppointments';
-import ChangePassword from './components/ChangePassword'; 
+import ChangePassword from './components/ChangePasswordPatCl'; 
 import VideoChatPage from './pages/VideoChatPage'; 
 import ChatPage from './pages/ChatPage'; 
 import PatientsList from './components/PatientsList';
 import PharmacistsList from './components/PharmacistsList';
 import DocPharmacistsList from './components/DocPharmacistsList';
 import ChatUserProfile from './components/ChatPatientInformation'
-
-
+import DoctorDashboard from './components/DoctorDashboard';
+import ChangePassDoc from './components/ChangePassDoc';
+import AdminDashboardCl from './components/AdminDashboardCl';
+import ChangePassAdmin from './components/ChangePassAdmin';
 
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
@@ -140,9 +142,9 @@ function App() {
               <Route path="/Meeting"
               element={<Meeting/>}/>
               <Route path="/AdminPage"
-              element={<AdminPage/>}/>
+              element={<AdminDashboardCl/>}/>
               <Route path="/DoctorPage"
-              element={<DoctorPage/>}/>
+              element={<DoctorDashboard/>}/>
               {/* <Route path="/"
               element={<Menu/>}/> */}
               <Route path="/"
@@ -182,13 +184,15 @@ function App() {
               element={<ScheduleFollowUp/>}/>
                <Route path="/ChangeMyPassword"
               element={<ChangePassword/>}/>
-
+               <Route path="/ChangeMyPasswordDoc"
+              element={<ChangePassDoc/>}/>
           
               <Route path="/videochatpage"
               element={<VideoChatPage/>}/>
-              
-          
-              
+
+              <Route path="/ChangePassAdmin"
+              element={<ChangePassAdmin/>}/>
+                            
           
             
               {/*SS*/}

@@ -51,19 +51,22 @@ function PatientPage() {
       <h2>Hello Doctor</h2>
       <br/>
       <div className="button-container" style={buttonContainerStyle}>
-      <Button onClick={() => window.location.href=`http://localhost:3000/addRequest`}>Submit Request</Button>
-        <Button onClick={() => window.location.href=`http://localhost:3000/setting`}>Edit Profile</Button>
-        <Button  onClick={() => window.location.href=`http://localhost:3000/ShowPatients`}>ShowPatients</Button>
-      <Button onClick={() => window.location.href=`http://localhost:3000/Info`}>SearchClient</Button>
-      <Button onClick={() => window.location.href=`http://localhost:3000/Meeting`}>Show UpcomingAppointment</Button>
-      <Button onClick={() => window.location.href=`http://localhost:3000/ViewAcceptContract`}>View Contracts</Button>
+      {/* <Button onClick={() => window.location.href=`http://localhost:3000/addRequest`}>Submit Request</Button> */}
+        {/* <Button onClick={() => window.location.href=`http://localhost:3000/setting`}>Edit Profile</Button> */}
+        {/* <Button  onClick={() => window.location.href=`http://localhost:3000/ShowPatients`}>ShowPatients</Button> */}
+
+
+
+      {/* <Button onClick={() => window.location.href=`http://localhost:3000/Info`}>SearchClient</Button> */}
+      {/* <Button onClick={() => window.location.href=`http://localhost:3000/Meeting`}>Show UpcomingAppointment</Button> */}
+      {/* <Button onClick={() => window.location.href=`http://localhost:3000/ViewAcceptContract`}>View Contracts</Button> */}
       <Button onClick={() => window.location.href=`http://localhost:3000/wallet`}>View My Wallet</Button>
-      <Button onClick={() => window.location.href=`http://localhost:3000/AddAppointment`}>AddAppointment</Button>
+      {/* <Button onClick={() => window.location.href=`http://localhost:3000/AddAppointment`}>AddAppointment</Button> */}
       <Button onClick={() => window.location.href=`http://localhost:3000/ViewHealthRecords`}>ViewHealthRecords</Button>
-      <Button onClick={() => window.location.href=`http://localhost:3000/AddNewHR`}>AddNewHR</Button>
-      <Button onClick={() => window.location.href=`http://localhost:3000/Schedule`}>ScheduleFollowUp</Button>
+      {/* <Button onClick={() => window.location.href=`http://localhost:3000/AddNewHR`}>AddNewHR</Button> */}
+      {/* <Button onClick={() => window.location.href=`http://localhost:3000/Schedule`}>ScheduleFollowUp</Button> */}
       <Button onClick={() => window.location.href=`http://localhost:3000/ChangeMyPassword`}>ChangeMyPassword</Button>
-      <Button onClick={() => window.location.href='http://localhost:3000/DocPharmacistsList'}>View Pharmacists</Button>
+      {/* <Button onClick={() => window.location.href='http://localhost:3000/DocPharmacistsList'}>View Pharmacists</Button> */}
 
       
    

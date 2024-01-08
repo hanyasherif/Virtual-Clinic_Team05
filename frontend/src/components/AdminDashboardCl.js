@@ -17,7 +17,7 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItemsCl';
+import { mainListItems, secondaryListItems } from './listItemsAdCl';
 import Button from "@mui/material/Button";
 import ViewDocPat from './ViewDocPat';
 import Wallet from './Wallet';
@@ -92,7 +92,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function PatClinicDashboard() {
+export default function DoctorDashboard() {
 
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -137,7 +137,7 @@ export default function PatClinicDashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              El7a2ny Clinic Patient Page
+              El7a2ny Clinic Admin Page
             </Typography>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
             <IconButton color="inherit">
@@ -182,7 +182,7 @@ export default function PatClinicDashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={8} lg={9} 
+              {/* <Grid item xs={12} md={8} lg={9} 
                 sx={{
                   '&:hover > div': {
                     transform: 'scale(1.01)',
@@ -201,11 +201,9 @@ export default function PatClinicDashboard() {
                     borderRadius: 3,
                   }}
                 >
-                  {/* <Chart /> */}
                   <ViewDocPat />
                 </Paper>
               </Grid>
-              {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}
                 sx={{
                   '&:hover > div': {
@@ -333,7 +331,7 @@ export default function PatClinicDashboard() {
                 >
                   <ViewMyPackage />
                 </Paper>
-              </Grid>
+              </Grid> */}
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
