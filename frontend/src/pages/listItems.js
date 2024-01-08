@@ -11,6 +11,9 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import DescriptionIcon from '@mui/icons-material/Description';
+import HomeIcon from '@mui/icons-material/Home';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
 
 
 
@@ -19,9 +22,9 @@ export const mainListItems = (
   <React.Fragment>
     <ListItemButton onClick={() => { window.location.href = '/patientPagePH'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
-        <DashboardIcon />
+        <HomeIcon/>
       </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Dashboard"/>
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Home"/>
     </ListItemButton>
     <ListItemButton onClick={() => { window.location.href = '/PrescriptionMedicines'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
@@ -31,13 +34,13 @@ export const mainListItems = (
     </ListItemButton>
     <ListItemButton onClick={() => { window.location.href = '/cartPagePH'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
-        <DateRangeIcon />
+        <ShoppingCartIcon />
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Cart" />
     </ListItemButton>
-    <ListItemButton onClick={() => { window.location.href = '/uploadMedicalHistory'; }}>
+    {/* <ListItemButton onClick={() => { window.location.href = '/uploadMedicalHistory'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
-        <CloudUploadIcon />
+        <ShoppingCartIcon />
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Upload Documents" />
     </ListItemButton>
@@ -52,14 +55,14 @@ export const mainListItems = (
         <SearchIcon />
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Search Prescriptions" />
-    </ListItemButton>
+    </ListItemButton> */}
   </React.Fragment>
 );
 
 export const secondaryListItems = (
   <React.Fragment>
     <ListSubheader component="div" inset>
-      Personal Details
+      {/* Personal Details */}
     </ListSubheader>   
     <ListItemButton onClick={() => { window.location.href = '/ChangeMyPassword'; }}>
     <ListItemIcon sx={{ color: '#8B0000' }}>

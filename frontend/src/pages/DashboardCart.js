@@ -186,7 +186,7 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flex: 1, display: 'flex' }}>
             <Grid container spacing={3}>
-              {/* Chart (PatientPagePH) */}
+              {/* Cart */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
@@ -196,12 +196,12 @@ export default function Dashboard() {
                     height: '100%',
                   }}
                 >
-                  {/* <Chart /> */}
+                  {/* <Cart /> */}
                   <CartPagePH />
                 </Paper>
               </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
+              {/* filter */}
+              {/* <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
                     p: 2,
@@ -212,17 +212,10 @@ export default function Dashboard() {
                 >
                   <FilterMedicine />
                 </Paper>
-              </Grid>
+              </Grid> */}
             </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper
-                sx={{ p: 2, display: 'flex', flexDirection: 'column', flex: 1 }}
-              >
-                <Search />
-                {/* <Orders /> */}
-              </Paper>
-            </Grid>
+            {/* search */}
+          
           </Container>
           <Copyright sx={{ pt: 4 }} />
         </Box>
