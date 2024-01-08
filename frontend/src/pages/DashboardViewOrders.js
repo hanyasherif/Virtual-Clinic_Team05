@@ -32,6 +32,9 @@ import Logo from '../assets/Logo.png';
 import CartPagePH from './CartPage';
 import Checkout from './Checkout';
 
+import OrderDetailsPH from './OrderDetails';
+import Wallet from './WalletPH';
+
 
 ///mangaa
 
@@ -60,7 +63,6 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   backgroundColor: '#004E64', // New background color
-  // background: 'linear-gradient(to right, #004E64, #0088A8)',
 
   ...(open && {
     marginLeft: drawerWidth,
@@ -225,13 +227,36 @@ export default function Dashboard() {
                   }}
                 >
                   
-                  <Checkout />
+                  <OrderDetailsPH />
                 </Paper>
               </Grid>
               {/* Filter Medicines */}
               
             </Grid>
             {/* Search */}
+            <Grid item xs={12} md={4} lg={3}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.02)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                  ml: 5, // Add left margin of 10 pixels
+
+                }}
+              >
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 200,
+                    borderRadius: 3,
+                  }}
+                >
+                  <Wallet />
+                </Paper>
+              </Grid>
            
           </Container>
           <Copyright sx={{ pt: 4 }} />

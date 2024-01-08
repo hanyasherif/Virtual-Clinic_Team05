@@ -349,11 +349,60 @@ const changePassword = async (req, res) => {//Changing password
   }
 };
 
+///from clinic
+const getWalletInfo = async (req, res) => {
+  const token = req.cookies.jwt;
+  const decodedToken = jwt.verify(token, 'supersecret');
+    const userId= decodedToken.user._id
+
+
+  try {
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    
+    res.status(200).json(user.walletInfo);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+const modifyWallet = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, 'supersecret');
+      const patientId= decodedToken.user._id
+    const price = req.body.price;
+  
+
+    // Fetch the specific appointment using the appointmentId
+    const user = await userModel.findById(patientId);
+
+    // Check if the appointment exists
+    if (!user) {
+      return res.status(404).json({ message: "patient not found" });
+    }
+
+    // Update the appointment with the new patientId
+    user.walletInfo = user.walletInfo- price;
+    
+
+    // Save the modified appointment
+    await user.save();
+
+    res.status(200).json({ message: "patient wallet updated successfully", user });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
 
 module.exports = {addAdministrator, removeUser , registerPatient,
    deleteUser, adminViewPharmacists,
    adminViewPatients,checkUsername, getUsers, logout,login, GEmail, CEmail, 
-   CheckOTP, changePassword}
+   CheckOTP, changePassword, getWalletInfo, modifyWallet}
 
 
 

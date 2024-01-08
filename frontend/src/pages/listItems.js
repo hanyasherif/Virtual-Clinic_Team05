@@ -14,6 +14,8 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 
 
@@ -38,6 +40,19 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Cart" />
     </ListItemButton>
+    <ListItemButton onClick={() => { window.location.href = '/OrderDetails'; }}>
+      <ListItemIcon sx={{ color: '#25A18E' }}>
+        <AssignmentIcon/>
+      </ListItemIcon>
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="My Orders"/>
+    </ListItemButton>
+    <ListItemButton onClick={() => { window.location.href = '/OrderDetails'; }}>
+      <ListItemIcon sx={{ color: '#25A18E' }}>
+        <AccountBalanceWalletIcon/>
+      </ListItemIcon>
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="My Wallet"/>
+    </ListItemButton>
+
     {/* <ListItemButton onClick={() => { window.location.href = '/uploadMedicalHistory'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
         <ShoppingCartIcon />

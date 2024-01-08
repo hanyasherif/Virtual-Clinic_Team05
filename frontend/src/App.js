@@ -26,7 +26,7 @@ import PharmacistArch from './pages/PharmacistArch';
 import CartPagePH from './pages/CartPage';
 import CheckoutPagePH from './pages/CheckoutPage';
 import CancelOrderPH from './pages/sp2/CancelOrder';
-import OrderDetailsPH from './pages/sp2/OrderDetails';
+// import OrderDetailsPH from './pages/sp2/OrderDetails';
 import SuccessOrderPH from './pages/sp2/SuccessOrder';
 import LoginPH from './pages/Login'; //old pharmacy login here
 import ChangePasswPH from './pages/sp2/ChangePassw';
@@ -83,6 +83,7 @@ import ViewAcceptContract from './components/ViewAcceptContract';
 import AddAppointment from './components/AddAppointments';
 import ChangePassword from './components/ChangePassword'; 
 
+import OrderDetailsPH from './pages/OrderDetails';
 
 import Dashboard from './pages/Dashboard';
 import DashboardCart from './pages/DashboardCart';
@@ -93,6 +94,8 @@ import DashboardPharmacist from './pages/DashboardPharmacist';
 import DashboardPharmacistArchive from './pages/DashboardPharmacistArchive';
 import DashboardPharmacistSales from './pages/DashboardPharmacistSales';
 import DashboardAlternatives from './pages/DashboardAlternatives';
+import DashboardViewOrders from './pages/DashboardViewOrders';
+// import DashboardWallet from './pages/DashboardWallet';
 
 // import ChooseMode from './pages/chooseMode';
 
@@ -252,8 +255,8 @@ function App() {
               element={<DashboardCart/>} 
             />
             <Route
-              path="/orderDetailsPH"
-              element={<OrderDetailsPH/>} 
+              path="/orderDetails"
+              element={<DashboardViewOrders/>} 
             />
             <Route
               path="/checkoutPagePH"
@@ -302,6 +305,8 @@ function App() {
               path="/ChoosePath"
               element={<ChoosePath/>}
             />
+          
+            
               
               </Routes>
 
