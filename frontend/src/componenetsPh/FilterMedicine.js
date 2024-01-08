@@ -32,7 +32,7 @@ const MedicineFilter = ({ filterMedicine }) => {
       <p>Filter by Medicinal Use:</p>
       <div>
         {medicinalUses.map((medicinalUse, index) => (
-          <Button key={index} onClick={() => handleFilter(medicinalUse)} variant="contained" color="primary">
+          <Button key={index} onClick={() => handleFilter(medicinalUse)} variant="contained" color="primary" style={{ margin: '5px' }}>
             {medicinalUse}
           </Button>
         ))}

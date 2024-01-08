@@ -1,29 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Add this import statement
-//import jwt from 'jsonwebtoken'; // Add this import statement
-//import Cookies from 'js-cookie'; // Add this import statement
+import { Link } from 'react-router-dom';
+import {
+  Button,
+  Input,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Grid,
+  Paper,
+} from '@material-ui/core';
 import emptyCart from '../assets/emptyCart.jpg';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: theme.spacing(2),
+  },
+  paper: {
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    width: '100%', // Make each medicine component the same width
+  },
+  cartItem: {
+    marginBottom: theme.spacing(2),
+  },
+  quantityInput: {
+    marginLeft: theme.spacing(2),
+  },
+  proceedButton: {
+    marginTop: theme.spacing(2),
+  },
+  removeButton: {
+    marginLeft: 'auto', // Move the Remove button to the right
+  },
+}));
 
 const CartPage = () => {
+  const classes = useStyles();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [patientId, setPatientId] = useState('');
 
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get('/viewCart')
+        const response = await axios.get('/viewCart');
         setCartItems(response.data.items);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching cart items:', error);
       }
     };
-  
+
     fetchCartItems();
   }, []);
-  
 
   const removeFromCart = async (itemId) => {
     try {
@@ -52,38 +86,62 @@ const CartPage = () => {
     }
   };
 
-  
-
   if (loading) {
     return (
-      <div>
+      <div className={classes.root}>
         <img src={emptyCart} alt="Empty Cart" />
-        <p>Your cart is empty!</p>
+        <Typography variant="body1">Your cart is empty!</Typography>
       </div>
     );
   }
-  
+
   return (
-    <div>
-      <h2>Cart Page</h2>
-      <ul>
-        {cartItems.map((item) => (
-          <li key={item._id}>
-            <p>{item.medicine.name}</p>
-            <p>Quantity: {item.quantity}</p>
-            <p>Total Price: {item.totalPrice}</p>
-            <button onClick={() => removeFromCart(item._id)}>Remove</button>
-            <input
-              type="number"
-              value={item.quantity}
-              onChange={(e) => changeQuantity(item._id, e.target.value)}
-            />
-          </li>
-        ))}
-      </ul>
+    <div className={classes.root}>
+      <Typography variant="h4" gutterBottom>
+        Your Cart
+      </Typography>
+      {cartItems.map((item) => (
+        <Paper key={item._id} elevation={3} className={classes.paper}>
+          <Grid container alignItems="center">
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h6">{item.medicine.name}</Typography>
+            </Grid>
+            <Grid item xs={6} sm={3}>
+              <Typography variant="body2">Quantity: {item.quantity}</Typography>
+            </Grid>
+            <Grid item xs={6} sm={3}>
+              <Typography variant="body2">Total Price: {item.totalPrice}</Typography>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Input
+                className={classes.quantityInput}
+                type="number"
+                value={item.quantity}
+                onChange={(e) => changeQuantity(item._id, e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Button
+                onClick={() => removeFromCart(item._id)}
+                variant="contained"
+                color="secondary"
+                className={classes.removeButton}
+              >
+                Remove
+              </Button>
+            </Grid>
+          </Grid>
+        </Paper>
+      ))}
       <Link to="/CheckoutPagePH">
-        <button>Proceed to checkout</button>
-      </Link>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.proceedButton}
+        >
+          Proceed to Checkout
+        </Button>
+      </Link>
     </div>
   );
 };
