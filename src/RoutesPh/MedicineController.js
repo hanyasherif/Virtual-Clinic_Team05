@@ -193,8 +193,27 @@ const archiveMedicine = async (medicineId) => {
    }
  };
 
+ //make me a method to get the total sales of all medicines
+   //make me a method to get the total sales of all medicines
+   const getSales = async (req, res) => {
+      try {
+         const medicines = await medicineModel.find({});
+         let totalSales = 0;
+         let medicineSales = [];
+
+         medicines.forEach((medicine) => {
+            totalSales += medicine.sales;
+            medicineSales.push({ name: medicine.name, sales: medicine.sales });
+         });
+
+         res.status(200).json({ totalSales, medicineSales });
+      } catch (err) {
+         res.status(500).json({ message: err.message });
+      }
+   };
 
  
-module.exports = {createMedicine, getMedicine, updateMedicine,searchMedicine, filterMedicine, prescriptionMedicine,findAlternativeMedicines, archiveMedicine};
+module.exports = {createMedicine, getMedicine, updateMedicine,searchMedicine, filterMedicine, 
+   prescriptionMedicine,findAlternativeMedicines, archiveMedicine, getSales};
 
 

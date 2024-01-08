@@ -32,7 +32,7 @@ const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData 
 const {createContract, acceptContract,   rejectContract,   getContract}= require("./Routes/employmentController");
 
 //////PHARMA OLAYAN
-const { createMedicine, getMedicine, updateMedicine, searchMedicine, filterMedicine, prescriptionMedicine, findAlternativeMedicines } = require("./RoutesPh/MedicineController");
+const { createMedicine, getMedicine, updateMedicine, searchMedicine, filterMedicine, prescriptionMedicine, findAlternativeMedicines, getSales } = require("./RoutesPh/MedicineController");
 const { addRequestPH, getRequestsPH, getARequestPH, handleAcceptPH, handleRejectPH } = require("./RoutesPh/requestController");
 const { loginPH, CEmailPH,GEmailPH,CheckOTPPH, changePasswordPH } = require("./RoutesPh/userController");
 
@@ -284,6 +284,7 @@ app.post("/ChangePassword",requireAuth,changePassword);
 //new sp3
 app.get("/prescriptions",requireAuth("Patient"),  prescriptionMedicine);
 app.get("/alternativeMedicines", findAlternativeMedicines);
+app.get("/getSales", getSales);
 
 
 

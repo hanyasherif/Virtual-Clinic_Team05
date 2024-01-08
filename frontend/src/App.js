@@ -91,6 +91,7 @@ import DashboardPrescription from './pages/DashboardPrescription';
 import SignIn from './pages/SignIn';
 import DashboardPharmacist from './pages/DashboardPharmacist';
 import DashboardPharmacistArchive from './pages/DashboardPharmacistArchive';
+import DashboardPharmacistSales from './pages/DashboardPharmacistSales';
 
 // import ChooseMode from './pages/chooseMode';
 
@@ -287,6 +288,10 @@ function App() {
               <Route
               path="/PrescriptionMedicines"
               element={<DashboardPrescription/>}
+            />
+
+            <Route path="/Sales"
+            element={<DashboardPharmacistSales/>}
             />
 
               <Route

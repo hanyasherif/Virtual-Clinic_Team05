@@ -27,7 +27,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Home"/>
     </ListItemButton>
-    <ListItemButton onClick={() => { window.location.href = '/pharmacistPagePh'; }}>
+    <ListItemButton onClick={() => { window.location.href = '/sales'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
       <DescriptionIcon />
       </ListItemIcon>
