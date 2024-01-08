@@ -146,7 +146,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Welcome, Patient!
+              Welcome, Manar!
 
               </Typography>
 
