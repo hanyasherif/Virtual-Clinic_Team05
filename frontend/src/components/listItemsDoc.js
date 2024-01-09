@@ -33,12 +33,12 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Chat With Pharmacist" />
     </ListItemButton>
-    <ListItemButton onClick={() => { window.location.href = '/ShowPatients'; }}>
+    {/* <ListItemButton onClick={() => { window.location.href = '/Info'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
         <SearchIcon />
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Search Patients" />
-    </ListItemButton>
+    </ListItemButton> */}
     <ListItemButton onClick={() => { window.location.href = '/ViewAcceptContract'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
         <DescriptionIcon />

@@ -741,6 +741,27 @@ const modifyWalletDoctor = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+const searchByNamePatients = async (req, res) => {
+  const token = req.cookies.jwt;
+  const decodedToken = jwt.verify(token, 'supersecret');
+  let DoctorId = decodedToken.user._id;
+
+  try {
+    const { name, patList } = req.body; // Retrieve 'name' and 'patList' from the request body
+    console.log(name);
+    console.log(patList);
+    const regexName = new RegExp(name, 'i'); // 'i' flag for case-insensitive search
+
+    const results = patList.filter(patient => regexName.test(patient.name));
+
+    res.status(200).json(results);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+
 
 //////////////////////////////////sherif and momen//////////////////////////////////
 
@@ -865,7 +886,7 @@ module.exports = { login, addAdministrator, removeUser, getUsers,registerPatient
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
    filterAppointmentsStatus, AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor, uploadMedicalDocument, removeMedicalDocument
   , getUploaded, findPatById, servefiles ,getUserById  ,getWalletInfo, getWalletInfoDoc, getFamilyMemberData,
-  getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor, getUserByTokenId, getRoom, phviewPatients, viewPharmacists}   
+  getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor, getUserByTokenId, getRoom, phviewPatients, viewPharmacists,searchByNamePatients}   
 
 // module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
 //    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,

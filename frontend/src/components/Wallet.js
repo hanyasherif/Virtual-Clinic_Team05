@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import * as React from 'react';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Title from './Title';
 
@@ -19,6 +17,7 @@ const Wallet = () => {
       try {
         const response = await axios.get(`http://localhost:8000/getWalletInfo`,{withCredentials:true});
         const user = response.data;
+        console.log("Wallet"+user);
         setWalletInfo(user);
         console.log("Wallet Info:", walletInfo);
       } catch (error) {

@@ -180,106 +180,110 @@ export default function DoctorDashboard() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-            <Grid item xs={12} md={4} lg={3}
-                sx={{
-                  '&:hover > div': {
-                    transform: 'scale(1.02)',
-                    transition: 'transform 0.3s ease-in-out',
-                  },
-                }}
-              >
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'transform 0.3s ease-in-out',
-                    // height: 200,
-                    borderRadius: 3,
-                    width: 235,
-                  }}
-                >
-                  <WalletDoc />
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={8} lg={9} 
-                sx={{
-                  '&:hover > div': {
-                    transform: 'scale(1.01)',
-                    transition: 'transform 0.3s ease-in-out',
-                  },
-                  
-                }}
-              >
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'transform 0.3s ease-in-out',
-                    // height: 200,
-                    // marginTop: 2,
-                    borderRadius: 3,
-                    width: 900,
-                    marginLeft: -5,
-                  }}
-                >
-                  <UsersList />
-                </Paper>
-              </Grid>
+  <Grid container spacing={3}>
+    {/* Grid for WalletDoc and ViewHealthRecords */}
+    <Grid item xs={12} md={4} lg={3}>
+      <Grid container direction="column" spacing={3}>
+        <Grid item
+        sx={{
+          '&:hover > div': {
+            transform: 'scale(1.02)',
+            transition: 'transform 0.3s ease-in-out',
+          },
+        }}
+        >
+          <Paper
+            sx={{
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              transition: 'transform 0.3s ease-in-out',
+              borderRadius: 3,
+              width: 235,
+            }}
+          >
+            <WalletDoc />
+          </Paper>
+        </Grid>
+        <Grid item
+        sx={{
+          '&:hover > div': {
+            transform: 'scale(1.02)',
+            transition: 'transform 0.3s ease-in-out',
+          },
+        }}
+        >
+          <Paper
+            sx={{
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              transition: 'transform 0.3s ease-in-out',
+              borderRadius: 3,
+              width: 235,
+              marginTop: -1,
+            }}
+          >
+            <ViewHealthRecords />
+          </Paper>
+        </Grid>
+      </Grid>
+    </Grid>
+    
+    {/* Grid for UsersList and Meeting */}
+    <Grid item xs={12} md={8} lg={9}>
+      <Grid container direction="column" spacing={3}>
+        <Grid item
+        sx={{
+          '&:hover > div': {
+            transform: 'scale(1.01)',
+            transition: 'transform 0.3s ease-in-out',
+          },
+        }}
+        > 
+          <Paper
+            sx={{
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              transition: 'transform 0.3s ease-in-out',
+              borderRadius: 3,
+              width: 890,
+              marginLeft: -4.5,
+            }}
+          >
+            <UsersList />
+          </Paper>
+        </Grid>
+        <Grid item
+        sx={{
+          '&:hover > div': {
+            transform: 'scale(1.01)',
+            transition: 'transform 0.3s ease-in-out',
+          },
+        }}
+        >
+          <Paper
+            sx={{
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              transition: 'transform 0.3s ease-in-out',
+              borderRadius: 3,
+              width: 890,
+              marginTop: -1,
+              marginLeft: -4.5,
+            }}
+          >
+            <Meeting />
+          </Paper>
+        </Grid>
+      </Grid>
+    </Grid>
+  </Grid>
+  <Copyright sx={{ pt: 4 }} />
+</Container>
 
-            <Grid item xs={12} md={4} lg={2}
-                sx={{
-                  '&:hover > div': {
-                    transform: 'scale(1.01)',
-                    transition: 'transform 0.3s ease-in-out',
-                  },
-                }}
-              >
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'transform 0.3s ease-in-out',
-                    // height: 200,
-                    marginTop: -13,
-                    borderRadius: 3,
-                    width: 235
-                  }}
-                >
-                  <ViewHealthRecords />
-                  
-                </Paper>
-              </Grid>
-               
-              <Grid item xs={12} lg={10}
-                sx={{
-                  '&:hover > div': {
-                    transform: 'scale(1.01)',
-                    transition: 'transform 0.3s ease-in-out',
-                  },
-                }}
-              >
-                <Paper 
-                sx={{ 
-                  p: 2, 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  transition: 'transform 0.3s ease-in-out',
-                  // height: 200, 
-                  marginTop: 0,
-                  borderRadius: 3,
-                  width: 900,
-                  marginLeft: 8,
-                }}>
-                  <Meeting />
-                </Paper>
-              </Grid>   
-            </Grid>
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
         </Box>
       </Box>
     </ThemeProvider>

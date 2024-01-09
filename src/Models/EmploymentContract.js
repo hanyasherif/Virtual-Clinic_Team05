@@ -8,15 +8,14 @@ const employmentContractSchema = new Schema({
         ref:'User',
         required: true
     },
-
-termsAndConditions: {
-    type: String,
-    required: true    
-},
+    termsAndConditions: {
+        type: String,
+        required: true    
+    },
     status: {
         type: String,
-        default: 'PENDING',
-        enum: ['PENDING','ACCEPTED','REJECTED']
+        default: 'Pending',
+        enum: ['Pending','Accepted','Rejected']
     },
     markup: {
         type: Number,

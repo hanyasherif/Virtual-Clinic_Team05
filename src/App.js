@@ -132,7 +132,7 @@ const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, sear
    uploadMedicalDocument, findPatById,login, removeMedicalDocument, 
     servefiles ,getUploaded ,    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,
     getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId, phviewPatients,
-     viewPharmacists, getWalletInfoDoc} 
+     viewPharmacists, getWalletInfoDoc,searchByNamePatients} 
     = require("./Routes/userController");
 
 
@@ -275,7 +275,7 @@ app.get("/getUserById/:id", getUserById);
 app.get("/getUserByTokenId", getUserByTokenId);
 app.post("/addAppointment",addAppointment);
 app.get("/getAppointmentInfo",getAppointmentInfo) //query in frontenddd
-app.get("/getWalletInfo",requireAuth("ALL"),getWalletInfo);
+app.get("/getWalletInfo",requireAuth("Patient"),getWalletInfo);
 app.get("/getWalletInfoDoc",requireAuth("Doctor"),getWalletInfoDoc);
 
 app.get("/getFamilyMemberData",requireAuth("Patient"),getFamilyMemberData);
@@ -306,6 +306,8 @@ app.post("/deleteMedicine/:prescriptionId",deleteMedicine);
 app.post("/modifyInstruction/:prescriptionId",modifyInstruction);
 
 app.get("/generatePdf/:prescriptionId" , generatePdf);
+
+app.post("/searchByNamePatients", requireAuth("Doctor") , searchByNamePatients);
 
 ////////////////////////////////////////////////sherif and momen/////////////////////////////
 app.post("/Addpatient", AddPatient);

@@ -142,13 +142,12 @@ const modifyAppointment = async (req, res) => {
       res.status(200).json({message:"You can't add appointment, your contract is not accepted"})
       return;
   }
- 
- 
 
   let date = req.body.date;
+  let status = "Free";
   let price = doctor.hourlyRate + contract.markup;
   try{
-    const newApp = {date: date, doctor: doctorId,  price: price}
+    const newApp = {date: date, doctor: doctorId,  price: price, status: status}
     const Appo = await appointmentsModel.create(newApp);
     await Appo.save();
         res.status(200).json({message: "Appointment created successfully"})

@@ -3,44 +3,49 @@ const AppointmentModel = require('../Models/Appointment.js');
 const { default: mongoose } = require('mongoose');
 const jwt = require("jsonwebtoken");
 
-const ViewPatients = async(req,res) => {
+const ViewPatients = async (req, res) => {
   const token = req.cookies.jwt;
   const decodedToken = jwt.verify(token, 'supersecret');
-  let DoctorId= decodedToken.user._id
-  const arr = [];
-AppointmentModel.find({ doctor: DoctorId })
-  .populate({
-    path:'patient',
-    select:'_id username name email dateOfBirth emergencyContactFullname emergencyContactMobileNumber gender famMemName famMemNatID famMemAge famMemRelation HealthRecord',
-  }) 
+  let DoctorId = decodedToken.user._id;
+  const uniquePatients = new Set(); // Set to store unique patient IDs
+  const patientDetails = [];
 
-  .exec((err, appointments) => {
-    if (err) {
-       return  res.status(400).json({error:err.message})
-    }
-    else{
-      console.log('Appointments before population:', appointments);
-        const patientDetails = appointments.filter((appointment) => appointment.patient).map(appointment => ({
-          
-          _id:appointment.patient._id,  
-        username: appointment.patient.username,
-        dateOfBirth: appointment.patient.dateOfBirth,
-          email:appointment.patient.email,
-          gender: appointment.patient.gender,
-          famMemName: appointment.patient.famMemName,
-          famMemNatID: appointment.patient.famMemNatID,
-          famMemRelation: appointment.patient.famMemRelation,
-          famMemAge: appointment.patient.famMemAge,
-          emergencyContactFullname:appointment.patient.emergencyContactFullname,
-          emergencyContactMobileNumber:appointment.patient.emergencyContactMobileNumber,
-          HealthRecord:appointment.patient.HealthRecord,
-          }));            
-          return res.json(patientDetails);
-    }
-}
-   )
+  AppointmentModel.find({ doctor: DoctorId })
+    .populate({
+      path: 'patient',
+      select: '_id username name email dateOfBirth emergencyContactFullname emergencyContactMobileNumber gender famMemName famMemNatID famMemAge famMemRelation HealthRecord',
+    })
+    .exec((err, appointments) => {
+      if (err) {
+        return res.status(400).json({ error: err.message });
+      } else {
+        console.log('Appointments before population:', appointments);
+        appointments.forEach((appointment) => {
+          if (appointment.patient && !uniquePatients.has(appointment.patient._id)) {
+            uniquePatients.add(appointment.patient._id);
+            const patientDetail = {
+              _id: appointment.patient._id,
+              username: appointment.patient.username,
+              name: appointment.patient.name,
+              dateOfBirth: appointment.patient.dateOfBirth,
+              email: appointment.patient.email,
+              gender: appointment.patient.gender,
+              famMemName: appointment.patient.famMemName,
+              famMemNatID: appointment.patient.famMemNatID,
+              famMemRelation: appointment.patient.famMemRelation,
+              famMemAge: appointment.patient.famMemAge,
+              emergencyContactFullname: appointment.patient.emergencyContactFullname,
+              emergencyContactMobileNumber: appointment.patient.emergencyContactMobileNumber,
+              HealthRecord: appointment.patient.HealthRecord,
+            };
+            patientDetails.push(patientDetail);
+          }
+        });
+        return res.json(patientDetails);
+      }
+    });
+};
 
-}
 const SearchPatient = async (req, res) => {
   try {
     const token = req.cookies.jwt;
@@ -172,14 +177,13 @@ const filteredAppointments = async (req, res) => {
   const currentDate = new Date();
   const token = req.cookies.jwt;
   const decodedToken = jwt.verify(token, 'supersecret');
-    const doctorId= decodedToken.user._id
-  
+  const doctorId= decodedToken.user._id 
 
   try {
     const AllNewAppointments = await AppointmentModel.find({
       doctor: doctorId, 
-      date: { $gte: currentDate },
-    });
+      // date: { $gte: currentDate },
+    }).populate('patient');
 
     if (!AllNewAppointments || AllNewAppointments.length === 0) {
       return res.status(404).json({ message: 'No upcoming appointments with this doctor' });
