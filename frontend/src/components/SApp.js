@@ -93,6 +93,22 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const defaultTheme = createTheme();
 
 export default function SApp  () {
+  const [open, setOpen] = React.useState(true);
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
+  
+  
+  
+  
+  const handleLogout = async (e) => {
+    try {
+      await fetch(`http://localhost:8000/logout`,{credentials: 'include'});
+      window.location.href = 'http://localhost:3000/';
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
     const params = new URLSearchParams(window.location.search);
     const appointmentId = params.get('appointmentId');
     const [doctorName, setDoctorName] = useState({});
@@ -409,6 +425,76 @@ export default function SApp  () {
 
     return (
       <ThemeProvider theme={defaultTheme}>
+          <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="absolute" open={open}>
+          <Toolbar
+            sx={{
+              pr: '24px', // keep right padding when drawer closed
+            }}
+          >
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={toggleDrawer}
+              sx={{
+                marginRight: '36px',
+                ...(open && { display: 'none' }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              El7a2ny Clinic Patient Page
+            </Typography>
+            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+            <IconButton color="inherit">
+              <Badge badgeContent={0} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Drawer variant="permanent" open={open}>
+          <Toolbar
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              px: [1],
+            }}
+          >
+            <IconButton onClick={toggleDrawer}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </Toolbar>
+          <Divider />
+          <List component="nav">
+            {mainListItems}
+            <Divider sx={{ my: 1 }} />
+            {secondaryListItems}
+          </List>
+        </Drawer>
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === 'light'
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: '100vh',
+            overflow: 'auto',
+          }}
+        >
+          <Toolbar />
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
           <div className="reserve-page" style={{ maxWidth: '600px', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
             <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Reserve Appointment</h1>
@@ -601,6 +687,8 @@ export default function SApp  () {
           </form>
         )}
       </div>
+    </Box>
+    </Box>
     </Box>
   </ThemeProvider>
 );

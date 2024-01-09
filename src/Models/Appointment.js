@@ -27,6 +27,9 @@ const appointmentSchema = new Schema({
     },
     followUp:{
         type:Boolean
+    },
+    followUpDate:{
+        type: Date,
     }
   }, { timestamps: true });
   

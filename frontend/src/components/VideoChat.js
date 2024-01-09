@@ -103,7 +103,7 @@ function VideoChat({socket,room,partner}) {
 
 	return (
 		<>
-			<h1 style={{ textAlign: "center", color: '#fff' }}>Zoomish</h1>
+		<h1 style={{ textAlign: "center", color: '#fff' }}>Zoomish</h1>
 		<div className="container">
 			<div className="video-container">
 				<div className="video">
@@ -142,9 +142,6 @@ function VideoChat({socket,room,partner}) {
 				 
 				 (null)}
 				</div>
-				
-					
-
 				<div className="call-button">
 					{callAccepted && !callEnded ? (
 						<Button variant="contained" color="secondary" onClick={leaveCall}>

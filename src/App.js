@@ -145,7 +145,7 @@ const{viewPackages , subscribePackage , viewMyPackage , cancelPackage , CheckOTP
 // const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
 //    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getUserById , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor,
 //    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor} = require("./Routes/userController");
-const{addAppointment,getAppointmentInfo,modifyAppointment,createAppointment,getDoctorAppointments,AppointmentCompleted} = require("./Routes/appointmentController");
+const{addAppointment,getAppointmentInfo,modifyAppointment,createAppointment,getDoctorAppointments,AppointmentCompleted,CancelAppointment,rescheduleAppointmentForP,requestFollowUpAppointment,acceptFollowUpRequest,rejectFollowUpRequest,viewFollowUpRequests} = require("./Routes/appointmentController");
 const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData , AddNewHR , ViewUpdatedHRforD ,scheduleFollowUp}=require("./Routes/DrController");
 const {createContract, acceptContract,   rejectContract,   getContract}= require("./Routes/employmentController");
 
@@ -275,7 +275,7 @@ app.get("/getUserById/:id", getUserById);
 app.get("/getUserByTokenId", getUserByTokenId);
 app.post("/addAppointment",addAppointment);
 app.get("/getAppointmentInfo",getAppointmentInfo) //query in frontenddd
-app.get("/getWalletInfo",requireAuth("All"),getWalletInfo);
+app.get("/getWalletInfo",requireAuth("ALL"),getWalletInfo);
 app.get("/getWalletInfoDoc",requireAuth("Doctor"),getWalletInfoDoc);
 
 app.get("/getFamilyMemberData",requireAuth("Patient"),getFamilyMemberData);
@@ -318,6 +318,12 @@ app.get("/UpcomingAppoint",filteredAppointments);
 app.get("/GetFullData",GetPFullData);
 app.put("/handleAccept/:requestId", requireAuth("Administrator"), handleAccept);
 app.put("/handleReject/:requestId", requireAuth("Administrator"), handleReject);
+app.post("/CancelAppointment",requireAuth("Patient"),CancelAppointment);
+app.post("/ReschedulePatient",requireAuth("ALL"),rescheduleAppointmentForP);
+app.post("/requestFollowUp",requireAuth("Patient"),requestFollowUpAppointment);
+app.post("/acceptFollowUpRequest",requireAuth("Doctor"),acceptFollowUpRequest);
+app.post("/rejectFollowUpRequest",requireAuth("Doctor"),rejectFollowUpRequest);
+app.get("/viewFollowUpRequests",requireAuth("Doctor"),viewFollowUpRequests);
 
 
 app.get("/viewPackages",requireAuth("Patient"),viewPackages);
