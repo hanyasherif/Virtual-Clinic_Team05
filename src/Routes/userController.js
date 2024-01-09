@@ -621,6 +621,26 @@ const getWalletInfo = async (req, res) => {
   }
 };
 
+const getWalletInfoDoc = async (req, res) => {
+  const token = req.cookies.jwt;
+  const decodedToken = jwt.verify(token, 'supersecret');
+    const userId= decodedToken.user._id
+
+
+  try {
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    
+    res.status(200).json(user.walletInfo);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 const getFamilyMemberData = async (req, res) => {
   const token = req.cookies.jwt;
   const decodedToken = jwt.verify(token, 'supersecret');
@@ -844,7 +864,7 @@ const getRoom = async (req, res) => {
 module.exports = { login, addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
    filterAppointmentsStatus, AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor, uploadMedicalDocument, removeMedicalDocument
-  , getUploaded, findPatById, servefiles ,getUserById  ,getWalletInfo,getFamilyMemberData,
+  , getUploaded, findPatById, servefiles ,getUserById  ,getWalletInfo, getWalletInfoDoc, getFamilyMemberData,
   getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor, getUserByTokenId, getRoom, phviewPatients, viewPharmacists}   
 
 // module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,

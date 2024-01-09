@@ -10,18 +10,18 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useLocation } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState,  useEffect} from 'react';
+import Title from './Title';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },   
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "#25A18E",
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
 const UsersList = () => {
   const location = useLocation();
@@ -33,38 +33,25 @@ const UsersList = () => {
            await axios.get(`http://localhost:8000/getC?Id=${Id}`,{withCredentials:true}).then((res)=>{
              const patients = res.data;
              console.log(patients)
+            //  for(let i = 0; i<patients.length; i++){
+            //     if(!(Patients.includes(patients[i]))){
+            //       Patients.push(patients[i]);
+            //     }
+            //  }
              SetPatients(patients);
              
             }).catch (error=>{
              alert('An error occurred:', error.message);
 
-           })
-        
-    
- 
-          }
+           })}
+
+      useEffect(() => {
+        getPatient();
+      }, []); 
 
     return(
        <div className="UsersList">
-            <Box sx={{marginBottom: 2}}>
-             <div className="right" sx={{width:20}}>
-              <h2>Welcome Dr Mo</h2>
-             </div>
-             <div className="middle">
-             </div>
-             <div className="left">
-             <Button variant="contained"
-            onClick={getPatient}
-            margin="normal"
-            padding="normal"
-            >Load Patients</Button> 
-            {/* margin */}
-             </div>
-            </Box>
-            
-        
-        
-            
+         <Title style={{ color: '#25A18E' , fontSize: 23}}>My Patient's List</Title>
     <TableContainer component={Paper} className='MiddleAPP'>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>

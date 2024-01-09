@@ -64,7 +64,17 @@ const ViewFamilyMember = () => {
         </TableHead>
         <TableBody>
           {famMem.map((familyMember) => (
-            <TableRow key={familyMember._famMemNatID}>
+            <TableRow 
+            hover
+            sx={{
+                "&:hover":{
+                cursor: "pointer",
+                backgroundColor: "#f5f5f5",
+                width: "100%"
+                }
+            }}
+            onClick={() =>window.location.href=`http://localhost:3000/ViewAppFamilyMember?famMemUsername=${familyMember.username}`}
+            key={familyMember._famMemNatID}>
               <TableCell style={{ textAlign: 'center' }}>{familyMember.famMemName}</TableCell>
               <TableCell style={{ textAlign: 'center' }}>{familyMember.famMemNatID}</TableCell>
               <TableCell style={{ textAlign: 'center' }}>{familyMember.famMemAge}</TableCell>

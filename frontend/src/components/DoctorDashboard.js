@@ -21,6 +21,8 @@ import { mainListItems, secondaryListItems } from './listItemsDoc';
 import Button from "@mui/material/Button";
 import UsersList from './UsersList';
 import Meeting from './Appointments';
+import ViewHealthRecords from './ViewHealthRecords';
+import WalletDoc from './WalletDoc';
 
 function Copyright(props) {
   return (
@@ -47,7 +49,9 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  backgroundColor: '#004E64', // New background color
+//   backgroundColor: '#004E64', // New background color
+background: 'linear-gradient(to right, #004E64, #0088A8)',
+
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -177,7 +181,29 @@ export default function DoctorDashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-               <Grid item xs={12} md={8} lg={9} 
+            <Grid item xs={12} md={4} lg={3}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.02)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 200,
+                    borderRadius: 3,
+                    width: 235,
+                  }}
+                >
+                  <WalletDoc />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={8} lg={9} 
                 sx={{
                   '&:hover > div': {
                     transform: 'scale(1.01)',
@@ -193,14 +219,17 @@ export default function DoctorDashboard() {
                     flexDirection: 'column',
                     transition: 'transform 0.3s ease-in-out',
                     // height: 200,
+                    // marginTop: 2,
                     borderRadius: 3,
-                    width: 1150,
+                    width: 900,
+                    marginLeft: -5,
                   }}
                 >
                   <UsersList />
                 </Paper>
               </Grid>
-              <Grid item xs={12} md={4} lg={2}
+
+            <Grid item xs={12} md={4} lg={2}
                 sx={{
                   '&:hover > div': {
                     transform: 'scale(1.01)',
@@ -215,14 +244,16 @@ export default function DoctorDashboard() {
                     flexDirection: 'column',
                     transition: 'transform 0.3s ease-in-out',
                     // height: 200,
+                    marginTop: -13,
                     borderRadius: 3,
+                    width: 235
                   }}
                 >
-                  <Meeting />
+                  <ViewHealthRecords />
+                  
                 </Paper>
               </Grid>
-              {/*
-
+               
               <Grid item xs={12} lg={10}
                 sx={{
                   '&:hover > div': {
@@ -238,75 +269,14 @@ export default function DoctorDashboard() {
                   flexDirection: 'column', 
                   transition: 'transform 0.3s ease-in-out',
                   // height: 200, 
+                  marginTop: 0,
                   borderRadius: 3,
+                  width: 900,
+                  marginLeft: 8,
                 }}>
-                  <ViewFamilyMember />
+                  <Meeting />
                 </Paper>
-              </Grid>
-
-              <Grid item xs={12} md={8} lg={13}
-                sx={{
-                  '&:hover > div': {
-                    transform: 'scale(1.01)',
-                    transition: 'transform 0.3s ease-in-out',
-                  },
-                }}
-              >
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'transform 0.3s ease-in-out',
-                    // height: 200,
-                    borderRadius: 3,
-                  }}
-                >
-                  <PatPrescView />
-                </Paper>
-              </Grid>
-
-              <Grid item xs={12}
-                sx={{
-                  '&:hover > div': {
-                    transform: 'scale(1.01)',
-                    transition: 'transform 0.3s ease-in-out',
-                  },
-                }}
-              >
-                <Paper 
-                sx={{ 
-                  p: 2, 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  transition: 'transform 0.3s ease-in-out',
-                  borderRadius: 3,
-                }}>
-                  <ViewPackages />
-                </Paper>
-              </Grid>
-
-              <Grid item xs={12} md={4} lg={4}
-                sx={{
-                  '&:hover > div': {
-                    transform: 'scale(1.01)',
-                    transition: 'transform 0.3s ease-in-out',
-                  },
-                }}
-              >
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'transform 0.3s ease-in-out',
-                    // height: 240,
-                    borderRadius: 3,
-                  }}
-                >
-                  <ViewMyPackage />
-                </Paper>
-              </Grid> */}
+              </Grid>   
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>

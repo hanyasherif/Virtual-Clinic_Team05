@@ -57,6 +57,13 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Add Health Record" />
     </ListItemButton>
+    <ListItemButton onClick={() => { window.location.href = '/AddNewHR'; }}>
+        {/* PresDoctor */}
+    <ListItemIcon sx={{ color: '#25A18E' }}>
+        <DescriptionIcon />
+      </ListItemIcon>
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="View Prescriptions" />
+    </ListItemButton>
   </React.Fragment>
 );
 

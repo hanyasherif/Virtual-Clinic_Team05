@@ -52,7 +52,9 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  backgroundColor: '#004E64', // New background color
+  // backgroundColor: '#004E64', // New background color
+  background: 'linear-gradient(to right, #004E64, #0088A8)',
+
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,

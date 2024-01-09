@@ -132,7 +132,7 @@ const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, sear
    uploadMedicalDocument, findPatById,login, removeMedicalDocument, 
     servefiles ,getUploaded ,    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,
     getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId, phviewPatients,
-     viewPharmacists} 
+     viewPharmacists, getWalletInfoDoc} 
     = require("./Routes/userController");
 
 
@@ -275,7 +275,9 @@ app.get("/getUserById/:id", getUserById);
 app.get("/getUserByTokenId", getUserByTokenId);
 app.post("/addAppointment",addAppointment);
 app.get("/getAppointmentInfo",getAppointmentInfo) //query in frontenddd
-app.get("/getWalletInfo",requireAuth("Patient"),getWalletInfo);
+app.get("/getWalletInfo",requireAuth("All"),getWalletInfo);
+app.get("/getWalletInfoDoc",requireAuth("Doctor"),getWalletInfoDoc);
+
 app.get("/getFamilyMemberData",requireAuth("Patient"),getFamilyMemberData);
 app.post('/modifyAppointment', modifyAppointment);
 app.get("/getUserById/:id", getUserById);

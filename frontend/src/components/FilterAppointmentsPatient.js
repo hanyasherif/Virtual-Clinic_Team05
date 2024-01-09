@@ -28,7 +28,6 @@ import TableRow from '@mui/material/TableRow';
 import { InputLabel, MenuItem, Select } from '@mui/material';
 import { Box, Button, TextField, FormControl} from '@mui/material';
 
-
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -39,8 +38,6 @@ function Copyright(props) {
       {new Date().getFullYear()}
       {'.'}
     </Typography>
-
-    
   );
 }
 

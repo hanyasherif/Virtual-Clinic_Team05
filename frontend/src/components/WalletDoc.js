@@ -17,7 +17,7 @@ const Wallet = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/getWalletInfo`,{withCredentials:true});
+        const response = await axios.get(`http://localhost:8000/getWalletInfoDoc`,{withCredentials:true});
         const user = response.data;
         setWalletInfo(user);
         console.log("Wallet Info:", walletInfo);
@@ -43,3 +43,4 @@ const Wallet = () => {
 };
 
 export default Wallet;
+

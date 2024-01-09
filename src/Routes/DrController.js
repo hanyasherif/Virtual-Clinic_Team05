@@ -2,10 +2,12 @@ const userModel = require('../Models/User.js');
 const AppointmentModel = require('../Models/Appointment.js');
 const { default: mongoose } = require('mongoose');
 const jwt = require("jsonwebtoken");
+
 const ViewPatients = async(req,res) => {
   const token = req.cookies.jwt;
   const decodedToken = jwt.verify(token, 'supersecret');
   let DoctorId= decodedToken.user._id
+  const arr = [];
 AppointmentModel.find({ doctor: DoctorId })
   .populate({
     path:'patient',
@@ -32,8 +34,7 @@ AppointmentModel.find({ doctor: DoctorId })
           emergencyContactFullname:appointment.patient.emergencyContactFullname,
           emergencyContactMobileNumber:appointment.patient.emergencyContactMobileNumber,
           HealthRecord:appointment.patient.HealthRecord,
-          }));   
-         
+          }));            
           return res.json(patientDetails);
     }
 }
