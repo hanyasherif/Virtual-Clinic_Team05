@@ -127,9 +127,6 @@ export default function DocProfile  ()  {
     setOpen(!open);
   };
 
-
-
-
   const handleLogout = async (e) => {
     try {
       await fetch(`http://localhost:8000/logout`,{credentials: 'include'});
@@ -177,8 +174,6 @@ export default function DocProfile  ()  {
     localStorage.setItem('partner', params.get('doctorId'));
     window.location.href='http://localhost:3000/ChatPage'
   }
-
-
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -254,11 +249,11 @@ export default function DocProfile  ()  {
           <Toolbar />
     <div className="doctor-profile">
       <ProfileContainer elevation={3}>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom sx={{marginTop: 1}}>
           Doctor {doctor.name}
         </Typography>
         <Divider />
-        <ProfileDetail>
+        <ProfileDetail sx={{marginTop: 2}}>
           <strong>Email:</strong> {doctor.email}
         </ProfileDetail>
         <ProfileDetail>
@@ -279,10 +274,29 @@ export default function DocProfile  ()  {
       </ProfileContainer>
 
       <ActionButtonsContainer>
-        <Button variant="contained" color="primary" onClick={Videochat}>
+        <Button 
+        variant="contained"
+        sx={{
+          color: 'white',
+          marginLeft: 3,
+          backgroundColor: '#25A18E',
+          '&:hover': {
+            backgroundColor: '#20756c',
+          },
+        }}     
+        onClick={Videochat}>
           VideoChat
         </Button>
-        <Button variant="contained" color="primary" onClick={chat}>
+        <Button 
+        variant="contained"
+        sx={{
+          color: 'white',
+          backgroundColor: '#25A18E',
+          '&:hover': {
+            backgroundColor: '#20756c',
+          },
+        }}    
+        onClick={chat}>
           Chat
         </Button>
       </ActionButtonsContainer>

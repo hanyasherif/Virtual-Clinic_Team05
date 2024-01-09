@@ -27,6 +27,7 @@ import ViewHealthRecords from './ViewHealthRecords';
 import ViewPackages from './ViewPackages';
 import ViewMyPackage from './ViewMyPackage'
 import axios from "axios";
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -52,7 +53,7 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  backgroundColor: '#004E64', // New background color
+  background: 'linear-gradient(to right, #004E64, #0088A8)',
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -97,9 +98,6 @@ export default function SApp  () {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  
-  
-  
   
   const handleLogout = async (e) => {
     try {
@@ -244,6 +242,7 @@ export default function SApp  () {
       
     }, [appointmentId]);
     useEffect(() => {
+      handleViewPriceClick();
         const fetchAmount = async () => {
           try {
             const response = await axios.get(`http://localhost:8000/getUserByTokenId`,{withCredentials:true});
@@ -502,9 +501,10 @@ export default function SApp  () {
             <p>Doctor Name: {doctorName[appointment.doctor]}</p>
             <p>Status: {appointment.status}</p>
     
-            <Button
+            {/* <Button
               variant="contained"
               sx={{
+                marginLeft: 20,
                 color: 'white',
                 backgroundColor: '#25A18E',
                 '&:hover': {
@@ -515,11 +515,11 @@ export default function SApp  () {
               
             >
               View Price
-            </Button>
-            {isPriceVisible && (
+            </Button> */}
+            {/* {isPriceVisible && ( */}
               <>
                 <label>Price:</label>
-                <br />
+                
                 <input
                   type="text"
                   value={amount}
@@ -527,7 +527,7 @@ export default function SApp  () {
                   style={{ width: '100%', padding: '10px', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
                 />
               </>
-            )}
+            {/* )} */}
     
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Button
@@ -537,6 +537,7 @@ export default function SApp  () {
 
                 sx={{
                   color: 'white',
+                  marginTop: 1,
                   backgroundColor: '#25A18E',
                   '&:hover': {
                       backgroundColor: '#20756c', // Change color on hover if desired
@@ -551,6 +552,8 @@ export default function SApp  () {
                 onClick={handleReserveForMyselfClick}
 
                 sx={{
+                  marginTop: 1,
+                  marginLeft: 1,
                   color: 'white',
                   backgroundColor: '#25A18E',
                   '&:hover': {
@@ -569,6 +572,8 @@ export default function SApp  () {
                 id="creditCard"
                 onClick={handleCreditCardButtonClick}
                 sx={{
+                  marginTop: -5,
+                  marginLeft: 15,
                   color: 'white',
                   backgroundColor: '#25A18E',
                   '&:hover': {
@@ -582,6 +587,8 @@ export default function SApp  () {
                 id="wallet"
                 onClick={handleWalletButtonClick}
                 sx={{
+                  marginTop: -5,
+                  marginLeft: 1,
                   color: 'white',
                   backgroundColor: '#25A18E',
                   '&:hover': {
@@ -655,13 +662,27 @@ export default function SApp  () {
               />
             </label>
             <br />
-
-            <button
+            <Button
+                type="submit"
+                // onClick={handleWalletButtonClick}
+                sx={{
+                  marginTop: -5,
+                  marginLeft: 23,
+                  color: 'white',
+                  backgroundColor: '#25A18E',
+                  '&:hover': {
+                      backgroundColor: '#20756c', // Change color on hover if desired
+                  },
+                  }} 
+              >
+                Pay
+              </Button>
+            {/* <button
               type="submit"
               style={{ padding: '10px 20px', backgroundColor: '#f0f0f0', border: '1px solid #ccc', borderRadius: '5px', cursor: 'pointer' }}
             >
               Pay
-            </button>
+            </button> */}
           </form>
         )}
 
@@ -677,13 +698,27 @@ export default function SApp  () {
               />
             </label>
             <br />
-
-            <button
+            <Button
+                type="submit"
+                // onClick={handleWalletButtonClick}
+                sx={{
+                  marginTop: -5,
+                  marginLeft: 23,
+                  color: 'white',
+                  backgroundColor: '#25A18E',
+                  '&:hover': {
+                      backgroundColor: '#20756c', // Change color on hover if desired
+                  },
+                  }} 
+              >
+                Pay
+              </Button>
+            {/* <button
               type="submit"
               style={{ padding: '10px 20px', backgroundColor: '#f0f0f0', border: '1px solid #ccc', borderRadius: '5px', cursor: 'pointer' }}
             >
               Pay
-            </button>
+            </button> */}
           </form>
         )}
       </div>

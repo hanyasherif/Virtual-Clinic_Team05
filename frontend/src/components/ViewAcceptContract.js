@@ -272,7 +272,7 @@ export default function ViewAcceptContract() {
               onClick={handleAcceptContract}
             >
               Accept Contract
-            </Button>
+            </Button>        
             <Button
               variant="contained"
               sx={{

@@ -126,8 +126,8 @@ export default function AddAppointment() {
           <Grid container spacing={3} justifyContent="center"> {/* Center align the content */}
           <div className="DoctorsList">
 
-          <Grid item xs={12} sx={{marginTop: 2, marginBottom: 2}}>
-            <Title style={{ color: 'black' , fontSize: 23, textAlign: 'center' }}>Choose Your Free Date</Title>
+          <Grid item xs={12} >
+          <Title style={{ color: '#25A18E' , fontSize: 23, marginLeft: 6.5}}>Choose Free Slot</Title>
           </Grid>
           <div>
           <TextField
@@ -138,8 +138,8 @@ export default function AddAppointment() {
           sx={{
             // marginBottom: '10px',
             marginLeft: 1,
-            marginTop: 2,
-            minWidth: 200,
+            marginTop: 1,
+            minWidth: 150,
             '& .MuiOutlinedInput-root': {
             },
             '& .MuiSelect-icon': {
@@ -156,8 +156,8 @@ export default function AddAppointment() {
                 color: 'white',
                 marginLeft: 1,
                 marginTop: 2,
-                minWidth: 200,
-                height: 54,
+                minWidth: 150,
+                height: 55,
                 backgroundColor: '#25A18E',
                 '&:hover': {
                     backgroundColor: '#20756c', // Change color on hover if desired

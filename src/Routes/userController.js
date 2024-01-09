@@ -281,7 +281,7 @@ const viewAppointmentsOfDoctor = async(req,res) => {
 
   try{
     const doc = await userModel.findById(req.params.docID);
-    const appointments = await appointmentModel.find({ doctor: doc, status: "free" });
+    const appointments = await appointmentModel.find({ doctor: doc, status: "Free" });
     
     res.status(200).json(appointments)
   }

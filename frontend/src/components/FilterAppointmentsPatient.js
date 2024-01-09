@@ -389,15 +389,43 @@ export default function FilterAppointmentsPatient() {
               <TableCell align="center">{Appointment.status}</TableCell>
               <TableCell align="center">
               {Appointment.status === 'Upcoming' || Appointment.status === 'Rescheduled' ? (
-                <Button onClick={() => handleCancel(Appointment._id)} style={{ color: 'red' }}>Cancel</Button>
+                <Button
+                variant="contained"
+                sx={{
+                  color: 'white',
+                  // marginLeft: 2,
+                  backgroundColor: '#A81D24',
+                  '&:hover': {
+                    backgroundColor: '#911A20',
+                  },
+                }}
+                onClick={() => handleCancel(Appointment._id)}>Cancel</Button>
               ) : null}
             </TableCell>
             <TableCell align="center">
               {Appointment.status === 'Upcoming' || Appointment.status === 'Rescheduled' ? (
-                <Button onClick={() => handleRes(Appointment._id)} style={{ color: 'green' }}>Reschedule</Button>
+                <Button 
+                variant="contained"
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#25A18E',
+                  '&:hover': {
+                    backgroundColor: '#20756c',
+                  },
+                }}       
+                onClick={() => handleRes(Appointment._id)}>Reschedule</Button>
               ) : null}
               {Appointment.status === 'Completed' ? (
-                <Button onClick={() => handleRequestFollowUp(Appointment._id)} style={{ color: 'blue' }}>Request Follow Up</Button>
+                <Button 
+                variant="contained"
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#25A18E',
+                  '&:hover': {
+                    backgroundColor: '#20756c',
+                  },
+                }}    
+                onClick={() => handleRequestFollowUp(Appointment._id)}>Request Follow Up</Button>
               ) : null}
             </TableCell>
               </TableRow>

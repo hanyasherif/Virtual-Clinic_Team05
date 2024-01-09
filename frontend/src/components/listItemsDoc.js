@@ -21,12 +21,6 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Dashboard"/>
     </ListItemButton>
-    <ListItemButton onClick={() => { window.location.href = '/Schedule'; }}>
-      <ListItemIcon sx={{ color: '#25A18E' }}>
-        <AlarmIcon />
-      </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Schedule Follow Up" />
-    </ListItemButton>
     <ListItemButton onClick={() => { window.location.href = '/DocPharmacistsList'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
         <ChatIcon />
@@ -45,12 +39,18 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="View Contracts" />
     </ListItemButton>
-    <ListItemButton onClick={() => { window.location.href = '/AddAppointment'; }}>
+    <ListItemButton onClick={() => { window.location.href = '/Schedule'; }}>
+      <ListItemIcon sx={{ color: '#25A18E' }}>
+        <AlarmIcon />
+      </ListItemIcon>
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Schedule Follow Up" />
+    </ListItemButton>
+    {/* <ListItemButton onClick={() => { window.location.href = '/AddAppointment'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
         <AddCircleOutlineIcon />
       </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Add Appointment" />
-    </ListItemButton>
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Add Appointment" /> 
+    </ListItemButton>*/}
     <ListItemButton onClick={() => { window.location.href = '/AddNewHR'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
         <HealthRecordIcon />

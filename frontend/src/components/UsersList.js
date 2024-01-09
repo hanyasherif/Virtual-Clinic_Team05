@@ -68,11 +68,7 @@ const UsersList = () => {
           margin="normal"
           value={searchName}
           sx={{
-            // marginBottom: '20px', // Adjust the margin as needed
-            minWidth: 180,
-            // '& .MuiInputLabel-root': {
-            //   color: '#25A18E', // Change label color if necessary
-            // },
+            minWidth: 150,
             '& .MuiInputLabel-shrink': {
               color: '#25A18E', // Change label color while shrinking (on input)
             },
@@ -95,7 +91,7 @@ const UsersList = () => {
           sx={{
             marginTop: 2,
             marginLeft: 1,
-            minWidth: 180,
+            minWidth: 150,
             color: 'white',
             backgroundColor: '#25A18E',
             '&:hover': {

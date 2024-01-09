@@ -336,7 +336,7 @@ const handleWalletButtonClick = () => {
             {secondaryListItems}
           </List>
         </Drawer>
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', marginLeft: 3, marginTop: 7 }}>
         <div className="appointment-profile">
         <h1>My Prescription</h1>
       <p>Date: {prescription.date}</p>
@@ -350,6 +350,7 @@ const handleWalletButtonClick = () => {
       <Button id="creditCard" onClick={handleCreditCardButtonClick}
        sx={{
         color: 'white',
+        marginBottom: 2,
         backgroundColor: '#25A18E',
         '&:hover': {
             backgroundColor: '#20756c', // Change color on hover if desired
@@ -363,6 +364,7 @@ const handleWalletButtonClick = () => {
   onClick={handleWalletButtonClick}
   sx={{
     color: 'white',
+    marginBottom: 3,
     backgroundColor: '#25A18E',
     '&:hover': {
       backgroundColor: '#20756c', // Change color on hover if desired
