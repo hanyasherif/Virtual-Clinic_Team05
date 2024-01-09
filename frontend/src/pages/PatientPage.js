@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Button, Grid } from '@mui/material';
 import MedicineDetailsLite from '../componenetsPh/MedicineDetailsLite';
-//import Cookies from 'js-cookie';
 import axios from 'axios';
-
 
 const PatientPage = () => {
   const [medicines, setMedicines] = useState(null);
@@ -16,7 +15,8 @@ const PatientPage = () => {
         const json = await response.json();
 
         if (response.ok) {
-          setMedicines(json);
+          const nonArchivedMedicines = json.filter(medicine => !medicine.isArchived);
+          setMedicines(nonArchivedMedicines);
         }
       } catch (error) {
         console.error('Error fetching medicines:', error);
@@ -45,21 +45,36 @@ const PatientPage = () => {
 
   return (
     <div className="patientPage">
-      <div>Welcome, Patient!</div>
-      <div className="medicines">
+      <div>Welcome, Manar!</div>
+      <Grid container spacing={2} className="medicines">
         {medicines &&
           medicines.map((medicine) => (
-            <MedicineDetailsLite
-              key={medicine._id}
-              medicine={medicine}
-              addToCart={addToCart}
-            />
+            <Grid item key={medicine._id} xs={12} sm={6} md={4} lg={3}>
+              <MedicineDetailsLite
+                medicine={medicine}
+                addToCart={addToCart}
+              />
+            </Grid>
           ))}
-      </div>
+      </Grid>
 
       {/* Add button to route to CartPage */}
       <Link to="/CartPagePH">
-        <button>Go to Cart</button>
+      <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginTop: 20, width: '50%' }}
+          sx={{
+            color: 'white',
+            backgroundColor: '#2ac68f',
+            '&:hover': {
+              backgroundColor: '#20756c',
+            },
+          }}
+        >
+          Go to Cart
+        </Button>
       </Link>
     </div>
   );

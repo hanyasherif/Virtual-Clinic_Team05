@@ -1,11 +1,10 @@
-//import { set } from 'mongoose';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Typography, Button } from '@mui/material';
 
 //components
 import MedicineDetails from '../componenetsPh/MedicineDetails'
 import CreateMedicine from '../componenetsPh/CreateMedicine'
-
-
 
 const PharmacistPage = () => {
     const [medicines, setMedicines] = useState(null);
@@ -16,16 +15,44 @@ const PharmacistPage = () => {
             const json = await response.json();
 
             if (response.ok) {
-                setMedicines(json);
+                const nonArchivedMedicines = json.filter(medicine => !medicine.isArchived);
+                setMedicines(nonArchivedMedicines);
             }
         };
 
         fetchMedicine();
     }, []);
 
+    useEffect(() => {
+        if (medicines) {
+                    medicines.forEach((medicine) => {
+                        if (medicine.availableQuantity === 0) {
+                            alert(medicine.name + ' is Out of Stock');
+                        }
+                    });
+                }
+            }, [medicines]);
+
+
     return (
         <div className="pharmacistPage">
-           
+              <Link to="/PharmacistArch">
+   <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginTop: 20, width: '50%' }}
+          sx={{
+            color: 'white',
+            backgroundColor: '#25A18E',
+            '&:hover': {
+              backgroundColor: '#20756c',
+            },
+          }}
+        >
+          Go to Archived Medicines  
+        </Button>            </Link>
+
             <div className="medicines">
             <div>Welcome, Pharmacist!</div>
             <div>
@@ -35,11 +62,10 @@ const PharmacistPage = () => {
                 {medicines &&
                     medicines.map((medicine) => 
                         <MedicineDetails key={medicine._id} medicine={medicine} />)}   
-           
             </div>  
-            <CreateMedicine />
+          
+            
         </div>
-    
     );
 };
 

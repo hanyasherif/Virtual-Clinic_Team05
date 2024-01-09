@@ -37,7 +37,7 @@ const RemovePharmacistPatient = () => {
     
     const getUsers = async () => {
       try {
-        const response = await fetch('http://localhost:4000/getAllUsers');
+        const response = await fetch('http://localhost:8000/getAllUsers');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

@@ -150,7 +150,7 @@ const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData 
 const {createContract, acceptContract,   rejectContract,   getContract}= require("./Routes/employmentController");
 
 //////PHARMA OLAYAN
-const { createMedicine, getMedicine, updateMedicine, searchMedicine, filterMedicine } = require("./RoutesPh/MedicineController");
+const { createMedicine, getMedicine, updateMedicine, searchMedicine, filterMedicine, prescriptionMedicine, findAlternativeMedicines, getSales } = require("./RoutesPh/MedicineController");
 const { addRequestPH, getRequestsPH, getARequestPH, handleAcceptPH, handleRejectPH } = require("./RoutesPh/requestController");
 const { loginPH, CEmailPH,GEmailPH,CheckOTPPH, changePasswordPH } = require("./RoutesPh/userController");
 
@@ -223,7 +223,7 @@ app.post("/ChangePassword",requireAuth("ALL"),changePassword);
 app.post("/addAdministrator", requireAuth("Administrator"),addAdministrator);
 app.delete("/removeUser", requireAuth("Administrator"),removeUser);
 app.post("/checkUsername", requireAuth,checkUsername);
-app.get("/getAllUsers", requireAuth("Administrator"), getUsers);
+app.get("/getAllUsers", getUsers);
 app.get("/searchByName",requireAuth("Patient"),searchByName);
 app.get("/searchBySpec",requireAuth("Patient"),searchBySpec);
 app.get("/searchByNameSpec",requireAuth("Patient"),searchByNameSpec);
@@ -401,12 +401,13 @@ app.post("/addToCart", addToCart);
 app.get("/viewCart", viewCart);
 app.delete("/removeFromCart", removeFromCart);
 app.put("/changeCartItemQuantity", requireAuth, changeCartItemQuantity);
-app.post("/checkout", requireAuth, checkout);
-app.get("/orders", requireAuth, viewOrders);
-app.put("/cancelOrder", requireAuth, cancelOrder);
+app.post("/checkout", requireAuth("Patient"), checkout);
+app.get("/orders", requireAuth("Patient"), viewOrders);
+app.put("/cancelOrder", requireAuth("Patient"), cancelOrder);
 
-app.post("/addAddress", requireAuth, addAddress);
-app.get("/searchAddress", requireAuth, searchAddress);
+
+app.post("/addAddress", requireAuth("Patient"), addAddress);
+app.get("/searchAddress", requireAuth("Patient"), searchAddress);
 
 app.put("/handleAccept/:requestId", handleAccept);
 app.put("/handleReject/:requestId", handleReject);
@@ -427,3 +428,13 @@ app.post("/ChangePassword",requireAuth,changePassword);
 
 
 app.get("/getRoom",getRoom)
+//new sp3
+app.get("/prescriptions",requireAuth("Patient"),  prescriptionMedicine);
+app.get("/alternativeMedicines", findAlternativeMedicines);
+app.get("/getSales", getSales);
+
+
+
+/*
+                                                    End of your code
+*/

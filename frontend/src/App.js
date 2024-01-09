@@ -20,13 +20,14 @@ import RequestsPH from './componentsPh/Requests';
 import SubmitRequestPH from './pages/SubmitRequest';
 import PatientInfoPH from './pages/PatientInfo';
 import PharmacistInfoPH from './pages/PharmacistInfo';
+import PharmacistArch from './pages/PharmacistArch';
 
-import CartPagePH from './pages/sp2/CartPage';
-import CheckoutPagePH from './pages/sp2/CheckoutPage';
+import CartPagePH from './pages/CartPage';
+import CheckoutPagePH from './pages/CheckoutPage';
 import CancelOrderPH from './pages/sp2/CancelOrder';
-import OrderDetailsPH from './pages/sp2/OrderDetails';
+// import OrderDetailsPH from './pages/sp2/OrderDetails';
 import SuccessOrderPH from './pages/sp2/SuccessOrder';
-import LoginPH from './pages/Login';
+import LoginPH from './pages/Login'; //old pharmacy login here
 import ChangePasswPH from './pages/sp2/ChangePassw';
 import ForgotPasswPH from './pages/sp2/ForgotPassw';
 import OTPSenderPH from './pages/sp2/OTPsender'; 
@@ -62,7 +63,8 @@ import Meeting from './components/Appointments';
 import UserProfile from './components/Patientinformation'
 import PrescriptionInfo from './components/PrescriptionInfo';
 import UploadMedicalHistory from './components/UploadMedicalHistory';
-import Login from './components/login';
+// import Login from './components/login'; 
+//old clinic login here
 import PatientPage from './components/PatientPage';
 import AdminPage from './components/AdminPage'
 import DoctorPage from './components/DoctorPage'
@@ -81,7 +83,7 @@ import ViewHealthRecords from './components/ViewHealthRecords';
 import CreateContract from './components/CreateContract';
 import ViewAcceptContract from './components/ViewAcceptContract';
 import AddAppointment from './components/AddAppointments';
-import ChangePassword from './components/ChangePasswordPatCl'; 
+import ChangePasswordPatCl from './components/ChangePasswordPatCl'; 
 import VideoChatPage from './pages/VideoChatPage'; 
 import ChatPage from './pages/ChatPage'; 
 import PatientsList from './components/PatientsList';
@@ -102,6 +104,33 @@ import PresPatient from './components/PresPatient';
 import SelectedPrescriptionD from './components/SelectedPrescriptionD';
 import SelectedPrescriptionP from './components/SelectedPrescriptionP';
 import MyCalendar from './components/MyCalender';
+import ChangePassword from './components/ChangePassword'; 
+
+import OrderDetailsPH from './pages/OrderDetails';
+
+import Dashboard from './pages/Dashboard';
+import DashboardCart from './pages/DashboardCart';
+import DashboardCheckout from './pages/DashboardCheckout';
+import DashboardPrescription from './pages/DashboardPrescription';
+import SignIn from './pages/SignIn';
+import DashboardPharmacist from './pages/DashboardPharmacist';
+import DashboardPharmacistArchive from './pages/DashboardPharmacistArchive';
+import DashboardPharmacistSales from './pages/DashboardPharmacistSales';
+import DashboardAlternatives from './pages/DashboardAlternatives';
+import DashboardViewOrders from './pages/DashboardViewOrders';
+import DashboardAdmin from './pages/DashboardAdmin';
+import DashboardAdminAdd from './pages/DashboardAdminAdd';
+import DashboardAdminRemove from './pages/DashboardAdminRemove';
+import DashboardAdminViewPatient from './pages/DashboardAdminViewPatient';
+import DashboardAdminViewPharmacist from './pages/DashboardAdminViewPharmacist';
+import DashPharmaWallet from './pages/DashPharmaWallet';
+
+// import DashboardWallet from './pages/DashboardWallet';
+
+// import ChooseMode from './pages/chooseMode';
+
+import ChoosePath from './pages/ChoosePath';
+
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
   return (
@@ -156,8 +185,13 @@ function App() {
               element={<DoctorDashboard/>}/>
               {/* <Route path="/"
               element={<Menu/>}/> */}
+
+
               <Route path="/"
-              element={<Login/>}/>
+              element={<SignIn/>}/> 
+              {/* login here */}
+
+
               <Route path="/PatientProfile"
               element={<UserProfile/>}/>
               <Route path="/uploadMedicalHistory"
@@ -192,7 +226,7 @@ function App() {
               <Route path="/Schedule"
               element={<ScheduleFollowUp/>}/>
                <Route path="/ChangeMyPassword"
-              element={<ChangePassword/>}/>
+              element={<ChangePasswordPatCl/>}/>
                <Route path="/ChangeMyPasswordDoc"
               element={<ChangePassDoc/>}/>
                   <Route path="/ReschedulePatient"
@@ -225,27 +259,27 @@ function App() {
               {/*SS*/}
             <Route
               path="/PH"
-              element={<LoginPH/>}
+              element={<SignIn/>}
             />
             <Route
               path="/patientPagePH"
-              element={<PatientPagePH/>}
+              element={<Dashboard/>}
             />
             <Route
               path="/pharmacistPagePH"
-              element={<PharmacistPagePH/>}
+              element={<DashboardPharmacist/>}
             />
             <Route
               path="/adminPagePH"
-              element={<AdminPagePH/>}
+              element={<DashboardAdmin/>}
             />
             <Route 
               path="/addAdminPagePH"
-              element={<AddAdminPagePH/>}
+              element={<DashboardAdminAdd/>}
             />
             <Route 
               path="/removePharPatPagePH"
-              element={<RemovePharPatPagePH/>}
+              element={<DashboardAdminRemove/>}
             />
             <Route 
               path="/guestPagePH"
@@ -261,11 +295,11 @@ function App() {
             />
             <Route
              path = "/admin/patientPH"
-              element = {<PatientInfoPH/>}
+              element = {<DashboardAdminViewPatient/>}
              /> 
               <Route
                path = "/admin/pharmacistPH"
-              element = {<PharmacistInfoPH/>}
+              element = {<DashboardAdminViewPharmacist/>}
              />
              
              {/* sp2 */}
@@ -276,15 +310,15 @@ function App() {
             />
             <Route
               path="/cartPagePH"
-              element={<CartPagePH/>} 
+              element={<DashboardCart/>} 
             />
             <Route
-              path="/orderDetailsPH"
-              element={<OrderDetailsPH/>} 
+              path="/orderDetails"
+              element={<DashboardViewOrders/>} 
             />
             <Route
               path="/checkoutPagePH"
-              element={<CheckoutPagePH/>}
+              element={<DashboardCheckout/>}
             />
             <Route
               path="/successOrderPH"
@@ -331,7 +365,33 @@ function App() {
           </Routes>
           
 
-             
+              <Route path="/PharmacistArch"
+              element={<DashboardPharmacistArchive/>}/>
+              {/* sp3 */}
+
+              <Route
+              path="/PrescriptionMedicines"
+              element={<DashboardPrescription/>}
+            />
+
+            <Route path="/Sales"
+            element={<DashboardPharmacistSales/>}
+            />
+
+<Route path="/AlternativesMedicines"
+            element={<DashboardAlternatives/>}
+            />
+              <Route
+              path="/ChoosePath"
+              element={<ChoosePath/>}
+            />
+            <Route
+              path="/DashPharmaWallet"
+              element={<DashPharmaWallet/>}
+            />
+            
+          
+            
               
 
       </div>

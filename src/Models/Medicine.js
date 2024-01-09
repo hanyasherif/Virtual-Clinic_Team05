@@ -24,7 +24,8 @@ const medicineSchema = new Schema({
   },
   availableQuantity: {
     type: Number,
-    required: true
+    default: 0
+    
   },
   sales: {
     type: Number,
@@ -37,6 +38,10 @@ const medicineSchema = new Schema({
   medicinalUse: {
     type: String,
     required: true
+  },
+  isArchived: {
+    type: Boolean,
+    default: false
   }
 }, { timestamps: true });
 

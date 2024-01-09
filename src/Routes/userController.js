@@ -75,7 +75,8 @@ const addAdministrator = async(req,res) => {
          const users = await userModel.find({
             type: { $in: ["Patient", "Doctor", "Administrator"] }
           })
-          .sort({ createdAt: -1 });            
+          .sort({ createdAt: -1 });    
+             
           res.status(200).json(users);
         } catch (err) {
             res.status(500).json({ message: err.message });

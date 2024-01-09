@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { TextField, Button } from '@mui/material';
 import MedicineDetailsLite from './MedicineDetailsLite';
 
 const Search = () => {
@@ -31,10 +32,23 @@ const Search = () => {
         <div className="search">
             <form className= "create" onSubmit={handleSubmit}>
                 <label>Search</label>
-                <input type="text" placeholder="Enter Medicine Name" value={search} onChange={(e) => setSearch(e.target.value)}/>
+                <TextField type="text" placeholder="Enter Medicine Name" value={search} onChange={(e) => setSearch(e.target.value)}/>
 
-                <button>Search</button>
-
+                <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginTop: 20, width: '50%' }}
+          sx={{
+            color: 'white',
+            backgroundColor: '#2ac68f',
+            '&:hover': {
+              backgroundColor: '#20756c',
+            },
+          }}
+        >
+          Search
+        </Button>
                 {medicines && (
                     <div>
                         {medicines.map((medicine) => (

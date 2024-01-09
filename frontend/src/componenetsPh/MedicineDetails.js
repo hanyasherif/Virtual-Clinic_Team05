@@ -16,10 +16,11 @@ const MedicineDetails = ({medicine}) => {
     const [sales, setSales] = useState("");
     const [activeIngredients, setActiveIngredients] = useState("");
     const [medicinalUse, setMedicinalUse] = useState("");
+    const [isArchived, setIsArchived] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const updatedMedicine = {price, description, availableQuantity, activeIngredients, medicinalUse};
+        const updatedMedicine = {price, description, availableQuantity, activeIngredients, medicinalUse, isArchived};
         console.log(medicine);
         const response = await fetch(`/updateMedicine/${medicine._id}`, {
             method: "PUT",
@@ -37,7 +38,7 @@ const MedicineDetails = ({medicine}) => {
         else{
             setName(medicine.name);
             // setPicture(medicine.picture);
-            setMedicineImage(medicine.picture);
+            // setMedicineImage(medicine.picture);
             setPrice(medicine.price);
             setDescription(medicine.description);
             setAvailableQuantity(medicine.availableQuantity);
@@ -52,7 +53,7 @@ const MedicineDetails = ({medicine}) => {
     return(
         <div className="medicine-description">
             <h4> {medicine.name}</h4>
-       < img id="imageDisplay" src={medicineImage} alt="Medicine Image" />
+       {/* < img id="imageDisplay" src={medicineImage} alt="Medicine Image" /> */}
 
             <p><strong>Available Quantity: </strong> {medicine.availableQuantity}</p>
             <p><strong>Sales: </strong> {medicine.sales}</p>
@@ -69,13 +70,22 @@ const MedicineDetails = ({medicine}) => {
                 <input type="text" placeholder="Enter Active Ingredients" value={activeIngredients || medicine.activeIngredients} onChange={(e) => setActiveIngredients(e.target.value)}/>
                 <label>Medicinal Use</label>
                 <input type="text" placeholder="Enter Medicinal Use" value={medicinalUse || medicine.medicinalUse} onChange={(e) => setMedicinalUse(e.target.value)}/>
-                <button type="submit">Edit</button>
+                
+                {/* Add a radio button for isArchived */}
+      <div>
+        <label>
+          Archive Medicine:
+          <input
+            type="radio"
+            name="isArchived"
+            checked={isArchived}
+            onChange={() => setIsArchived(true)}
+          />
+        </label>
+      </div>
+      <button type="submit">Edit</button>
             </form>
-
-
-
             </div>
-
             </div>
        
     )

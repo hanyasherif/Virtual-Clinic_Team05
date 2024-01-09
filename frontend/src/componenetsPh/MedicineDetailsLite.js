@@ -1,22 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
 import pillsImage from '../assets/pills.jpg';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 const MedicineDetailsLite = ({ medicine, addToCart }) => {
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+
   const handleAddToCart = (medicineId) => {
     // Assuming quantity is set to 1 for simplicity, you can adjust as needed
     addToCart(medicineId, 1);
+    setFeedbackOpen(true);
+  };
+
+  const handleFeedbackClose = () => {
+    setFeedbackOpen(false);
+  };
+
+  const handleRedirectToAlternatives = () => {
+    window.location.href = '/AlternativesMedicines';
   };
 
   return (
     <div className="medicine-description">
-      <h4>{medicine.name}</h4>
+      <Typography variant="h4">{medicine.name}</Typography>
       <img id="imageDisplay" src={pillsImage} alt="Medicine Image" />
-      <p><strong>Price: </strong>{medicine.price}</p>
-      <p><strong>Description: </strong>{medicine.description}</p>
-      <p><strong>Active Ingredients: </strong>{medicine.activeIngredients}</p>
-      <p><strong>Medicinal Use: </strong>{medicine.medicinalUse}</p>
+      <Typography><strong>Price: </strong>{medicine.price}</Typography>
+      <Typography><strong>Description: </strong>{medicine.description}</Typography>
+      <Typography><strong>Active Ingredients: </strong>{medicine.activeIngredients}</Typography>
+      <Typography><strong>Medicinal Use: </strong>{medicine.medicinalUse}</Typography>
       {/* Button to add the medicine to the cart */}
-      <button key={medicine._id} onClick={() => handleAddToCart(medicine._id)}>Add to Cart</button>
+      {medicine.availableQuantity !== 0 ? (
+        <Button type="submit" variant="contained" color="primary" 
+          sx={{
+            color: 'white',
+            backgroundColor: '#25A18E',
+            '&:hover': {
+                backgroundColor: '#20756c', // Change color on hover if desired
+            },
+            }}
+          onClick={() => handleAddToCart(medicine._id)}
+          disableRipple
+        >
+          Add to Cart
+        </Button>
+      ) : (
+
+        <Button type="submit" variant="contained" color="primary"
+        sx={{
+          color: 'white',
+          backgroundColor: '#880808',
+          '&:hover': {
+              backgroundColor: '#20756c', // Change color on hover if desired
+          },
+          }}
+        onClick={handleRedirectToAlternatives}
+        disableRipple
+      >
+View Alternatives      </Button>
+        
+        
+      )}
+      {/* Feedback Snackbar */}
+      <Snackbar open={feedbackOpen} autoHideDuration={3000} onClose={handleFeedbackClose}>
+        <MuiAlert onClose={handleFeedbackClose} severity="success" sx={{ width: '100%' }}>
+          Item added to cart!
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 };
