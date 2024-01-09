@@ -1,8 +1,98 @@
-
 import React, { useEffect, useState } from "react";
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiDrawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Badge from '@mui/material/Badge';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Link from '@mui/material/Link';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { mainListItems, secondaryListItems } from './listItemsCl';
+import Button from "@mui/material/Button";
+import ViewDocPat from './ViewDocPat';
+import Wallet from './Wallet';
+import ViewFamilyMember from './ViewFamilyMember';
+import PatPrescView from './PatPrescView';
+import ViewHealthRecords from './ViewHealthRecords';
+import ViewPackages from './ViewPackages';
+import ViewMyPackage from './ViewMyPackage'
 import axios from "axios";
+function Copyright(props) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="http://localhost:3000">
+        El7a2ny
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
 
-const SApp = () => {
+    
+  );
+}
+
+const drawerWidth = 240;
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  backgroundColor: '#004E64', // New background color
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    '& .MuiDrawer-paper': {
+      position: 'relative',
+      whiteSpace: 'nowrap',
+      width: drawerWidth,
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      boxSizing: 'border-box',
+      ...(!open && {
+        overflowX: 'hidden',
+        transition: theme.transitions.create('width', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        width: theme.spacing(7),
+        [theme.breakpoints.up('sm')]: {
+          width: theme.spacing(9),
+        },
+      }),
+    },
+  }),
+);
+
+// TODO remove, this demo shouldn't need to reset the theme.
+const defaultTheme = createTheme();
+
+export default function SApp  () {
     const params = new URLSearchParams(window.location.search);
     const appointmentId = params.get('appointmentId');
     const [doctorName, setDoctorName] = useState({});
@@ -316,103 +406,204 @@ const SApp = () => {
      
     };
     
-  return (
-    <div className="appointment-profile">
-        <h1>Reserve Appointment</h1>
-      <p>Date: {appointment.date}</p>
-      <p>Doctor Name: {doctorName[appointment.doctor]}</p> 
-      <p>Status: {appointment.status}</p>
-      <button onClick={handleViewPriceClick}>View Price</button>
-      <br />
-      {isPriceVisible && (
-        <>
-          <label>Price:</label>
-          <br />
-          <input type="text" value={amount} readOnly />
-        </>
-      )}
 
-
-     <br/>
-     <button id="familyMember" onClick={handleFamilyMemberButtonClick}>
-       Reserve for a Family Member
-      </button>
-      <button id="reserveForMyself" onClick={handleReserveForMyselfClick}>
-        Reserve for Myself
-      </button>
-      <br/>
-    <label>Pay With:</label>
-    <br />
-    <button id="creditCard" onClick={handleCreditCardButtonClick}>
-      Credit Card
-    </button>
-    <button id="wallet" onClick={handleWalletButtonClick}>
-      Wallet
-    </button>
+    return (
+      <ThemeProvider theme={defaultTheme}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+          <div className="reserve-page" style={{ maxWidth: '600px', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
+            <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Reserve Appointment</h1>
+            <p>Date: {appointment.date}</p>
+            <p>Doctor Name: {doctorName[appointment.doctor]}</p>
+            <p>Status: {appointment.status}</p>
     
-    {showFamilyMemberTable && (
-        <div>
-          <h2>Family Member Information</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                {/* Add more table column headers as needed */}
-              </tr>
-            </thead>
-            <tbody>
-              {familyMemberData.map((member, index) => (
-                <tr key={index}>
-                  <td 
-                    onClick={() => handleFamilyMemberClick(member)} 
-                    style={{ cursor: 'pointer', backgroundColor: selectedFamilyMember === member._id ? 'lightblue' : 'white' }}
-                  >
-                    {member.famMemName}
-                  </td>
-                  {/* Add more table cells based on your data structure */}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    {showCreditCardTextBox && (
-      <form onSubmit={handlePaymentSubmit}>
-        <label>
-          Card number
-          <input type="text" value={cardNumber} onChange={handleCardNumber} />
-        </label>
-        <br />
-        <label>
-          Expiry date
-          <input type="text" value={expiryDate} onChange={handleExpiryDate} />
-        </label>
-        <br />
-        <label>
-          Security code(CVV)
-          <input type="text" value={CVV} onChange={handleCVV} />
-        </label>
-        <br />
+            <Button
+              variant="contained"
+              sx={{
+                color: 'white',
+                backgroundColor: '#25A18E',
+                '&:hover': {
+                    backgroundColor: '#20756c', // Change color on hover if desired
+                },
+                }} 
+              onClick={handleViewPriceClick}
+              
+            >
+              View Price
+            </Button>
+            {isPriceVisible && (
+              <>
+                <label>Price:</label>
+                <br />
+                <input
+                  type="text"
+                  value={amount}
+                  readOnly
+                  style={{ width: '100%', padding: '10px', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
+                />
+              </>
+            )}
+    
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Button
+              
+                id="familyMember"
+                onClick={handleFamilyMemberButtonClick}
 
-        <button type="submit">Pay</button>
-      </form>
-    )}
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#25A18E',
+                  '&:hover': {
+                      backgroundColor: '#20756c', // Change color on hover if desired
+                  },
+                  }} 
+              
+              >
+                Reserve for a Family Member
+              </Button>
+              <Button
+                
+                onClick={handleReserveForMyselfClick}
 
-    {showWalletTextBox && (
-      <form onSubmit={handlePaymentSubmit}>
-        <label>
-          Wallet Info
-          <input type="text" value={walletInfo} readOnly />
-        </label>
-        <br />
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#25A18E',
+                  '&:hover': {
+                      backgroundColor: '#20756c', // Change color on hover if desired
+                  },
+                  }} 
+              >
+                Reserve for Myself
+              </Button>
+            </div>
+    
+            <div style={{ marginTop: '20px' }}>
+              <label>Pay With:</label>
+              <br />
+              <Button
+                id="creditCard"
+                onClick={handleCreditCardButtonClick}
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#25A18E',
+                  '&:hover': {
+                      backgroundColor: '#20756c', // Change color on hover if desired
+                  },
+                  }} 
+              >
+                Credit Card
+              </Button>
+              <Button
+                id="wallet"
+                onClick={handleWalletButtonClick}
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#25A18E',
+                  '&:hover': {
+                      backgroundColor: '#20756c', // Change color on hover if desired
+                  },
+                  }} 
+              >
+                Wallet
+              </Button>
+            </div>
+    
+            {showFamilyMemberTable && (
+              <div style={{ marginTop: '20px' }}>
+                <h2>Family Member Information</h2>
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr>
+                      <th style={{ borderBottom: '1px solid #ccc', padding: '5px' }}>Name</th>
+                      {/* Add more table column headers as needed */}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {familyMemberData.map((member, index) => (
+                      <tr key={index}>
+                        <td                      onClick={() => handleFamilyMemberClick(member)}
+                      style={{
+                        cursor: 'pointer',
+                        backgroundColor: selectedFamilyMember === member._id ? 'lightblue' : 'white',
+                        padding: '5px'
+                      }}
+                    >
+                      {member.famMemName}
+                    </td>
+                    {/* Add more table cells based on your data structure */}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
-        <button type="submit">Pay</button>
-      </form>
-    )}
-  </div>
-  );
-  }
+        {showCreditCardTextBox && (
+          <form onSubmit={handlePaymentSubmit} style={{ marginTop: '20px' }}>
+            <label>
+              Card number
+              <input
+                type="text"
+                value={cardNumber}
+                onChange={handleCardNumber}
+                style={{ width: '100%', padding: '10px', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
+              />
+            </label>
+            <br />
+            <label>
+              Expiry date
+              <input
+                type="text"
+                value={expiryDate}
+                onChange={handleExpiryDate}
+                style={{ width: '100%', padding: '10px', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
+              />
+            </label>
+            <br />
+            <label>
+              Security code(CVV)
+              <input
+                type="text"
+                value={CVV}
+                onChange={handleCVV}
+                style={{ width: '100%', padding: '10px', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
+              />
+            </label>
+            <br />
 
+            <button
+              type="submit"
+              style={{ padding: '10px 20px', backgroundColor: '#f0f0f0', border: '1px solid #ccc', borderRadius: '5px', cursor: 'pointer' }}
+            >
+              Pay
+            </button>
+          </form>
+        )}
 
-  
-  export default SApp;
+        {showWalletTextBox && (
+          <form onSubmit={handlePaymentSubmit} style={{ marginTop: '20px' }}>
+            <label>
+              Wallet Info
+              <input
+                type="text"
+                value={walletInfo}
+                readOnly
+                style={{ width: '100%', padding: '10px', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
+              />
+            </label>
+            <br />
+
+            <button
+              type="submit"
+              style={{ padding: '10px 20px', backgroundColor: '#f0f0f0', border: '1px solid #ccc', borderRadius: '5px', cursor: 'pointer' }}
+            >
+              Pay
+            </button>
+          </form>
+        )}
+      </div>
+    </Box>
+  </ThemeProvider>
+);
+                         
+      }
+

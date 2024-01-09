@@ -83,8 +83,25 @@ io.on("connection", (socket) => {
   
   socket.on("join_room", (data) => {
     socket.join(data);
-    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+    socket.to(data).emit("joined_user",{socketId: socket.id});
+    console.log("User with ID:"+socket.id +"joined room:" +data);
   });
+  
+
+	
+
+	socket.on("disconnect", () => {
+		socket.broadcast.emit("callEnded")
+	})
+
+	
+	socket.on("callUser", (data) => {
+		io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
+	})
+
+	socket.on("answerCall", (data) => {
+		io.to(data.to).emit("callAccepted", data.signal)
+	})
   
   socket.on("send_message", (data) => {
     socket.to(data.room).emit("receive_message", data);
