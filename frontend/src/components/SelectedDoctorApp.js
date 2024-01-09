@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -19,6 +18,9 @@ const SelectedDoctorApp = () => {
   const [dosage, setDosage] = useState('');
   const [dosageList, setDosageList] = useState([]);
   const [date, setDate] = useState([]);
+  const [medicineList2, setMedicineList2] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showCompletedButton, setShowCompletedButton] = useState(false);
  // const[patientId, setPatientId] = useState([]);
   
 
@@ -36,6 +38,7 @@ const SelectedDoctorApp = () => {
           setDoctorId(appData.doctor);
             fetchDoctorNames(appData.doctor);
             fetchPatientNames(appData.patient);
+            setShowCompletedButton(appData.status === 'Upcoming' || appData.status === 'Rescheduled');
             // console.log(doctor)
           }).catch(err=>{
             console.log(err.message)
@@ -77,10 +80,23 @@ const SelectedDoctorApp = () => {
           setPatientName(pN);
         
       };
+      const fetchMedicines = async () => {
+        await axios.get(`http://localhost:8000/medicines`,{withCredentials:true}).then((res) => { 
+          const medicines = res.data
+          setMedicineList2(medicines);
+          
+          // console.log(doctor)
+        }).catch(err=>{
+          console.log(err.message)
+         });
+        
+      };
+      
    
    
       if (appointmentId) {
         fetchAppointmentData();
+        fetchMedicines();
         
        
         
@@ -88,10 +104,12 @@ const SelectedDoctorApp = () => {
       }
       
     }, [appointmentId]);
+    
     const fetchAppointmentData = async () => {
         await axios.get(`http://localhost:8000/getAppointmentInfo?appointmentId=${appointmentId}`,{withCredentials:true}).then((res) => { 
           const appData = res.data
           setAppointment(appData)
+          setShowCompletedButton(appData.status === 'Upcoming' || appData.status === 'Rescheduled');
           
           // console.log(doctor)
         }).catch(err=>{
@@ -110,25 +128,9 @@ const SelectedDoctorApp = () => {
         }
     };
     
-    const fetchID = async (username) =>{
-        try {
-          const response = await axios.get(`http://localhost:8000/getUserByUsername/${username}`);
-          console.log("retrievedd", response.data._id)
-          if (response.data && response.data._id) {
-            return response.data._id;
-            
-          } else {
-            return 'No user found';
-          }
-        } catch (error) {
-          console.error('Error fetching user', error);
-          return 'Unknown No user found';
-        }
-     
-  };
-
-
-  
+    const filteredMedicineList = medicineList2.filter(
+      (med) => med.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   const handleInstructionChange = (e) => {
     setInstruction(e.target.value);
   };
@@ -159,6 +161,9 @@ const SelectedDoctorApp = () => {
       setPrescription(false);
     else
         setPrescription(true);
+  };
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   const submitPrescription = async () => { ///////////////////////////////////hereeee
@@ -208,15 +213,29 @@ const SelectedDoctorApp = () => {
             onChange={handleInstructionChange}
             required
           />
-          <label htmlFor="medicine">Medicine:</label>
+           <label htmlFor="medicine">Medicine:</label>
           <input
             type="text"
+            id="searchMedicine"
+            name="searchMedicine"
+            placeholder="Search for medicine..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+          <select
             id="medicine"
             name="medicine"
             value={medicine}
             onChange={handleMedicineChange}
             required
-          />
+          >
+            <option value="" disabled>Select a medicine</option>
+            {filteredMedicineList.map((med, index) => (
+              <option key={index} value={med.name}>
+                {med.name}
+              </option>
+            ))}
+          </select>
           <br/>
            <label htmlFor="dosage">Dosage:</label>
           <input
@@ -248,7 +267,9 @@ const SelectedDoctorApp = () => {
         </div>
       )}
      <br/>
-     <button onClick={markAsCompleted}> Appointment Completed</button>
+     {showCompletedButton && (
+            <button onClick={markAsCompleted}>Appointment Completed</button>
+          )}
   </div>
   );
   }

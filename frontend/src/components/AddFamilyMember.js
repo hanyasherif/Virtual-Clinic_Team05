@@ -107,15 +107,11 @@ export default function AddFamilyMember () {
   const [username, setUsername] = useState('');
 
   //wife/husband
-  const [username2, setUsername2] = useState('');
-  const [famMemNatID2, setfamMemNatID2] = useState(''); //my nationalId to be linked to other family member as a family member
-  const [famMemNatID3, setfamMemNatID3] = useState('');
-  const [famMemNatID4, setfamMemNatID4] = useState('');
-  const [famMemName2, setfamMemName2] = useState('');
-  const [famMemGender2, setfamMemGender2] = useState('');
-  const [famMemAge2, setfamMemAge2] = useState('');
-  const [famMemRelation2, setfamMemRelation2] = useState('');
-  const [idGenerated, setIdGenerated] = useState('');
+ const [famMemName2, setfamMemName2] =  useState('');
+ const [famMemNatID2, setfamMemNatID2] =  useState('');
+ const [famMemAge2,setfamMemAge2] =  useState('');
+ const [famMemGender2,setfamMemGender2] = useState('');
+ const [famMemRelation2, setfamMemRelation2] = useState('');
 
   // const id = '65735cebad66db980718a14d';
 
@@ -165,14 +161,7 @@ export default function AddFamilyMember () {
       console.error('Error:', error);
     }
   };
-    const handleAddFamilyMemberClick = () => {
-      setNewFamMem(true);
-      setLinkFamMem(false); // Close the link to existing user form
-    };
-    const handleLinkToExistingUserClick = () => {
-      setLinkFamMem(true);
-      setNewFamMem(false); // Close the family member form
-    };
+    
     const getUserName = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/getUserByTokenId`,{withCredentials:true});
@@ -190,54 +179,49 @@ export default function AddFamilyMember () {
     const handleSubmit2 = async (e) => {
       e.preventDefault();
       const params = new URLSearchParams(window.location.search);
-      if (!email && !phoneNumber) {
-        alert('Please fill in at least one of the email or phone number fields');
+      if(email !== ''){
+       assignFamilyMemberValuesEmail(email);
+       
+      }
+      else if(phoneNumber !== '')
+      assignFamilyMemberValuesPhoneNumber(phoneNumber);
+    else
+    alert('Please insert email or phone');
+      const FamilyMember = {famMemName: famMemName2 , famMemNatID: famMemNatID2, famMemAge:famMemAge2, famMemGender:famMemGender2 , famMemRelation: famMemRelation2, username};
+      if (!famMemNatID2 ||!famMemGender2 || !famMemRelation2) {
+        alert('Please fill in all fields.');
         return;
       }
-      if(!famMemNatID2|| !famMemRelation2)
-      {
-        alert('Please fill in national ID and Relation fields');
-        return;
-      }
-      fetchUser(email,phoneNumber);
-      if (famMemRelation2 === "wife/husband"){
-      // idGenerated = getId(username);
-      const idUsername =getUserName()  //bta3ty ana elly wa5daha mn el session
-      assignFamilyMemberValues(idUsername) 
-              
-      if(!famMemNatID2){
-        alert('Please Provide your National ID');
-      }
-              
-    }
-  };
-    const assignFamilyMemberValues = async (username) => {
+  
       try {
-        const response = await fetch(`/getUserByUsername/${username}`,{credentials:'include'});
-        if (!response.ok) {
-          
-          console.error('Failed to fetch user information');
-          return;
+        const response = await fetch(`http://localhost:8000/addFamilyMember`, {
+          method: 'POST',
+          body: JSON.stringify(FamilyMember),
+          headers: {
+           'Content-Type': 'application/json',
+          },credentials:'include'
+        });
+        const json = await response.json();
+  
+        if(!response.ok){
+          alert(json.message);
+            return;
         }
-        const user = await response.json();
-        // Extract user information and assign it to state variables
-        setUsername2(username);
-        setfamMemName2(user.name); // Assuming 'name' is a property of the user object
-        setfamMemGender2(user.gender); // Assuming 'gender' is a property of the user object
-    
-        // Calculate age based on date of birth
-        if (user.dateOfBirth) {
-          const birthDate = new Date(user.dateOfBirth);
-          const currentDate = new Date();
-          const age = Math.floor((currentDate - birthDate) / (365.25 * 24 * 60 * 60 * 1000));
-          setfamMemAge2(age );
-        } else {
-          setfamMemAge2('');
-        }
-      } catch (error) {
-        console.error('Error fetching user information:', error);
+        else{
+          setfamMemName("");
+          setfamMemNatID("");
+          setfamMemAge("");
+          setfamMemGender("");
+          setfamMemRelation("");
+          setError("");
+          console.log(json.message);
+          alert(json.message);
+        }}
+      catch (error) {
+        console.error('Error:', error);
       }
-    };
+  };
+    
     const assignFamilyMemberValuesEmail = async (email) => {
       try {
         const response = await fetch(`/getUserByEmail/${email}`);
@@ -253,15 +237,15 @@ export default function AddFamilyMember () {
         // Extract user information and assign it to state variables
          
         setUsername(user.username);
-        setfamMemName(user.name); // Assuming 'name' is a property of the user object
-        setfamMemGender(user.gender); // Assuming 'gender' is a property of the user object
+        setfamMemName2(user.name); // Assuming 'name' is a property of the user object
+        setfamMemGender2(user.gender); // Assuming 'gender' is a property of the user object
     
         // Calculate age based on date of birth
         if (user.dateOfBirth) {
           const birthDate = new Date(user.dateOfBirth);
           const currentDate = new Date();
           const age = Math.floor((currentDate - birthDate) / (365.25 * 24 * 60 * 60 * 1000));
-          setfamMemAge(age );
+          setfamMemAge2(age );
            
         } else {
           setfamMemAge('');
@@ -285,8 +269,8 @@ export default function AddFamilyMember () {
     
         // Extract user information and assign it to state variables
         setUsername(user.username);
-        setfamMemName(user.name); // Assuming 'name' is a property of the user object
-        setfamMemGender(user.gender); // Assuming 'gender' is a property of the user object
+        setfamMemName2(user.name); // Assuming 'name' is a property of the user object
+        setfamMemGender2(user.gender); // Assuming 'gender' is a property of the user object
     
         // Calculate age based on date of birth
         if (user.dateOfBirth) {
@@ -383,7 +367,7 @@ export default function AddFamilyMember () {
     };
 
   useEffect(() => {    
-    addFamilyMember(); // Call the function
+   //  addFamilyMember(); // Call the function
   }, [username]);
 
 
@@ -496,7 +480,7 @@ export default function AddFamilyMember () {
             }}
           >
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+        {/* <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}> */}
             <Title style={{ color: '#25A18E', fontSize: 23, textAlign: 'center' }}>
               Add Family Member Details
             </Title>
@@ -691,10 +675,11 @@ export default function AddFamilyMember () {
         '&:hover': {
             backgroundColor: '#20756c', // Change color on hover if desired
         },
-        }} >
+        }}
+        onClick={handleSubmit}>
         Add Family Member
       </Button>
-    </form>
+    {/* </form> */}
     {error && <p>{error}</p>}  
 
           </Paper>
@@ -720,7 +705,7 @@ export default function AddFamilyMember () {
                   }}
                 >
             {error && <p>{error}</p>}
-            <form onSubmit={handleSubmit2} style={{ display: 'flex', flexDirection: 'column' }}>
+            {/* <form onSubmit={handleSubmit2} style={{ display: 'flex', flexDirection: 'column' }}> */}
 
             {/* <form onSubmit={handleSubmit2}> */}
             <Title style={{ color: '#25A18E', fontSize: 23, textAlign: 'center' }}>
@@ -872,10 +857,11 @@ export default function AddFamilyMember () {
         '&:hover': {
             backgroundColor: '#20756c', // Change color on hover if desired
         },
-        }} >
+        }} 
+        onClick={handleSubmit2}>
         Link Family Member
       </Button>
-    </form>
+    
 
     </Paper>
       </Grid>

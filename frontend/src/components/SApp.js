@@ -1,3 +1,4 @@
+/////////// reserve for myselffff session
 import React, { useEffect, useState } from "react";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -370,6 +371,7 @@ export default function SApp  () {
            modifyDoctorWallet(amount,appointment.doctor);
 
         }
+        console.log("the senttt isss " ,patientId);
         modifyAppointmentStatus(appointmentId,patientId);
     }
     const modifyAppointmentStatus = async (appointmentId, patientId) => {
