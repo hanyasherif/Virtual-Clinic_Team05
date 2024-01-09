@@ -26,6 +26,7 @@ const ViewPatients = async (req, res) => {
             const patientDetail = {
               _id: appointment.patient._id,
               username: appointment.patient.username,
+              name: appointment.patient.name,
               dateOfBirth: appointment.patient.dateOfBirth,
               email: appointment.patient.email,
               gender: appointment.patient.gender,

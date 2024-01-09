@@ -132,7 +132,7 @@ const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, sear
    uploadMedicalDocument, findPatById,login, removeMedicalDocument, 
     servefiles ,getUploaded ,    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,
     getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId, phviewPatients,
-     viewPharmacists, getWalletInfoDoc} 
+     viewPharmacists, getWalletInfoDoc,searchByNamePatients} 
     = require("./Routes/userController");
 
 
@@ -306,6 +306,8 @@ app.post("/deleteMedicine/:prescriptionId",deleteMedicine);
 app.post("/modifyInstruction/:prescriptionId",modifyInstruction);
 
 app.get("/generatePdf/:prescriptionId" , generatePdf);
+
+app.get("/searchByNamePatients" , searchByNamePatients);
 
 ////////////////////////////////////////////////sherif and momen/////////////////////////////
 app.post("/Addpatient", AddPatient);

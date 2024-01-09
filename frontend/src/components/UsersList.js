@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useLocation } from 'react-router-dom';
 import React, { useState,  useEffect} from 'react';
+import TextField from "@mui/material/TextField";
 import Title from './Title';
 
 const UsersList = () => {
@@ -18,6 +19,7 @@ const UsersList = () => {
   const searchParams = new URLSearchParams(location.search);
   const Id = searchParams.get('Id');
       const [Patients,SetPatients] = useState([]);
+      const [searchName, setSearchName] = useState("");
       const getPatient =  async () => {
         // try {
            await axios.get(`http://localhost:8000/getC?Id=${Id}`,{withCredentials:true}).then((res)=>{
@@ -33,15 +35,79 @@ const UsersList = () => {
       useEffect(() => {
         getPatient();
       }, []); 
-
+      const searchPatients = async () => {
+        // Make a request to your backend API to fetch doctors based on search criteria
+        if (searchName !== "") {
+          axios
+          .get(`http://localhost:8000/searchByNamePatients`, {
+            data: {
+              name: searchName,
+            },
+            withCredentials: true,
+          })
+          .then((res) => {
+            console.log("",res.data);
+            const patients = res.data;
+            SetPatients(patients);
+          });
+        }
+      };
+      
     return(
 
 
 <React.Fragment>
     <Title style={{ color: '#25A18E' , fontSize: 23}}>My Patient's List</Title>
+    <Box sx={{ marginBottom: 2, marginLeft: 7}}>
+        <TextField
+          label="Search by Name"
+          variant="outlined"
+          margin="normal"
+          value={searchName}
+          sx={{
+            marginBottom: '20px', // Adjust the margin as needed
+            minWidth: 180,
+            // '& .MuiInputLabel-root': {
+            //   color: '#25A18E', // Change label color if necessary
+            // },
+            '& .MuiInputLabel-shrink': {
+              color: '#25A18E', // Change label color while shrinking (on input)
+            },
+            '& .MuiOutlinedInput-root': {
+              '&:hover fieldset': {
+                borderColor: '#25A18E', // Change border color on hover
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#25A18E', // Change border color on focus
+              },
+            }
+          }}    
+          onChange={(e) => setSearchName(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          onClick={searchPatients}
+          margin="normal"
+          padding="normal"
+          sx={{
+            marginTop: 2,
+            marginLeft: 1,
+            minWidth: 180,
+            color: 'white',
+            backgroundColor: '#25A18E',
+            '&:hover': {
+                backgroundColor: '#20756c', // Change color on hover if desired
+            },
+            height: 55
+            }} 
+        >
+          Search Patients
+        </Button>
+        </Box>
       <Table size="small">
         <TableHead>
           <TableRow>
+          <TableCell style={{ color: '#25A18E', textAlign: 'center' }}>Name</TableCell>
             <TableCell style={{ color: '#25A18E', textAlign: 'center' }}>Username</TableCell>
             <TableCell style={{ color: '#25A18E', textAlign: 'center' }}>Email</TableCell>
           </TableRow>
@@ -60,6 +126,7 @@ const UsersList = () => {
             onClick={() =>window.location.href=`http://localhost:3000/PatientProfile?Patient=${Patient._id}&&Id=${Id}`}
               key={Patient._id}
             >
+              <TableCell style={{ textAlign: 'center'}}>{Patient.name}</TableCell>
               <TableCell style={{ textAlign: 'center'}}>{Patient.username}</TableCell>
               <TableCell style={{ textAlign: 'center'}}>{Patient.email}</TableCell>
             </TableRow>

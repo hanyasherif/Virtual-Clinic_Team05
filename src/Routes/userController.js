@@ -741,6 +741,72 @@ const modifyWalletDoctor = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+const searchByNamePatients = async (req, res) => {
+  const token = req.cookies.jwt;
+  const decodedToken = jwt.verify(token, 'supersecret');
+  let DoctorId = decodedToken.user._id;
+  const uniquePatients = new Set(); // Set to store unique patient IDs
+  const patientDetails = [];
+  let common = [];
+
+  AppointmentModel.find({ doctor: DoctorId })
+    .populate({
+      path: 'patient',
+      select: '_id username name email dateOfBirth emergencyContactFullname emergencyContactMobileNumber gender famMemName famMemNatID famMemAge famMemRelation HealthRecord',
+    })
+    .exec((err, appointments) => {
+      if (err) {
+        return res.status(400).json({ error: err.message });
+      } else {
+        console.log('Appointments before population:', appointments);
+        appointments.forEach((appointment) => {
+          if (appointment.patient && !uniquePatients.has(appointment.patient._id)) {
+            uniquePatients.add(appointment.patient._id);
+            const patientDetail = {
+              _id: appointment.patient._id,
+              username: appointment.patient.username,
+              name: appointment.patient.name,
+              dateOfBirth: appointment.patient.dateOfBirth,
+              email: appointment.patient.email,
+              gender: appointment.patient.gender,
+              famMemName: appointment.patient.famMemName,
+              famMemNatID: appointment.patient.famMemNatID,
+              famMemRelation: appointment.patient.famMemRelation,
+              famMemAge: appointment.patient.famMemAge,
+              emergencyContactFullname: appointment.patient.emergencyContactFullname,
+              emergencyContactMobileNumber: appointment.patient.emergencyContactMobileNumber,
+              HealthRecord: appointment.patient.HealthRecord,
+            };
+            patientDetails.push(patientDetail);
+          }
+        });
+        results.forEach((result) => {
+          patientDetails.forEach((patient) => {
+            if (result.username === patient.username) {
+              common.push(result);
+            }
+          });
+        });
+    
+        res.status(200).json(common);
+      }
+    });
+  try {
+    const { name } = req.query;
+
+    // Create a regular expression with 'i' option for case-insensitive search
+    const regexName = new RegExp(name, 'i');
+
+    const results = await userModel.find({
+      name: { $regex: regexName },
+      type: "Patient"
+    });
+    
+    res.status(200).json(results);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
 //////////////////////////////////sherif and momen//////////////////////////////////
 
@@ -865,7 +931,7 @@ module.exports = { login, addAdministrator, removeUser, getUsers,registerPatient
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
    filterAppointmentsStatus, AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor, uploadMedicalDocument, removeMedicalDocument
   , getUploaded, findPatById, servefiles ,getUserById  ,getWalletInfo, getWalletInfoDoc, getFamilyMemberData,
-  getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor, getUserByTokenId, getRoom, phviewPatients, viewPharmacists}   
+  getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor, getUserByTokenId, getRoom, phviewPatients, viewPharmacists,searchByNamePatients}   
 
 // module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
 //    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
