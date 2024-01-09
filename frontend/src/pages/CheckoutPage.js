@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FormControl, InputLabel, Select, MenuItem, Button, TextField 
-  ,  Snackbar
-} from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, Button, TextField, Alert } from '@mui/material';
 
 const CheckoutPage = () => {
   const AddressSelectionComponent = ({ addresses, handleSelectAddress }) => {
@@ -35,16 +32,18 @@ const CheckoutPage = () => {
     setSelectedPaymentMethod(e.target.value);
   };
 
-  const [successSnackbarOpen, setSuccessSnackbarOpen] = useState(false);
-  const handleSnackbarClose = () => {
-    setSuccessSnackbarOpen(false);
-  };
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
 
+  const handleAlertClose = () => {
+    setSuccessAlertOpen(false);
+  };
 
   const handleCheckout = async () => {
     // Replace with the actual patient ID
     const addressId = ''; // Replace with the actual selected address ID
     const paymentMethod = ''; // Replace with the actual payment method
+
+    setSuccessAlertOpen(true);
 
     const performCheckout = async (addressId, paymentMethod) => {
       try {
@@ -59,7 +58,7 @@ const CheckoutPage = () => {
 
         if (response.status === 200) {
           console.log('Order placed successfully:', response.data);
-          // Redirect or perform other actions as needed
+          setSuccessAlertOpen(true); // Toggle the Alert
         } else {
           console.error('Error placing order:', response.data);
           // Handle errors or show an error message to the user
@@ -173,50 +172,53 @@ const CheckoutPage = () => {
 
       {/* Existing Addresses Selection */}
       <div>
-  <h3>Existing Addresses:</h3>
-  <FormControl sx={{ width: 200, marginBottom: 2 }}>
-    <InputLabel sx={{ marginTop: 1 }}>Select Address</InputLabel>
-    <Select
-      value={selectedAddressId || ''}
-      onChange={(e) => handleSelectAddress(e.target.value)}
-    >
-      {addresses.map((address) => (
-        <MenuItem key={address._id} value={address._id}>
-          {`${address.addressLine1}, ${address.city}, ${address.country}`}
-        </MenuItem>
-      ))}
-    </Select>
-  </FormControl>
-</div>
-
-  
+        <h3>Existing Addresses:</h3>
+        <FormControl sx={{ width: 200, marginBottom: 2 }}>
+          <InputLabel sx={{ marginTop: 1 }}>Select Address</InputLabel>
+          <Select
+            value={selectedAddressId || ''}
+            onChange={(e) => handleSelectAddress(e.target.value)}
+          >
+            {addresses.map((address) => (
+              <MenuItem key={address._id} value={address._id}>
+                {`${address.addressLine1}, ${address.city}, ${address.country}`}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
 
       {/* Perform checkout button */}
       <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          onClick = {handleCheckout}
-          style={{ marginTop: 20, width: '70%' }}
-          sx={{
-            color: 'white',
-            backgroundColor: '#25A18E',
-            '&:hover': {
-              backgroundColor: '#20756c',
-            },
-          }}
-        >        Perform Checkout
+        type="submit"
+        variant="contained"
+        color="primary"
+        onClick={handleCheckout}
+        style={{ marginTop: 20, width: '70%' }}
+        sx={{
+          color: 'white',
+          backgroundColor: '#25A18E',
+          '&:hover': {
+            backgroundColor: '#20756c',
+          },
+        }}
+      >
+        Perform Checkout
       </Button>
-           {/* Success Snackbar */}
-           <Snackbar
-        open={successSnackbarOpen}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-        message="Order placed successfully"
-      />
-    </div>
 
-  );
+          {/* Success Alert */}
+          {successAlertOpen && (
+            <Alert
+              severity="success"
+              open={successAlertOpen}
+              autoHideDuration={6000}
+              onClose={() => setSuccessAlertOpen(false)}
+            >
+              Order placed successfully
+            </Alert>
+          )}
+        </div>
+      );
 };
 
 export default CheckoutPage;
