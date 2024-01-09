@@ -36,6 +36,9 @@ const Meeting = () => {
           alert('An error occurred:', error.message);
         }
     }
+    async function handleRes(id){
+      window.location.href = `/ReschedulePatient?id=${id}`;
+    };
     return(
        <div className="UsersList">
             <Box sx={{marginBottom: 2}}>
@@ -63,6 +66,7 @@ const Meeting = () => {
           <TableRow>
             <StyledTableCell align="center">Date</StyledTableCell>
             <StyledTableCell align="center">to Be Determind</StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -81,6 +85,8 @@ const Meeting = () => {
               >
               <TableCell align="center">{meet.date}</TableCell>
               <TableCell align="center">{}</TableCell>
+              <TableCell align="center">
+              <Button onClick={() => handleRes(meet._id)} style={{ color: 'green ' }}>Reschedule</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

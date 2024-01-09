@@ -4,7 +4,6 @@ const { default: mongoose } = require('mongoose');
 const familyMemberModel = require('../Models/FamilyMember.js');
 const appointmentsModel = require('../Models/Appointment.js');
 const contractModel = require('../Models/EmploymentContract.js');
-const nodemailer = require('nodemailer');
 const jwt = require("jsonwebtoken");
 //THIS IS THE TASK CODE TO GUIDE YOUUU
 
@@ -91,27 +90,23 @@ async function sendEmail(email,date){
       throw err;
   }
 };
-const CancelAppointment = async (req, res) => {
+const CancelAppointment = async (req,res) =>{
   try {
-    const appointmentId = req.query.appointmentId;
+    const appointmentId = req.body.appointmentId;
     const token = req.cookies.jwt;
     const decodedToken = jwt.verify(token, 'supersecret');
-    const patientId= decodedToken.user._id;
+    const patientId= decodedToken.user._id
     const patient = await userModel.findById(patientId);
-    const appointment = await appointmentsModel.findByIdAndDelete(appointmentId);
-    if (!appointment) {
-      return res.status(404).json({ message: 'Appointment not found' });
-    }
+    const appointment = await appointmentsModel.findById(appointmentId);// add the delete part
     const date = appointment.date;
     const email = patient.email;
-    sendEmail(email, date);
-    res.status(200).json({ message: 'Appointment canceled successfully' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal server error' });
+    sendEmail(email,date);
   }
-};
+   catch(err){
+    throw(err);
+   } 
 
+}
 // Add this method in the backend
 const modifyAppointment = async (req, res) => {
    try {
@@ -153,6 +148,9 @@ const modifyAppointment = async (req, res) => {
       res.status(200).json({message:"You can't add appointment, your contract is not accepted"})
       return;
   }
+ 
+ 
+
   let date = req.body.date;
   let price = doctor.hourlyRate + contract.markup;
   try{
@@ -166,61 +164,5 @@ catch(err){
           res.json({message: err.message})}
 
 };
-const rescheduleAppointmentForP = async (req, res) => {
-  try {
-    const token = req.cookies.jwt;
-    const decodedToken = jwt.verify(token, 'supersecret');
-    const userid= decodedToken.user._id;
-    const appointmentId = req.query.appointmentId;     
-    const existingAppointment = await appointmentsModel.findById(appointmentId);
-    const patientId = existingAppointment.patient;
-    const patient = await userModel.findById(existingAppointment.patient);
-    const newDate = req.query.newDate;
-    const email =patient.email;
-    if (!existingAppointment) {
-      return res.status(404).json({ message: "Appointment not found." });
-    }
-    let parsedNewDate = new Date(newDate);
-
-    if (isNaN(parsedNewDate.getTime())) {
-      return res.status(400).json({ message: "Invalid date format for newDate." });
-    }
-
-    let conflictingAppointment = await appointmentsModel.findOne({
-      $or: [
-        { patient: patientId, date: parsedNewDate },
-        { doctor: existingAppointment.doctor, date: parsedNewDate }
-      ]
-    });
-
-    while (conflictingAppointment) {
-      console.log('There is another Appointment exists in the same time:', conflictingAppointment);
-
-      const newFollowUpDate = new Date(conflictingAppointment.date.getTime() + 60 * 60 * 1000);
-
-      parsedNewDate = newFollowUpDate;
-
-      const updatedAppointment = await appointmentsModel.findOne({
-        $or: [
-          { patient: patientId, date: parsedNewDate },
-          { doctor: existingAppointment.doctor, date: parsedNewDate }
-        ]
-      });
-
-      conflictingAppointment = updatedAppointment;
-    }
-
-    const updatedAppointment = await appointmentsModel.findOneAndUpdate(
-      { _id: appointmentId },
-      { $set: { status: "Reschedule", date: parsedNewDate } },
-      { new: true }
-    );
-
-    sendEmail(email,parsedNewDate);
-    res.status(200).json({ message: "Appointment rescheduled successfully", appointment: updatedAppointment });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
  
-module.exports = {rescheduleAppointmentForP,addAppointment,createAppointment,getAppointmentInfo,modifyAppointment,CancelAppointment}
+module.exports = {addAppointment,createAppointment,getAppointmentInfo,modifyAppointment,CancelAppointment}

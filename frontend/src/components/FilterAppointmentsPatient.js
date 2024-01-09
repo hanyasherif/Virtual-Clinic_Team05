@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -110,6 +111,7 @@ export default function FilterAppointmentsPatient() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  
 
   const handleLogout = async (e) => {
     try {
@@ -119,6 +121,7 @@ export default function FilterAppointmentsPatient() {
       console.error('Error:', error);
     }
   };
+ 
 
   const [date, setDate] = useState('')
   const [status, setStatus] = useState('')
@@ -155,6 +158,7 @@ export default function FilterAppointmentsPatient() {
       setDate(d);
       getAppointmentDate(d);
     }
+    
 
   const getAppointmentDate=  async (date) => {
     if (!date) {
@@ -197,7 +201,21 @@ export default function FilterAppointmentsPatient() {
         }
          );
     }
-
+    async function handleCancel (id) {
+      try {
+        const response = await axios.post(`http://localhost:8000/CancelAppointment?appointmentId=${id}`
+        ,{tm:"mohab"},{withCredentials:true});
+        console.log('Cancellation successful:', response.data);
+        alert("Cancellation Successed");
+        return true; 
+      } catch (error) {
+        console.error('Cancellation failed:', error);
+        return false; 
+      }
+    };
+    async function handleRes(id){
+      window.location.href = `/ReschedulePatient?id=${id}`;
+    };
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -348,6 +366,8 @@ export default function FilterAppointmentsPatient() {
             <StyledTableCell align="center">Date</StyledTableCell>
             <StyledTableCell align="center">Doctor</StyledTableCell>
             <StyledTableCell align="center">Status</StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -367,7 +387,11 @@ export default function FilterAppointmentsPatient() {
               <TableCell align="center">{Appointment.date}</TableCell>
               <TableCell align="center">{doctorNames[Appointment.doctor]}</TableCell>
               <TableCell align="center">{Appointment.status}</TableCell>
-            </TableRow>
+              <TableCell align="center">
+              <Button onClick={() => handleCancel(Appointment._id)} style={{ color: 'red' }}>Cancel</Button></TableCell>
+              <TableCell align="center">
+              <Button onClick={() => handleRes(Appointment._id)} style={{ color: 'green ' }}>Reschedule</Button></TableCell>
+              </TableRow>
           ))}
         </TableBody>
       </Table>

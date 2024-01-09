@@ -30,10 +30,9 @@ const subscribePackage = async(req,res)=>{
     {
       const token = req.cookies.jwt;
       const decodedToken = jwt.verify(token, 'supersecret');
-      //const user = await userModel.findById(decodedToken.user._id);
-        const patId= decodedToken.user._id
-        const packageName= req.query.packageName
-        const patient = await userModel.findById(patId)
+      const patId= decodedToken.user._id
+      const packageName= req.query.packageName
+      const patient = await userModel.findById(patId)
         if(!patient)
         {
             return res.status(404).json({ message: 'Patient not found' });

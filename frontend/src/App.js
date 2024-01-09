@@ -34,6 +34,7 @@ import OtpVerificationPH from './pages/sp2/OTPVerification';
 import ChangePasswordPH from './pages/sp2/ChangePass';
 import Dashboard from './components/PatClinicDashboard';
 import LandingPage from './components/LandingPage';
+import Spatient from './pages/MyCalendar';
 
 ///
 //Pages & Components
@@ -294,6 +295,9 @@ function App() {
 
               <Route path="/DocPharmacistslist"
               element={<DocPharmacistsList/>}/>
+
+              <Route path="/ReschedulePatient"
+               element={<Spatient/>}/>
 
               <Route path="/ChatPatientProfile"
               element={<ChatUserProfile/>}/>
