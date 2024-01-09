@@ -23,6 +23,7 @@ import UsersList from './UsersList';
 import Meeting from './Appointments';
 import ViewHealthRecords from './ViewHealthRecords';
 import WalletDoc from './WalletDoc';
+import AddAppointment from './AddAppointments';
 
 function Copyright(props) {
   return (
@@ -227,6 +228,28 @@ export default function DoctorDashboard() {
             <ViewHealthRecords />
           </Paper>
         </Grid>
+        <Grid item
+        sx={{
+          '&:hover > div': {
+            transform: 'scale(1.02)',
+            transition: 'transform 0.3s ease-in-out',
+          },
+        }}
+        >
+          <Paper
+            sx={{
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              transition: 'transform 0.3s ease-in-out',
+              borderRadius: 3,
+              width: 235,
+              marginTop: -1,
+            }}
+          >
+            <AddAppointment />
+          </Paper>
+        </Grid>
       </Grid>
     </Grid>
     
@@ -240,7 +263,7 @@ export default function DoctorDashboard() {
             transition: 'transform 0.3s ease-in-out',
           },
         }}
-        >
+        > 
           <Paper
             sx={{
               p: 2,

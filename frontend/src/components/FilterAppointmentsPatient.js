@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,7 +18,7 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItemsCl';
+import { mainListItems, secondaryListItems } from './listItems';
 import axios from 'axios';
 import Table from '@mui/material/Table';  
 import TableBody from '@mui/material/TableBody';
@@ -27,6 +28,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { InputLabel, MenuItem, Select } from '@mui/material';
 import { Box, Button, TextField, FormControl} from '@mui/material';
+
 
 function Copyright(props) {
   return (
@@ -38,6 +40,8 @@ function Copyright(props) {
       {new Date().getFullYear()}
       {'.'}
     </Typography>
+
+    
   );
 }
 
@@ -51,7 +55,7 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  background: 'linear-gradient(to right, #004E64, #0088A8)',
+  backgroundColor: '#004E64', // New background color
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -107,6 +111,7 @@ export default function FilterAppointmentsPatient() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  
 
   const handleLogout = async (e) => {
     try {
@@ -116,6 +121,7 @@ export default function FilterAppointmentsPatient() {
       console.error('Error:', error);
     }
   };
+ 
 
   const [date, setDate] = useState('')
   const [status, setStatus] = useState('')
@@ -152,6 +158,7 @@ export default function FilterAppointmentsPatient() {
       setDate(d);
       getAppointmentDate(d);
     }
+    
 
   const getAppointmentDate=  async (date) => {
     if (!date) {
@@ -194,7 +201,24 @@ export default function FilterAppointmentsPatient() {
         }
          );
     }
-
+    async function handleCancel (id) {
+      try {
+        const response = await axios.post(`http://localhost:8000/CancelAppointment?appointmentId=${id}`
+        ,{tm:"mohab"},{withCredentials:true});
+        console.log('Cancellation successful:', response.data);
+        alert("Cancellation Successed");
+        return true; 
+      } catch (error) {
+        console.error('Cancellation failed:', error);
+        return false; 
+      }
+    };
+    async function handleRes(id){
+      window.location.href = `/ReschedulePatient?id=${id}`;
+    };
+    async function handleRequestFollowUp(id){
+      window.location.href = `/ReschedulePatient?id=${id}`;
+    };
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -269,10 +293,7 @@ export default function FilterAppointmentsPatient() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
-
-
-                
+              <Grid item xs={12}>         
                 <Box sx={{ marginBottom: 2 }}>
                   <Typography
                   // component="h3"
@@ -345,6 +366,8 @@ export default function FilterAppointmentsPatient() {
             <StyledTableCell align="center">Date</StyledTableCell>
             <StyledTableCell align="center">Doctor</StyledTableCell>
             <StyledTableCell align="center">Status</StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -364,7 +387,48 @@ export default function FilterAppointmentsPatient() {
               <TableCell align="center">{Appointment.date}</TableCell>
               <TableCell align="center">{doctorNames[Appointment.doctor]}</TableCell>
               <TableCell align="center">{Appointment.status}</TableCell>
-            </TableRow>
+              <TableCell align="center">
+              {Appointment.status === 'Upcoming' || Appointment.status === 'Rescheduled' ? (
+                <Button
+                variant="contained"
+                sx={{
+                  color: 'white',
+                  // marginLeft: 2,
+                  backgroundColor: '#A81D24',
+                  '&:hover': {
+                    backgroundColor: '#911A20',
+                  },
+                }}
+                onClick={() => handleCancel(Appointment._id)}>Cancel</Button>
+              ) : null}
+            </TableCell>
+            <TableCell align="center">
+              {Appointment.status === 'Upcoming' || Appointment.status === 'Rescheduled' ? (
+                <Button 
+                variant="contained"
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#25A18E',
+                  '&:hover': {
+                    backgroundColor: '#20756c',
+                  },
+                }}       
+                onClick={() => handleRes(Appointment._id)}>Reschedule</Button>
+              ) : null}
+              {Appointment.status === 'Completed' ? (
+                <Button 
+                variant="contained"
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#25A18E',
+                  '&:hover': {
+                    backgroundColor: '#20756c',
+                  },
+                }}    
+                onClick={() => handleRequestFollowUp(Appointment._id)}>Request Follow Up</Button>
+              ) : null}
+            </TableCell>
+              </TableRow>
           ))}
         </TableBody>
       </Table>

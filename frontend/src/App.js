@@ -101,6 +101,7 @@ import PresDoctor from './components/PresDoctor';
 import PresPatient from './components/PresPatient';
 import SelectedPrescriptionD from './components/SelectedPrescriptionD';
 import SelectedPrescriptionP from './components/SelectedPrescriptionP';
+import MyCalendar from './components/MyCalender';
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
   return (
@@ -194,6 +195,9 @@ function App() {
               element={<ChangePassword/>}/>
                <Route path="/ChangeMyPasswordDoc"
               element={<ChangePassDoc/>}/>
+                  <Route path="/ReschedulePatient"
+               element={<MyCalendar/>}/>
+
           
               <Route path="/videochatpage"
               element={<VideoChatPage/>}/>

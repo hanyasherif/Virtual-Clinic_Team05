@@ -17,6 +17,7 @@ const Wallet = () => {
       try {
         const response = await axios.get(`http://localhost:8000/getWalletInfo`,{withCredentials:true});
         const user = response.data;
+        console.log("Wallet"+user);
         setWalletInfo(user);
         console.log("Wallet Info:", walletInfo);
       } catch (error) {
