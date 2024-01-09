@@ -22,13 +22,36 @@ const prescriptionSchema = new Schema({
         type: Boolean,
         required: true
     },
-    medicine:{
+    medicines:{
         type:[String],
         required: true
     },
     dosage:{
       type:[String],
       required: true
+  },
+  instruction:{
+    type: String
+  },
+  appointmentId: {
+    type: mongoose.Types.ObjectId,
+      ref:'Appointment',
+      required: true
+  },
+  instruction:{
+    type: String
+  },
+  appointmentId: {
+    type: mongoose.Types.ObjectId,
+      ref:'Appointment',
+      required: true
+  },
+  patientName:{
+    type: String,
+    required: true
+  },doctorName:{
+    type: String,
+    required: true
   }
   }, { timestamps: true });
   

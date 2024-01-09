@@ -20,14 +20,15 @@ const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, sear
     getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId} 
     = require("./Routes/userController");
 
-const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription} = require("./Routes/PrescriptionController");
+const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescription,getDoctorPresription,getPatientPresription,modifyDosage,
+  addMedicine, deleteMedicine, modifyInstruction, generatePdf} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest,  handleReject, handleAccept } = require("./Routes/requestController");
 const{viewPackages , subscribePackage , viewMyPackage , cancelPackage , CheckOTP , CEmail , GEmail ,changePassword } = require("./Routes/PatientController");
 // const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
 //    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getUserById , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor,
 //    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor} = require("./Routes/userController");
-const{addAppointment,getAppointmentInfo,modifyAppointment,createAppointment} = require("./Routes/appointmentController");
+const{addAppointment,getAppointmentInfo,modifyAppointment,createAppointment,getDoctorAppointments,AppointmentCompleted} = require("./Routes/appointmentController");
 const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData , AddNewHR , ViewUpdatedHRforD ,scheduleFollowUp}=require("./Routes/DrController");
 const {createContract, acceptContract,   rejectContract,   getContract}= require("./Routes/employmentController");
 
@@ -171,6 +172,18 @@ app.put("/rejectContract", requireAuth("Doctor"), rejectContract);
 app.get("/getContract", requireAuth("Doctor"), getContract);
 
 app.post("/createAppointment",createAppointment);
+
+app.get("/getDoctorAppointments", getDoctorAppointments); 
+app.post("/AppointmentCompleted/:appointmentId",AppointmentCompleted);
+app.get("/getDoctorPresription",getDoctorPresription);
+app.get("/getPatientPresription/:id", getPatientPresription); //session // zyadaaa
+
+app.post("/modifyDosage/:prescriptionId",modifyDosage);
+app.post("/addMedicine/:prescriptionId",addMedicine);
+app.post("/deleteMedicine/:prescriptionId",deleteMedicine);
+app.post("/modifyInstruction/:prescriptionId",modifyInstruction);
+
+app.get("/generatePdf/:prescriptionId" , generatePdf);
 
 ////////////////////////////////////////////////sherif and momen/////////////////////////////
 app.post("/Addpatient", AddPatient);

@@ -33,6 +33,7 @@ import ForgotPasswPH from './pages/sp2/ForgotPassw';
 import OTPSenderPH from './pages/sp2/OTPsender'; 
 import OtpVerificationPH from './pages/sp2/OTPVerification';
 import ChangePasswordPH from './pages/sp2/ChangePass';
+
 ///
 //Pages & Components
 // import Home from './pages/Home'
@@ -80,6 +81,13 @@ import CreateContract from './components/CreateContract';
 import ViewAcceptContract from './components/ViewAcceptContract';
 import AddAppointment from './components/AddAppointments';
 import ChangePassword from './components/ChangePassword'; 
+
+import DoctorApp from './components/DoctorApp';
+import SelectedDoctorApp from './components/SelectedDoctorApp';
+import PresDoctor from './components/PresDoctor';
+import PresPatient from './components/PresPatient';
+import SelectedPrescriptionD from './components/SelectedPrescriptionD';
+import SelectedPrescriptionP from './components/SelectedPrescriptionP';
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
   return (
@@ -172,6 +180,21 @@ function App() {
               element={<ScheduleFollowUp/>}/>
                <Route path="/ChangeMyPassword"
               element={<ChangePassword/>}/>
+              {/*Aseel S3*/}
+              <Route path="/DoctorApp"
+              element={<DoctorApp/>}/>
+               <Route path="/SelectedDoctorApp"
+              element={<SelectedDoctorApp/>}/>
+              <Route path="/PresDoctor"
+              element={<PresDoctor/>}/>
+              <Route path="/PresPatient"
+              element={<PresPatient/>}/>
+              <Route path="/SelectedPrescriptionD"
+              element={<SelectedPrescriptionD/>}/>
+              <Route path="/SelectedPrescriptionP"
+              element={<SelectedPrescriptionP/>}/>
+
+
               {/*SS*/}
             <Route
               path="/PH"
