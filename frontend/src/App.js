@@ -93,6 +93,14 @@ import ChangePassDoc from './components/ChangePassDoc';
 import AdminDashboardCl from './components/AdminDashboardCl';
 import ChangePassAdmin from './components/ChangePassAdmin';
 
+//import ChangePassword from './components/ChangePassword'; 
+
+import DoctorApp from './components/DoctorApp';
+import SelectedDoctorApp from './components/SelectedDoctorApp';
+import PresDoctor from './components/PresDoctor';
+import PresPatient from './components/PresPatient';
+import SelectedPrescriptionD from './components/SelectedPrescriptionD';
+import SelectedPrescriptionP from './components/SelectedPrescriptionP';
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
   return (
@@ -195,6 +203,21 @@ function App() {
                             
           
             
+              {/*Aseel S3*/}
+              <Route path="/DoctorApp"
+              element={<DoctorApp/>}/>
+               <Route path="/SelectedDoctorApp"
+              element={<SelectedDoctorApp/>}/>
+              <Route path="/PresDoctor"
+              element={<PresDoctor/>}/>
+              <Route path="/PresPatient"
+              element={<PresPatient/>}/>
+              <Route path="/SelectedPrescriptionD"
+              element={<SelectedPrescriptionD/>}/>
+              <Route path="/SelectedPrescriptionP"
+              element={<SelectedPrescriptionP/>}/>
+
+
               {/*SS*/}
             <Route
               path="/PH"

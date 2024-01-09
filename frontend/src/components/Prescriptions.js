@@ -397,7 +397,7 @@ export default function Prescriptions () {
                 width: "100%"
                 }
             }}
-            onClick={() =>window.location.href=`http://localhost:3000/PrescriptionInfo?Id=${prescription._id}`}
+            onClick={() =>window.location.href=`http://localhost:3000/SelectedPrescriptionP?prescriptionId=${prescription._id}`}
             key={prescription._id}
                  
               >
@@ -406,7 +406,7 @@ export default function Prescriptions () {
               <TableCell align="center">{prescription.doctorName}</TableCell>
               {/* <TableCell align="center">{prescription.patientName}</TableCell> */}
               <TableCell align="center">{prescription.filled? "Filled" : "Not Filled"}</TableCell>
-              <TableCell align="center">{prescription.medicines}</TableCell>
+              <TableCell align="center">{prescription.medicines.join(', ')}</TableCell>
               <TableCell align="center">{prescription.dosage.join(', ')}</TableCell>
  
 

@@ -70,11 +70,11 @@ const PatPrescView = () => {
         {prescriptions.map((prescription) => (
           <TableRow key={prescription.id}>
             <TableCell align="center">{prescription.date}</TableCell>
-               <TableCell align="center">{prescription.doctor}</TableCell>
+               <TableCell align="center">{prescription.doctorName}</TableCell>
                <TableCell align="center">{prescription.patientName}</TableCell>
                <TableCell align="center">{prescription.filled? "Filled" : "Not Filled"}</TableCell>
-               <TableCell align="center">{prescription.medicine.join(', ')}</TableCell>
-               <TableCell align="center">{prescription.dosage.join(', ')}</TableCell>
+               <TableCell align="center">{prescription.medicines}</TableCell>
+               <TableCell align="center">{prescription.dosage   }</TableCell>
           </TableRow>
         ))}
       </TableBody>

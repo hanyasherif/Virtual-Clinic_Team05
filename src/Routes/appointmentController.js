@@ -124,5 +124,48 @@ catch(err){
           res.json({message: err.message})}
 
 };
+
+const getDoctorAppointments = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, 'supersecret');
+    const doctorId= decodedToken.user._id
+    console.log(doctorId);
+    const appointment = await appointmentsModel.find({doctor: doctorId });
+    if (!appointment) {
+      return res.status(404).json({ message: "appointment not found" });
+    }
+    console.log(appointment);
+    res.status(200).json(appointment);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const AppointmentCompleted = async (req, res) => {
+  try {
+    const appointmentId = req.params.appointmentId;
+    
+
+    // Fetch the specific appointment using the appointmentId
+    const appointment = await appointmentsModel.findById(appointmentId);
+
+    // Check if the appointment exists
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    // Update the appointment with the new patientId
+    appointment.status = "Completed"
+
+    // Save the modified appointment
+    await appointment.save();
+    console.log("s");
+    console.log(appointment);
+    res.status(200).json({ message: "Appointment updated Completed successfully", appointment });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
  
-module.exports = {addAppointment,createAppointment,getAppointmentInfo,modifyAppointment}
+module.exports = {addAppointment,createAppointment,getAppointmentInfo,modifyAppointment,getDoctorAppointments,AppointmentCompleted}
