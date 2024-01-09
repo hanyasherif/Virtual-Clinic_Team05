@@ -37,14 +37,13 @@ const getContract = async (req, res) => {
     try {
       const token = req.cookies.jwt;
       const decodedToken = jwt.verify(token, 'supersecret');
-        const doctorId= decodedToken.user._id
+      const doctorId= decodedToken.user._id
     // Change from req.params.doctorId to req.query.doctorId
       console.log(doctorId);
       const contract = await contractModel.findOne({ doctorId: doctorId});
       if (!contract) {
         return res.status(404).json({ message: "there is no contract " });
       }
-      console.log("hh",contract);
        res.status(200).json(contract);
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -65,7 +64,7 @@ const getContract = async (req, res) => {
         return res.status(404).json({ message: "contract not found" });
       }
   
-      contract.status = "ACCEPTED";
+      contract.status = "Accepted";
   
       // Save the modified appointment
       await contract.save();
@@ -91,7 +90,7 @@ const getContract = async (req, res) => {
         return res.status(404).json({ message: "contract not found" });
       }
   
-      contract.status = "REJECTED";
+      contract.status = "Rejected";
   
       // Save the modified appointment
       await contract.save();
