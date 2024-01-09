@@ -33,7 +33,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Chat With Pharmacist" />
     </ListItemButton>
-    <ListItemButton onClick={() => { window.location.href = '/ShowPatients'; }}>
+    <ListItemButton onClick={() => { window.location.href = '/Info'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
         <SearchIcon />
       </ListItemIcon>

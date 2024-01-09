@@ -203,7 +203,6 @@ export default function PatClinicDashboard() {
                     borderRadius: 3,
                   }}
                 >
-                  {/* <Chart /> */}
                   <ViewDocPat />
                 </Paper>
               </Grid>

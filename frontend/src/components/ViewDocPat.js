@@ -12,7 +12,6 @@ import Title from './Title';
 function preventDefault(event) {
   event.preventDefault();
 }
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,

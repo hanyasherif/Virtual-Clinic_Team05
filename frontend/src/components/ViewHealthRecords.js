@@ -48,7 +48,7 @@ const ViewHealthRecordsForDoctor = ({ doctorId }) => {
   return (
 
 <React.Fragment>
-  <Title style={{ color: '#25A18E', fontSize: 23 }}>My Health Records</Title>
+  <Title style={{ color: '#25A18E', fontSize: 23 }}>Health Records</Title>
   {healthRecords.map((record) => (
     <div key={record.patientId}>
       {/* <Typography component="h3" variant="h5" style={{ color: '#25A18E', fontSize: 18 }}>

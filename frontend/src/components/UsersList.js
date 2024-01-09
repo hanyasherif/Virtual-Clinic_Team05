@@ -13,16 +13,6 @@ import { useLocation } from 'react-router-dom';
 import React, { useState,  useEffect} from 'react';
 import Title from './Title';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#25A18E",
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
 const UsersList = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -33,11 +23,6 @@ const UsersList = () => {
            await axios.get(`http://localhost:8000/getC?Id=${Id}`,{withCredentials:true}).then((res)=>{
              const patients = res.data;
              console.log(patients)
-            //  for(let i = 0; i<patients.length; i++){
-            //     if(!(Patients.includes(patients[i]))){
-            //       Patients.push(patients[i]);
-            //     }
-            //  }
              SetPatients(patients);
              
             }).catch (error=>{
@@ -50,19 +35,20 @@ const UsersList = () => {
       }, []); 
 
     return(
-       <div className="UsersList">
-         <Title style={{ color: '#25A18E' , fontSize: 23}}>My Patient's List</Title>
-    <TableContainer component={Paper} className='MiddleAPP'>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+
+
+<React.Fragment>
+    <Title style={{ color: '#25A18E' , fontSize: 23}}>My Patient's List</Title>
+      <Table size="small">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">username</StyledTableCell>
-            <StyledTableCell align="center">Email</StyledTableCell>
+            <TableCell style={{ color: '#25A18E', textAlign: 'center' }}>Username</TableCell>
+            <TableCell style={{ color: '#25A18E', textAlign: 'center' }}>Email</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {Patients.map((Patient) => (
-            <TableRow
+        {Patients.map((Patient) => (
+            <TableRow 
             hover
             sx={{
                 "&:hover":{
@@ -73,17 +59,17 @@ const UsersList = () => {
             }}
             onClick={() =>window.location.href=`http://localhost:3000/PatientProfile?Patient=${Patient._id}&&Id=${Id}`}
               key={Patient._id}
-              >
-              <TableCell align="center">{Patient.username}</TableCell>
-              <TableCell align="center">{}</TableCell>
+            >
+              <TableCell style={{ textAlign: 'center'}}>{Patient.username}</TableCell>
+              <TableCell style={{ textAlign: 'center'}}>{Patient.email}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
-        </div>
-                
-
+      {/* <Link style={{ color: '#25A18E' }} href="#" onClick={preventDefault} sx={{ mt: 3 }}>
+        See more doctors
+      </Link> */}
+    </React.Fragment>
     )
 }
 export default UsersList;

@@ -358,7 +358,7 @@ export default function FilterAppointmentsPatient() {
                 width: "100%"
                 }
             }}
-            // onClick={() => window.location.href = `/selectedAppointment?appointmentId=${Appointment._id}`}
+            onClick={() => window.location.href = `/selectedAppointment?appointmentId=${Appointment._id}`}
             key={Appointment._id}
               >             
               <TableCell align="center">{Appointment.date}</TableCell>
