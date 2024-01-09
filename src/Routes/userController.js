@@ -14,6 +14,8 @@ const bcrypt = require('bcrypt')
 const path = require('path');
 const jwt = require("jsonwebtoken"); 
 
+const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+
 //////////////////////HANYA////////////////////////////////////////////
 const addAdministrator = async(req,res) => {
    //add a new user to the database with 
@@ -760,6 +762,115 @@ const searchByNamePatients = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+const getMyId = async (req, res) => {
+  const token = req.cookies.jwt;
+  const decodedToken = jwt.verify(token, 'supersecret');
+  let patientId = decodedToken.user._id;
+return patientId;
+};
+const payStripe = async (req, res) => {
+  const amount = req.body.amount;
+  const patientId = req.body.patientId;
+  const appointment = req.body.appointment;
+        const doctorid= appointment.doctor
+        const doctor = await userModel.findById(doctorid);
+
+
+  //create a stripe session
+  const session = await stripe.checkout.sessions.create({
+    billing_address_collection: 'auto',
+    line_items: [
+        {
+            price_data: {
+                product_data: {
+                    name: 'appointment with doctor' + doctor.name ,
+                },
+                unit_amount: parseInt(amount*100,10),
+                currency: 'egp',
+                //remove recurring variable if not a subscription
+
+            },
+            quantity: 1,
+        },
+    ],
+    //change mode to 'payment' if not a subscription
+    mode:'payment',
+    //redirection url after success, query contains session id
+    success_url: `http://localhost:3000/AppointmentSuccess?sessionID={CHECKOUT_SESSION_ID}`,
+    cancel_url: 'http://localhost:3000/AppointmentFailure',
+    //metadata containing your product's id and its purchaser (important for later)
+    metadata: {
+        'patientID': patientId.toString(),
+        'doctorId': doctor._id.toString(),
+        'appointmentid':appointment._id.toString()
+    }
+});
+console.log(session)
+res.status(200).json(session)
+};
+async function sendEmail(email,date,message){
+  const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+          user: "seifkandel3@gmail.com",
+          pass: "c x o d r z b m d n u s y f p r",
+      },
+  });    
+  const mailOptions = {
+  from: 'sender@example.com',
+  to: email, 
+  subject: 'Test Email from Mailtrap',
+  text: message+" " + date,
+  };
+  
+  try {
+  let info = await transporter.sendMail(mailOptions);
+  console.log('Email sent:', info.response);
+  }
+  catch(err){
+      console.error('Error sending email:', err);
+      throw err;
+  }
+};
+const success = async (req, res) => {
+
+  const { sessionID } = req.params
+  const session = await stripe.checkout.sessions.retrieve(
+      sessionID,
+      {
+          expand: ['line_items'],
+      }
+  );
+  if(session.payment_status==="paid"){
+      const appointmentid = session.metadata.appointmentid
+   //   const familyMemberId=session.metadata.familyMemberId
+      const patientID = session.metadata.patientId
+
+      const appointment = await AppointmentModel.findById(appointmentid)
+      const patient = await PatientModel.findById(patientID)
+       const email = patient.email;
+
+      try{
+          appointment.patient = patientID
+        
+          appointment.status = 'Upcoming'
+          
+          await appointment.save()
+          console.log(email);
+     sendEmail(email,appointment.date,"Your Appointment Has Been Confirmed on");
+          
+          res.status(200).json(appointment)
+
+      }
+      catch (error) {
+          res.status(400).json(error.message)
+      }
+  } else {
+      res.status(400).json({error:"payment unsuccessful"})
+  }
+
+
+};
 
 
 
@@ -887,7 +998,8 @@ module.exports = { login, addAdministrator, removeUser, getUsers,registerPatient
    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,
    filterAppointmentsStatus, AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor, uploadMedicalDocument, removeMedicalDocument
   , getUploaded, findPatById, servefiles ,getUserById  ,getWalletInfo, getWalletInfoDoc, getFamilyMemberData,
-  getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor, getUserByTokenId, getRoom, phviewPatients, viewPharmacists,searchByNamePatients}   
+  getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor, getUserByTokenId, getRoom, phviewPatients, viewPharmacists,searchByNamePatients,getMyId,
+  payStripe,success}   
 
 // module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
 //    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,

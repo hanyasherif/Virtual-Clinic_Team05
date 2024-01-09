@@ -123,6 +123,9 @@ import DashboardAdminRemove from './pages/DashboardAdminRemove';
 import DashboardAdminViewPatient from './pages/DashboardAdminViewPatient';
 import DashboardAdminViewPharmacist from './pages/DashboardAdminViewPharmacist';
 import DashPharmaWallet from './pages/DashPharmaWallet';
+ 
+import AppointmentFailure from './components/AppointmentFailure';
+import AppointmentSuccess from './components/AppointmentSuccess';
 
 // import DashboardWallet from './pages/DashboardWallet';
 
@@ -253,8 +256,12 @@ function App() {
               element={<SelectedPrescriptionD/>}/>
               <Route path="/SelectedPrescriptionP"
               element={<SelectedPrescriptionP/>}/>
+              
 
-
+               {/*Stripe*/}
+               <Route path="/AppointmentSuccess" element={<AppointmentSuccess/>}/>
+               <Route path="/AppointmentFailure" element={<AppointmentFailure/>}/>
+              
               {/*SS*/}
             <Route
               path="/PH"

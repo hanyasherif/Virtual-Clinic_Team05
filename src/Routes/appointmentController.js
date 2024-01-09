@@ -101,9 +101,7 @@ const getAppointmentInfo = async (req, res) => {
 const modifyAppointment = async (req, res) => {
    try {
      const appointmentId = req.body.appointmentId;
-     const token = req.cookies.jwt;
-     const decodedToken = jwt.verify(token, 'supersecret');
-       const patientId= decodedToken.user._id
+       const patientId = req.body.patientId;
        const patient = await userModel.findById(patientId);
        const email = patient.email;
        
