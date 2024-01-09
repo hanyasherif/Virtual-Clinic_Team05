@@ -60,7 +60,19 @@ const PatientPage = () => {
 
       {/* Add button to route to CartPage */}
       <Link to="/CartPagePH">
-        <Button variant="contained" color="primary">
+      <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginTop: 20, width: '50%' }}
+          sx={{
+            color: 'white',
+            backgroundColor: '#2ac68f',
+            '&:hover': {
+              backgroundColor: '#20756c',
+            },
+          }}
+        >
           Go to Cart
         </Button>
       </Link>

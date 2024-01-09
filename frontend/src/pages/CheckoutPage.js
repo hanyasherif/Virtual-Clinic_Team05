@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FormControl, InputLabel, Select, MenuItem, Button, TextField } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, Button, TextField 
+  ,  Snackbar
+} from '@mui/material';
 
 const CheckoutPage = () => {
   const AddressSelectionComponent = ({ addresses, handleSelectAddress }) => {
@@ -32,6 +34,12 @@ const CheckoutPage = () => {
   const handleSelectPaymentMethod = (e) => {
     setSelectedPaymentMethod(e.target.value);
   };
+
+  const [successSnackbarOpen, setSuccessSnackbarOpen] = useState(false);
+  const handleSnackbarClose = () => {
+    setSuccessSnackbarOpen(false);
+  };
+
 
   const handleCheckout = async () => {
     // Replace with the actual patient ID
@@ -199,7 +207,15 @@ const CheckoutPage = () => {
           }}
         >        Perform Checkout
       </Button>
+           {/* Success Snackbar */}
+           <Snackbar
+        open={successSnackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message="Order placed successfully"
+      />
     </div>
+
   );
 };
 

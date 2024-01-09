@@ -48,9 +48,7 @@ export const mainListItems = (
     </ListItemButton>
     <ListItemButton onClick={() => { window.location.href = '/OrderDetails'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
-        <AccountBalanceWalletIcon/>
       </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="My Wallet"/>
     </ListItemButton>
 
     {/* <ListItemButton onClick={() => { window.location.href = '/uploadMedicalHistory'; }}>
