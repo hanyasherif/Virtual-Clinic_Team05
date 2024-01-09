@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { CircularProgress, Button, Paper, Typography } from '@mui/material';
 
 const OrderDetails = () => {
   const userId = ''; // Use the provided userId
- // const orderId = '6571039ab3949c52fbc4351b' ;
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`/orders`, {
-        });
+        const response = await axios.get(`/orders`);
         setOrders(response.data);
         setLoading(false);
       } catch (error) {
@@ -31,44 +30,47 @@ const OrderDetails = () => {
       });
       // Assuming you have a mechanism to update the order status in state or refetch orders
       // For simplicity, you can refetch the orders after cancellation
-      //fetchOrders();
+      // fetchOrders();
     } catch (error) {
       console.error('Error canceling order:', error);
     }
   };
-  
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <CircularProgress />;
   }
 
   return (
     <div>
-      <h2>Order Details for Patient {userId}</h2>
+      <Typography variant="h4">Order Details for Patient {userId}</Typography>
       {orders.map((order) => (
-        <div key={order._id}>
-          <p>Order ID: {order._id}</p>
-          <p>User: {order.user}</p>
-          <p>Order Status: {order.orderStatus}</p>
-          <p>Payment Method: {order.paymentMethod}</p>
-          <p>Order Total: {order.orderTotal}</p>
-          <p>Delivery Address: {order.deliveryAddress}</p>
+        <Paper key={order._id} elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
+          <Typography variant="h6">Order ID: {order._id}</Typography>
+          <Typography>User: {order.user}</Typography>
+          <Typography>Order Status: {order.orderStatus}</Typography>
+          <Typography>Payment Method: {order.paymentMethod}</Typography>
+          <Typography>Order Total: {order.orderTotal}</Typography>
+          <Typography>Delivery Address: {order.deliveryAddress}</Typography>
 
-          <h3>Order Items</h3>
+          <Typography variant="h6" style={{ marginTop: '10px' }}>
+            Order Items
+          </Typography>
           <ul>
             {order.items.map((item) => (
               <li key={item.medicine._id}>
-                <p>Medicine: {item.medicine.name}</p>
-                <p>Quantity: {item.quantity}</p>
-                <p>Total Price: {item.totalPrice}</p>
+                <Typography>Medicine: {item.medicine.name}</Typography>
+                <Typography>Quantity: {item.quantity}</Typography>
+                <Typography>Total Price: {item.totalPrice}</Typography>
               </li>
             ))}
           </ul>
 
           {order.orderStatus === 'pending' || order.orderStatus === 'processing' ? (
-            <button onClick={() => cancelOrder(order._id)}>Cancel Order</button>
+            <Button variant="contained" color="error" onClick={() => cancelOrder(order._id)}>
+              Cancel Order
+            </Button>
           ) : null}
-        </div>
+        </Paper>
       ))}
     </div>
   );

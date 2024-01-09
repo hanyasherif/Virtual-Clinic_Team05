@@ -10,7 +10,7 @@ const Wallet = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/getWalletInfo`,{withCredentials:true});
+        const response = await axios.get(`http://localhost:8000/getWalletInfo`, { withCredentials: true });
         const user = response.data;
         setWalletInfo(user);
         console.log("Wallet Info:", walletInfo);
@@ -19,22 +19,18 @@ const Wallet = () => {
       }
     };
 
-    fetchData(); // Call the fetchData function when the component mounts
-  }, []); // The empty dependency array ensures that this effect runs only once, equivalent to componentDidMount
+    fetchData();
+  }, []);
 
   return (
     <div>
-      <label htmlFor="amount">My Wallet Amount:</label>
-
-      
+      <label htmlFor="amount" style={{ fontSize: '18px' }}>My Wallet Amount:</label>
       <div>
         <br />
-        <input type="text" value={walletInfo} readOnly />
+        <input type="text" value={walletInfo} readOnly style={{ fontSize: '20px' }} />
       </div>
-
       {error && <p>{error}</p>}
     </div>
   );
 };
-
 export default Wallet;

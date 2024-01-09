@@ -100,6 +100,7 @@ import DashboardAdminAdd from './pages/DashboardAdminAdd';
 import DashboardAdminRemove from './pages/DashboardAdminRemove';
 import DashboardAdminViewPatient from './pages/DashboardAdminViewPatient';
 import DashboardAdminViewPharmacist from './pages/DashboardAdminViewPharmacist';
+import DashPharmaWallet from './pages/DashPharmaWallet';
 
 // import DashboardWallet from './pages/DashboardWallet';
 
@@ -311,6 +312,11 @@ function App() {
               path="/ChoosePath"
               element={<ChoosePath/>}
             />
+            <Route
+              path="/DashPharmaWallet"
+              element={<DashPharmaWallet/>}
+            />
+            
           
             
               

@@ -25,11 +25,23 @@ const PharmacistPage = () => {
 
     return (
         <div className="pharmacistPage">
-            <Typography variant="h5">Edit Medicine</Typography>
-            <br/>
-            <Link to="/PharmacistArch">
-                <Button variant="contained" color="primary">Go to Archive</Button>
-            </Link>
+              <Link to="/PharmacistArch">
+   <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginTop: 20, width: '50%' }}
+          sx={{
+            color: 'white',
+            backgroundColor: '#25A18E',
+            '&:hover': {
+              backgroundColor: '#20756c',
+            },
+          }}
+        >
+          Go to Archived Medicines  
+        </Button>            </Link>
+
             <div className="medicines">
                 {medicines &&
                     medicines.map((medicine) => 

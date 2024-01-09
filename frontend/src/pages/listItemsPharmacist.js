@@ -13,8 +13,9 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import DescriptionIcon from '@mui/icons-material/Description';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 
-
+import Wallet from './WalletPH';
 
 
 
@@ -39,6 +40,15 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Upload Documents" />
     </ListItemButton>
+    <ListItemButton onClick={() => { window.location.href = '/DashPharmaWallet'; }}>
+      <ListItemIcon sx={{ color: '#25A18E' }}>
+        <AccountBalanceWalletIcon />
+      </ListItemIcon>
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary=" My Wallet" />
+    </ListItemButton>
+    
+    
+
     {/* <ListItemButton onClick={() => { window.location.href = '/uploadMedicalHistory'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
         <ShoppingCartIcon />
@@ -66,10 +76,10 @@ export const secondaryListItems = (
       {/* Personal Details */}
     </ListSubheader>   
     <ListItemButton onClick={() => { window.location.href = '/ChangeMyPassword'; }}>
-    <ListItemIcon sx={{ color: '#8B0000' }}>
+    <ListItemIcon sx={{ color: '#25A18E' }}>
         <LockIcon />
       </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ style: { color: 'darkred' } }} primary="Change Password" />
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Change Password" />
     </ListItemButton>
     {/* <ListItemButton>
       <ListItemIcon>
