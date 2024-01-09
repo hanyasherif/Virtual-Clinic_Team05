@@ -57,7 +57,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Add Health Record" />
     </ListItemButton>
-    <ListItemButton onClick={() => { window.location.href = '/AddNewHR'; }}>
+    <ListItemButton onClick={() => { window.location.href = '/PresDoctor'; }}>
         {/* PresDoctor */}
     <ListItemIcon sx={{ color: '#25A18E' }}>
         <DescriptionIcon />
