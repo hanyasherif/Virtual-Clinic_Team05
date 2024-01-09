@@ -201,6 +201,8 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flex: 1, display: 'flex' }}>
             <Grid container spacing={3}>
+
+
               {/*PatientPagePH */}
               <Grid item xs={50} md={8} lg={20}
               sx={{
@@ -226,29 +228,30 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
               {/* Filter Medicines */}
-              <Grid item xs={12} md={4} lg={15} 
-                sx={{
-                  '&:hover > div': {
-                    transform: 'scale(1.01)',
-                    transition: 'transform 0.3s ease-in-out',
-                  },
-                  
-                }}
-              >
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'transform 0.3s ease-in-out',
-                     height: 290,
-                    borderRadius: 3,
-                  }}
-                >
-                  {/* <Chart /> */}
-                  <FilterMedicine />
-                </Paper>
-              </Grid>
+              
+             <Grid item xs={12} md={4} lg={15} 
+  sx={{
+    '&:hover > div': {
+      transform: 'scale(1.01)',
+      transition: 'transform 0.3s ease-in-out',
+    },
+  }}
+>
+  <Paper
+    sx={{
+      p: 2,
+      display: 'flex',
+      flexDirection: 'column',
+      transition: 'transform 0.3s ease-in-out',
+      height: 'auto', // Set height to 'auto' for dynamic height
+      borderRadius: 3,
+    }}
+  >
+    {/* <Chart /> */}
+    <FilterMedicine />
+  </Paper>
+</Grid>
+
             </Grid>
             {/* Search */}
             <Grid item xs={12} md={4} lg={3} 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import MedicineDetailsLite from './MedicineDetailsLite';
 
 const MedicineFilter = ({ filterMedicine }) => {
@@ -32,18 +32,35 @@ const MedicineFilter = ({ filterMedicine }) => {
       <p>Filter by Medicinal Use:</p>
       <div>
         {medicinalUses.map((medicinalUse, index) => (
-          <Button key={index} onClick={() => handleFilter(medicinalUse)} variant="contained" color="primary" style={{ margin: '5px' }}>
-            {medicinalUse}
-          </Button>
+        <Button
+        key={index}
+        onClick={() => handleFilter(medicinalUse)}
+        variant="contained"
+        color="primary"
+        style={{
+          marginTop: '5px', // Add top margin to match the spacing
+          width: '20%', // Match the width of the second button
+          backgroundColor: '#25A18E',
+          color: 'white',
+          '&:hover': {
+            backgroundColor: '#20756c',
+          },
+        }}
+      >
+        {medicinalUse}
+      </Button>
+      
         ))}
       </div>
 
       {medicines && (
-        <div>
+        <Grid container spacing={2} className="medicines">
           {medicines.map((medicine) => (
-            <MedicineDetailsLite key={medicine._id} medicine={medicine} />
+            <Grid item key={medicine._id} xs={12} sm={6} md={4} lg={3}>
+              <MedicineDetailsLite key={medicine._id} medicine={medicine} />
+            </Grid>
           ))}
-        </div>
+        </Grid>
       )}
     </div>
   );

@@ -30,6 +30,8 @@ import cart from '../assets/cart.jpg';
 import Button from '@mui/material/Button';
 import Logo from '../assets/Logo.png';
 import CartPagePH from './CartPage';
+import Wallet from './WalletPH';
+
 
 
 ///mangaa
@@ -252,7 +254,7 @@ export default function Dashboard() {
                   }}
                 >
                   {/* <Chart /> */}
-                  <Search />
+                  <Wallet />
                 </Paper>
               </Grid>
           </Container>

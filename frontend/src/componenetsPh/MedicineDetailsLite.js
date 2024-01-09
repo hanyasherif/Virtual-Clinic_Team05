@@ -52,7 +52,7 @@ const MedicineDetailsLite = ({ medicine, addToCart }) => {
           color: 'white',
           backgroundColor: '#880808',
           '&:hover': {
-              backgroundColor: '#880808', // Change color on hover if desired
+              backgroundColor: '#20756c', // Change color on hover if desired
           },
           }}
         onClick={handleRedirectToAlternatives}
