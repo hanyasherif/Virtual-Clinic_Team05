@@ -23,6 +23,17 @@ const PharmacistPage = () => {
         fetchMedicine();
     }, []);
 
+    useEffect(() => {
+        if (medicines) {
+                    medicines.forEach((medicine) => {
+                        if (medicine.availableQuantity === 0) {
+                            alert(medicine.name + ' is Out of Stock');
+                        }
+                    });
+                }
+            }, [medicines]);
+
+
     return (
         <div className="pharmacistPage">
               <Link to="/PharmacistArch">

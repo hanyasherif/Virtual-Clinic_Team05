@@ -110,85 +110,117 @@ const removeFromCart = async (req, res) => {
 
 // Change the amount of an item in the cart
 const changeCartItemQuantity = async (req, res) => {
-    try {
-        const { itemId, quantity } = req.body;
+  try {
+      const { itemId, quantity } = req.body;
 
-        const cartItem = await Cart.findOne({ 'items._id': itemId }, { 'items.$': 1 });
-        const medicineId = cartItem.items[0].medicine;
+      const cartItem = await Cart.findOne({ 'items._id': itemId }, { 'items.$': 1 });
+      const medicineId = cartItem.items[0].medicine;
 
-        const newTotalPrice = await calculateTotalPrice(medicineId, quantity);
+      const newTotalPrice = await calculateTotalPrice(medicineId, quantity);
 
-        const cart = await Cart.findOneAndUpdate(
-            { 'items._id': itemId },
-            { $set: { 'items.$.quantity': quantity, 'items.$.totalPrice': newTotalPrice }, totalAmount: newTotalPrice },
-            { new: true }
-        );
+      const cart = await Cart.findOneAndUpdate(
+          { 'items._id': itemId },
+          { $set: { 'items.$.quantity': quantity, 'items.$.totalPrice': newTotalPrice }, totalAmount: newTotalPrice },
+          { new: true }
+      );
+      res.status(200).json(cart);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+async function sendEmail(email,NameOfMedicine) {
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: "seifkandel3@gmail.com",
+        pass: "c x o d r z b m d n u s y f p r",
+    },
+});
 
-        res.status(200).json(cart);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+const mailOptions = {
+from: 'sender@example.com',
+to: email,
+subject: 'From the Pharamcy',
+text: "This Medicine is Currently Out of Stock" + NameOfMedicine,
+};
+
+try {
+let info = await transporter.sendMail(mailOptions);
+console.log('Email sent:', info.response);
+} catch (err) {
+console.error('Error sending email:', err);
+throw err;
+  }
 };
 
 // Checkout route
 const checkout = async (req, res) => {
-    try {
+  try {
 
-      const token = req.cookies.jwt;  
-      const decodedToken = jwt.verify(token, 'supersecret'); // Replace 'your-secret-key' with your actual secret key
-      const patientId = decodedToken.user._id;
+    const token = req.cookies.jwt;  
+    const decodedToken = jwt.verify(token, 'supersecret'); // Replace 'your-secret-key' with your actual secret key
+    const patientId = decodedToken.user._id;
 
-      console.log("mangawy")
-      console.log(patientId);
-      const { addressId, paymentMethod } = req.body;
-  
-      // Find the cart for the patient
-      const cart = await Cart.findOne({ patient: patientId }).populate('items.medicine');
-  
-      if (!cart) {
-        return res.status(400).json({ error: 'Cart not found for the user' });
-      }
-  
-      // Calculate the total order amount
-      const orderTotal = cart.totalAmount;
-  
-      // Create an order based on cart items
-      const order = new Order({
-        user: patientId,
-        items: cart.items.map(item => ({
-          medicine: item.medicine._id,
-          quantity: item.quantity,
-          totalPrice: item.totalPrice
-        })),
-        deliveryAddress: addressId,
-        paymentMethod,
-        orderTotal
-      });
-  
-      // Save the order to the database
-      await order.save();
+   
+    const { addressId, paymentMethod } = req.body;
 
-       // Decrease the medicine's available quantity
-    for (const item of cart.items) {
-      const medicineId = item.medicine._id;
-      const quantity = item.quantity;
+    // Find the cart for the patient
+    const cart = await Cart.findOne({ patient: patientId }).populate('items.medicine');
 
-      await Medicine.findByIdAndUpdate(medicineId, 
-      { $inc: { availableQuantity: -quantity } },
-       {$inc: {sales: +quantity}}
-        );
+    if (!cart) {
+      return res.status(400).json({ error: 'Cart not found for the user' });
     }
-  
-      // Clear the cart for the user
-      await Cart.findOneAndRemove({ patient: patientId });
-  
-      res.status(200).json(order);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+
+    // Calculate the total order amount
+    const orderTotal = cart.totalAmount;
+
+    // Create an order based on cart items
+    const order = new Order({
+      user: patientId,
+      items: cart.items.map(item => ({
+        medicine: item.medicine._id,
+        quantity: item.quantity,
+        totalPrice: item.totalPrice
+      })),
+      deliveryAddress: addressId,
+      paymentMethod,
+      orderTotal
+    });
+
+    // Save the order to the database
+    await order.save();
+     // Decrease the medicine's available quantity
+  for (const item of cart.items) {
+    const medicineId = item.medicine._id;
+    const quantity = item.quantity;
+    await Medicine.findByIdAndUpdate(medicineId, { $inc: { availableQuantity: -quantity}});
+    if(availableQuantity==0){
+      try{
+        const Medicine = await Medicine.findById(medicineId);
+        const MedicineName=Medicine.name;
+        const pharmacists = await userModel.findAll({ where: { type:'Pharmacist'} });
+        pharmacists.forEach(async (pharmacist) => {
+          const email= pharmacist.email;
+          sendEmail(email,MedicineName);
+        });
+        }
+        catch(err){
+          throw err;
+        }
     }
-  };
+  }
+
+    // Clear the cart for the user
+    await Cart.findOneAndRemove({ patient: patientId });
+
+    res.status(200).json(order);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 
   /////stripe
 
