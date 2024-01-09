@@ -22,7 +22,7 @@ const CartPage = () => {
       try {
         const response = await axios.get('/viewCart');
         setCartItems(response.data.items);
-        setLoading(response.data.items.length === 0);
+        //setLoading(response.data.items.length === 0);
       } catch (error) {
         console.error('Error fetching cart items:', error);
       }
@@ -47,7 +47,7 @@ const CartPage = () => {
 
   const changeQuantity = async (itemId, newQuantity) => {
     try {
-      console.log('Changing quantity:', itemId, newQuantity);
+      //console.log('Changing quantity:', itemId, newQuantity);
   
       const response = await axios.put('/changeCartItemQuantity', {
         itemId,
@@ -63,21 +63,11 @@ const CartPage = () => {
   };
   
 
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const response = await axios.get('/viewCart');
-        setCartItems(response.data.items);
-        setLoading(response.data.items.length === 0);
-      } catch (error) {
-        console.error('Error fetching cart items:', error);
-      }
-    };
-
-    fetchCartItems();
-  }, []);
+  
 
   const totalCartPrice = cartItems.reduce((total, item) => total + item.totalPrice, 0);
+
+  
 
   return (
     <div>
@@ -85,35 +75,30 @@ const CartPage = () => {
         Your Cart
       </Typography>
       {cartItems.map((item) => (
-        <Paper key={item._id} elevation={3}>
-          <Grid container alignItems="center">
-            <Grid item xs={12} sm={6}>
-              <Typography variant="h6">{item.medicine.name}</Typography>
-            </Grid>
-            <Grid item xs={6} sm={3}>
-              <Typography variant="body2">Quantity: {item.quantity}</Typography>
-            </Grid>
-            <Grid item xs={6} sm={3}>
-              <Typography variant="body2">Total Price: {item.totalPrice}</Typography>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <Input
-                type="number"
-                value={item.quantity}
-                onChange={(e) => changeQuantity(item._id, e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <Button
-                onClick={() => removeFromCart(item._id)}
-                variant="contained"
-                color="secondary"
-              >
-                Remove
-              </Button>
-            </Grid>
-          </Grid>
-        </Paper>
+        <div key={item._id} style={{ border: '1px solid black', padding: '10px', marginBottom: '10px' }}>
+          <Typography variant="h6">{item.medicine.name}</Typography>
+          <Typography variant="body2">Quantity: {item.quantity}</Typography>
+          <Typography variant="body2">Total Price: {item.totalPrice}</Typography>
+          <div>
+            <Input
+              type="number"
+              value={item.quantity}
+              onChange={(e) => changeQuantity(item._id, e.target.value)}
+            />
+           
+          </div>
+
+          
+          <div style={{ marginTop: '10px' }}>
+            <Button
+              onClick={() => removeFromCart(item._id)}
+              variant="contained"
+              color="#880808"
+            >
+              Remove
+            </Button>
+          </div>
+        </div>
       ))}
       <Typography variant="h6" style={{ marginTop: '10px' }}>
         Total Cart Price: {totalCartPrice}
@@ -125,6 +110,6 @@ const CartPage = () => {
       </Link>
     </div>
   );
-};
+}
 
 export default CartPage;
