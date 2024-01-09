@@ -336,7 +336,7 @@ const handleWalletButtonClick = () => {
             {secondaryListItems}
           </List>
         </Drawer>
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', marginLeft: 3, marginTop: 7 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', marginLeft: 3, marginTop: 1 }}>
         <div className="appointment-profile">
         <h1>My Prescription</h1>
       <p>Date: {prescription.date}</p>
