@@ -19,7 +19,7 @@ import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems, secondaryListItems } from './listItemsAdmin';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
@@ -28,6 +28,11 @@ import FilterMedicine from '../componenetsPh/FilterMedicine';
 import Search from '../componenetsPh/Search';
 import cart from '../assets/cart.jpg';
 import Button from '@mui/material/Button';
+import Logo from '../assets/Logo.png';
+import AdminPage from './AdminPage';
+import PharmacistInfo from './PharmacistInfo';
+import PharmacistPage from './PharmacistArch';
+
 
 ///mangaa
 
@@ -148,22 +153,12 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-             El7a2ny!
+
+              <img src={Logo} alt="Logo" width="50" height="50" />
 
               </Typography>
 
               <Button color="inherit" onClick={handleLogout}>Logout</Button>
-            {/* Cart Button
-            <Link to="/CartPage" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <img
-                id="cartImage"
-                src={cart}
-                alt="Cart Image"
-                style={{ width: '30px', height: '30px', cursor: 'pointer' }}
-              />
-            </Link> */}
-            {/* cart button here!!!! */}
-
 
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -229,8 +224,10 @@ export default function Dashboard() {
                     borderRadius: 3,
                   }}
                 >
-                  
-                  <adminPagePH />
+
+                  <PharmacistInfo/>
+
+                
                 </Paper>
               </Grid>
               {/* Filter Medicines */}
@@ -243,18 +240,7 @@ export default function Dashboard() {
                   
                 }}
               >
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'transform 0.3s ease-in-out',
-                     height: 290,
-                    borderRadius: 3,
-                  }}
-                >
-                  {/* <Chart 1/> */}
-                </Paper>
+            
               </Grid>
             </Grid>
             {/* Search */}
@@ -267,21 +253,6 @@ export default function Dashboard() {
                   
                 }}
               >
-                <Paper
-                  sx={{
-                    marginLeft: '50px', // Adjust the initial left margin
-
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'transform 0.3s ease-in-out',
-                    // height: 290,
-                    borderRadius: 3,
-                  }}
-                >
-                  {/* <Chart /> */}
-                  <adminPagePH />
-                </Paper>
               </Grid>
           </Container>
           <Copyright sx={{ pt: 4 }} />

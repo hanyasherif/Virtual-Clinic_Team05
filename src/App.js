@@ -106,7 +106,7 @@ app.post("/ChangePassword",requireAuth("ALL"),changePassword);
 app.post("/addAdministrator", requireAuth("Administrator"),addAdministrator);
 app.delete("/removeUser", requireAuth("Administrator"),removeUser);
 app.post("/checkUsername", requireAuth,checkUsername);
-app.get("/getAllUsers", requireAuth("Administrator"), getUsers);
+app.get("/getAllUsers", getUsers);
 app.get("/searchByName",requireAuth("Patient"),searchByName);
 app.get("/searchBySpec",requireAuth("Patient"),searchBySpec);
 app.get("/searchByNameSpec",requireAuth("Patient"),searchByNameSpec);

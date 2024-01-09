@@ -95,6 +95,12 @@ import DashboardPharmacistArchive from './pages/DashboardPharmacistArchive';
 import DashboardPharmacistSales from './pages/DashboardPharmacistSales';
 import DashboardAlternatives from './pages/DashboardAlternatives';
 import DashboardViewOrders from './pages/DashboardViewOrders';
+import DashboardAdmin from './pages/DashboardAdmin';
+import DashboardAdminAdd from './pages/DashboardAdminAdd';
+import DashboardAdminRemove from './pages/DashboardAdminRemove';
+import DashboardAdminViewPatient from './pages/DashboardAdminViewPatient';
+import DashboardAdminViewPharmacist from './pages/DashboardAdminViewPharmacist';
+
 // import DashboardWallet from './pages/DashboardWallet';
 
 // import ChooseMode from './pages/chooseMode';
@@ -213,15 +219,15 @@ function App() {
             />
             <Route
               path="/adminPagePH"
-              element={<AdminPagePH/>}
+              element={<DashboardAdmin/>}
             />
             <Route 
               path="/addAdminPagePH"
-              element={<AddAdminPagePH/>}
+              element={<DashboardAdminAdd/>}
             />
             <Route 
               path="/removePharPatPagePH"
-              element={<RemovePharPatPagePH/>}
+              element={<DashboardAdminRemove/>}
             />
             <Route 
               path="/guestPagePH"
@@ -237,11 +243,11 @@ function App() {
             />
             <Route
              path = "/admin/patientPH"
-              element = {<PatientInfoPH/>}
+              element = {<DashboardAdminViewPatient/>}
              /> 
               <Route
                path = "/admin/pharmacistPH"
-              element = {<PharmacistInfoPH/>}
+              element = {<DashboardAdminViewPharmacist/>}
              />
              
              {/* sp2 */}
