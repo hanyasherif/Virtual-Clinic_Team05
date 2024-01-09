@@ -93,7 +93,13 @@ const CartPage = () => {
             <Button
               onClick={() => removeFromCart(item._id)}
               variant="contained"
-              color="#880808"
+              sx={{
+                color: 'white',
+                backgroundColor: '#A81D24',
+                '&:hover': {
+                    backgroundColor: '#911A20', // Change color on hover if desired
+                },
+                }}
             >
               Remove
             </Button>

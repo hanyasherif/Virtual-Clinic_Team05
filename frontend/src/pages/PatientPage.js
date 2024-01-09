@@ -63,18 +63,19 @@ const PatientPage = () => {
       <Button
           type="submit"
           variant="contained"
-          color="primary"
+         
           style={{ marginTop: 20, width: '50%' }}
           sx={{
             color: 'white',
-            backgroundColor: '#2ac68f',
+            backgroundColor: '#0088A8',
             '&:hover': {
-              backgroundColor: '#20756c',
+              backgroundColor: '#005670',
             },
           }}
         >
           Go to Cart
         </Button>
+        
       </Link>
     </div>
   );

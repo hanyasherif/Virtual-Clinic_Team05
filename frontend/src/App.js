@@ -104,11 +104,10 @@ import PresPatient from './components/PresPatient';
 import SelectedPrescriptionD from './components/SelectedPrescriptionD';
 import SelectedPrescriptionP from './components/SelectedPrescriptionP';
 import MyCalendar from './components/MyCalender';
-import ChangePassword from './components/ChangePassword'; 
-
+//import ChangePassword from './components/ChangePassword'; 
 import OrderDetailsPH from './pages/OrderDetails';
 
-import Dashboard from './pages/Dashboard';
+import DashboardPH from './pages/Dashboard';
 import DashboardCart from './pages/DashboardCart';
 import DashboardCheckout from './pages/DashboardCheckout';
 import DashboardPrescription from './pages/DashboardPrescription';
@@ -263,7 +262,7 @@ function App() {
             />
             <Route
               path="/patientPagePH"
-              element={<Dashboard/>}
+              element={<DashboardPH/>}
             />
             <Route
               path="/pharmacistPagePH"
@@ -362,7 +361,7 @@ function App() {
 
               <Route path="/ChatPatientProfile"
               element={<ChatUserProfile/>}/>
-          </Routes>
+         
           
 
               <Route path="/PharmacistArch"
@@ -390,7 +389,7 @@ function App() {
               element={<DashPharmaWallet/>}
             />
             
-          
+            </Routes>
             
               
 

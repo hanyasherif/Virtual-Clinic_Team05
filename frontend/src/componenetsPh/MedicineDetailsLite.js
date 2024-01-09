@@ -50,9 +50,9 @@ const MedicineDetailsLite = ({ medicine, addToCart }) => {
         <Button type="submit" variant="contained" color="primary"
         sx={{
           color: 'white',
-          backgroundColor: '#880808',
+          backgroundColor: '#A81D24',
           '&:hover': {
-              backgroundColor: '#20756c', // Change color on hover if desired
+              backgroundColor: '#911A20', // Change color on hover if desired
           },
           }}
         onClick={handleRedirectToAlternatives}
