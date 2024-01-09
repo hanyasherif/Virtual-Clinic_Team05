@@ -122,79 +122,7 @@ export default function AddAppointment() {
     };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="absolute" open={open}>
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-            }}
-          >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              El7a2ny Clinic Add Appointment Page
-            </Typography>
-            <Button color="inherit" onClick={handleLogout}>Logout</Button>
-            <IconButton color="inherit">
-              <Badge badgeContent={0} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List component="nav">
-            {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
-          </List>
-        </Drawer>
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
-          }}
-        >
-          <Toolbar />
-
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+<Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Grid container spacing={3} justifyContent="center"> {/* Center align the content */}
           <div className="DoctorsList">
 
@@ -223,16 +151,25 @@ export default function AddAppointment() {
           }}   
           onChange={(e) => setDate(e.target.value)}
           />
-        <button onClick={handleAddAppointment}>Add Appointment</button>
+            <Button variant="contained" 
+            sx={{
+                color: 'white',
+                marginLeft: 1,
+                marginTop: 2,
+                minWidth: 200,
+                height: 54,
+                backgroundColor: '#25A18E',
+                '&:hover': {
+                    backgroundColor: '#20756c', // Change color on hover if desired
+                },
+                }} 
+            onClick={handleAddAppointment}>Add Appointment</Button>
+        {/* <button onClick={handleAddAppointment}>Add Appointment</button> */}
         </div>
   </div>
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
           </Container>
 
-        </Box>
-      </Box>
-    </ThemeProvider>
   );
 }
 
