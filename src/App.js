@@ -275,7 +275,7 @@ app.get("/getUserById/:id", getUserById);
 app.get("/getUserByTokenId", getUserByTokenId);
 app.post("/addAppointment",addAppointment);
 app.get("/getAppointmentInfo",getAppointmentInfo) //query in frontenddd
-app.get("/getWalletInfo",requireAuth("All"),getWalletInfo);
+app.get("/getWalletInfo",requireAuth("Patient"),getWalletInfo);
 app.get("/getWalletInfoDoc",requireAuth("Doctor"),getWalletInfoDoc);
 
 app.get("/getFamilyMemberData",requireAuth("Patient"),getFamilyMemberData);
@@ -307,7 +307,7 @@ app.post("/modifyInstruction/:prescriptionId",modifyInstruction);
 
 app.get("/generatePdf/:prescriptionId" , generatePdf);
 
-app.get("/searchByNamePatients" , searchByNamePatients);
+app.post("/searchByNamePatients", requireAuth("Doctor") , searchByNamePatients);
 
 ////////////////////////////////////////////////sherif and momen/////////////////////////////
 app.post("/Addpatient", AddPatient);

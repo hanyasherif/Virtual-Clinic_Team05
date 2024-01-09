@@ -109,35 +109,35 @@ export default function ViewAcceptContract() {
     }
   };
 
-  const [contract, setContract] = useState(null);
-    // const doctorId = '6543e673eff0e09fab8d7124';
-    const [isVisible, setIsVisible] = useState(false);
+    const [contract, setContract] = useState(null);
     const [t, setT] = useState('');
-    let flag = true;
 
     useEffect(() => {
         fetchContract();
       }, []);
 
-     
-     const handleViewContract = async() =>{
-     setIsVisible(true);
-     };
+      const fetchContract = async () => {
+        try {
+            // Fetch the contract details from the backend
+            const response = await axios.get(`http://localhost:8000/getContract`,{withCredentials:true}); // Replace with the actual endpoint
+            setContract(response.data);
+            setT(response.data.termsAndConditions);
+        } catch (error) {
+            console.error('Error fetching contract details:', error);
+        }
+        
+    };
+    
      const handleAcceptContract = async () => {
          try {
-             // Call the accept contract endpoint in the backend
              const response = await axios.put(`http://localhost:8000/acceptContract`,
              {},
              {
-                 withCredentials: true, // Set withCredentials as part of the config object
-             }); // Replace with the actual endpoint
-             console.log("returnedd222",response.data); // Log the response if needed
- 
-             // Optionally, you can perform additional actions after accepting the contract
- 
+                 withCredentials: true,
+             }); 
+             fetchContract(); 
          } catch (error) {
              console.error('Error accepting contract:', error);
-             // Handle the error as needed
          }
      };
  
@@ -147,32 +147,14 @@ export default function ViewAcceptContract() {
              const response = await axios.put(`http://localhost:8000/rejectContract`,
              {},
              {
-                 withCredentials: true, // Set withCredentials as part of the config object
-             }); // Replace with the actual endpoint
-             console.log(response.data); // Log the response if needed
- 
-             // Optionally, you can perform additional actions after rejecting the contract
- 
+                 withCredentials: true,
+             });
+             fetchContract();
          } catch (error) {
              console.error('Error rejecting contract:', error);
              // Handle the error as needed
          }
      };
-        const fetchContract = async () => {
-            try {
-                // Fetch the contract details from the backend
-                const response = await axios.get(`http://localhost:8000/getContract`,{withCredentials:true}); // Replace with the actual endpoint
-                console.log("returnedd",response.data);
-                setContract(response.data);
-                setT(response.data.termsAndConditions);
-                console.log("Contract"+contract);
-                setIsVisible(true);
-            } catch (error) {
-                console.error('Error fetching contract details:', error);
-                // Handle the error as needed
-            }
-            
-        };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -203,7 +185,7 @@ export default function ViewAcceptContract() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              View Contract Doctor Page
+              El7a2ny Clinic View Contract Doctor Page
             </Typography>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
             <IconButton color="inherit">
@@ -247,25 +229,73 @@ export default function ViewAcceptContract() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-  <Grid container spacing={3}>
-    {/* Grid for WalletDoc and ViewHealthRecords */}
-    <Grid item xs={12} md={4} lg={3}>
-   
-        <p>Terms and Conditions: {t ? t : 'N/A'}</p>
-        <p>Markup: {contract && contract.markup ? contract.markup : 'N/A'}</p>
-        <p>Status: {contract && contract.status ? contract.status : 'N/A'}</p>
-
+  <Grid container direction="column" alignItems="center">
+    <Grid item xs={12} md={8} lg={9}>
+      <Paper
+        sx={{
+          p: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          borderRadius: 3,
+          width: 890,
+          marginLeft: -4.5,
+          marginTop: 3,
+        }}
+      >
+        <Typography variant="h4" component="h2" sx={{ color: '#25A18E', marginBottom: 2 }}>
+          Contract Details
+        </Typography>
+        <div style={{ textAlign: 'center' }}>
+          <Typography component="p" variant="subtitle1">
+            Terms and Conditions: {t ? t : 'N/A'}
+          </Typography>
+          <Typography component="p" variant="subtitle1">
+            Markup: {contract && contract.markup ? contract.markup : 'N/A'}
+          </Typography>
+          <Typography component="p" variant="subtitle1">
+            Status: {contract && contract.status ? contract.status : 'N/A'}
+          </Typography>
+        </div>
         {contract && contract.status !== 'Accepted' && contract.status !== 'Rejected' && (
-  <div>
-    <button onClick={handleAcceptContract}>Accept Contract</button>
-    <button onClick={handleRejectContract}>Reject Contract</button>
-  </div>
-)}
-       
+          <div>
+            <Button
+              variant="contained"
+              sx={{
+                color: 'white',
+                backgroundColor: '#25A18E',
+                '&:hover': {
+                  backgroundColor: '#20756c',
+                },
+                marginTop: 2,
+              }}
+              onClick={handleAcceptContract}
+            >
+              Accept Contract
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                color: 'white',
+                marginLeft: 2,
+                backgroundColor: '#A81D24',
+                '&:hover': {
+                  backgroundColor: '#911A20',
+                },
+                marginTop: 2,
+              }}
+              onClick={handleRejectContract}
+            >
+              Reject Contract
+            </Button>
+          </div>
+        )}
+      </Paper>
     </Grid>
   </Grid>
   <Copyright sx={{ pt: 4 }} />
 </Container>
+
 
         </Box>
       </Box>

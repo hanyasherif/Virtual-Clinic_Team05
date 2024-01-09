@@ -240,7 +240,7 @@ export default function DoctorDashboard() {
             transition: 'transform 0.3s ease-in-out',
           },
         }}
-        >
+        > 
           <Paper
             sx={{
               p: 2,

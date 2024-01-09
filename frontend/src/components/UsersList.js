@@ -21,7 +21,6 @@ const UsersList = () => {
       const [Patients,SetPatients] = useState([]);
       const [searchName, setSearchName] = useState("");
       const getPatient =  async () => {
-        // try {
            await axios.get(`http://localhost:8000/getC?Id=${Id}`,{withCredentials:true}).then((res)=>{
              const patients = res.data;
              console.log(patients)
@@ -36,36 +35,40 @@ const UsersList = () => {
         getPatient();
       }, []); 
       const searchPatients = async () => {
-        // Make a request to your backend API to fetch doctors based on search criteria
         if (searchName !== "") {
           axios
-          .get(`http://localhost:8000/searchByNamePatients`, {
-            data: {
+            .post('http://localhost:8000/searchByNamePatients', { // Use POST method and send data in the request body
               name: searchName,
-            },
-            withCredentials: true,
-          })
-          .then((res) => {
-            console.log("",res.data);
-            const patients = res.data;
-            SetPatients(patients);
-          });
+              patList: Patients,
+            }, {
+              withCredentials: true,
+            })
+            .then((res) => {
+              console.log(res.data);
+              const patients = res.data;
+              SetPatients(patients);
+            })
+            .catch((err) => {
+              // Handle error
+              console.error(err);
+            });
         }
       };
+      
       
     return(
 
 
 <React.Fragment>
     <Title style={{ color: '#25A18E' , fontSize: 23}}>My Patient's List</Title>
-    <Box sx={{ marginBottom: 2, marginLeft: 7}}>
+    <Box sx={{ marginBottom: 2, marginLeft: 26, marginTop: -7}}>
         <TextField
           label="Search by Name"
           variant="outlined"
           margin="normal"
           value={searchName}
           sx={{
-            marginBottom: '20px', // Adjust the margin as needed
+            // marginBottom: '20px', // Adjust the margin as needed
             minWidth: 180,
             // '& .MuiInputLabel-root': {
             //   color: '#25A18E', // Change label color if necessary
@@ -126,9 +129,16 @@ const UsersList = () => {
             onClick={() =>window.location.href=`http://localhost:3000/PatientProfile?Patient=${Patient._id}&&Id=${Id}`}
               key={Patient._id}
             >
-              <TableCell style={{ textAlign: 'center'}}>{Patient.name}</TableCell>
-              <TableCell style={{ textAlign: 'center'}}>{Patient.username}</TableCell>
-              <TableCell style={{ textAlign: 'center'}}>{Patient.email}</TableCell>
+            <TableCell style={{ textAlign: 'center'}}>
+            {Patient.name ? Patient.name : 'N/A'}
+            </TableCell>
+            <TableCell style={{ textAlign: 'center'}}>
+              {Patient.username ? Patient.username : 'N/A'}
+            </TableCell>
+            <TableCell style={{ textAlign: 'center'}}>
+              {Patient.email ? Patient.email : 'N/A'}
+            </TableCell>
+
             </TableRow>
           ))}
         </TableBody>
