@@ -29,6 +29,9 @@ import { Box, Button, Input } from '@mui/material';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+
 
 //navigationn
 import { useNavigate } from 'react-router-dom';
@@ -123,6 +126,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 14,
   },
 }));
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
 
 const defaultTheme = createTheme();
 
@@ -132,9 +143,31 @@ const defaultTheme = createTheme();
 export default function SelectedPrescriptionP () {
   const [open, setOpen] = React.useState(true);
   const navigate = useNavigate(); // Use useNavigate hook to get the navigation function
+  const [buttonPosition, setButtonPosition] = React.useState({
+    top: '75px',
+    left: '120px',
+  });
   const toggleDrawer = () => {
     setOpen(!open);
+    if (open) {
+      setButtonPosition({
+        top: '75px',
+        left: '120px',
+      });
+    } else {
+      setButtonPosition({
+        top: '75px',
+        left: '240px', // Adjust this value according to your drawer width
+      });
+    }
   };
+
+ 
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
   
   
   
@@ -316,6 +349,17 @@ useEffect(() => {
         </Drawer>
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', marginLeft: 3, marginTop: 1 }}>
         <div className="appointment-profile">
+        <button
+          onClick={goBack}
+          className="back-button"
+          style={{
+            ...specificButtonStyle,
+            top: buttonPosition.top,
+            left: buttonPosition.left,
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
         <h1>My Prescription</h1>
       <p>Date: {prescription.date}</p>
       <p>Doctor Name: {prescription.doctorName}</p> 

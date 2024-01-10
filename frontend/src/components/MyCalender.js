@@ -32,6 +32,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -273,6 +277,17 @@ export default function MyCalendar  () {
   >
     <Toolbar />
     <div style={containerStyle}>
+    <button
+          onClick={goBack}
+          className="back-button"
+          style={{
+            ...specificButtonStyle,
+            top: buttonPosition.top,
+            left: buttonPosition.left,
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
     <label htmlFor="dateInput" style={labelStyle}>Enter Date:</label>
     <input
       type="date"
@@ -284,6 +299,7 @@ export default function MyCalendar  () {
     <br /> {/* Line break for space */}
     <button onClick={handleSubmit} style={buttonStyle}>Submit</button>
   </div>
+  <Copyright sx={{ pt: 4 }} />
   </Box>
   </Box>
   </ThemeProvider>

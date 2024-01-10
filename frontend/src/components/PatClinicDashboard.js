@@ -29,6 +29,7 @@ import ViewMyPackage from './ViewMyPackage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function Copyright(props) {
   return (
@@ -142,7 +143,9 @@ export default function PatClinicDashboard() {
       console.error('Error:', error);
     }
   };
-
+  useEffect(() => {    
+    toggleDrawer();
+   }, []);
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>

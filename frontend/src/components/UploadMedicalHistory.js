@@ -28,6 +28,10 @@ import { Box, Button, Input } from '@mui/material';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+
 
 function Copyright(props) {
   return (
@@ -101,14 +105,44 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
 const defaultTheme = createTheme();
 
 export default function UploadMedicalHistory() {
 
   const [open, setOpen] = React.useState(true);
+  const [buttonPosition, setButtonPosition] = React.useState({
+    top: '75px',
+    left: '120px',
+  });
   const toggleDrawer = () => {
     setOpen(!open);
+    if (open) {
+      setButtonPosition({
+        top: '75px',
+        left: '120px',
+      });
+    } else {
+      setButtonPosition({
+        top: '75px',
+        left: '240px', // Adjust this value according to your drawer width
+      });
+    }
   };
+
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
 
   const handleLogout = async (e) => {
     try {
@@ -124,6 +158,7 @@ export default function UploadMedicalHistory() {
 
   useEffect(() => {
     getUploadedFiles(); // Fetch uploaded files when the component mounts
+    
   }, []);
 
   const getUploadedFiles = async () => {
@@ -304,7 +339,17 @@ export default function UploadMedicalHistory() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-
+            <button
+          onClick={goBack}
+          className="back-button"
+          style={{
+            ...specificButtonStyle,
+            top: buttonPosition.top,
+            left: buttonPosition.left,
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
             <div className="UploadMedicalHistory">
               
       <input type="file" onChange={handleFileChange} style={{marginLeft:400, marginTop: 20}}/>
