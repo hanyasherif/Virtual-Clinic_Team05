@@ -246,7 +246,7 @@ export default function DocPharmacistsList() {
               width: "100%"
               }
           }}
-           onClick={() =>window.location.href=`http://localhost:3000/ChatPatientProfile?Patient=${Pharmacist._id}&&Id=${Id}`}
+           onClick={() =>window.location.href=`http://localhost:3000/PharmacistProfile?Patient=${Pharmacist._id}&&Id=${Id}`}
            key={Pharmacist._id}
           >
             <TableCell align="center">{Pharmacist.username}</TableCell>

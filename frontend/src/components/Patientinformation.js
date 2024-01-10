@@ -27,7 +27,9 @@ import AddAppointment from './AddAppointments';
 import { useLocation } from 'react-router-dom';
 import axios from "axios";
 import { useState, useEffect } from "react";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -131,13 +133,41 @@ const ActionButtonsContainer = styled('div')(({ theme }) => ({
 }));
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
-
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
 export default function UserProfile() {
 
   const [open, setOpen] = React.useState(true);
+  const [buttonPosition, setButtonPosition] = React.useState({
+    top: '75px',
+    left: '120px',
+  });
   const toggleDrawer = () => {
     setOpen(!open);
+    if (open) {
+      setButtonPosition({
+        top: '75px',
+        left: '120px',
+      });
+    } else {
+      setButtonPosition({
+        top: '75px',
+        left: '240px', // Adjust this value according to your drawer width
+      });
+    }
   };
+
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
 
   const handleLogout = async (e) => {
     try {
@@ -156,6 +186,7 @@ const PatientId = searchParams.get('Patient');
 
 
       useEffect(() => {
+       
         const getPatient = async () => {
           try {
             const response = await axios.get(`http://localhost:8000/getUserById/${PatientId}`);
@@ -258,13 +289,24 @@ const Videochat= async() =>{
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
   <Grid container spacing={3}>
+  <button
+          onClick={goBack}
+          className="back-button"
+          style={{
+            ...specificButtonStyle,
+            top: buttonPosition.top,
+            left: buttonPosition.left,
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
     {/* Grid for WalletDoc and ViewHealthRecords */}
     {Patient && (
     
         <div className="profile-info">
           
           
-        <ProfileContainer elevation={3}>
+        <ProfileContainer elevation={3} sx={{ width: '200%' , height: '100%' }}>
         <Typography variant="h4" gutterBottom sx={{marginTop: 1}}>
           Patient {Patient.username}
           </Typography>

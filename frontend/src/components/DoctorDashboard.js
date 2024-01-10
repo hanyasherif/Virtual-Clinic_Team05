@@ -25,7 +25,10 @@ import ViewHealthRecords from './ViewHealthRecords';
 import WalletDoc from './WalletDoc';
 import AddAppointment from './AddAppointments';
 import Setting from './Setting';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -40,6 +43,14 @@ function Copyright(props) {
     
   );
 }
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
 
 const drawerWidth = 240;
 
@@ -96,10 +107,33 @@ const defaultTheme = createTheme();
 export default function DoctorDashboard() {
 
   const [open, setOpen] = React.useState(true);
+  const [buttonPosition, setButtonPosition] = React.useState({
+    top: '75px',
+    left: '120px',
+  });
   const toggleDrawer = () => {
     setOpen(!open);
+    if (open) {
+      setButtonPosition({
+        top: '75px',
+        left: '120px',
+      });
+    } else {
+      setButtonPosition({
+        top: '75px',
+        left: '240px', // Adjust this value according to your drawer width
+      });
+    }
   };
 
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+useEffect(() => {    
+  toggleDrawer();
+  }, []);
   const handleLogout = async (e) => {
     try {
       await fetch(`http://localhost:8000/logout`,{credentials: 'include'});
@@ -183,6 +217,17 @@ export default function DoctorDashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
   <Grid container spacing={3}>
+  <button
+          onClick={goBack}
+          className="back-button"
+          style={{
+            ...specificButtonStyle,
+            top: buttonPosition.top,
+            left: buttonPosition.left,
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
     {/* Grid for WalletDoc and ViewHealthRecords */}
     <Grid item xs={12} md={4} lg={3}>
       <Grid container direction="column" spacing={3}>

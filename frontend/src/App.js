@@ -126,7 +126,7 @@ import DashPharmaWallet from './pages/DashPharmaWallet';
 import RequestFollowUp from './components/RequestFollowUp';
 import SubPackage from './components/SubPackage';
 import AddAdminPage from './components/AddAdminPage';
- 
+import PharmacistInfo from './components/PharmacistInfo';
 import AppointmentFailure from './components/AppointmentFailure';
 import AppointmentSuccess from './components/AppointmentSuccess';
 
@@ -199,6 +199,9 @@ function App() {
 
               <Route path="/PatientProfile"
               element={<UserProfile/>}/>
+                 <Route path="/PharmacistProfile"
+              element={<PharmacistInfo/>}/>
+
               <Route path="/uploadMedicalHistory"
               element={<UploadMedicalHistory/>}/>      
               {/* <Route path="/login"
