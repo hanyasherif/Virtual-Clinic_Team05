@@ -9,6 +9,7 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update';
 import DescriptionIcon from '@mui/icons-material/Description';
+import AssignmentIcon from '@mui/icons-material/Assignment'; // Import the icon
 
 
 export const mainListItems = (
@@ -19,12 +20,12 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Dashboard"/>
     </ListItemButton>
-    <ListItemButton onClick={() => { window.location.href = '/addAdminPage'; }}>
+    {/* <ListItemButton onClick={() => { window.location.href = '/addAdminPage'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
         <SupervisorAccountIcon />
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Add New Admin" />
-    </ListItemButton>
+    </ListItemButton> */}
     <ListItemButton onClick={() => { window.location.href = '/adminAddPackage'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
         <DeleteIcon />
@@ -37,17 +38,23 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Update Packages" />
     </ListItemButton>
-    <ListItemButton onClick={() => { window.location.href = '/remove'; }}>
-    <ListItemIcon sx={{ color: '#25A18E' }}>
-        <SupervisorAccountIcon />
-      </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Delete Users" />
-    </ListItemButton>
     <ListItemButton onClick={() => { window.location.href = '/CreateContract'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
         <DescriptionIcon />
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Create New Contract" />
+    </ListItemButton>
+    {/* <ListItemButton onClick={() => { window.location.href = '/remove'; }}>
+    <ListItemIcon sx={{ color: '#25A18E' }}>
+        <SupervisorAccountIcon />
+      </ListItemIcon>
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Delete Users" />
+    </ListItemButton> */}
+    <ListItemButton onClick={() => { window.location.href = '/ViewReAdminDoc'; }}>
+    <ListItemIcon sx={{ color: '#25A18E' }}>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="View Doc Requests" />
     </ListItemButton>
   </React.Fragment>
 );
