@@ -5,7 +5,8 @@
     "main": "App.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon ./src/App.js"
+        "start": "nodemon ./src/App.js",
+        "generate-swagger": "node ./src/swagger.js"
     },
     "repository": {
         "type": "git",
@@ -43,6 +44,8 @@
         "socket-io": "^1.0.0",
         "socket.io": "^4.7.3",
         "stripe": "^14.11.0",
+        "swagger": "^0.7.5",
+        "swagger-autogen": "^2.23.7",
         "uuid": "^9.0.1"
     }
 }
