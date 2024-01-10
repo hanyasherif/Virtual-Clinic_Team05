@@ -155,7 +155,7 @@ In the ever-evolving landscape of healthcare, we recognize the need for accessib
 
 - Clone the repository: git clone https://github.com/hanyasherif/Virtual-Clinic_Team05.git
 
-- Install dependencies: npm install
+- Install dependencies: npm install dotenv express mongoose node react socket.io nodemon
 
 - Configure environment variables: Create a .env file and fill in the required values.
 
@@ -170,13 +170,13 @@ Testing is performed using Postman for API testing.
 ### Frontend
 
 1. Navigate to the `frontend` directory: `cd frontend`
-2. Install frontend dependencies: `npm install`
+2. Install frontend dependencies: `npm install react`
 3. Start the frontend server: `npm start`
 4. Open your browser and visit: `http://localhost:3000`
 
 ### Backend
 
-1. Install backend dependencies: `npm install`
+1. Install backend dependencies: `npm install mongoose dotenv express node nodemon socket.io`
 2. Configure environment variables: Create a `.env` file and fill in the required values.
 3. Start the backend server: `npm start`
 4. The backend API will be accessible at: `http://localhost:8000`
