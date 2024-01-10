@@ -13,6 +13,7 @@ const PatientPagePrescription = () => {
       try {
         const response = await fetch('/prescriptions');
         const json = await response.json();
+        console.log('ALOOO', json);
         console.log(json);
 
         if (response.ok) {
