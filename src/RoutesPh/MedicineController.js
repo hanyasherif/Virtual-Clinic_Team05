@@ -121,17 +121,17 @@ const prescriptionMedicine = async (req, res) => {
 
     // Use Mongoose to find prescriptions by patient ID
     const prescriptions = await Prescription.find({ patient: patientId });
-
+//console.log('prescriptiosn:',prescriptions);
     // Create an array to store the medicines from prescriptions
     const medicines = [];
 
     // Iterate through each prescription to get associated medicines
     for (const prescription of prescriptions) {
-      const medicineIds = prescription.medicine; // Assuming medicine field in prescription contains names
+      const medicineNames = prescription.medicines; // Assuming medicine field in prescription contains names
 
       // Use Mongoose to find medicines by IDs
       const medicinesForPrescription = await medicineModel.find({
-        name: { $in: medicineIds },
+        name: { $in: medicineNames },
       });
 
       // Add medicines to the array
