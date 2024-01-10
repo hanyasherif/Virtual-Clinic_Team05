@@ -313,7 +313,7 @@ const [buttonPosition, setButtonPosition] = React.useState({
 
             </Grid>
             {/* Search */}
-            <Grid item xs={12} md={4} lg={3} 
+            <Grid item xs={12} md={4} lg={7} 
                 sx={{
                   '&:hover > div': {
                     transform: 'scale(1.01)',

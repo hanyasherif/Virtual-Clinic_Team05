@@ -107,117 +107,118 @@ const CheckoutPage = () => {
   };
 
   return (
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', margin: -100, padding: 0 }}>
+  <h2></h2>
+
+  {/* Payment Method Selection */}
+  <FormControl>
+    <InputLabel>Payment Method</InputLabel>
+    <Select value={selectedPaymentMethod} onChange={handleSelectPaymentMethod}>
+      <MenuItem value="creditCard">Credit Card</MenuItem>
+      <MenuItem value="wallet">Wallet</MenuItem>
+      <MenuItem value="cashOnDelivery">Cash on Delivery</MenuItem>
+    </Select>
+  </FormControl>
+
+  {/* Conditional rendering based on selected payment method */}
+  {selectedPaymentMethod === 'wallet' && (
     <div>
-      <h2>CHECKOUT PAGE lol</h2>
+      <p>Current Balance: $1250</p>
+      {/* Additional content for wallet payment method */}
+    </div>
+  )}
 
-      {/* Payment Method Selection */}
-      <FormControl>
-        <InputLabel>Payment Method</InputLabel>
-        <Select value={selectedPaymentMethod} onChange={handleSelectPaymentMethod}>
-          <MenuItem value="creditCard">Credit Card</MenuItem>
-          <MenuItem value="wallet">Wallet</MenuItem>
-          <MenuItem value="cashOnDelivery">Cash on Delivery</MenuItem>
-        </Select>
-      </FormControl>
+  {selectedPaymentMethod === 'cashOnDelivery' && (
+    <div>
+      <p>Total Price: $100</p>
+      <p>Price Due</p>
+      {/* Additional content for cash on delivery payment method */}
+    </div>
+  )}
 
-      {/* Conditional rendering based on selected payment method */}
-      {selectedPaymentMethod === 'wallet' && (
-        <div>
-          <p>Current Balance: $1250</p>
-          {/* Additional content for wallet payment method */}
-        </div>
-      )}
+  {selectedPaymentMethod === 'creditCard' && (
+    <div>
+      <h3>Credit Card Information:</h3>
+      <TextField
+        label="Card Number"
+        type="text"
+        name="cardNumber"
+        value={creditCardInfo.cardNumber}
+        onChange={handleCreditCardInputChange}
+        required
+      />
+      <br />
+      <TextField
+        label="Expiration Date"
+        type="text"
+        name="expirationDate"
+        value={creditCardInfo.expirationDate}
+        onChange={handleCreditCardInputChange}
+        required
+      />
+      <br />
+      <TextField
+        label="CVV"
+        type="text"
+        name="cvv"
+        value={creditCardInfo.cvv}
+        onChange={handleCreditCardInputChange}
+        required
+      />
+      <br />
+      {/* Additional content for credit card payment method */}
+    </div>
+  )}
 
-      {selectedPaymentMethod === 'cashOnDelivery' && (
-        <div>
-          <p>Total Price: $100</p>
-          <p>Price Due</p>
-          {/* Additional content for cash on delivery payment method */}
-        </div>
-      )}
-
-      {selectedPaymentMethod === 'creditCard' && (
-        <div>
-          <h3>Credit Card Information:</h3>
-          <TextField
-            label="Card Number"
-            type="text"
-            name="cardNumber"
-            value={creditCardInfo.cardNumber}
-            onChange={handleCreditCardInputChange}
-            required
-          />
-          <br />
-          <TextField
-            label="Expiration Date"
-            type="text"
-            name="expirationDate"
-            value={creditCardInfo.expirationDate}
-            onChange={handleCreditCardInputChange}
-            required
-          />
-          <br />
-          <TextField
-            label="CVV"
-            type="text"
-            name="cvv"
-            value={creditCardInfo.cvv}
-            onChange={handleCreditCardInputChange}
-            required
-          />
-          <br />
-          {/* Additional content for credit card payment method */}
-        </div>
-      )}
-
-      {/* Existing Addresses Selection */}
-      <div>
-        <h3>Existing Addresses:</h3>
-        <FormControl sx={{ width: 200, marginBottom: 2 }}>
-          <InputLabel sx={{ marginTop: 1 }}>Select Address</InputLabel>
-          <Select
-            value={selectedAddressId || ''}
-            onChange={(e) => handleSelectAddress(e.target.value)}
-          >
-            {addresses.map((address) => (
-              <MenuItem key={address._id} value={address._id}>
-                {`${address.addressLine1}, ${address.city}, ${address.country}`}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </div>
-
-      {/* Perform checkout button */}
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        onClick={handleCheckout}
-        style={{ marginTop: 20, width: '70%' }}
-        sx={{
-          color: 'white',
-          backgroundColor: '#25A18E',
-          '&:hover': {
-            backgroundColor: '#20756c',
-          },
-        }}
+  {/* Existing Addresses Selection */}
+  <div>
+    <h3>Existing Addresses:</h3>
+    <FormControl sx={{ width: 200, marginBottom: 2 }}>
+      <InputLabel sx={{ marginTop: 1 }}>Select Address</InputLabel>
+      <Select
+        value={selectedAddressId || ''}
+        onChange={(e) => handleSelectAddress(e.target.value)}
       >
-        Perform Checkout
-      </Button>
+        {addresses.map((address) => (
+          <MenuItem key={address._id} value={address._id}>
+            {`${address.addressLine1}, ${address.city}, ${address.country}`}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  </div>
 
-          {/* Success Alert */}
-          {successAlertOpen && (
-            <Alert
-              severity="success"
-              open={successAlertOpen}
-              autoHideDuration={6000}
-              onClose={() => setSuccessAlertOpen(false)}
-            >
-              Order placed successfully
-            </Alert>
-          )}
-        </div>
+  {/* Perform checkout button */}
+  <Button
+    type="submit"
+    variant="contained"
+    color="primary"
+    onClick={handleCheckout}
+    style={{ marginTop: 20, width: '70%' }}
+    sx={{
+      color: 'white',
+      backgroundColor: '#25A18E',
+      '&:hover': {
+        backgroundColor: '#20756c',
+      },
+    }}
+  >
+    Perform Checkout
+  </Button>
+
+  {/* Success Alert */}
+  {successAlertOpen && (
+    <Alert
+      severity="success"
+      open={successAlertOpen}
+      autoHideDuration={6000}
+      onClose={() => setSuccessAlertOpen(false)}
+    >
+      Order placed successfully
+    </Alert>
+  )}
+</div>
+
       );
 };
 

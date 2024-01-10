@@ -45,7 +45,6 @@ const PatientPage = () => {
 
   return (
     <div className="patientPage">
-      <div>Welcome, Manar!</div>
       <Grid container spacing={2} className="medicines">
         {medicines &&
           medicines.map((medicine) => (
@@ -61,21 +60,25 @@ const PatientPage = () => {
       {/* Add button to route to CartPage */}
       <Link to="/CartPagePH">
       <Button
-          type="submit"
-          variant="contained"
-         
-          style={{ marginTop: 20, width: '50%' }}
-          sx={{
-            color: 'white',
-            backgroundColor: '#0088A8',
-            '&:hover': {
-              backgroundColor: '#005670',
-            },
-          }}
-        >
-          Go to Cart
-        </Button>
-        
+  type="submit"
+  variant="contained"
+  style={{
+    marginTop: 20,
+    width: '50%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    display: 'block',
+  }}
+  sx={{
+    color: 'white',
+    backgroundColor: '#0088A8',
+    '&:hover': {
+      backgroundColor: '#005670',
+    },
+  }}
+>
+  Go to Cart
+</Button>
       </Link>
     </div>
   );
