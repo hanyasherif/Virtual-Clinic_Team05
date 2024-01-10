@@ -141,7 +141,7 @@ const {createPres , viewPatientPrescriptions , filterPrescriptions , getPrescrip
   addMedicine, deleteMedicine, modifyInstruction, generatePdf} = require("./Routes/PrescriptionController");
 const {adminAddPackage , adminDeletePackage , adminUpdatePackage , getPacakges} = require("./Routes/AdminController");
 const {addRequest, getRequests, getARequest,  handleReject, handleAccept } = require("./Routes/requestController");
-const{viewPackages , subscribePackage , viewMyPackage , cancelPackage , CheckOTP , CEmail , GEmail ,changePassword } = require("./Routes/PatientController");
+const{viewPackages , subscribePackage , viewMyPackage , cancelPackage , CheckOTP , CEmail , GEmail ,changePassword , ViewPackage} = require("./Routes/PatientController");
 // const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
 //    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getUserById , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor,
 //    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor} = require("./Routes/userController");
@@ -152,7 +152,7 @@ const {createContract, acceptContract,   rejectContract,   getContract}= require
 //////PHARMA OLAYAN
 const { createMedicine, getMedicine, updateMedicine, searchMedicine, filterMedicine, prescriptionMedicine, findAlternativeMedicines, getSales } = require("./RoutesPh/MedicineController");
 const { addRequestPH, getRequestsPH, getARequestPH, handleAcceptPH, handleRejectPH } = require("./RoutesPh/requestController");
-const { loginPH, CEmailPH,GEmailPH,CheckOTPPH, changePasswordPH } = require("./RoutesPh/userController");
+//const { loginPH, CEmailPH,GEmailPH,CheckOTPPH, changePasswordPH } = require("./RoutesPh/userController");
 
 const { addAdministratorPH, removeUserPH, checkUsernamePH, getUsersPH, registerPatientPH,
    deleteUserPH, adminViewPharmacists, adminViewPatients, logoutPH } = require("./RoutesPh/userController");
@@ -326,7 +326,7 @@ app.post("/requestFollowUp",requireAuth("Patient"),requestFollowUpAppointment);
 app.post("/acceptFollowUpRequest",requireAuth("Doctor"),acceptFollowUpRequest);
 app.post("/rejectFollowUpRequest",requireAuth("Doctor"),rejectFollowUpRequest);
 app.get("/viewFollowUpRequests",requireAuth("Doctor"),viewFollowUpRequests);
-
+app.get("/viewPackage",requireAuth("Patient"),ViewPackage);
 
 app.get("/viewPackages",requireAuth("Patient"),viewPackages);
 app.post("/subPackage",requireAuth("Patient"),subscribePackage);
@@ -360,7 +360,7 @@ app.get("/medicines", getMedicine);
 app.put("/updateMedicine/:id", updateMedicine);
 app.get("/Search", searchMedicine);
 app.get("/filterMedicine", filterMedicine);
-app.post("/addAdministrator", addAdministrator);
+//app.post("/addAdministrator", addAdministrator);
 app.delete("/removeUser", removeUser);
 app.post("/checkUsername", checkUsername);
 app.get("/getAllUsers", getUsers);
@@ -421,7 +421,7 @@ app.post('/addMedicine', upload.single('picture'), createMedicine);
 
 app.post("/ChangeEmailPassword",requireAuth,GEmail);
 app.post("/otpChecker",requireAuth,CheckOTP);
-app.get("/CheckEmail",requireAuth,CEmail);
+//app.get("/CheckEmail",requireAuth,CEmail);
 
 app.post("/ChangePassword",requireAuth,changePassword);
 

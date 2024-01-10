@@ -21,9 +21,9 @@ const Login = () => {
       });
 
       if (!response.ok) {
-        const error = await response.json();
-        console.error('Login failed:', error.message);
-        // Handle error (e.g., show error message)
+        const error =await response.json();
+      
+        alert('An error occurred:'+error.error);
         return;
       }
 

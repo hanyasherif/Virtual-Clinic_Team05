@@ -31,7 +31,9 @@ import TableRow from '@mui/material/TableRow';
 import { Box, Button, Input } from '@mui/material';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -141,6 +143,14 @@ const handleLogout = async (e) => {
     console.error('Error:', error);
   }
 };
+
+
+const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
   const [partner, setPartner] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
@@ -219,7 +229,11 @@ useEffect(() => {
     //         {secondaryListItems}
     //       </List>
     //     </Drawer>
+    
         <div className="Chat">
+          <button onClick={goBack} className="back-button">
+      <FontAwesomeIcon icon={faArrowLeft} />
+    </button>
       {!showChat ? (
         <div className="joinChatContainer">
           <h3>Start Chat</h3>

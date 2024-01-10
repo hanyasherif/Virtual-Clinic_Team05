@@ -22,9 +22,17 @@ const addAdministrator = async(req,res) => {
    let password = req.body.password
 
    try{
-      let user = await userModel.create({type: "Administrator",username: username, password: password})
-      await user.save()
-      res.status(200).json({message: "Administrator created successfully"})
+      const usert = await userModel.findOne({username: username});
+      if(usert){
+        res.status(404).json({message: "Username already exists"})
+      }
+      else
+      {
+        let user = await userModel.create({type: "Administrator",username: username, password: password})
+        await user.save()
+        res.status(200).json({message: "Administrator created successfully"})
+      }
+     
    }
    catch(err){
       res.json({message: err.message})

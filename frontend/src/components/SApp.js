@@ -384,10 +384,13 @@ export default function SApp  () {
             }
            modifyPatientWallet(amount);
            modifyDoctorWallet(amount,appointment.doctor);
+          
 
         }
         console.log("the senttt isss " ,patientId);
         modifyAppointmentStatus(appointmentId,patientId);
+        alert('Payment successful!');
+        window.location.href = '/FilterAppointmentsPatient';
     }
     const modifyAppointmentStatus = async (appointmentId, patientId) => {
         try {

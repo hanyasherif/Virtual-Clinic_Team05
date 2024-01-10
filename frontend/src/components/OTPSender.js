@@ -13,6 +13,7 @@ const OTPSender = () => {
   const handleSendOTP = async() => {
     // Perform logic to send OTP using the entered email (e.g., make an API call)
     try {
+      console.log("email:"+userEmail);
      const res = await axios.get(`http://localhost:8000/CheckEmail?email=${userEmail}`);
      window.location.href='/ChangePassword';
      alert('email Sent');

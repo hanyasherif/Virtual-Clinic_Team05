@@ -189,3 +189,14 @@
   .hide {
     opacity: 0 !important;
   }
+  .back-button {
+    position: absolute;
+    top: 10px; /* Adjust the top position as needed */
+    left: 10px; /* Adjust the left position as needed */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: #333; /* Adjust the color as needed */
+    padding: 0.2em;
+  }

@@ -19,13 +19,13 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Dashboard"/>
     </ListItemButton>
-    <ListItemButton onClick={() => { window.location.href = '/addAdmin'; }}>
+    <ListItemButton onClick={() => { window.location.href = '/addAdminPage'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
         <SupervisorAccountIcon />
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Add New Admin" />
     </ListItemButton>
-    <ListItemButton onClick={() => { window.location.href = '/admin'; }}>
+    <ListItemButton onClick={() => { window.location.href = '/adminAddPackage'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
         <DeleteIcon />
       </ListItemIcon>

@@ -92,7 +92,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const defaultTheme = createTheme();
-export default function MyCalendar  () {
+export default function RequestFollowUp  () {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -150,16 +150,16 @@ export default function MyCalendar  () {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/ReschedulePatient?appointmentId=${appointmentId}&newDate=${selectedDate}`,
+        `http://localhost:8000/requestFollowUp?appointmentId=${appointmentId}&newDate=${selectedDate}`,
         { tm: 'mohab' },
         { withCredentials: true }
       );
       console.log('Rescheduled successful:', response.data);
-      alert('Rescheduled Successfully');
+      alert('Request Sent Successfully');
       window.location.href = 'http://localhost:3000/FilterAppointmentsPatient';
     } catch (error) {
       console.error('Reschedule failed:', error);
-      alert('Rescheduling Failed');
+      alert('Request Failed');
     }
   };
 

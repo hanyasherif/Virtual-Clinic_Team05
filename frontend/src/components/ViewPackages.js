@@ -41,9 +41,9 @@ function ViewPackages() {
        });
   };
 
-  const handlePaymentOption = (packageId, option) => {
+  const handlePaymentOption = (packageName) => {
     // Handle the selected payment option (e.g., "Wallet" or "Credit Card")
-    console.log(`Package ID: ${packageId}, Payment Option: ${option}`);
+    window.location.href = '/SubPackage?name='+packageName;
     // Add your logic to handle the payment option (e.g., redirect to a payment page)
   };
 
@@ -70,7 +70,7 @@ function ViewPackages() {
                 backgroundColor: '#20756c', // Change color on hover if desired
               },
             }}
-            onClick={() => subscribePackage(packagew.name)}
+      
           >
             {packagew.name}
           </Button>
@@ -99,26 +99,11 @@ function ViewPackages() {
                 backgroundColor: '#20756c', // Change color on hover if desired
               },
             }}
-            onClick={() => handlePaymentOption(packagew.id, 'Wallet')}
+            onClick={() => handlePaymentOption(packagew.name, 'Wallet')}
           >
-            Pay Wallet
+           Subscribe
           </Button>
-          <Button
-            variant="contained"
-            sx={{
-              color: 'white',
-              backgroundColor: '#25A18E',
-              padding: '4px 12px', // Adjust padding to change the button's size
-              fontSize: '0.875rem', // Adjust font size as needed
-              lineHeight: 1.1, // Adjust line height as needed
-              '&:hover': {
-                backgroundColor: '#20756c', // Change color on hover if desired
-              },
-            }}
-            onClick={() => handlePaymentOption(packagew.id, 'Credit Card')}
-          >
-            Pay Credit Card
-          </Button>
+          
         </div>
       </div>
     </li>

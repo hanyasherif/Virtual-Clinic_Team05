@@ -308,8 +308,6 @@ const requestFollowUpAppointment = async (req, res) => {
     const token = req.cookies.jwt;
     const decodedToken = jwt.verify(token, 'supersecret');
     const patientId= decodedToken.user._id;
-    const patient = await userModel.findById(patientId);
-    const doctor = await userModel.findById(appointment.doctor);
     const appointment = await appointmentsModel.findById(appointmentId)
     if (!appointment) {
       return res.status(404).json({ message: 'Appointment not found' });
@@ -364,9 +362,10 @@ const acceptFollowUpRequest = async (req, res) => {
 
 const rejectFollowUpRequest = async (req, res) => {
   const appointmentId = req.query.appointmentId;
+  const appointment = await appointmentsModel.findById(appointmentId)
  const patient = await userModel.findById(patientId);
   const doctor = await userModel.findById(appointment.doctor);
-  const appointment = await appointmentsModel.findById(appointmentId)
+
   if (!appointment) {
     return res.status(404).json({ message: 'Appointment not found' });
   }

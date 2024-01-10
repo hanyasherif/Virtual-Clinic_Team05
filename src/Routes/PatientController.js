@@ -199,7 +199,7 @@ const CEmail = async (req, res) => {//Checking if Email Exist
 try {
 
 const userEmail = req.query.email; // Use a different variable name to avoid conflict
-console.log(userEmail);
+console.log("TEST0"+userEmail);
 const user = await userModel.find({ email: userEmail });
 if (user != null){
   sendEmail(userEmail);
@@ -292,6 +292,16 @@ const changePassword = async (req, res) => {//Changing password
 };
 
 
-
+const ViewPackage = async (req, res) => {
+     
+  try{
+    const name= req.query.name
+    const packages = await PackageModel.findOne({name:name})
+    res.status(200).json(packages)
+}
+catch(error){
+    res.status(400).json({message: error.message})
+    }
+}
   
-module.exports = {viewPackages ,subscribePackage , viewMyPackage ,cancelPackage  ,GEmail ,CEmail,CheckOTP,changePassword}; 
+module.exports = {viewPackages ,subscribePackage , viewMyPackage ,cancelPackage  ,GEmail ,CEmail,CheckOTP,changePassword,ViewPackage}; 

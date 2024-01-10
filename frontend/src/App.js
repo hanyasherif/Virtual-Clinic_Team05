@@ -123,7 +123,9 @@ import DashboardAdminRemove from './pages/DashboardAdminRemove';
 import DashboardAdminViewPatient from './pages/DashboardAdminViewPatient';
 import DashboardAdminViewPharmacist from './pages/DashboardAdminViewPharmacist';
 import DashPharmaWallet from './pages/DashPharmaWallet';
-
+import RequestFollowUp from './components/RequestFollowUp';
+import SubPackage from './components/SubPackage';
+import AddAdminPage from './components/AddAdminPage';
 // import DashboardWallet from './pages/DashboardWallet';
 
 // import ChooseMode from './pages/chooseMode';
@@ -141,8 +143,8 @@ function App() {
               path = "/register"
               element = {<Home />}/>
              <Route 
-              path = "/admin"
-              element = {<AdminAddPackage />}/>
+              path = "/adminAddPackage"
+              element = {<AdminAddPackage/>}/>
               <Route 
               path = "/admin/update"
               element = {<AdminUpdatePackage />}/>
@@ -230,14 +232,18 @@ function App() {
               element={<ChangePassDoc/>}/>
                   <Route path="/ReschedulePatient"
                element={<MyCalendar/>}/>
-
+            <Route path="/RequestFollowUp"
+               element={<RequestFollowUp/>}/>
           
               <Route path="/videochatpage"
               element={<VideoChatPage/>}/>
+              <Route path="/addAdminPage"
+              element={<AddAdminPage/>}/>
 
               <Route path="/ChangePassAdmin"
               element={<ChangePassAdmin/>}/>
-                            
+                 <Route path="/SubPackage"
+              element={<SubPackage/>}/>            
           
             
               {/*Aseel S3*/}

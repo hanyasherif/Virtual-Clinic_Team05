@@ -217,7 +217,7 @@ export default function FilterAppointmentsPatient() {
       window.location.href = `/ReschedulePatient?id=${id}`;
     };
     async function handleRequestFollowUp(id){
-      window.location.href = `/ReschedulePatient?id=${id}`;
+      window.location.href = `/RequestFollowUp?id=${id}`;
     };
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -381,7 +381,7 @@ export default function FilterAppointmentsPatient() {
                 width: "100%"
                 }
             }}
-            onClick={() => window.location.href = `/selectedAppointment?appointmentId=${Appointment._id}`}
+           
             key={Appointment._id}
               >             
               <TableCell align="center">{Appointment.date}</TableCell>
