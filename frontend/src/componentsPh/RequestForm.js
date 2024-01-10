@@ -1,4 +1,5 @@
-import React from "react"
+import React from "react";
+import Title from '../components/Title';
 
 
 const { useState } = require("react")
@@ -78,7 +79,9 @@ const RequestForm = () => {
 
     return(
         <div>
-            <h1>Submit Request</h1>
+            <Title style={{ color: '#25A18E' , fontSize: 23, textAlign: 'center' }}>Submit Request</Title>
+
+            {/* <h1>Submit Request</h1> */}
                 <form className="create" onSubmit={handleSubmit}>
                     <div>
                         <label>Name: </label>
@@ -152,7 +155,7 @@ const RequestForm = () => {
                             onChange={handleEducationalBackground}
                             />
                     </div>
-                    <input type="submit" onClick={handleSubmit} className="primaryBtn"/>
+                    <input type="submit" onClick={handleSubmit} className="primaryBtn" style={{marginLeft: 160}}/>
                 </form>
         </div>
     )

@@ -24,6 +24,9 @@ import { mainListItems, secondaryListItems } from './listItemsAdCl';
 import Button from "@mui/material/Button";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -89,14 +92,44 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
+
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function CreateContract() {
 
   const [open, setOpen] = React.useState(true);
+  const [buttonPosition, setButtonPosition] = React.useState({
+    top: '75px',
+    left: '120px',
+  });
   const toggleDrawer = () => {
     setOpen(!open);
+    if (open) {
+      setButtonPosition({
+        top: '75px',
+        left: '120px',
+      });
+    } else {
+      setButtonPosition({
+        top: '75px',
+        left: '240px', // Adjust this value according to your drawer width
+      });
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
   };
 
   const handleLogout = async (e) => {
@@ -166,6 +199,10 @@ export default function CreateContract() {
           return false;
       }
   };
+
+  // useEffect(() => {    
+  //   toggleDrawer();
+  //  }, []);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -239,18 +276,29 @@ export default function CreateContract() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
+            <button
+          onClick={goBack}
+          className="back-button"
+          style={{
+            ...specificButtonStyle,
+            top: buttonPosition.top,
+            left: buttonPosition.left,
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
             <Box sx={{ backgroundColor: 'background.default', minHeight: '100%' }}>
              <CssBaseline />
-             <AppBar position="static" color="primary">
+             {/* <AppBar position="static" color="primary">
                 <Toolbar>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                  Employment Contract
                 </Typography>
                 </Toolbar>
-                </AppBar>
-                <Container maxWidth="md" sx={{ mt: 4 }}>
+                </AppBar> */}
+                <Container sx={{ mt: 4, width: 1150 }}>
 
                 <Box sx={{ mb: 4 }}>
                 <Typography variant="h4" gutterBottom>
@@ -289,9 +337,21 @@ export default function CreateContract() {
 
                         <Button
                         variant="contained"
-                        color="secondary"
+                        
+                        sx={{
+                          marginTop: 0,
+                          // marginLeft: 61.5,
+                          minWidth: 205,
+                          color: 'white',
+                          backgroundColor: '#25A18E',
+                          '&:hover': {
+                              backgroundColor: '#20756c', // Change color on hover if desired
+                          },
+                          height: 55,
+                          mt: 2
+                          }}
                         onClick={handleSubmit}
-                        sx={{ mt: 2 }}
+                        
                       >
                        Create Contract
                       </Button>

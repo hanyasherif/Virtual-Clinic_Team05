@@ -62,15 +62,16 @@ const Login = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
       {/* Login form */}
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} style={{ width: '100%', maxWidth: '400px' }}>
         <TextField
           label="Username"
           variant="outlined"
           margin="normal"
           fullWidth
           id="username"
+          sx={{marginTop: -25,}}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
@@ -81,6 +82,7 @@ const Login = () => {
           fullWidth
           type="password"
           id="password"
+          sx={{marginTop: -18}}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -90,7 +92,7 @@ const Login = () => {
           type="submit"
           variant="contained"
           color="primary"
-          style={{ marginTop: 20, width: '50%' }}
+          style={{ marginTop: -100, width: '100%' }}
           sx={{
             color: 'white',
             backgroundColor: '#25A18E',
@@ -104,44 +106,29 @@ const Login = () => {
       </form>
 
       {/* Buttons for Change Password and Forgot Password */}
-      <Grid container spacing={2} style={{ width: '100%', marginTop: 1, marginLeft:180, marginBottom: 10}}>
-      
-        <Grid item xs={6}>
-          <Link to="/ForgotPasswPH">
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
+        <Link to="/ForgotPasswPH">
           <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          style={{ marginTop: 20, width: '50%' }}
-          sx={{
-            color: 'white',
-            backgroundColor: '#25A18E',
-            '&:hover': {
-              backgroundColor: '#20756c',
-            },
-          }}
-        >
-              Forgot Password
-        </Button>
-          </Link>
-        </Grid>
-      </Grid>
-      {/* Not a user? Register! button */}
-      <Link to="/guestPagePH">
-     
-Not a user? Register      
-      </Link>
-
-        {/* Not a user? Register! button */}
-        <Link to="/addRequest">
-     
-Wanna Register as a doctor?        
-      </Link>
-
+            type="submit"
+            variant="contained"
+            color="primary"
+            style={{ marginTop: -20, width: '100%' }}
+            sx={{
+              color: 'white',
+              backgroundColor: '#25A18E',
+              '&:hover': {
+                backgroundColor: '#20756c',
+              },
+            }}
+          >
+            Forgot Password
+          </Button>
+        </Link>
+        <Link to="/guestPagePH" style={{ marginTop: 10 }}>
+          Not a user? Register
+        </Link>
+      </div>
     </div>
-
-    
-
     
   );
 };

@@ -132,7 +132,7 @@ export default function DoctorDashboard() {
     navigate(-1);
   };
 useEffect(() => {    
-  toggleDrawer();
+  // toggleDrawer();
   }, []);
   const handleLogout = async (e) => {
     try {

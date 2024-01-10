@@ -1,6 +1,12 @@
+import Title from './Title';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+
 const { useState } = require("react")
 
 const RequestForm = () => {
+
     const [name,setName] = useState('')
     const [username,setUsername] = useState('')
     const [password,setPassword] = useState('')
@@ -79,9 +85,19 @@ const RequestForm = () => {
         }
     }
 
+    const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
     return(
         <div>
-            <h1>Submit Request</h1>
+    <button onClick={goBack} className="back-button">
+      <FontAwesomeIcon icon={faArrowLeft} />
+    </button>
+            <br /><br />
+            <Title style={{ color: '#25A18E' , fontSize: 23, textAlign: 'center' }}>Submit Request</Title>
                 <form className="create" onSubmit={handleSubmit}>
                     <div>
                         <label>Name: </label>
@@ -164,7 +180,9 @@ const RequestForm = () => {
                             onChange={handleEducationalBackground}
                             />
                     </div>
-                    <input type="submit" onClick={handleSubmit} className="primaryBtn"/>
+                    
+                    <input type="submit" onClick={handleSubmit} style={{marginLeft: 160}}
+                    className="primaryBtn"/>
                 </form>
         </div>
     )

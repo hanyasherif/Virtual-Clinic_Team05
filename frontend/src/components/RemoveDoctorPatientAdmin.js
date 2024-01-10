@@ -31,6 +31,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import Title from './Title';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -108,14 +112,44 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
+
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function RemoveDoctorPatientAdmin() {
 
   const [open, setOpen] = React.useState(true);
+  const [buttonPosition, setButtonPosition] = React.useState({
+    top: '75px',
+    left: '120px',
+  });
   const toggleDrawer = () => {
     setOpen(!open);
+    if (open) {
+      setButtonPosition({
+        top: '75px',
+        left: '120px',
+      });
+    } else {
+      setButtonPosition({
+        top: '75px',
+        left: '240px', // Adjust this value according to your drawer width
+      });
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
   };
 
   const handleLogout = async (e) => {
@@ -162,128 +196,78 @@ export default function RemoveDoctorPatientAdmin() {
         alert("User removed successfully");
       }
     };
+
+  useEffect(() => {    
+    getUsers();
+  }, []);
  
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="absolute" open={open}>
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-            }}
-          >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              El7a2ny Clinic Admin Page
-            </Typography>
-            <Button color="inherit" onClick={handleLogout}>Logout</Button>
-            <IconButton color="inherit">
-              <Badge badgeContent={0} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List component="nav">
-            {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
-          </List>
-        </Drawer>
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
-          }}
-        >
-          <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static">
-                  <Toolbar>
-                    <IconButton
-                      size="large"
-                      edge="start"
-                      color="inherit"
-                      aria-label="menu"
-                      sx={{ mr: 2 }}
-                    >
-
-                    </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                      Users List
-                    </Typography>
-
-                  </Toolbar>
-                </AppBar>
-
-                <Container maxWidth="lg">
-                  <Box sx={{ my: 4 }}>
-                    <Grid container spacing={3}>
-                      <Grid item xs={12}>
-                        <Paper sx={{ p: 2 }}>
+    
+                // <Container maxWidth="lg">
+                //   <Box sx={{ my: 4 }}>
+                //     <Grid container spacing={3}>
+                      
+                //       <Grid item xs={12}>
+                //         <Paper sx={{ p: 2 }}>
                           <div className="UsersList">
-                            <Box sx={{ marginBottom: 2 }}>
-                              <Button variant="contained" onClick={getUsers} margin="normal" padding="normal"
-                                   sx={{
-                  color: 'white',
-                  marginTop: 1,
-                  backgroundColor: '#0088A8',
-                  '&:hover': {
-                      backgroundColor: '#20756c', // Change color on hover if desired
-                  },
-                  }} 
-              >
-                                Load Users
-                              </Button>
-                            </Box>
 
-                            <TableContainer component={Paper}>
+            <Title style={{ color: 'black' , fontSize: 25}}>Users List</Title>
+            <React.Fragment>
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell style={{ color: '#25A18E', textAlign: 'center' }}>Username</TableCell>
+            <TableCell style={{ color: '#25A18E', textAlign: 'center' }}>Type</TableCell>
+            <TableCell style={{ color: '#25A18E', textAlign: 'center' }}>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+        {users.map((user) => (
+                                    <TableRow
+                                      hover
+                                      sx={{
+                                        "&:hover": {
+                                          cursor: "pointer",
+                                          backgroundColor: "#f5f5f5",
+                                          width: "100%",
+                                        },
+                                      }}
+                                      key={user._id}
+                                    >
+                                      <TableCell align="center">{user.username}</TableCell>
+                                      <TableCell align="center">{user.type}</TableCell>
+                                      <TableCell align="center">
+                                        <Button
+                                          variant="contained"
+                                          // color="secondary"
+                                          sx={{
+                                            color: 'white',
+                                            backgroundColor: '#A81D24',
+                                            '&:hover': {
+                                                backgroundColor: '#911A20', // Change color on hover if desired
+                                            },
+                                            }}
+                                          onClick={() => removeUser(user._id)}
+                                        >
+                                          Remove
+                                        </Button>
+                                      </TableCell>
+                                    </TableRow>
+                                  ))}
+        </TableBody>
+      </Table>
+      {/* <Link style={{ color: '#25A18E' }} href="#" onClick={preventDefault} sx={{ mt: 3 }}>
+        See more family members
+      </Link> */}
+    </React.Fragment>
+
+                            {/* <TableContainer component={Paper}>
                               <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                                 <TableHead>
                                   <TableRow>
                                     <StyledTableCell align="center">Username</StyledTableCell>
                                     <StyledTableCell align="center">Type</StyledTableCell>
-                                    <StyledTableCell align="center">Actions</StyledTableCell> {/* Add Actions column */}
+                                    <StyledTableCell align="center">Actions</StyledTableCell> 
                                   </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -315,20 +299,14 @@ export default function RemoveDoctorPatientAdmin() {
                                 </TableBody>
                               </Table>
                             </TableContainer>
-                          </div>
-                        </Paper>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Container>
-              </Box>
-
-            </Grid>
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
-        </Box>
-      </Box>
-    </ThemeProvider>
+                          
+                //         </Paper>
+                //       </Grid>
+                //     </Grid>
+                //   </Box>
+                // </Container>
+             */}
+             </div> 
   );
 }
 

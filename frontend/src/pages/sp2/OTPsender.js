@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import Title from '../Title';
 
 const OTPSender = () => {
   const [userEmail, setEmail] = useState('');
@@ -25,8 +28,18 @@ const OTPSender = () => {
     setEmail('');
   };
 
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
   return (
     <div>
+          <button onClick={goBack} className="back-button">
+      <FontAwesomeIcon icon={faArrowLeft} />
+    </button>
+    {/* <Title style={{ color: '#25A18E' , fontSize: 23, textAlign: 'center' }}>Send OTP</Title> */}
+<br /><br />
       <h1>Send OTP</h1>
       <form>
         <div>

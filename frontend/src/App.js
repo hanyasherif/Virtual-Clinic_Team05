@@ -139,6 +139,7 @@ import RescheduleDoctor from './components/RescheduleDoctor';
 
 import ChoosePath from './pages/ChoosePath';
 import ChoosePathAdmin from './pages/ChoosePathAdmin';
+import ViewReAdminDoc from './components/ViewReAdminDoc';
 
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
@@ -203,7 +204,8 @@ function App() {
               element={<RescheduleDoctor/>}/>
               {/* <Route path="/"
               element={<Menu/>}/> */}
-
+              <Route path="/ViewReAdminDoc"
+              element={<ViewReAdminDoc/>}/>
 
               <Route path="/"
               element={<SignIn/>}/> 

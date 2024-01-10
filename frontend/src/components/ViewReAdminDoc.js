@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useState, useEffect } from "react";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -18,16 +18,20 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItemsAdCl';
-import { Box, Button, Input } from '@mui/material';
-import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
-import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import ViewDocPat from './ViewDocPat';
+import Wallet from './Wallet';
+import ViewFamilyMember from './ViewFamilyMember';
+import PatPrescView from './PatPrescView';
+import ViewHealthRecords from './ViewHealthRecords';
+import ViewPackages from './ViewPackages';
+import ViewMyPackage from './ViewMyPackage'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-
-let email='';
+import { useState, useEffect } from "react";
+import Requests from '../pagesCl/Requests';
+import Title from './Title';
 
 function Copyright(props) {
   return (
@@ -54,7 +58,9 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  background: 'linear-gradient(to right, #004E64, #0088A8)',
+//   backgroundColor: '#004E64', // New background color
+background: 'linear-gradient(to right, #004E64, #0088A8)',
+
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -103,7 +109,7 @@ const specificButtonStyle = {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function ChangePassAdmin() {
+export default function AdminDashboardCl() {
 
   const [open, setOpen] = React.useState(true);
   const [buttonPosition, setButtonPosition] = React.useState({
@@ -140,43 +146,6 @@ export default function ChangePassAdmin() {
     }
   };
 
-  const [otp, setOtp] = useState('');
-  const [verified, setVerified] = useState(false);
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmedPassword, setConfirmedPassword] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
-  const handleOtpChange = (e) => {
-    setOtp(e.target.value);
-  };
-
-  
-  const handleNewPasswordChange = (e) => {
-    setNewPassword(e.target.value);
-  };
-  const handleCurrentPasswordChange = (e) => {
-    setCurrentPassword(e.target.value);
-  };
-  const handleConfirmedPasswordChange = (e) => {
-    setConfirmedPassword(e.target.value);
-  };
-
-  const handleSetNewPassword = async() => {
-    if (newPassword.trim() !== '' &&  newPassword === confirmedPassword ) {
-      try {
-        const res = await axios.post(`http://localhost:8000/ChangePassword`, {
-        currentPassword:currentPassword,
-        password: newPassword},{withCredentials:true});
-        alert("Password Changed");
-        window.location.href='/';
-      } catch (error) {
-        console.log("ero"+error.response.data.error);
-          alert("TryAgain Later:"+error.response.data.error);
-        }
-    } else {
-      alert('Passwords do not match');
-    }
-  };
-
   // useEffect(() => {    
   //   toggleDrawer();
   //  }, []);
@@ -210,7 +179,7 @@ export default function ChangePassAdmin() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Change Password Admin Page
+              El7a2ny Clinic View Doc Requests Admin Page
             </Typography>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
             <IconButton color="inherit">
@@ -256,146 +225,166 @@ export default function ChangePassAdmin() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
             <button
-          onClick={goBack}
-          className="back-button"
-          style={{
-            ...specificButtonStyle,
-            top: buttonPosition.top,
-            left: buttonPosition.left,
-          }}
-        >
-          <FontAwesomeIcon icon={faArrowLeft} />
-        </button>
-            <div>
-        <Typography
-              component="h1"
-              variant="h5"
-              color="inherit"
-              noWrap
-              
-              sx={{ flexGrow: 1, marginTop: 10, marginLeft: 61.5 }}
+              onClick={goBack}
+              className="back-button"
+              style={{
+                ...specificButtonStyle,
+                top: buttonPosition.top,
+                left: buttonPosition.left,
+              }}
             >
-              Change Password
-        </Typography>
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </button>
+               <Grid item xs={12} md={8} lg={9} 
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.005)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
+                <Paper
+                  sx={{ 
+                    p: 2, 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 200, 
+                    borderRadius: 3,
+                  }}
+                >
+                <Title style={{ color: 'black' , fontSize: 25}}>Doctors Requests</Title>
+                  <Requests />
+                </Paper>
+              </Grid>
+            {/*  <Grid item xs={12} md={4} lg={3}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.02)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 200,
+                    borderRadius: 3,
+                  }}
+                >
+                  <Wallet />
+                </Paper>
+              </Grid>
 
-        <TextField
-          label="Enter Current Password"
-          variant="outlined"
-          margin="normal"
-          type="password"
-          value={currentPassword}
-          // placeholder="Enter Current Password"
+              <Grid item xs={12} md={4} lg={2}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 200,
+                    borderRadius: 3,
+                  }}
+                >
+                  <ViewHealthRecords />
+                </Paper>
+              </Grid>
 
-          sx={{
-            // marginBottom: '20px', // Adjust the margin as needed
-            marginLeft: 61.5,
-            minWidth: 205,
-            marginTop: 4,
-            // height: 20,
-            '& .MuiInputLabel-shrink': {
-              color: '#25A18E', // Change label color while shrinking (on input)
-            },
-            '& .MuiOutlinedInput-root': {
-              '&:hover fieldset': {
-                borderColor: '#25A18E', // Change border color on hover
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#25A18E', // Change border color on focus
-              },
-            },
-          }}    
-          onChange={handleCurrentPasswordChange}
-        />
+              <Grid item xs={12} lg={10}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
+                <Paper 
+                sx={{ 
+                  p: 2, 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  transition: 'transform 0.3s ease-in-out',
+                  // height: 200, 
+                  borderRadius: 3,
+                }}>
+                  <ViewFamilyMember />
+                </Paper>
+              </Grid>
 
-          {/* <input
-            type="password"
-            value={currentPassword}
-            onChange={handleCurrentPasswordChange}
-            placeholder="Enter Current Password"
-          /> */}
-          {/* <h2 style={{marginLeft: 5}}>Set New Password</h2> */}
+              <Grid item xs={12} md={8} lg={13}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 200,
+                    borderRadius: 3,
+                  }}
+                >
+                  <PatPrescView />
+                </Paper>
+              </Grid>
 
-        {/* <Typography
-              component="h1"
-              variant="h4"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1, marginTop: 3, marginLeft: 1 }}
-            >
-              Set New Password
-        </Typography> */}
-        <br/>
+              <Grid item xs={12}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
+                <Paper 
+                sx={{ 
+                  p: 2, 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  transition: 'transform 0.3s ease-in-out',
+                  borderRadius: 3,
+                }}>
+                  <ViewPackages />
+                </Paper>
+              </Grid>
 
-          <TextField
-          label="Enter New Password"
-          variant="outlined"
-          margin="normal"
-          type="password"
-          value={newPassword}
-          // placeholder="Enter New Password"
-
-          sx={{
-            // marginBottom: '20px', // Adjust the margin as needed
-            marginLeft: 61.5,
-            minWidth: 205,
-            // height: 20,
-            '& .MuiInputLabel-shrink': {
-              color: '#25A18E', // Change label color while shrinking (on input)
-            },
-            '& .MuiOutlinedInput-root': {
-              '&:hover fieldset': {
-                borderColor: '#25A18E', // Change border color on hover
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#25A18E', // Change border color on focus
-              },
-            },
-          }}    
-          onChange={handleNewPasswordChange}
-        />
-        <br/>
-        <TextField
-          label="Confirm New Password"
-          variant="outlined"
-          margin="normal"
-          type="password"
-          value={confirmedPassword}
-          // placeholder="Confirm New Password"
-
-          sx={{
-            // marginBottom: '20px', // Adjust the margin as needed
-            marginLeft: 61.5,
-            minWidth: 205,
-            // height: 20,
-            '& .MuiInputLabel-shrink': {
-              color: '#25A18E', // Change label color while shrinking (on input)
-            },
-            '& .MuiOutlinedInput-root': {
-              '&:hover fieldset': {
-                borderColor: '#25A18E', // Change border color on hover
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#25A18E', // Change border color on focus
-              },
-            },
-          }}    
-          onChange={handleConfirmedPasswordChange}
-        />
-        <br/>
-          <Button
-            sx={{
-              marginTop: 2,
-              marginLeft: 61.5,
-              minWidth: 205,
-              color: 'white',
-              backgroundColor: '#25A18E',
-              '&:hover': {
-                  backgroundColor: '#20756c', // Change color on hover if desired
-              },
-              height: 55
-              }} 
-          onClick={handleSetNewPassword}>Save</Button>
-        </div>
+              <Grid item xs={12} md={4} lg={4}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.01)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: 'transform 0.3s ease-in-out',
+                    // height: 240,
+                    borderRadius: 3,
+                  }}
+                >
+                  <ViewMyPackage />
+                </Paper>
+              </Grid> */}
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>

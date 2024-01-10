@@ -31,6 +31,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
+
 const ViewFamilyMember = () => { 
     const params = new URLSearchParams(window.location.search);
     const [famMem,setFamMem] = useState([]);

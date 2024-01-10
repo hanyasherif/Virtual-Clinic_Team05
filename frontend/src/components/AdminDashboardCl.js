@@ -26,6 +26,13 @@ import PatPrescView from './PatPrescView';
 import ViewHealthRecords from './ViewHealthRecords';
 import ViewPackages from './ViewPackages';
 import ViewMyPackage from './ViewMyPackage'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import Requests from '../pagesCl/Requests';
+import AddAdminPage from './AddAdminPage';
+import RemoveDoctorPatientAdmin from './RemoveDoctorPatientAdmin';
 
 function Copyright(props) {
   return (
@@ -91,14 +98,44 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
+
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function DoctorDashboard() {
+export default function AdminDashboardCl() {
 
   const [open, setOpen] = React.useState(true);
+  const [buttonPosition, setButtonPosition] = React.useState({
+    top: '75px',
+    left: '120px',
+  });
   const toggleDrawer = () => {
     setOpen(!open);
+    if (open) {
+      setButtonPosition({
+        top: '75px',
+        left: '120px',
+      });
+    } else {
+      setButtonPosition({
+        top: '75px',
+        left: '240px', // Adjust this value according to your drawer width
+      });
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
   };
 
   const handleLogout = async (e) => {
@@ -109,6 +146,10 @@ export default function DoctorDashboard() {
       console.error('Error:', error);
     }
   };
+
+  // useEffect(() => {    
+  //   toggleDrawer();
+  //  }, []);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -184,29 +225,62 @@ export default function DoctorDashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* <Grid item xs={12} md={8} lg={9} 
+            <button
+              onClick={goBack}
+              className="back-button"
+              style={{
+                ...specificButtonStyle,
+                top: buttonPosition.top,
+                left: buttonPosition.left,
+              }}
+            >
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </button>
+            <Grid item xs={12} lg={6}
+                sx={{
+                  '&:hover > div': {
+                    transform: 'scale(1.009)',
+                    transition: 'transform 0.3s ease-in-out',
+                  },
+                }}
+              >
+                <Paper 
+                sx={{ 
+                  p: 2, 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  transition: 'transform 0.3s ease-in-out',
+                  // height: 200, 
+                  width: 840, // Adjust width as needed
+                  borderRadius: 3,
+                }}>
+                  <RemoveDoctorPatientAdmin />
+                </Paper>
+              </Grid>
+               <Grid item xs={12} lg={6} 
                 sx={{
                   '&:hover > div': {
                     transform: 'scale(1.01)',
                     transition: 'transform 0.3s ease-in-out',
                   },
-                  
                 }}
               >
                 <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
+                  sx={{ 
+                    p: 2, 
+                    display: 'flex', 
+                    flexDirection: 'column', 
                     transition: 'transform 0.3s ease-in-out',
-                    // height: 200,
+                    // height: 200, 
+                    width: 250, // Adjust width as needed
                     borderRadius: 3,
+                    marginLeft: 35,
                   }}
                 >
-                  <ViewDocPat />
+                  <AddAdminPage />
                 </Paper>
               </Grid>
-              <Grid item xs={12} md={4} lg={3}
+            {/*  <Grid item xs={12} md={4} lg={3}
                 sx={{
                   '&:hover > div': {
                     transform: 'scale(1.02)',
@@ -249,28 +323,9 @@ export default function DoctorDashboard() {
                   <ViewHealthRecords />
                 </Paper>
               </Grid>
+*/}
 
-              <Grid item xs={12} lg={10}
-                sx={{
-                  '&:hover > div': {
-                    transform: 'scale(1.01)',
-                    transition: 'transform 0.3s ease-in-out',
-                  },
-                }}
-              >
-                <Paper 
-                sx={{ 
-                  p: 2, 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  transition: 'transform 0.3s ease-in-out',
-                  // height: 200, 
-                  borderRadius: 3,
-                }}>
-                  <ViewFamilyMember />
-                </Paper>
-              </Grid>
-
+{/*
               <Grid item xs={12} md={8} lg={13}
                 sx={{
                   '&:hover > div': {

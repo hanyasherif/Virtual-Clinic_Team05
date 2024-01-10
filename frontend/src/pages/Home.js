@@ -1,39 +1,50 @@
-import React from 'react'
-import { useEffect, useState } from "react"
-import Navbar from '../componentsPh/Navbar';
-
-
-// components
-//import Details from "../../../admin/src/components/details"
-import Form from "../componentsPh/form"
+import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import Title from './Title';
+import Form from "../componentsPh/form";
 
 const Home = () => {
-  const [patients, setpatients] = useState(null)
+  const [patients, setPatients] = useState(null);
 
   useEffect(() => {
     const fetchDetails = async () => {
-      const response = await fetch('/registerPatient')
-      const json = await response.json()
+      const response = await fetch('/registerPatient');
+      const json = await response.json();
 
       if (response.ok) {
-        setpatients(json)
+        setPatients(json);
       }
-    }
+    };
 
-    fetchDetails()
-  }, [])
+    fetchDetails();
+  }, []);
+
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
 
   return (
     <div className="home">
-      <Navbar/>
-      <div className="patients">
-        {patients && patients.map(patients => (
-          <Form patients={patients} key={patients._id} />
-                    ))}
-                </div>
-            <Form />
-    </div>
-  )
-}
+      <button onClick={goBack} className="back-button">
+        <FontAwesomeIcon icon={faArrowLeft} />
+      </button>
+      <br /><br />
+      <div style={{ textAlign: 'center' }}>
+        <Title style={{ color: 'black', fontSize: 23 }}>Register As A Patient</Title>
+      </div>
 
-export default Home
+      <div className="patients">
+        {patients && patients.map(patient => (
+          <Form patients={patient} key={patient._id} />
+        ))}
+      </div>
+      <Form />
+    </div>
+  );
+};
+
+export default Home;
