@@ -68,7 +68,16 @@ const PatPrescView = () => {
       </TableHead>   
       <TableBody>
         {prescriptions.map((prescription) => (
-          <TableRow key={prescription.id}>
+          <TableRow 
+          hover
+            sx={{
+                "&:hover":{
+                cursor: "pointer",
+                backgroundColor: "#f5f5f5",
+                width: "100%"
+                }
+            }}
+          key={prescription.id}>
             <TableCell align="center">{prescription.date}</TableCell>
                <TableCell align="center">{prescription.doctorName}</TableCell>
                <TableCell align="center">{prescription.patientName}</TableCell>

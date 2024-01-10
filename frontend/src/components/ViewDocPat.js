@@ -62,7 +62,16 @@ const ViewDocPat = () => {
         </TableHead>
         <TableBody>
           {doctors.map((doctor) => (
-            <TableRow key={doctor.id}>
+            <TableRow 
+            hover
+            sx={{
+                "&:hover":{
+                cursor: "pointer",
+                backgroundColor: "#f5f5f5",
+                width: "100%"
+                }
+            }}
+            key={doctor.id}>
               <TableCell style={{ textAlign: 'center'}}>{doctor.name}</TableCell>
               <TableCell style={{ textAlign: 'center'}}>{doctor.email}</TableCell>
               <TableCell style={{ textAlign: 'center'}}>{doctor.docSpeciality}</TableCell>

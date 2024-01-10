@@ -300,10 +300,13 @@ export default function DocProfile  ()  {
           Chat
         </Button>
       </ActionButtonsContainer>
-
       <br />
-
-
+      <Typography 
+        sx={{marginLeft: 3}}
+      >
+          Choose An Appointment To Reserve:
+        </Typography>
+        <br />
      <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>

@@ -440,7 +440,9 @@ export default function DoctorsList() {
           Filter Doctors
         </Button>
 
-
+        <Typography>
+          Choose A Doctor To Chat/Video Chat With Or Reserve An Appointment:
+        </Typography>
       </Box>
 
       <TableContainer component={Paper}>

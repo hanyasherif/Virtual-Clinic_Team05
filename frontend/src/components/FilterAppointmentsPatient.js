@@ -366,8 +366,8 @@ export default function FilterAppointmentsPatient() {
             <StyledTableCell align="center">Date</StyledTableCell>
             <StyledTableCell align="center">Doctor</StyledTableCell>
             <StyledTableCell align="center">Status</StyledTableCell>
-            <StyledTableCell align="center"></StyledTableCell>
-            <StyledTableCell align="center"></StyledTableCell>
+            <StyledTableCell align="center">Cancel Appointment</StyledTableCell>
+            <StyledTableCell align="center">Reschedule Appointment</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>

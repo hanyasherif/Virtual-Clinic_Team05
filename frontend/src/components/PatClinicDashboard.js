@@ -25,7 +25,10 @@ import ViewFamilyMember from './ViewFamilyMember';
 import PatPrescView from './PatPrescView';
 import ViewHealthRecords from './ViewHealthRecords';
 import ViewPackages from './ViewPackages';
-import ViewMyPackage from './ViewMyPackage'
+import ViewMyPackage from './ViewMyPackage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -91,14 +94,44 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
+
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function PatClinicDashboard() {
 
   const [open, setOpen] = React.useState(true);
+  const [buttonPosition, setButtonPosition] = React.useState({
+    top: '75px',
+    left: '120px',
+  });
   const toggleDrawer = () => {
     setOpen(!open);
+    if (open) {
+      setButtonPosition({
+        top: '75px',
+        left: '120px',
+      });
+    } else {
+      setButtonPosition({
+        top: '75px',
+        left: '240px', // Adjust this value according to your drawer width
+      });
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
   };
 
   const handleLogout = async (e) => {
@@ -127,21 +160,28 @@ export default function PatClinicDashboard() {
               onClick={toggleDrawer}
               sx={{
                 marginRight: '36px',
+                marginLeft: 3,
                 ...(open && { display: 'none' }),
               }}
             >
               <MenuIcon />
             </IconButton>
+
             <Typography
               component="h1"
               variant="h6"
               color="inherit"
               noWrap
-              sx={{ flexGrow: 1 }}
+              sx={{ flexGrow: 1, marginLeft: 4 }}
             >
               El7a2ny Clinic Patient Page
             </Typography>
-            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+            {/* <button onClick={goBack} className="back-button"
+      style={specificButtonStyle}>
+      <FontAwesomeIcon icon={faArrowLeft} />
+    </button> */}
+
+<Button color="inherit" onClick={handleLogout}>Logout</Button>
             <IconButton color="inherit">
               <Badge badgeContent={0} color="secondary">
                 <NotificationsIcon />
@@ -181,9 +221,24 @@ export default function PatClinicDashboard() {
             overflow: 'auto',
           }}
         >
+
           <Toolbar />
+
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+
             <Grid container spacing={3}>
+
+            <button
+          onClick={goBack}
+          className="back-button"
+          style={{
+            ...specificButtonStyle,
+            top: buttonPosition.top,
+            left: buttonPosition.left,
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
               <Grid item xs={12} md={8} lg={9} 
                 sx={{
                   '&:hover > div': {
@@ -193,6 +248,7 @@ export default function PatClinicDashboard() {
                   
                 }}
               >
+                
                 <Paper
                   sx={{
                     p: 2,
@@ -206,7 +262,6 @@ export default function PatClinicDashboard() {
                   <ViewDocPat />
                 </Paper>
               </Grid>
-              {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}
                 sx={{
                   '&:hover > div': {
