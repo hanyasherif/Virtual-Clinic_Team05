@@ -140,6 +140,7 @@ import RescheduleDoctor from './components/RescheduleDoctor';
 import ChoosePath from './pages/ChoosePath';
 import ChoosePathAdmin from './pages/ChoosePathAdmin';
 import ViewReAdminDoc from './components/ViewReAdminDoc';
+import PharmacistChatDoc from './components/PharmacistChatDoc';
 
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
@@ -299,6 +300,11 @@ function App() {
             <Route
               path="/pharmacistPagePH"
               element={<DashboardPharmacist/>}
+            />
+
+<Route
+              path="/PharmacistChatDoc"
+              element={<PharmacistChatDoc/>}
             />
             <Route
               path="/adminPagePH"
