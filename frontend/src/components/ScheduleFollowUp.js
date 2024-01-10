@@ -161,6 +161,45 @@ export default function ScheduleFollowUp() {
     }
   };
 
+  const [patientId, setPatientId] = useState('');
+  const [healthRecord, setHealthRecord] = useState('');
+  // const [message, setMessage] = useState('');
+
+  const handlePatientIdChange = (e) => {
+    setPatientId(e.target.value);
+  };
+
+  const handleHealthRecordChange = (e) => {
+    setHealthRecord(e.target.value);
+  };
+
+  const handleAddHealthRecord = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/AddNewHR', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          PatientId: patientUser._id,
+          HealthRecord: healthRecord,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.message) {
+          setMessage(data.message);
+        }
+      } else {
+        // Handle non-2xx status codes
+        console.error('Error:', response.status);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -190,7 +229,7 @@ export default function ScheduleFollowUp() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              El7a2ny Clinic Schedule FollowUp Doctor Page
+              El7a2ny Clinic Schedule FollowUp/ Add Health Record Doctor Page
             </Typography>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
             <IconButton color="inherit">
@@ -307,6 +346,55 @@ export default function ScheduleFollowUp() {
              }} 
           onClick={scheduleFollowUp}>Schedule A Follow-Up</Button>
           <br />
+          <Grid container spacing={3}>
+          <TextField
+          label="Enter Patient's Health Record"
+          variant="outlined"
+          margin="normal"
+          type="text"
+          value={healthRecord}
+          // placeholder="Enter Current Password"
+          sx={{
+            // marginBottom: '20px', // Adjust the margin as needed
+            marginLeft: 49,
+            minWidth: 200,
+            marginTop: 4,
+            // height: 20,
+            '& .MuiInputLabel-shrink': {
+              color: '#25A18E', // Change label color while shrinking (on input)
+            },
+            '& .MuiOutlinedInput-root': {
+              '&:hover fieldset': {
+                borderColor: '#25A18E', // Change border color on hover
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#25A18E', // Change border color on focus
+              },
+            },
+          }}    
+          onChange={handleHealthRecordChange}
+        />
+      <br />
+      <Button 
+           variant="contained"
+           margin="normal"
+           padding="normal"
+           sx={{
+            marginTop: 4,
+             marginLeft: 1,
+             minWidth: 150,
+             color: 'white',
+             backgroundColor: '#25A18E',
+             '&:hover': {
+                 backgroundColor: '#20756c', // Change color on hover if desired
+             },
+             height: 55
+             }} 
+             onClick={handleAddHealthRecord}>Add Health Record</Button>
+      {/* <button onClick={handleAddHealthRecord}>Add Health Record</button> */}
+      </Grid>
+      <Grid container spacing={3} sx={{marginTop: 4, marginLeft: 20}}>
+      {/* {message && <p>{message}</p>} */}
       <div>
       {message && <p>{message}</p>}
       {scheduledAppointment && (
@@ -319,6 +407,7 @@ export default function ScheduleFollowUp() {
         </div>
       )} 
       </div> 
+      </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
