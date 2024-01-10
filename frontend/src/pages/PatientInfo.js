@@ -51,6 +51,13 @@ const PatientInfo = () => {
             onClick={getPatients}
             margin="normal"
             padding="normal"
+                 sx={{
+            color: 'white',
+            backgroundColor: '#25A18E',
+            '&:hover': {
+              backgroundColor: '#20756c',
+            },
+          }}
             >Load Patient</Button>
             {/* margin */}
             </Box>
