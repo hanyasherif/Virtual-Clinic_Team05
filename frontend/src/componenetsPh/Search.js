@@ -35,27 +35,20 @@ const Search = () => {
                 <TextField type="text" placeholder="Enter Medicine Name" value={search} onChange={(e) => setSearch(e.target.value)}/>
 
                 <Button
-  type="submit"
-  variant="contained"
-  color="primary"
-  style={{
-    marginTop: 20,
-    width: '50%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    display: 'block',
-  }}
-  sx={{
-    color: 'white',
-    backgroundColor: '#0088A8',
-    '&:hover': {
-      backgroundColor: '#005670',
-    },
-  }}
->
-  Search
-</Button>
-
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginTop: 20,marginBottom: 20, width: '50%' }}
+          sx={{
+            color: 'white',
+            backgroundColor: '#0088A8',
+            '&:hover': {
+              backgroundColor: '#005670',
+            },
+          }}
+        >
+          Search
+        </Button>
                 {medicines && (
                     <div>
                         {medicines.map((medicine) => (

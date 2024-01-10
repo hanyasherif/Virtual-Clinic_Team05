@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Grid } from '@mui/material';
 import MedicineDetailsLite from './MedicineDetailsLite';
+import Typography from '@mui/material/Typography';
 
 const MedicineFilter = ({ filterMedicine }) => {
-  const medicinalUses = ["Pain and Fever", "Infections", "Relief", "Infections"];
+  const medicinalUses = ["Pain and Fever", "Reflux", "Relief", "Anxiety"];
   const [medicines, setMedicines] = useState([]);
 
   const handleFilter = (medicinalUse) => {
@@ -29,26 +30,32 @@ const MedicineFilter = ({ filterMedicine }) => {
 
   return (
     <div className="medicine-filter">
-      <p>Filter by Medicinal Use:</p>
+        <Typography variant="h4" style={{ color: '#25A18E', fontSize: 27, textAlign: 'center' }}>
+          Filter by medicinal Use
+        </Typography>
       <div>
         {medicinalUses.map((medicinalUse, index) => (
-        <Button
-        key={index}
-        onClick={() => handleFilter(medicinalUse)}
-        variant="contained"
-        color="primary"
-        style={{
-          marginTop: '5px', // Add top margin to match the spacing
-          width: '20%', // Match the width of the second button
-          backgroundColor: '#25A18E',
-          color: 'white',
-          '&:hover': {
-            backgroundColor: '#20756c',
-          },
-        }}
-      >
-        {medicinalUse}
-      </Button>
+     <Button
+     key={index}
+     onClick={() => handleFilter(medicinalUse)}
+     variant="contained"
+     color="primary"
+     style={{
+      marginLeft: '15px',
+       marginTop: '5px',
+       marginBottom: '20px', // Add top margin to match the spacing
+       width: '20%', // Match the width of the second button
+       padding: '10px', // Add padding here
+       backgroundColor: '#25A18E',
+       color: 'white',
+       '&:hover': {
+         backgroundColor: '#20756c',
+       },
+     }}
+   >
+     {medicinalUse}
+   </Button>
+   
       
         ))}
       </div>
