@@ -17,7 +17,6 @@ const RemovePharPatPage = () => {
     </button>
     <br /><br />
     {/* <Title style={{ color: '#25A18E' , fontSize: 23, textAlign: 'center' }}>Submit Request</Title> */}
-      <h1>Hello, Pharmacist!</h1>
       <RequestForm/>
     </div>
   );

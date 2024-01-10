@@ -261,7 +261,7 @@ app.post("/login", login);
 app.get("/getPatientById",findPatById);
 ////wael
 
-app.post("/addRequest", requireAuth("Doctor"), addRequest);
+app.post("/addRequest", addRequest);
 app.get("/getRequests", requireAuth("Administrator"), getRequests);
 app.get("/getARequest", getARequest);
 

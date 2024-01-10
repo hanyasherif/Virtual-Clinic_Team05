@@ -1,5 +1,8 @@
 import React from "react";
 import Title from '../components/Title';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
 
 
 const { useState } = require("react")
@@ -78,86 +81,92 @@ const RequestForm = () => {
     }
 
     return(
-        <div>
-            <Title style={{ color: '#25A18E' , fontSize: 23, textAlign: 'center' }}>Submit Request</Title>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <Title style={{ color: '#25A18E', fontSize: 23, textAlign: 'center' }}>Submit Pharmacist Request</Title>
 
-            {/* <h1>Submit Request</h1> */}
-                <form className="create" onSubmit={handleSubmit}>
-                    <div>
-                        <label>Name: </label>
-                        <input
-                            type="text" 
-                            placeholder="Enter you name"
-                            value={name}
-                            onChange={handleName}
-                        />
-                    </div>
-                    <div>
-                        <label>Username: </label>
-                        <input
-                            type="text" 
-                            placeholder="Enter you username"
-                            value={username}
-                            onChange={handleUsername}
-                        />
-                    </div>
-                    <div>
-                        <label>Password: </label>
-                        <input
-                            type="password" 
-                            placeholder="Enter you password"
-                            value={password}
-                            onChange={handlePassword}
-                        />
-                    </div>
-                    <div>
-                        <label>Email: </label>
-                        <input 
-                            type="email" 
-                            placeholder="Enter you Email"
-                            value={email}
-                            onChange={handleEmail}
-                            />
-                    </div>
-                    <div>
-                        <label>Date Of Birth: </label>
-                        <input 
-                            type="date" 
-                            placeholder="Enter you Email"
-                            value={dateOfBirth}
-                            onChange={handleDateOfBirth}
-                            />
-                    </div>
-                    <div>
-                        <label>Hourly Rate: </label>
-                        <input 
-                            type="number" 
-                            placeholder="Enter you Hourly Rate"
-                            value={hourlyRate}
-                            onChange={handleHourlyRate}
-                            />
-                    </div>
-                    <div>
-                        <label>Affiliation: </label>
-                        <input 
-                            type="text" 
-                            placeholder="Enter you affiliation"
-                            value={affiliation}
-                            onChange={handleAffiliation}
-                            />
-                    </div>
-                    <div>
-                        <label>Educational Background: </label>
-                        <input 
-                            type="text"
-                            placeholder="Enter you educational background:"
-                            value={educationalBackground}
-                            onChange={handleEducationalBackground}
-                            />
-                    </div>
-                    <input type="submit" onClick={handleSubmit} className="primaryBtn" style={{marginLeft: 160}}/>
-                </form>
-        </div>
+        <form className="create" onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '400px' }}>
+            <TextField
+                label="Name"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                value={name}
+                onChange={handleName}
+            />
+            <TextField
+                label="Username"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                value={username}
+                onChange={handleUsername}
+            />
+            <TextField
+                label="Password"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                type="password"
+                value={password}
+                onChange={handlePassword}
+            />
+            <TextField
+                label="Email"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                type="email"
+                value={email}
+                onChange={handleEmail}
+            />
+            <TextField
+                label="Date Of Birth"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                type="date"
+                value={dateOfBirth}
+                onChange={handleDateOfBirth}
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                style={{ width: '100%' }}
+            />
+            <TextField
+                label="Hourly Rate"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                type="number"
+                value={hourlyRate}
+                onChange={handleHourlyRate}
+            />
+            <TextField
+                label="Affiliation"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                value={affiliation}
+                onChange={handleAffiliation}
+            />
+            <TextField
+                label="Educational Background"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                value={educationalBackground}
+                onChange={handleEducationalBackground}
+            />
+            <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                style={{ marginTop: 20, width: '100%' }}
+            >
+                Submit
+            </Button>
+        </form>
+    </div>
     )
 }
 

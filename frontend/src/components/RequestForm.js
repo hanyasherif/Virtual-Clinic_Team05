@@ -2,8 +2,9 @@ import Title from './Title';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-
+import { Button, TextField, Link } from '@mui/material';
 const { useState } = require("react")
+
 
 const RequestForm = () => {
 
@@ -91,101 +92,130 @@ const RequestForm = () => {
     navigate(-1);
   };
 
-    return(
+    return (
         <div>
-    <button onClick={goBack} className="back-button">
-      <FontAwesomeIcon icon={faArrowLeft} />
-    </button>
+            <button onClick={goBack} className="back-button">
+                <FontAwesomeIcon icon={faArrowLeft} />
+            </button>
             <br /><br />
-            <Title style={{ color: '#25A18E' , fontSize: 23, textAlign: 'center' }}>Submit Request</Title>
-                <form className="create" onSubmit={handleSubmit}>
-                    <div>
-                        <label>Name: </label>
-                        <input
-                            type="text" 
-                            placeholder="Enter you name"
-                            value={name}
-                            onChange={handleName}
-                        />
-                    </div>
-                    <div>
-                        <label>Username: </label>
-                        <input
-                            type="text" 
-                            placeholder="Enter you username"
-                            value={username}
-                            onChange={handleUsername}
-                        />
-                    </div>
-                    <div>
-                        <label>Password: </label>
-                        <input
-                            type="password" 
-                            placeholder="Enter you password"
-                            value={password}
-                            onChange={handlePassword}
-                        />
-                    </div>
-                    <div>
-                        <label>ID: </label>
-                        <input
-                            type="text" 
-                            placeholder="Enter you ID"
-                            value={doctor}
-                            onChange={handleDoctor}
-                        />
-                    </div>
-                    <div>
-                        <label>Email: </label>
-                        <input 
-                            type="email" 
-                            placeholder="Enter you Email"
-                            value={email}
-                            onChange={handleEmail}
-                            />
-                    </div>
-                    <div>
-                        <label>Date Of Birth: </label>
-                        <input 
-                            type="date" 
-                            placeholder="Enter you Email"
-                            value={dateOfBirth}
-                            onChange={handleDateOfBirth}
-                            />
-                    </div>
-                    <div>
-                        <label>Hourly Rate: </label>
-                        <input 
-                            type="number" 
-                            placeholder="Enter you Hourly Rate"
-                            value={hourlyRate}
-                            onChange={handleHourlyRate}
-                            />
-                    </div>
-                    <div>
-                        <label>Affiliation: </label>
-                        <input 
-                            type="text" 
-                            placeholder="Enter you affiliation"
-                            value={affiliation}
-                            onChange={handleAffiliation}
-                            />
-                    </div>
-                    <div>
-                        <label>Educational Background: </label>
-                        <input 
-                            type="text"
-                            placeholder="Enter you educational background:"
-                            value={educationalBackground}
-                            onChange={handleEducationalBackground}
-                            />
-                    </div>
-                    
-                    <input type="submit" onClick={handleSubmit} style={{marginLeft: 160}}
-                    className="primaryBtn"/>
-                </form>
+            <Title style={{ color: '#25A18E', fontSize: 23, textAlign: 'center' }}>Submit Doctor Request</Title>
+            <form className="create" onSubmit={handleSubmit}>
+                <div>
+                    <TextField
+                        label="Name"
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        value={name}
+                        onChange={handleName}
+                    />
+                </div>
+                <div>
+                    <TextField
+                        label="Username"
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        value={username}
+                        onChange={handleUsername}
+                    />
+                </div>
+                <div>
+                    <TextField
+                        label="Password"
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        type="password"
+                        value={password}
+                        onChange={handlePassword}
+                    />
+                </div>
+                <div>
+                    <TextField
+                        label="ID"
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        value={doctor}
+                        onChange={handleDoctor}
+                    />
+                </div>
+                <div>
+                    <TextField
+                        label="Email"
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        type="email"
+                        value={email}
+                        onChange={handleEmail}
+                    />
+                </div>
+                <div>
+                    <TextField
+                        label="Date Of Birth"
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        type="date"
+                        value={dateOfBirth}
+                        onChange={handleDateOfBirth}
+                        InputLabelProps={{
+                            shrink: true,
+                            style: { width: '100%' } // Adjust the width of the label
+                          }}
+                    />
+                </div>
+                <div>
+                    <TextField
+                        label="Hourly Rate"
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        type="number"
+                        value={hourlyRate}
+                        onChange={handleHourlyRate}
+                    />
+                </div>
+                <div>
+                    <TextField
+                        label="Affiliation"
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        value={affiliation}
+                        onChange={handleAffiliation}
+                    />
+                </div>
+                <div>
+                    <TextField
+                        label="Educational Background"
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        value={educationalBackground}
+                        onChange={handleEducationalBackground}
+                    />
+                </div>
+
+                <Button type="submit" onClick={handleSubmit} 
+                variant="contained"
+                color="primary"
+                style={{ marginTop: 20, width: '100%' }}
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#25A18E',
+                  '&:hover': {
+                    backgroundColor: '#20756c',
+                  },
+                }}
+              >
+                    Submit
+                </Button>
+            </form>
         </div>
-    )
+    );
 }
 
 export default RequestForm

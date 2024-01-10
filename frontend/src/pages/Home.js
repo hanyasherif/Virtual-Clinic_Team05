@@ -34,7 +34,7 @@ const Home = () => {
       </button>
       <br /><br />
       <div style={{ textAlign: 'center' }}>
-        <Title style={{ color: 'black', fontSize: 23 }}>Register As A Patient</Title>
+         <Title style={{ color: '#25A18E', fontSize: 23, textAlign: 'center' }}>Register as a Patient</Title>
       </div>
 
       <div className="patients">
