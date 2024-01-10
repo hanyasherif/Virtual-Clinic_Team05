@@ -161,6 +161,15 @@ In the ever-evolving landscape of healthcare, we recognize the need for accessib
 
 # API Refrences
 
+To view all the routes:
+
+**Run at route Directory**
+   ```sh
+   npm run generate-swagger
+   ```
+
+**Note:** you will find the routes in backend/swagger-output.json
+
 # Tests
 
 Testing is performed using Postman for API testing.
