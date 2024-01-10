@@ -18,6 +18,13 @@ const RequestForm = () => {
     const [educationalBackground,setEducationalBackground] = useState('')
     const [error,setError] = useState(null)
     
+    const [selectedFile, setSelectedFile] = useState(null);
+    const handleFileChange = (event) => {
+      const file = event.target.files[0];
+      setSelectedFile(file);
+    };
+
+
     const handleName = e => {
         setName (e.target.value)
     }
@@ -157,6 +164,10 @@ const RequestForm = () => {
                 value={educationalBackground}
                 onChange={handleEducationalBackground}
             />
+             <div>
+                 <input type="file" onChange={handleFileChange} style={{marginLeft:200, marginTop: 20}}/>
+                  </div>
+    
             <Button
                 type="submit"
                 variant="contained"

@@ -36,7 +36,9 @@ const requestSchema = new Schema({
         required: true
     },status:{
       type: String
-    }
+    },
+    doc: {type:[String]}
+
 
   }, { timestamps: true });
   

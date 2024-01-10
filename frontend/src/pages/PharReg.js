@@ -18,6 +18,7 @@ const RemovePharPatPage = () => {
     <br /><br />
     {/* <Title style={{ color: '#25A18E' , fontSize: 23, textAlign: 'center' }}>Submit Request</Title> */}
       <RequestForm/>
+      
     </div>
   );
 };

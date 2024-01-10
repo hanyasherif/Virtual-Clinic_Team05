@@ -52,10 +52,11 @@ const addRequest = async(req,res) => {
       let request = await requestModel.create({username: username, 
         name: name, email: email, dateOfBirth: dateOfBirth,
          password: password, hourlyRate: hourlyRate, affiliation: affiliation,
-         educationalBackground: educationalBackground
+         educationalBackground: educationalBackground, status: 'pending'
       })
       await request.save()
-      res.status(200).json({message: "Request created successfully", request})
+      const createdRequested = await requestModel.findOne({username: username});
+      res.status(200).json( createdRequested);
    }
    catch(err){
       res.json({message: err.message})

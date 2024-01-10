@@ -28,7 +28,7 @@ const storage2 = multer.diskStorage({
   destination: function (req, file, cb) {
     
     //const dest = `Uploads/medical-history/${username}`;
-    const dest = `Uploads/reqUpload/${requestId}`;
+    const dest = `Uploads/reqUpload`;
     
     // Check if the folder exists, create it if not
     if (!fs.existsSync(dest)) {

@@ -321,12 +321,12 @@ const uploadMedicalDocument = async (req, res) => {
 
 const uploadDoctorDocument = async (req, res) => {
   try {
-    const requestId = req.body.requestId;
+    const usernameR = req.body.usernameR;
     const originalname= req.file;
-    const request= await requestModel.findById(requestId);
+    const request= await requestModel.findOne({username:usernameR});
     request.doc.push(originalname);
     await request.save();
-
+   
     res.status(201).json({ message: 'Document uploaded successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
