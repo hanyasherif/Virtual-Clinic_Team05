@@ -41,9 +41,9 @@ export const mainListItems = (
     </ListItemButton>
     <ListItemButton onClick={() => { window.location.href = '/Schedule'; }}>
       <ListItemIcon sx={{ color: '#25A18E' }}>
-        <AlarmIcon />
+        <HealthRecordIcon />
       </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Schedule Follow Up" />
+      <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Patient's Data" />
     </ListItemButton>
     {/* <ListItemButton onClick={() => { window.location.href = '/AddAppointment'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
@@ -51,12 +51,12 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Add Appointment" /> 
     </ListItemButton>*/}
-    <ListItemButton onClick={() => { window.location.href = '/AddNewHR'; }}>
+    {/* <ListItemButton onClick={() => { window.location.href = '/AddNewHR'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
         <HealthRecordIcon />
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Add Health Record" />
-    </ListItemButton>
+    </ListItemButton> */}
     <ListItemButton onClick={() => { window.location.href = '/PresDoctor'; }}>
         {/* PresDoctor */}
     <ListItemIcon sx={{ color: '#25A18E' }}>
