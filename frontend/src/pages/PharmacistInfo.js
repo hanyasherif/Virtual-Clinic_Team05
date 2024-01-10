@@ -51,10 +51,19 @@ const PharmacistInfo = () => {
             onClick={getPharmacists}
             margin="normal"
             padding="normal"
+            color="primary"
+            sx={{
+              color: 'white',
+              backgroundColor: '#25A18E',
+              '&:hover': {
+                backgroundColor: '#20756c',
+              },
+            }}
             >Load Pharmacist</Button>
             {/* margin */}
             </Box>
-            
+            {/* onClick={getPharmacists} */}
+
         
         
             
