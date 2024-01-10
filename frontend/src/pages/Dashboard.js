@@ -30,6 +30,12 @@ import cart from '../assets/cart.jpg';
 import Button from '@mui/material/Button';
 import Logo from '../assets/Logo.png';
 
+//#4
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+
+
 
 ///mangaa
 
@@ -57,6 +63,8 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+
+  // #5
   background: 'linear-gradient(to right, #004E64, #0088A8)',
 
   ...(open && {
@@ -96,6 +104,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 // TODO remove, this demo shouldn't need to reset the theme.
+
+//#1
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
 const defaultTheme = createTheme();
 
 // ... (imports)
@@ -107,9 +125,10 @@ const defaultTheme = createTheme();
 
 export default function Dashboard() {
 
+   // #2
   const handleLogout = async (e) => {
     try {
-      await fetch('http://localhost:8000/logout');
+      await fetch(`http://localhost:8000/logout`,{credentials: 'include'});
       window.location.href = 'http://localhost:3000/';
     } catch (error) {
       console.error('Error:', error);
@@ -117,9 +136,34 @@ export default function Dashboard() {
   };
 
   const [open, setOpen] = React.useState(true);
+
+const [buttonPosition, setButtonPosition] = React.useState({
+    top: '75px',
+    left: '120px',
+  });
   const toggleDrawer = () => {
     setOpen(!open);
+    if (open) {
+      setButtonPosition({
+        top: '75px',
+        left: '120px',
+      });
+    } else {
+      setButtonPosition({
+        top: '75px',
+        left: '240px', // Adjust this value according to your drawer width
+      });
+    }
   };
+
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+ 
+  
+   };
+// #2
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -213,6 +257,21 @@ export default function Dashboard() {
                   
                 }}
               >
+                {/* #3 */}
+                <button
+          onClick={goBack}
+          className="back-button"
+          style={{
+            ...specificButtonStyle,
+            top: buttonPosition.top,
+            left: buttonPosition.left,
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>     
+
+            {/* #3 */}
+
                 <Paper
                   sx={{
                     p: 1,

@@ -162,7 +162,7 @@ const { addAddress, searchAddress } = require("./RoutesPh/AddressController");
 
 const {addToCart, viewCart, removeFromCart, 
   changeCartItemQuantity, 
-  checkout, createPaymentIntent} = require("./RoutesPh/cartController");
+  checkout, createPaymentIntent, getCartTotalAmount } = require("./RoutesPh/cartController");
 
 const {viewOrders, cancelOrder} = require("./RoutesPh/orderController");
 
@@ -435,6 +435,8 @@ app.get("/getRoom",getRoom)
 app.get("/prescriptions",requireAuth("Patient"),  prescriptionMedicine);
 app.get("/alternativeMedicines", findAlternativeMedicines);
 app.get("/getSales", getSales);
+
+app.get("/getCartTotalAmount", getCartTotalAmount);
 
 
 ///////Aseel

@@ -6,6 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import Title from '../components/Title';
 
 const AddressForm = () => {
   const [newAddress, setNewAddress] = useState({
@@ -63,9 +64,9 @@ const AddressForm = () => {
 
   return (
     <form onSubmit={handleAddAddress}>
-      <Typography variant="h5" gutterBottom>
-        Add New Address:
-      </Typography>
+     <Title style={{ color: '#25A18E', fontSize: 23, textAlign: 'center' }}>
+              Add new address (optional)
+            </Title>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
@@ -133,9 +134,21 @@ const AddressForm = () => {
           />
         </Grid>
       </Grid>
-      <Button type="submit" variant="contained" color="primary">
-        Add New Address
-      </Button>
+      <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginTop: 5, marginLeft: 110, width: '55%' }}
+          sx={{
+            color: 'white',
+            backgroundColor: '#25A18E',
+            '&:hover': {
+              backgroundColor: '#20756c',
+            },
+          }}
+        >
+              Add Address
+        </Button>
     </form>
   );
 };

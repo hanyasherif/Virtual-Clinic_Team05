@@ -238,4 +238,26 @@ const createPaymentIntent = async (req, res) => {
   }
 };
 
-module.exports = { addToCart, viewCart, removeFromCart, changeCartItemQuantity, checkout, createPaymentIntent };
+
+const getCartTotalAmount= async (req,res)=>{
+  try {
+    // Retrieve user ID from the authenticated user (you may use the user ID stored in the session or token)
+    const userId = req.user.id;
+
+    // Fetch cart items for the user
+    const cartItems = await CartItem.find({ user: userId });
+
+    // Calculate the total amount
+    const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
+
+    res.status(200).json({ totalAmount });
+  } catch (error) {
+    console.error('Error fetching cart total amount:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+
+}
+
+
+
+module.exports = { addToCart, viewCart, removeFromCart, changeCartItemQuantity, checkout, createPaymentIntent ,getCartTotalAmount};

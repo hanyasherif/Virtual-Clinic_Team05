@@ -1,4 +1,6 @@
 import React from 'react';
+import { TextField, FormControlLabel, Radio } from '@mui/material';
+
 
 // import pillsImage from '../assets/pills.jpg';
 
@@ -73,16 +75,19 @@ const MedicineDetails = ({medicine}) => {
                 
                 {/* Add a radio button for isArchived */}
       <div>
-        <label>
-          un-archive Medicine:
-          <input
-            type="radio"
-            name="
-            
-            ived"
-            checked={isArchived}
-            onChange={() => setIsArchived(false)}
-          />
+      <label>
+          Archive Medicine:
+          <Radio
+                //   value="female"
+                //   checked={famMemGender === 'female'}
+                  onChange={() => setIsArchived(false)}
+                  sx={{
+                     color: '#25A18E', // Adjust color as needed
+                     '&.Mui-checked': {
+                      color: '#25A18E', // Adjust color for checked state
+                      },
+                  }}
+                />
         </label>
       </div>
       <button type="submit">Edit</button>

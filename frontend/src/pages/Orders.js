@@ -7,6 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
 import { useState, useEffect } from 'react';
+import Typography from '@mui/material/Typography';
+
 
 export default function Orders() {
   const [salesData, setSalesData] = useState({ totalSales: 0, medicineSales: [] });
@@ -28,7 +30,9 @@ export default function Orders() {
 
   return (
     <React.Fragment>
-      <Title>Sales Report</Title>
+        <Typography variant="h4" style={{ color: '#25A18E', fontSize: 27, textAlign: 'center' }}>
+          Sales Report
+        </Typography>
       <Table size="small">
         <TableHead>
           <TableRow>
