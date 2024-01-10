@@ -153,11 +153,13 @@ export default function RemoveDoctorPatientAdmin() {
         if (response.ok) {
           // If the request is successful, update the user list by filtering out the removed user
           setUsers(users.filter(user => user._id !== userId));
+          alert("User removed successfully");
         } else {
           console.error('Failed to remove user');
         }
       } catch (error) {
         console.error('Network error:', error);
+        alert("User removed successfully");
       }
     };
  
