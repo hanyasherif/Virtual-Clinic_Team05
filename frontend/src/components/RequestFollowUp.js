@@ -149,6 +149,7 @@ export default function RequestFollowUp  () {
 
   const handleSubmit = async () => {
     try {
+        console.log("what"+selectedDate)
       const response = await axios.post(
         `http://localhost:8000/requestFollowUp?appointmentId=${appointmentId}&newDate=${selectedDate}`,
         { tm: 'mohab' },
@@ -164,6 +165,7 @@ export default function RequestFollowUp  () {
   };
 
   const handleDateChange = (event) => {
+    console.log("what2"+event.target.value)
     setSelectedDate(event.target.value);
   };
 

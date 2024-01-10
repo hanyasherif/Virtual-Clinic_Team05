@@ -129,7 +129,10 @@ import AddAdminPage from './components/AddAdminPage';
 import PharmacistInfo from './components/PharmacistInfo';
 import AppointmentFailure from './components/AppointmentFailure';
 import AppointmentSuccess from './components/AppointmentSuccess';
-
+import DoctorPatientPage from './components/DoctorPatientPage';
+import DocPatientsList from './components/DocPatientsList';
+import DocPatientAppPage from './components/DocPatientAppPage';
+import RescheduleDoctor from './components/RescheduleDoctor';
 // import DashboardWallet from './pages/DashboardWallet';
 
 // import ChooseMode from './pages/chooseMode';
@@ -159,6 +162,9 @@ function App() {
                <Route 
               path = "/PrescriptionInfo"
               element = {<PrescriptionInfo />}/>
+                   <Route 
+              path = "/DocPatientsList"
+              element = {<DocPatientsList />}/>
               <Route path="/addAdmin"
               element={<AddAdminForm/>}/>
               <Route path="/remove"
@@ -167,6 +173,10 @@ function App() {
               element={<DoctorsList/>}/>
               <Route path="/docProfile"
               element={<DocProfile/>}/>
+                <Route path="/DoctorPatientPage"
+              element={<DoctorPatientPage/>}/>
+                <Route path="/DocPatientAppPage"
+              element={<DocPatientAppPage/>}/>
               <Route path="/addRequest"
               element={<SubmitRequest/>}></Route>
               <Route path="/requests"
@@ -189,6 +199,8 @@ function App() {
               element={<AdminDashboardCl/>}/>
               <Route path="/DoctorPage"
               element={<DoctorDashboard/>}/>
+               <Route path="/RescheduleDoctor"
+              element={<RescheduleDoctor/>}/>
               {/* <Route path="/"
               element={<Menu/>}/> */}
 

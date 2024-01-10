@@ -145,7 +145,8 @@ const{viewPackages , subscribePackage , viewMyPackage , cancelPackage , CheckOTP
 // const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors, getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs  ,
 //    registerPatient, deleteUser, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,filterAppointmentsStatus,getUserById , AddPatient,AddDoctor,CreatAppoint, logout, viewAppointmentsOfDoctor,
 //    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor} = require("./Routes/userController");
-const{addAppointment,getAppointmentInfo,modifyAppointment,createAppointment,getDoctorAppointments,AppointmentCompleted,CancelAppointment,rescheduleAppointmentForP,requestFollowUpAppointment,acceptFollowUpRequest,rejectFollowUpRequest,viewFollowUpRequests} = require("./Routes/appointmentController");
+const{addAppointment,getAppointmentInfo,modifyAppointment,createAppointment,getDoctorAppointments,AppointmentCompleted,CancelAppointment,rescheduleAppointmentForP,requestFollowUpAppointment,acceptFollowUpRequest,rejectFollowUpRequest,viewFollowUpRequests
+,getDoctorAppointmentWithPatient} = require("./Routes/appointmentController");
 const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData , AddNewHR , ViewUpdatedHRforD ,scheduleFollowUp}=require("./Routes/DrController");
 const {createContract, acceptContract,   rejectContract,   getContract}= require("./Routes/employmentController");
 
@@ -243,6 +244,7 @@ app.post( '/upload-document', upload.single('document'), requireAuth("Patient"),
 app.delete('/remove-document/:documentId',requireAuth("Patient"),  removeMedicalDocument);
 app.get('/getUploaded', requireAuth("Patient"),getUploaded);
 app.get("/serveFile/:filePath/:fileName", servefiles);
+app.get("/getDoctorAppointmentWithPatient",requireAuth("Doctor"), getDoctorAppointmentWithPatient);
 
 // #Routing to userController here
 ///mohab
@@ -321,7 +323,7 @@ app.get("/UpcomingAppoint",filteredAppointments);
 app.get("/GetFullData",GetPFullData);
 app.put("/handleAccept/:requestId", requireAuth("Administrator"), handleAccept);
 app.put("/handleReject/:requestId", requireAuth("Administrator"), handleReject);
-app.post("/CancelAppointment",requireAuth("Patient"),CancelAppointment);
+app.post("/CancelAppointment",requireAuth("ALL"),CancelAppointment);
 app.post("/ReschedulePatient",requireAuth("ALL"),rescheduleAppointmentForP);
 app.post("/requestFollowUp",requireAuth("Patient"),requestFollowUpAppointment);
 app.post("/acceptFollowUpRequest",requireAuth("Doctor"),acceptFollowUpRequest);

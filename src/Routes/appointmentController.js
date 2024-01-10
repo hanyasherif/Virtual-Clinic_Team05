@@ -173,17 +173,36 @@ const getDoctorAppointments = async (req, res) => {
   }
 };
 
+const getDoctorAppointmentWithPatient = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    const decodedToken = jwt.verify(token, 'supersecret');
+    const doctorId= decodedToken.user._id
+    const patientId = req.query.patientId;
+    console.log(doctorId);
+    const appointment = await appointmentsModel.find({doctor: doctorId , patient: patientId }).populate('patient');;
+    if (!appointment) {
+      return res.status(404).json({ message: "appointment not found" });
+    }
+    console.log(appointment);
+    res.status(200).json(appointment);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
 const CancelAppointment = async (req, res) => {
   try {
     const appointmentId = req.query.appointmentId;
-    const token = req.cookies.jwt;
-    const decodedToken = jwt.verify(token, 'supersecret');
-    const patientId= decodedToken.user._id;
-    const patient = await userModel.findById(patientId);
+ 
+ 
     const appointment = await appointmentsModel.findById(appointmentId);
+ 
     if (!appointment) {
       return res.status(404).json({ message: 'Appointment not found' });
     }
+    const patient = await userModel.findById(appointment.patient);
     let price =appointment.price;
     if(patient.package)
     {
@@ -302,7 +321,7 @@ const requestFollowUpAppointment = async (req, res) => {
   try
   {
     const appointmentId = req.query.appointmentId;
-    const newDate = req.body.appointmentId;
+    const newDate = req.query.newDate;
     const token = req.cookies.jwt;
     const decodedToken = jwt.verify(token, 'supersecret');
     const patientId= decodedToken.user._id;
@@ -311,6 +330,7 @@ const requestFollowUpAppointment = async (req, res) => {
       return res.status(404).json({ message: 'Appointment not found' });
     }
     appointment.followUp = true;
+    console.log("DATEEE" + newDate)
     appointment.followUpDate = newDate;
     appointment.save();
     //
@@ -327,9 +347,12 @@ const viewFollowUpRequests = async (req, res) => {
     const token = req.cookies.jwt;
     const decodedToken = jwt.verify(token, 'supersecret');
     const doctorId= decodedToken.user._id;
-    const appointments = await appointmentsModel.find({doctor:doctorId, followUp:true});
+    console.log("ww")
+    const patientId= req.query.Id
+  
+    const appointments = await appointmentsModel.findOne({_id:patientId , followUp:true});
     if (!appointments) {
-      return res.status(404).json({ message: 'You have no requests for a followUp.' });
+      return res.status(200).json({ message: 'You have no requests for a followUp.' });
     }
     res.status(200).json(appointments);
   }
@@ -343,35 +366,58 @@ const viewFollowUpRequests = async (req, res) => {
 
 const acceptFollowUpRequest = async (req, res) => {
   const appointmentId = req.query.appointmentId;
+ 
   // const patient = await userModel.findById(patientId);
   // const doctor = await userModel.findById(appointment.doctor);
   const appointment = await appointmentsModel.findById(appointmentId)
   if (!appointment) {
     return res.status(404).json({ message: 'Appointment not found' });
   }
+   const patient = await userModel.findById(appointment.patient);
+  const doctor = await userModel.findById(appointment.doctor);
+
+  let appointmentDate = await appointmentsModel.findOne({date:appointment.followUpDate , doctor: appointment.doctor});
+  if(appointmentDate){
+    res.status(404).json({ message: "There is an appointment already scheduled for this date" });
+  }
   appointment.followUp = false;
-  sendEmail(patient.email,"Your request for a follow up on the appointment with Dr. " + doctor.name + " on Date : " + appointment.date + " has been accepted your new Appointment is now on "+ newDate);
-  appointment.date=appointment.followUpDate;
+  sendEmail(patient.email,"Your request for a follow up on the appointment with Dr. " + doctor.name + " on Date : " + appointment.date + " has been accepted your new Appointment is now on "+ appointment.followUpDate);
+  
+
+  const newAppointment = new appointmentsModel({
+      date: appointment.followUpDate,
+      doctor: appointment.doctor,
+      patient: appointment.patient,
+      status: 'Upcoming', 
+      price:appointment.price
+  });
+
+   await newAppointment.save();
+  //appointment.date=appointment.followUpDate;
+  appointment.followUp = false;
   appointment.followUpDate = null;
-  appointment.status="Upcoming";
+  //appointment.status="Upcoming";
   appointment.save();
+  return res.status(200).json({ message: 'Appointment Accepted ' });
 
 }
 
 const rejectFollowUpRequest = async (req, res) => {
   const appointmentId = req.query.appointmentId;
   const appointment = await appointmentsModel.findById(appointmentId)
- const patient = await userModel.findById(patientId);
-  const doctor = await userModel.findById(appointment.doctor);
+ 
 
   if (!appointment) {
     return res.status(404).json({ message: 'Appointment not found' });
   }
+  const patient = await userModel.findById(appointment.patient);
+  const doctor = await userModel.findById(appointment.doctor);
   sendEmail(patient.email,"Your request for a follow up on the appointment with Dr. " + doctor.name + " on Date : " + appointment.date + " has been rejected");
   appointment.followUp = false;
   appointment.followUpDate = null;
   appointment.save();
 
+return res.status(200).json({ message: 'Appointment Rejected ' });
 }
 module.exports = {addAppointment,createAppointment,getAppointmentInfo,modifyAppointment,getDoctorAppointments,AppointmentCompleted
-,rescheduleAppointmentForP,CancelAppointment,viewFollowUpRequests,acceptFollowUpRequest,rejectFollowUpRequest,requestFollowUpAppointment};
+,rescheduleAppointmentForP,CancelAppointment,viewFollowUpRequests,acceptFollowUpRequest,rejectFollowUpRequest,requestFollowUpAppointment,getDoctorAppointmentWithPatient};
