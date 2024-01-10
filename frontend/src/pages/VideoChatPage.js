@@ -224,7 +224,7 @@ useEffect(() => {
     //         {mainListItems}
     //         <Divider sx={{ my: 1 }} />
     //         {secondaryListItems}
-    //       </List>
+    //       </List>   
     //     </Drawer>
         <div className="Chat">
           <button onClick={goBack} className="back-button">

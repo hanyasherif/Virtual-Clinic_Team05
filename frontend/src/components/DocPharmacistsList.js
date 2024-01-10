@@ -32,7 +32,9 @@ import TextField from "@mui/material/TextField";
 import { InputLabel, MenuItem, Select, FormControl } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import Title from './Title';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -47,8 +49,16 @@ function Copyright(props) {
 
     
   );
+ 
 }
-
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#25A18E",
@@ -113,10 +123,31 @@ const defaultTheme = createTheme();
 
 export default function DocPharmacistsList() {
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(true);const [buttonPosition, setButtonPosition] = React.useState({
+    top: '75px',
+    left: '120px',
+  });
   const toggleDrawer = () => {
     setOpen(!open);
+    if (open) {
+      setButtonPosition({
+        top: '75px',
+        left: '120px',
+      });
+    } else {
+      setButtonPosition({
+        top: '75px',
+        left: '240px', // Adjust this value according to your drawer width
+      });
+    }
   };
+
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
 
   const handleLogout = async (e) => {
     try {
@@ -222,6 +253,17 @@ export default function DocPharmacistsList() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Grid container spacing={3} justifyContent="center"> {/* Center align the content */}
+          <button
+          onClick={goBack}
+          className="back-button"
+          style={{
+            ...specificButtonStyle,
+            top: buttonPosition.top,
+            left: buttonPosition.left,
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
           <div className="DoctorsList">
 
           <Grid item xs={12} sx={{marginTop: 2, marginBottom: 2}}>

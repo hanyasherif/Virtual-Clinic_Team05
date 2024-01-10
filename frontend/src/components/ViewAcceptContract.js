@@ -25,6 +25,9 @@ import ViewHealthRecords from './ViewHealthRecords';
 import WalletDoc from './WalletDoc';
 import { useEffect,useState } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -40,6 +43,14 @@ function Copyright(props) {
     
   );
 }
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
 
 const drawerWidth = 240;
 
@@ -96,10 +107,30 @@ const defaultTheme = createTheme();
 export default function ViewAcceptContract() {
 
   const [open, setOpen] = React.useState(true);
+  const [buttonPosition, setButtonPosition] = React.useState({
+    top: '75px',
+    left: '120px',
+  });
   const toggleDrawer = () => {
     setOpen(!open);
+    if (open) {
+      setButtonPosition({
+        top: '75px',
+        left: '120px',
+      });
+    } else {
+      setButtonPosition({
+        top: '75px',
+        left: '240px', // Adjust this value according to your drawer width
+      });
+    }
   };
 
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
   const handleLogout = async (e) => {
     try {
       await fetch(`http://localhost:8000/logout`,{credentials: 'include'});
@@ -230,6 +261,17 @@ export default function ViewAcceptContract() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
   <Grid container direction="column" alignItems="center">
+  <button
+          onClick={goBack}
+          className="back-button"
+          style={{
+            ...specificButtonStyle,
+            top: buttonPosition.top,
+            left: buttonPosition.left,
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
     <Grid item xs={12} md={8} lg={9}
     sx={{
         '&:hover > div': {
