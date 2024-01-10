@@ -217,11 +217,10 @@ export default function AddFamilyMember () {
             return;
         }
         else{
-          setfamMemName("");
-          setfamMemNatID("");
-          setfamMemAge("");
-          setfamMemGender("");
-          setfamMemRelation("");
+          setEmail("");
+          setPhoneNumber("");
+          setfamMemNatID2("");
+          setfamMemRelation2("");
           setError("");
           console.log(json.message);
           alert(json.message);
