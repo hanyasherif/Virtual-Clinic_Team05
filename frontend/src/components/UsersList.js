@@ -18,18 +18,16 @@ const UsersList = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const Id = searchParams.get('Id');
-      const [Patients,SetPatients] = useState([]);
-      const [searchName, setSearchName] = useState("");
-      const getPatient =  async () => {
-           await axios.get(`http://localhost:8000/getC?Id=${Id}`,{withCredentials:true}).then((res)=>{
-             const patients = res.data;
-             console.log(patients)
-             SetPatients(patients);
-             
-            }).catch (error=>{
-             alert('An error occurred:', error.message);
-
-           })}
+  const [searchName, setSearchName] = useState("");
+  const [Patients,SetPatients] = useState([]);
+  
+  const getPatient =  async () => {
+    await axios.get(`http://localhost:8000/getC?Id=${Id}`,{withCredentials:true}).then((res)=>{
+      const patients = res.data;
+      SetPatients(patients);
+    }).catch (error=>{
+      alert('An error occurred:', error.message);
+  })}
 
       useEffect(() => {
         getPatient();
@@ -60,7 +58,7 @@ const UsersList = () => {
 
 
 <React.Fragment>
-    <Title style={{ color: '#25A18E' , fontSize: 23}}>My Patient's List</Title>
+    <Title style={{ color: '#25A18E' , fontSize: 23}}>Chat with A Patient</Title>
     <Box sx={{ marginBottom: 2, marginLeft: 26, marginTop: -7}}>
         <TextField
           label="Search by Name"
@@ -69,6 +67,7 @@ const UsersList = () => {
           value={searchName}
           sx={{
             minWidth: 150,
+            marginLeft: 4,
             '& .MuiInputLabel-shrink': {
               color: '#25A18E', // Change label color while shrinking (on input)
             },
@@ -134,7 +133,6 @@ const UsersList = () => {
             <TableCell style={{ textAlign: 'center'}}>
               {Patient.email ? Patient.email : 'N/A'}
             </TableCell>
-
             </TableRow>
           ))}
         </TableBody>

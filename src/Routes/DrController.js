@@ -153,20 +153,20 @@ const EditMyInfo = async(req,res) =>{
  
   let DoctorId= decodedToken.user._id
     const updatedDoc = {};
+  console.log("Doc Email Test: "+req.query.email);
 
 if (req.query.email) {
     updatedDoc.email = req.query.email;
 }
-
 if (req.query.hourlyRate) {
     updatedDoc.hourlyRate = req.query.hourlyRate;
 }
-
 if (req.query.affiliation) {
     updatedDoc.affiliation = req.query.affiliation;
 }
 try {
     const updatedDoctor = await userModel.findByIdAndUpdate(DoctorId, { $set: updatedDoc }, { new: true });
+    console.log("DocTest"+updatedDoc.email);
     res.json({ message: 'Doctor  updated successfully', doctor: updatedDoc });
   } catch (err) {
     res.status(400).json({ error:err.message});
@@ -245,8 +245,7 @@ const scheduleFollowUp = async (req, res) => {
     const decodedToken = jwt.verify(token, 'supersecret');
     const doctorId= decodedToken.user._id
       let followUpDate = new Date(req.body.FollowUpDate);
-      const patientId = req.body.Patient;
-      console.log("WENAK " +followUpDate)
+      const patientId = req.body.PatientId;
       let appointment = await AppointmentModel.findOne({
         $or: [
             { doctor: doctorId, date: { $gte: followUpDate } },
@@ -273,6 +272,7 @@ const scheduleFollowUp = async (req, res) => {
       }
 
       console.log('No appointment found');
+      console.log("PatId"+patientId);
 
       const newAppointment = new AppointmentModel({
           date: followUpDate,
@@ -283,6 +283,7 @@ const scheduleFollowUp = async (req, res) => {
       });
 
       const savedAppointment = await newAppointment.save();
+
 
       res.json({
           message: 'Follow-up appointment scheduled successfully',

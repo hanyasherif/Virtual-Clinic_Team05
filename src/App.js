@@ -316,7 +316,7 @@ app.post("/Adddoctor", AddDoctor);
 app.post("/AddC", CreatAppoint);
 app.get("/getC",ViewPatients);
 app.get("/SearchP",SearchPatient);//Searchbyname
-app.post("/Edit",EditMyInfo);
+app.post("/Edit", requireAuth("Doctor"),EditMyInfo);
 app.get("/UpcomingAppoint",filteredAppointments);
 app.get("/GetFullData",GetPFullData);
 app.put("/handleAccept/:requestId", requireAuth("Administrator"), handleAccept);

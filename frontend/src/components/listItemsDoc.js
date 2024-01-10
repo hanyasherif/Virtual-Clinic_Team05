@@ -72,12 +72,12 @@ export const secondaryListItems = (
     <ListSubheader component="div" inset>
       Personal Details
     </ListSubheader>   
-    <ListItemButton onClick={() => { window.location.href = '/setting'; }}>
+    {/* <ListItemButton onClick={() => { window.location.href = '/setting'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
         <EditIcon />
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ style: { color: 'black' } }} primary="Edit Profile" />
-    </ListItemButton>
+    </ListItemButton> */}
     <ListItemButton onClick={() => { window.location.href = '/ChangeMyPasswordDoc'; }}>
     <ListItemIcon sx={{ color: '#25A18E' }}>
         <LockIcon />
