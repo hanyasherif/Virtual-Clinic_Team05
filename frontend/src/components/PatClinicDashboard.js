@@ -143,9 +143,9 @@ export default function PatClinicDashboard() {
       console.error('Error:', error);
     }
   };
-  useEffect(() => {    
-    toggleDrawer();
-   }, []);
+  // useEffect(() => {    
+  //   toggleDrawer();
+  //  }, []);
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>

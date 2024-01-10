@@ -229,7 +229,7 @@ useEffect(() => {
     //         {secondaryListItems}
     //       </List>
     //     </Drawer>
-    
+
         <div className="Chat">
           <button onClick={goBack} className="back-button">
       <FontAwesomeIcon icon={faArrowLeft} />

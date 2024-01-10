@@ -128,9 +128,12 @@ const Form = () => {
         value={emergencyContactRelation} 
       />
 
-
-      <button>Add Patient</button>
-      {error && <div className="error">{error}</div>}
+<br />
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <button style={{}}>
+        Add Patient
+      </button>
+    </div>      {error && <div className="error">{error}</div>}
     </form>
   )
 }

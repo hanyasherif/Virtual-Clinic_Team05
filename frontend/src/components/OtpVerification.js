@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+
 let email='';
 
 const OtpVerification = () => {
@@ -49,16 +53,29 @@ const OtpVerification = () => {
     }
   };
 
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div>
+      <button onClick={goBack} className="back-button">
+      <FontAwesomeIcon icon={faArrowLeft} />
+    </button>
+    <br /><br />
       {!verified ? (
         <div>
+    
+    
           <h2>OTP Verification</h2>
           <input type="text" value={otp} onChange={handleOtpChange} placeholder="Enter OTP" />
           <button onClick={handleVerifyOtp}>Verify OTP</button>
         </div>
       ) : (
         <div>
+          
           <h2>Set New Password</h2>
           <input
             type="password"
