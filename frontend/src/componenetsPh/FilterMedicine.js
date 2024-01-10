@@ -31,7 +31,7 @@ const MedicineFilter = ({ filterMedicine }) => {
   return (
     <div className="medicine-filter">
         <Typography variant="h4" style={{ color: '#25A18E', fontSize: 27, textAlign: 'center' }}>
-          Filter by medicinal Use
+          Filter by medicinal use
         </Typography>
       <div>
         {medicinalUses.map((medicinalUse, index) => (

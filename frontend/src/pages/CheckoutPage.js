@@ -3,6 +3,51 @@ import axios from 'axios';
 import { FormControl, InputLabel, Select, MenuItem, Button, TextField, Alert } from '@mui/material';
 
 const CheckoutPage = () => {
+  const [walletInfo, setWalletInfo] = useState(0);
+  // const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [totalCartAmount, setTotalCartAmount] = useState(0);
+
+  useEffect(() => {
+    const fetchWalletInfo = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/getUserByTokenId', { withCredentials: true });
+        const user = response.data;
+        setWalletInfo(user.walletInfo);
+      } catch (error) {
+        console.error('Error fetching wallet info:', error);
+      }
+    };
+
+    fetchWalletInfo();
+  }, []);
+
+  useEffect(() => {
+    const fetchTotalCartAmount = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/getCartTotalAmount', { withCredentials: true });
+        setTotalCartAmount(response.data.totalAmount);
+      } catch (error) {
+        console.error('Error fetching total cart amount:', error);
+      }
+    };
+
+    fetchTotalCartAmount();
+  }, []); // Empty dependency array ensures that this effect runs only once, similar to componentDidMount
+
+  const calculateTotalCartAmount = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/getCartTotalAmount', { withCredentials: true });
+      setTotalCartAmount(response.data.totalAmount); // Set the state with the fetched value
+      return response.data.totalAmount;
+    } catch (error) {
+      console.error('Error fetching total cart amount:', error);
+      return 0;
+    }
+  };
+  useEffect(() => {
+    calculateTotalCartAmount(); // Fetch the totalCartAmount and set it in the state
+  }, []);
+
   const AddressSelectionComponent = ({ addresses, handleSelectAddress }) => {
     return (
       <div>
@@ -44,6 +89,8 @@ const CheckoutPage = () => {
     const paymentMethod = ''; // Replace with the actual payment method
 
     setSuccessAlertOpen(true);
+
+    
 
     const performCheckout = async (addressId, paymentMethod) => {
       try {
@@ -121,20 +168,23 @@ const CheckoutPage = () => {
   </FormControl>
 
   {/* Conditional rendering based on selected payment method */}
-  {selectedPaymentMethod === 'wallet' && (
-    <div>
-      <p>Current Balance: $1250</p>
-      {/* Additional content for wallet payment method */}
-    </div>
-  )}
 
-  {selectedPaymentMethod === 'cashOnDelivery' && (
-    <div>
-      <p>Total Price: $100</p>
-      <p>Price Due</p>
-      {/* Additional content for cash on delivery payment method */}
-    </div>
-  )}
+  {selectedPaymentMethod === 'wallet' && (
+        <div>
+          <p>Current Balance: ${walletInfo}</p>
+        </div>
+      )}
+
+{selectedPaymentMethod === 'cashOnDelivery' && (
+  <div>
+    {/* <p>Total totalCartAmount: ${totalCartAmount}</p> */}
+    <p>Total price: $45.27</p>
+
+
+    {/* Additional content for cash on delivery payment method */}
+  </div>
+)}
+
 
   {selectedPaymentMethod === 'creditCard' && (
     <div>
