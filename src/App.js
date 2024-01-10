@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const upload = require('../src/MulterConfig');
+const upload2 = require('../src/MulterConfig');
 // from 'uuid';
 mongoose.set('strictQuery', false);
 require("dotenv").config();
@@ -166,7 +167,7 @@ const {addToCart, viewCart, removeFromCart,
 
 const {viewOrders, cancelOrder} = require("./RoutesPh/orderController");
 
-
+const {uploadDoctorDocument} = require("./Routes/userController");
 //App variables
 
 //const cors = require('cors');
@@ -241,6 +242,9 @@ app.get("/filterDateSpecs",requireAuth("Patient"), filterDateSpecs);
 app.put("/logout", requireAuth("ALL"),logout);
 app.get("/viewAppointmentsOfDoctor/:docID", viewAppointmentsOfDoctor);
 app.post( '/upload-document', upload.single('document'), requireAuth("Patient"),uploadMedicalDocument );
+app.post( '/upload-doc', upload2.single('document'),uploadDoctorDocument );
+
+
 app.delete('/remove-document/:documentId',requireAuth("Patient"),  removeMedicalDocument);
 app.get('/getUploaded', requireAuth("Patient"),getUploaded);
 app.get("/serveFile/:filePath/:fileName", servefiles);

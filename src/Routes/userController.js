@@ -1,5 +1,6 @@
 // #Task route solution
 const userModel = require('../Models/User.js');
+const requestModel = require('../Models/Request.js');
 const PrescriptionModel = require('../Models/Prescription.js');
 const appointmentModel = require('../Models/Appointment.js');
 const PackageModel = require('../Models/Package.js');
@@ -311,6 +312,20 @@ const uploadMedicalDocument = async (req, res) => {
     const user2= await userModel.findById(user._id);
     user2.medicalHistory.push({ name: originalname, path: path });
     await user2.save();
+
+    res.status(201).json({ message: 'Document uploaded successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const uploadDoctorDocument = async (req, res) => {
+  try {
+    const requestId = req.body.requestId;
+    const originalname= req.file;
+    const request= await requestModel.findById(requestId);
+    request.doc.push(originalname);
+    await request.save();
 
     res.status(201).json({ message: 'Document uploaded successfully' });
   } catch (error) {
@@ -1007,7 +1022,7 @@ module.exports = { login, addAdministrator, removeUser, getUsers,registerPatient
    filterAppointmentsStatus, AddDoctor,AddPatient,CreatAppoint, logout, viewAppointmentsOfDoctor, uploadMedicalDocument, removeMedicalDocument
   , getUploaded, findPatById, servefiles ,getUserById  ,getWalletInfo, getWalletInfoDoc, getFamilyMemberData,
   getUserByEmail,getUserByPhoneNumber,getUserByUsername,modifyWallet,modifyWalletDoctor, getUserByTokenId, getRoom, phviewPatients, viewPharmacists,searchByNamePatients,getMyId,
-  payStripe,success}   
+  payStripe,success,uploadDoctorDocument}   
 
 // module.exports = {addAdministrator, removeUser, getUsers,registerPatient , deleteUser , removeUser, checkUsername, getUsers, searchByName, searchBySpec, searchByNameSpec, viewDoctors,
 //    getDoctorInfo, getSpecs, filterSpecs, filterByDate, filterDateSpecs, addFamilyMember,viewRegFamilyMembers,viewAppointments,filterAppointmentsDate,

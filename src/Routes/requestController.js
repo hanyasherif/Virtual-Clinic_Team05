@@ -55,7 +55,7 @@ const addRequest = async(req,res) => {
          educationalBackground: educationalBackground
       })
       await request.save()
-      res.status(200).json({message: "Request created successfully"})
+      res.status(200).json({message: "Request created successfully", request})
    }
    catch(err){
       res.json({message: err.message})

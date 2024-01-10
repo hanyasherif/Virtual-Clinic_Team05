@@ -19,6 +19,36 @@ const RequestForm = () => {
     const [educationalBackground,setEducationalBackground] = useState('')
     const [error,setError] = useState(null)
     
+
+    /////////////////////////////////////from medical history
+ 
+    const [selectedFile, setSelectedFile] = useState(null);
+      const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
+      };
+    
+      const uploadDocument = async (file, usernameR) => {
+        try {
+          const formData = new FormData();
+          console.log("username  " ,usernameR);
+          formData.append('document', selectedFile);
+          formData.append('requestId', usernameR);
+      
+          await fetch(`http://localhost:8000/upload-doc`, {
+            method: "POST",
+            body: formData,credentials: 'include'
+          });
+    
+      
+          
+        } catch (error) {
+          console.error({ message: error.message });
+          
+        }
+      };
+
+    ////////////////////////
     const handleName = e => {
         setName (e.target.value)
     }
@@ -48,6 +78,7 @@ const RequestForm = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault ()
+        
         const data = {
             name:name,
             username:username,
@@ -59,7 +90,7 @@ const RequestForm = () => {
             affiliation:affiliation,
             educationalBackground:educationalBackground
         }
-        const response = await fetch('/addRequest',{
+        const response = await fetch(`http://localhost:8000/addRequest`,{
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -72,6 +103,9 @@ const RequestForm = () => {
             setError(json.error)
         }
         if(response.ok){
+            //call method upload
+            console.log("sentt username" ,response.json() );
+           // uploadDocument(selectedFile, response.json().username);
             setUsername('')
             setName('')
             setPassword('')
@@ -82,7 +116,7 @@ const RequestForm = () => {
             setDateOfBirth('')
             setAffiliation('')
             setError(null)
-            console.log('new request added',json)
+            alert(' New Request Added');
         }
     }
 
@@ -198,6 +232,15 @@ const RequestForm = () => {
                         onChange={handleEducationalBackground}
                     />
                 </div>
+                 <div>
+                 <input type="file" onChange={handleFileChange} style={{marginLeft:200, marginTop: 20}}/>
+                  </div>
+                
+
+               
+
+                
+
 
                 <Button type="submit" onClick={handleSubmit} 
                 variant="contained"
