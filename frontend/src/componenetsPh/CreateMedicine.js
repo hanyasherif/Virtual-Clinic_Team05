@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
 
 const MedicineForm = () => {
   const [name, setName] = useState("");
@@ -57,25 +58,161 @@ const MedicineForm = () => {
 
   return (
     <form className="create" onSubmit={handleSubmit} encType="multipart/form-data">
-      <label>Medicine Name</label>
-      <input type="text" placeholder="Enter Medicine Name" value={name} onChange={(e) => setName(e.target.value)} />
-      
+<TextField
+  label="Medicine Name"
+  type="text"
+  placeholder="Enter Medicine Name"
+  value={name}
+  onChange={(e) => setName(e.target.value)}
+  fullWidth
+  sx={{
+    marginBottom: '20px',
+    '& .MuiInputLabel-shrink': {
+      color: '#25A18E',
+    },
+    '& .MuiOutlinedInput-root': {
+      '&:hover fieldset': {
+        borderColor: '#25A18E',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#25A18E',
+      },
+    }
+  }}
+/>
+
       {/* Updated input for file */}
       <label>Picture</label>
       <input type="file" onChange={handleImageChange} />
 
-      <label>Price</label>
-      <input type="number" placeholder="Enter Price" value={price} onChange={(e) => setPrice(e.target.value)} />
-      <label>Description</label>
-      <input type="text" placeholder="Enter Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-      <label>Available Quantity</label>
-      <input type="number" placeholder="Enter Available Quantity" value={availableQuantity} onChange={(e) => setAvailableQuantity(e.target.value)} />
-      <label>Sales</label>
-      <input type="number" placeholder="Enter Sales" value={sales} onChange={(e) => setSales(e.target.value)} />
-      <label>Active Ingredients</label>
-      <input type="text" placeholder="Enter Active Ingredients" value={activeIngredients} onChange={(e) => setActiveIngredients(e.target.value)} />
-      <label>Medicinal Use</label>
-      <input type="text" placeholder="Enter Medicinal Use" value={medicinalUse} onChange={(e) => setMedicinalUse(e.target.value)} />
+      <TextField
+             label="Price"
+              type="number"
+              value={price} onChange={(e) => setPrice(e.target.value)}
+              fullWidth
+              sx={{
+                marginBottom: '20px', // Adjust the margin as needed
+                // '& .MuiInputLabel-root': {
+                //   color: '#25A18E', // Change label color if necessary
+                // },
+                '& .MuiInputLabel-shrink': {
+                  color: '#25A18E', // Change label color while shrinking (on input)
+                },
+                '& .MuiOutlinedInput-root': {
+                  '&:hover fieldset': {
+                    borderColor: '#25A18E', // Change border color on hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#25A18E', // Change border color on focus
+                  },
+                }
+              }}      
+            />
+     <TextField
+        label="Description"
+        type="text"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        fullWidth
+        sx={{
+          marginBottom: '20px',
+          '& .MuiInputLabel-shrink': {
+            color: '#25A18E',
+          },
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': {
+              borderColor: '#25A18E',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: '#25A18E',
+            },
+          }
+        }}
+      />
+<TextField
+  label="Available Quantity"
+  type="number"
+  value={availableQuantity}
+  onChange={(e) => setAvailableQuantity(e.target.value)}
+  fullWidth
+  sx={{
+    marginBottom: '20px',
+    '& .MuiInputLabel-shrink': {
+      color: '#25A18E',
+    },
+    '& .MuiOutlinedInput-root': {
+      '&:hover fieldset': {
+        borderColor: '#25A18E',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#25A18E',
+      },
+    }
+  }}
+/>
+<TextField
+  label="Sales"
+  type="number"
+  value={sales}
+  onChange={(e) => setSales(e.target.value)}
+  fullWidth
+  sx={{
+    marginBottom: '20px',
+    '& .MuiInputLabel-shrink': {
+      color: '#25A18E',
+    },
+    '& .MuiOutlinedInput-root': {
+      '&:hover fieldset': {
+        borderColor: '#25A18E',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#25A18E',
+      },
+    }
+  }}
+/>
+<TextField
+  label="Active Ingredients"
+  type="text"
+  value={activeIngredients}
+  onChange={(e) => setActiveIngredients(e.target.value)}
+  fullWidth
+  sx={{
+    marginBottom: '20px',
+    '& .MuiInputLabel-shrink': {
+      color: '#25A18E',
+    },
+    '& .MuiOutlinedInput-root': {
+      '&:hover fieldset': {
+        borderColor: '#25A18E',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#25A18E',
+      },
+    }
+  }}
+/>
+<TextField
+  label="Medicinal Use"
+  type="text"
+  value={medicinalUse}
+  onChange={(e) => setMedicinalUse(e.target.value)}
+  fullWidth
+  sx={{
+    marginBottom: '20px',
+    '& .MuiInputLabel-shrink': {
+      color: '#25A18E',
+    },
+    '& .MuiOutlinedInput-root': {
+      '&:hover fieldset': {
+        borderColor: '#25A18E',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#25A18E',
+      },
+    }
+  }}
+/>
       <button type="submit">Add Medicine</button>
     </form>
   );

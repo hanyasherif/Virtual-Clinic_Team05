@@ -1,4 +1,5 @@
 import React from 'react';
+import { TextField, FormControlLabel, Radio } from '@mui/material';
 
 // import pillsImage from '../assets/pills.jpg';
 
@@ -75,12 +76,17 @@ const MedicineDetails = ({medicine}) => {
       <div>
         <label>
           Archive Medicine:
-          <input
-            type="radio"
-            name="isArchived"
-            checked={isArchived}
-            onChange={() => setIsArchived(true)}
-          />
+          <Radio
+                //   value="female"
+                //   checked={famMemGender === 'female'}
+                  onChange={() => setIsArchived(true)}
+                  sx={{
+                     color: '#25A18E', // Adjust color as needed
+                     '&.Mui-checked': {
+                      color: '#25A18E', // Adjust color for checked state
+                      },
+                  }}
+                />
         </label>
       </div>
       <button type="submit">Edit</button>
@@ -92,3 +98,4 @@ const MedicineDetails = ({medicine}) => {
 }
 
 export default MedicineDetails;
+
