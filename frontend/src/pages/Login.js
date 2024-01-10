@@ -46,7 +46,7 @@ const Login = () => {
           break;
         case 'Administrator':
           // Redirect to admin page
-          window.location.href = '/adminPagePH';
+          window.location.href = '/choosePathAdmin';
           break;
         case 'Doctor':
           // Redirect to doctor page

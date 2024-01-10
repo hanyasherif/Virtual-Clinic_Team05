@@ -135,6 +135,7 @@ import AppointmentSuccess from './components/AppointmentSuccess';
 // import ChooseMode from './pages/chooseMode';
 
 import ChoosePath from './pages/ChoosePath';
+import ChoosePathAdmin from './pages/ChoosePathAdmin';
 
 //const stripePromise = loadStripe('pk_test_51OMBvdHlzuYFquyQjNy7RUTS6Qxu0DPEZzhTgpYISpLNpfyeylxmhnCZgrzVwtzPUPTj52lbqDeIqr1aQP8lwFKS00GOShxGqG');
 function App() {
@@ -397,6 +398,11 @@ function App() {
               <Route
               path="/ChoosePath"
               element={<ChoosePath/>}
+            />
+
+<Route
+              path="/ChoosePathAdmin"
+              element={<ChoosePathAdmin/>}
             />
             <Route
               path="/DashPharmaWallet"
