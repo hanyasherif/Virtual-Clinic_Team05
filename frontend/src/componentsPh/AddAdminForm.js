@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import React from 'react';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Box, Container } from '@mui/material';
 const AddAdminForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -64,28 +64,49 @@ const AddAdminForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <TextField
-        label="Username"
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <br />
-      <TextField
-        label="Password"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <br />
-      <br />
+    
+    <Container
+    component="main"
+    maxWidth="xs"
+    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '50px' }}
+  >
+    <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Username"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <br />
+        <TextField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <br />
+        <br />
 
-      <Button variant="contained" type="submit">
-        Add Administrator
-      </Button>
-    </form>
-  );
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginTop: 20, marginLeft: 50, width: '50%' }}
+          sx={{
+            color: 'white',
+            backgroundColor: '#25A18E',
+            '&:hover': {
+              backgroundColor: '#20756c',
+            },
+          }}
+        >
+          Add
+        </Button>
+      </form>
+    </Box>
+  </Container>
+);
 };
 
 export default AddAdminForm;

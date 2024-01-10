@@ -56,7 +56,7 @@ const Meeting = () => {
                 width: "100%"
                 }
             }}
-            onClick={() =>window.location.href=`http://localhost:3000/SelectedDoctorApp?appointmentId=${meet._id}`}
+           
             key={meet._id}
 
             >

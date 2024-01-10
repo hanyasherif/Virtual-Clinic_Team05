@@ -25,7 +25,19 @@ import axios from 'axios';
 import TextField from "@mui/material/TextField";
 import { useLocation } from 'react-router-dom';
 import { InputLabel, MenuItem, Select, FormControl } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+
+
+import Title from './Title';
 
 function Copyright(props) {
   return (
@@ -43,6 +55,15 @@ function Copyright(props) {
 }
 
 const drawerWidth = 240;
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
+
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -94,10 +115,32 @@ const defaultTheme = createTheme();
 
 export default function ScheduleFollowUp() {
 
+
   const [open, setOpen] = React.useState(true);
+  const [buttonPosition, setButtonPosition] = React.useState({
+  top: '75px',
+  left: '120px',
+  });
   const toggleDrawer = () => {
-    setOpen(!open);
+  setOpen(!open);
+  if (open) {
+  setButtonPosition({
+    top: '75px',
+    left: '120px',
+  });
+  } else {
+  setButtonPosition({
+    top: '75px',
+    left: '240px', // Adjust this value according to your drawer width
+  });
+  }
   };
+  
+  const navigate = useNavigate();
+  
+  const goBack = () => {
+  navigate(-1);
+    };
 
   const handleLogout = async (e) => {
     try {
@@ -111,23 +154,18 @@ export default function ScheduleFollowUp() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const Id = searchParams.get('Id');
+  console.log("Appp id"+Id);
+  const patientId = searchParams.get('patientId');
   const [Patients,SetPatients] = useState([]);
   
-  const getPatient =  async () => {
-    await axios.get(`http://localhost:8000/getC?Id=${Id}`,{withCredentials:true}).then((res)=>{
-      const patients = res.data;
-      SetPatients(patients);
-    }).catch (error=>{
-      alert('An error occurred:', error.message);
-  })}
+ 
 
       useEffect(() => {
-        getPatient();
+        getAppointments();
+        
       }, []); 
-
+    
   const [followUpDate, setFollowUpDate] = useState('');
-  // const [patientId, setPatientId] = useState('');
-  const [patientUser, setPatientUser] = useState('');
   const [message, setMessage] = useState('');
   const [scheduledAppointment, setScheduledAppointment] = useState(null);
 
@@ -140,63 +178,75 @@ export default function ScheduleFollowUp() {
         },
         body: JSON.stringify({
           FollowUpDate: followUpDate,
-          PatientId: patientUser._id,
+          PatientId: patientId,
+          AppointmentId:Id
         }),credentials:'include'
       });
 
       if (response.ok) {
         const data = await response.json();
-        if (data.message) {
-          setMessage(data.message);
-        }
-        if (data.appointment) {
-          setScheduledAppointment(data.appointment);
-        }
+        alert("Follow up scheduled successfully");
+       
       } else {
         // Handle non-2xx status codes
         console.error('Error:', response.status);
       }
     } catch (error) {
-      console.error('Error:', error);
+      alert(""+error.response.data.message);
     }
   };
 
-  const [patientId, setPatientId] = useState('');
-  const [healthRecord, setHealthRecord] = useState('');
+  const [Meetings,SetAppointments] = useState([]);
+  
+  const [B,SetB] = useState(false);
+
+  const getAppointments =  async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/viewFollowUpRequests?Id=${Id}`,{withCredentials:true});
+      if(response.data.message) {
+        SetB(true);
+      }
+      else
+      {
+        SetB(false);
+        const meeting = response.data;
+        SetAppointments(meeting);
+      }
+     
+      console.log("dataa"+response.data);
+    } catch (error) {
+      alert('An error occurred:', error.message);
+    }
+}
   // const [message, setMessage] = useState('');
 
-  const handlePatientIdChange = (e) => {
-    setPatientId(e.target.value);
-  };
-
-  const handleHealthRecordChange = (e) => {
-    setHealthRecord(e.target.value);
-  };
-
-  const handleAddHealthRecord = async () => {
+ 
+  async function handleAcceptRequest (id) {
     try {
-      const response = await fetch('http://localhost:8000/AddNewHR', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          PatientId: patientUser._id,
-          HealthRecord: healthRecord,
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data.message) {
-          setMessage(data.message);
-        }
-      } else {
-        // Handle non-2xx status codes
-        console.error('Error:', response.status);
-      }
+      const response = await axios.post(`http://localhost:8000/acceptFollowUpRequest?appointmentId=${id}`
+      ,{tm:"mohab"},{withCredentials:true});
+      console.log('Cancellation successful:', response.data);
+      console.log('Cancellation successful:', response.data);
+      alert(""+response.data.message);
+      getAppointments();
+      return true; 
     } catch (error) {
-      console.error('Error:', error);
+      alert(""+error.response.data.message);
+      return false; 
+    }
+  };
+  async function handleRejectRequest (id) {
+    try {
+      const response = await axios.post(`http://localhost:8000/rejectFollowUpRequest?appointmentId=${id}`
+      ,{tm:"mohab"},{withCredentials:true});
+      console.log('Cancellation successful:', response.data);
+      alert(""+response.data.message);
+      getAppointments();
+      return true; 
+    } catch (error) {
+      console.error('Cancellation failed:', error);
+      alert(""+error.response.data.message);
+      return false; 
     }
   };
 
@@ -229,7 +279,7 @@ export default function ScheduleFollowUp() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              El7a2ny Clinic Schedule FollowUp/ Add Health Record Doctor Page
+              El7a2ny Clinic Schedule FollowUp/Cancel and Reschedule Appointment/Add HealthRecord
             </Typography>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
             <IconButton color="inherit">
@@ -274,40 +324,19 @@ export default function ScheduleFollowUp() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
+            <button
+          onClick={goBack}
+          className="back-button"
+          style={{
+            ...specificButtonStyle,
+            top: buttonPosition.top,
+            left: buttonPosition.left,
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
             {/* <Title style={{ color: '#25A18E' , fontSize: 23}}>My Wallet amount</Title> */}
-            <FormControl sx={{  minWidth: 200 , marginLeft: 20}}>
-      <InputLabel id="status-label" sx={{marginTop: 2, marginLeft: 1,}} >
-        {/* <FilterListIcon sx={{marginRight:1.5}}/> */}
-        Choose Patient
-      </InputLabel>
-      <Select
-      label="Choose Patient"
-      variant="outlined"
-      margin="normal"
-      label-Id = "status-label"
-      value={patientUser}
-      sx={{
-        marginLeft: 2,
-        marginTop: 2,
-        '& .MuiOutlinedInput-root': {
-        },
-        '& .MuiSelect-icon': {
-          color: '#25A18E', // Change dropdown arrow color
-        },
-        '&:hover': {
-          backgroundColor: '#E5E5E5', // Change color on hover if desired
-      },
-      }} 
-      onChange={(e) => setPatientUser(e.target.value)}
-      >
-        {/* <MenuItem value="">All Specialities</MenuItem> */}
-          {Patients.map((pat) => (
-            <MenuItem key={pat} value={pat}>
-              {pat.username}
-            </MenuItem>
-          ))}
-      </Select>
-    </FormControl>
+            
     <TextField
           type="date"
           variant="outlined"
@@ -347,66 +376,75 @@ export default function ScheduleFollowUp() {
           onClick={scheduleFollowUp}>Schedule A Follow-Up</Button>
           <br />
           <Grid container spacing={3}>
-          <TextField
-          label="Enter Patient's Health Record"
-          variant="outlined"
-          margin="normal"
-          type="text"
-          value={healthRecord}
-          // placeholder="Enter Current Password"
-          sx={{
-            // marginBottom: '20px', // Adjust the margin as needed
-            marginLeft: 49,
-            minWidth: 200,
-            marginTop: 4,
-            // height: 20,
-            '& .MuiInputLabel-shrink': {
-              color: '#25A18E', // Change label color while shrinking (on input)
-            },
-            '& .MuiOutlinedInput-root': {
-              '&:hover fieldset': {
-                borderColor: '#25A18E', // Change border color on hover
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#25A18E', // Change border color on focus
-              },
-            },
-          }}    
-          onChange={handleHealthRecordChange}
-        />
-      <br />
-      <Button 
-           variant="contained"
-           margin="normal"
-           padding="normal"
-           sx={{
-            marginTop: 4,
-             marginLeft: 1,
-             minWidth: 150,
-             color: 'white',
-             backgroundColor: '#25A18E',
-             '&:hover': {
-                 backgroundColor: '#20756c', // Change color on hover if desired
-             },
-             height: 55
-             }} 
-             onClick={handleAddHealthRecord}>Add Health Record</Button>
-      {/* <button onClick={handleAddHealthRecord}>Add Health Record</button> */}
+          
       </Grid>
       <Grid container spacing={3} sx={{marginTop: 4, marginLeft: 20}}>
-      {/* {message && <p>{message}</p>} */}
-      <div>
-      {message && <p>{message}</p>}
-      {scheduledAppointment && (
-        <div>
-          <h3>Scheduled Follow-Up Appointment</h3>
-          <p>Doctor ID: {scheduledAppointment.doctor}</p>
-          <p>Patient ID: {scheduledAppointment.patient}</p>
-          <p>Status: {scheduledAppointment.status}</p>
-          <p>Date: {scheduledAppointment.date}</p>
-        </div>
-      )} 
-      </div> 
+        {!B ?
+        (
+          <React.Fragment>
+          <Title style={{ color: '#25A18E' , fontSize: 23}}>Request for Follow-Up</Title>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell style={{ color: '#25A18E', textAlign: 'center' }}>Date</TableCell>
+      
+                </TableRow>
+              </TableHead>
+              <TableBody>
+               
+                  <TableRow
+                  hover
+                  sx={{
+                      "&:hover":{
+                      cursor: "pointer",
+                      backgroundColor: "#0000FF",
+                      width: "100%"
+                      }
+                  }}
+                 
+                  key={Meetings._id}
+      
+                  >
+                    <TableCell style={{ textAlign: 'center'}}>{Meetings.followUpDate}</TableCell>
+                    <TableCell align="center">
+                      <Button 
+                      variant="contained"
+                      sx={{
+                        color: 'white',
+                        backgroundColor: '#25A18E',
+                        '&:hover': {
+                          backgroundColor: '#20756c',
+                        },
+                      }}    
+                      onClick={() => handleAcceptRequest(Meetings._id)}>Accept Request</Button>
+                    
+                  </TableCell>   
+                  <TableCell align="center">
+                      <Button 
+                      variant="contained"
+                      sx={{
+                        color: 'white',
+                        backgroundColor: '#FF0000',
+                        '&:hover': {
+                          backgroundColor: '#8b0000',
+                        },
+                      }}    
+                      onClick={() => handleRejectRequest(Meetings._id)}>Reject Request</Button>
+                    
+                  </TableCell>  
+                    <TableCell align="center">
+                    
+                  </TableCell>   
+                    </TableRow>
+             
+              </TableBody>
+            </Table>
+      
+         
+          </React.Fragment>
+        ):<p1>No follow-up scheduled</p1>}
+        
+    
       </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />

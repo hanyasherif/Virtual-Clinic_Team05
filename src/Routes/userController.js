@@ -805,7 +805,7 @@ const payStripe = async (req, res) => {
     mode:'payment',
     //redirection url after success, query contains session id
     success_url: `http://localhost:3000/AppointmentSuccess?sessionID={CHECKOUT_SESSION_ID}`,
-    cancel_url: 'http://localhost:3000/AppointmentFailure',
+    cancel_url: `http://localhost:3000/SApp?appointmentId=${appointment._id}`,
     //metadata containing your product's id and its purchaser (important for later)
     metadata: {
         'patientID': patientId.toString(),

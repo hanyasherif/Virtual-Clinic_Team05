@@ -244,50 +244,35 @@ const scheduleFollowUp = async (req, res) => {
     const token = req.cookies.jwt;
     const decodedToken = jwt.verify(token, 'supersecret');
     const doctorId= decodedToken.user._id
-      let followUpDate = new Date(req.body.FollowUpDate);
+      let followUpDate = req.body.FollowUpDate;
+      
       const patientId = req.body.PatientId;
-      let appointment = await AppointmentModel.findOne({
-        $or: [
-            { doctor: doctorId, date: { $gte: followUpDate } },
-            { patient: patientId, date: { $gte: followUpDate } }
-        ]
-    });
-    
-
-      while (appointment) {
-          console.log('There is another Appointment exists in the same time:', appointment);
-
-          const newFollowUpDate = new Date(appointment.date.getTime() + 60 * 60 * 1000);
-
-          followUpDate = newFollowUpDate;
-
-          const updatedAppointment = await AppointmentModel.findOne({
-            $or: [
-                { doctor: doctorId, date: { $gte: followUpDate } },
-                { patient: patientId, date: { $gte: followUpDate } }
-            ]
-        });
-
-          appointment = updatedAppointment;
+      console.log("ss"+req.body.AppointmentId)
+      let appointment = await AppointmentModel.findById(req.body.AppointmentId);
+      if (!appointment) {
+        res.status(404).json({ message: "why" });
+      }
+      let appointmentDate = await AppointmentModel.findOne({date:followUpDate , doctor: doctorId});
+      if(appointmentDate){
+        res.status(404).json({ message: "There is an appointment already scheduled for this date" });
       }
 
-      console.log('No appointment found');
-      console.log("PatId"+patientId);
+      
 
       const newAppointment = new AppointmentModel({
           date: followUpDate,
           doctor: doctorId,
           patient: patientId,
           status: 'Upcoming', 
-          price:32
+          price:appointment.price
       });
 
-      const savedAppointment = await newAppointment.save();
+      await newAppointment.save();
 
 
-      res.json({
+      res.status(200).json({
           message: 'Follow-up appointment scheduled successfully',
-          appointment: savedAppointment,
+          
       });
   } catch (err) {
       console.error('Error:', err);

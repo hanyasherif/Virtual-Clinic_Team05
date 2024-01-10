@@ -44,9 +44,9 @@ export default function Deposits() {
 
   return (
     <React.Fragment>
-      <Typography variant="h6" component="div">
+     <Typography variant="h4" style={{ color: '#25A18E', fontSize: 27, textAlign: 'center' }}>
         Monthly Sales Report
-      </Typography>
+        </Typography>
       <Box sx={{ mt: 2 }}>
         <label htmlFor="month-select">Select Month: </label>
         <Select

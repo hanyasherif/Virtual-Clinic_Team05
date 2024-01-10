@@ -30,6 +30,13 @@ import cart from '../assets/cart.jpg';
 import MedicineDetails from '../componenetsPh/MedicineDetailsArch';
 import PharmacistPage from './PharmacistPage';
 import PharmacistArch from './PharmacistArch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import Logo from '../assets/Logo.png';
+import { Button } from '@mui/material';
+
+// import specificButtonStyle from '../styles/specificButtonStyle';
 
 function Copyright(props) {
   return (
@@ -54,6 +61,9 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  background: 'linear-gradient(to right, #004E64, #0088A8)',
+
+
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -89,6 +99,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -96,11 +114,45 @@ const defaultTheme = createTheme();
 // ... (imports)
 
 export default function Dashboard() {
+
+  const handleLogout = async (e) => {
+    try {
+      await fetch(`http://localhost:8000/logout`,{credentials: 'include'});
+      window.location.href = 'http://localhost:3000/';
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   const [open, setOpen] = React.useState(true);
+
+  // const [open, setOpen] = React.useState(true);
+
+const [buttonPosition, setButtonPosition] = React.useState({
+    top: '75px',
+    left: '120px',
+  });
   const toggleDrawer = () => {
     setOpen(!open);
+    if (open) {
+      setButtonPosition({
+        top: '75px',
+        left: '120px',
+      });
+    } else {
+      setButtonPosition({
+        top: '75px',
+        left: '240px', // Adjust this value according to your drawer width
+      });
+    }
   };
 
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+ 
+  
+   };
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -130,18 +182,13 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              My Cart
+              <img src={Logo} alt="Logo" width="50" height="50" />
 
               </Typography>
+              <Button color="inherit" onClick={handleLogout}>Logout</Button>
+
             {/* Cart Button */}
-            <Link to="/CartPage" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <img
-                id="cartImage"
-                src={cart}
-                alt="Cart Image"
-                style={{ width: '30px', height: '30px', cursor: 'pointer' }}
-              />
-            </Link>
+
             {/* cart button here!!!! */}
 
 
@@ -189,7 +236,17 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flex: 1, display: 'flex' }}>
             <Grid container spacing={3}>
-              {/* Cart */}
+            <button
+          onClick={goBack}
+          className="back-button"
+          style={{
+            ...specificButtonStyle,
+            top: buttonPosition.top,
+            left: buttonPosition.left,
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>     
               <Grid item xs={12} md={4} lg={10} 
                 sx={{
                   marginLeft: '70px',

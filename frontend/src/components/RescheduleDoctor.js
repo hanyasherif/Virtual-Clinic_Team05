@@ -1,5 +1,4 @@
-/////////// reserve for myselffff session
-import React, { useEffect, useState } from "react";
+import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -18,17 +17,14 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItemsCl';
+import { mainListItems, secondaryListItems } from './listItemsDoc';
 import Button from "@mui/material/Button";
-import ViewDocPat from './ViewDocPat';
-import Wallet from './Wallet';
-import ViewFamilyMember from './ViewFamilyMember';
-import PatPrescView from './PatPrescView';
+import UsersList from './UsersList';
+import Meeting from './Appointments';
 import ViewHealthRecords from './ViewHealthRecords';
-import ViewPackages from './ViewPackages';
-import ViewMyPackage from './ViewMyPackage'
-import axios from "axios";
-
+import WalletDoc from './WalletDoc';
+import { useEffect,useState } from 'react';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
@@ -47,6 +43,14 @@ function Copyright(props) {
     
   );
 }
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
 
 const drawerWidth = 240;
 
@@ -58,7 +62,9 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  background: 'linear-gradient(to right, #004E64, #0088A8)',
+//   backgroundColor: '#004E64', // New background color
+background: 'linear-gradient(to right, #004E64, #0088A8)',
+
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -94,16 +100,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
-const specificButtonStyle = {
-  background: 'none',
-  border: 'none',
-  cursor: 'pointer',
-  fontSize: '1.5em',
-  color: '#333', /* Adjust the color as needed */
-  padding: '0.2em',
-};
+
+// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
-export default function RequestFollowUp  () {
+
+export default function RescheduleDoctor() {
+
   const [open, setOpen] = React.useState(true);
   const [buttonPosition, setButtonPosition] = React.useState({
     top: '75px',
@@ -128,9 +130,7 @@ export default function RequestFollowUp  () {
 
   const goBack = () => {
     navigate(-1);
-  };
-
-  
+  };
   const handleLogout = async (e) => {
     try {
       await fetch(`http://localhost:8000/logout`,{credentials: 'include'});
@@ -139,6 +139,7 @@ export default function RequestFollowUp  () {
       console.error('Error:', error);
     }
   };
+
   const [selectedDate, setSelectedDate] = useState('');
   const [appointmentId, setAppointmentId] = useState('');
   const containerStyle = {
@@ -182,99 +183,100 @@ export default function RequestFollowUp  () {
 
   const handleSubmit = async () => {
     try {
-        console.log("what"+selectedDate)
       const response = await axios.post(
-        `http://localhost:8000/requestFollowUp?appointmentId=${appointmentId}&newDate=${selectedDate}`,
+        `http://localhost:8000/ReschedulePatient?appointmentId=${appointmentId}&newDate=${selectedDate}`,
         { tm: 'mohab' },
         { withCredentials: true }
       );
       console.log('Rescheduled successful:', response.data);
-      alert('Request Sent Successfully');
-      window.location.href = 'http://localhost:3000/FilterAppointmentsPatient';
+      alert('Rescheduled Successfully');
+     goBack();
     } catch (error) {
       console.error('Reschedule failed:', error);
-      alert('Request Failed');
+      alert('Rescheduling Failed');
     }
   };
 
   const handleDateChange = (event) => {
-    console.log("what2"+event.target.value)
     setSelectedDate(event.target.value);
   };
 
+
   return (
     <ThemeProvider theme={defaultTheme}>
-    <Box sx={{ display: 'flex' }}>
-  <CssBaseline />
-  <AppBar position="absolute" open={open}>
-    <Toolbar
-      sx={{
-        pr: '24px', // keep right padding when drawer closed
-      }}
-    >
-      <IconButton
-        edge="start"
-        color="inherit"
-        aria-label="open drawer"
-        onClick={toggleDrawer}
-        sx={{
-          marginRight: '36px',
-          ...(open && { display: 'none' }),
-        }}
-      >
-        <MenuIcon />
-      </IconButton>
-      <Typography
-        component="h1"
-        variant="h6"
-        color="inherit"
-        noWrap
-        sx={{ flexGrow: 1 }}
-      >
-        El7a2ny Clinic Patient Page
-      </Typography>
-      <Button color="inherit" onClick={handleLogout}>Logout</Button>
-      <IconButton color="inherit">
-        <Badge badgeContent={0} color="secondary">
-          <NotificationsIcon />
-        </Badge>
-      </IconButton>
-    </Toolbar>
-  </AppBar>
-  <Drawer variant="permanent" open={open}>
-    <Toolbar
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        px: [1],
-      }}
-    >
-      <IconButton onClick={toggleDrawer}>
-        <ChevronLeftIcon />
-      </IconButton>
-    </Toolbar>
-    <Divider />
-    <List component="nav">
-      {mainListItems}
-      <Divider sx={{ my: 1 }} />
-      {secondaryListItems}
-    </List>
-  </Drawer>
-  <Box
-    component="main"
-    sx={{
-      backgroundColor: (theme) =>
-        theme.palette.mode === 'light'
-          ? theme.palette.grey[100]
-          : theme.palette.grey[900],
-      flexGrow: 1,
-      height: '100vh',
-      overflow: 'auto',
-    }}
-  >
-    <Toolbar />
-    <button
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="absolute" open={open}>
+          <Toolbar
+            sx={{
+              pr: '24px', // keep right padding when drawer closed
+            }}
+          >
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={toggleDrawer}
+              sx={{
+                marginRight: '36px',
+                ...(open && { display: 'none' }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              El7a2ny Clinic View Contract Doctor Page
+            </Typography>
+            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+            <IconButton color="inherit">
+              <Badge badgeContent={0} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Drawer variant="permanent" open={open}>
+          <Toolbar
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              px: [1],
+            }}
+          >
+            <IconButton onClick={toggleDrawer}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </Toolbar>
+          <Divider />
+          <List component="nav">
+            {mainListItems}
+            <Divider sx={{ my: 1 }} />
+            {secondaryListItems}
+          </List>
+        </Drawer>
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === 'light'
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: '100vh',
+            overflow: 'auto',
+          }}
+        >
+          <Toolbar />
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+  <Grid container direction="column" alignItems="center">
+  <button
           onClick={goBack}
           className="back-button"
           style={{
@@ -284,9 +286,8 @@ export default function RequestFollowUp  () {
           }}
         >
           <FontAwesomeIcon icon={faArrowLeft} />
-        </button>
-    <div style={containerStyle}>
-    <label htmlFor="dateInput" style={labelStyle}>Enter Date:</label>
+        </button>
+ <label htmlFor="dateInput" style={labelStyle}>Enter Date:</label>
     <input
       type="date"
       id="dateInput"
@@ -296,10 +297,28 @@ export default function RequestFollowUp  () {
     />
     <br /> {/* Line break for space */}
     <button onClick={handleSubmit} style={buttonStyle}>Submit</button>
-  </div>
-  </Box>
-  </Box>
-  </ThemeProvider>
-);
-};
+    
+  </Grid>
+  <Copyright sx={{ pt: 4 }} />
+</Container>
 
+
+        </Box>
+      </Box>
+    </ThemeProvider>
+  );
+}
+
+
+
+
+// const ViewAcceptContract = () => {
+
+    
+       
+//     return (
+        
+//     );
+// };
+
+// export default ViewAcceptContract;

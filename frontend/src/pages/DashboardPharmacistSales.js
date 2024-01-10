@@ -32,6 +32,12 @@ import PharmacistPage from './PharmacistPage';
 import PharmacistPage2 from './PharmacistPage2';
 import { Button } from '@mui/material';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import Logo from '../assets/Logo.png';
+
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -55,7 +61,7 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  backgroundColor: '#004E64', // New background color
+  background: 'linear-gradient(to right, #004E64, #0088A8)',
 
   ...(open && {
     marginLeft: drawerWidth,
@@ -92,25 +98,59 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
-
+const specificButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '1.5em',
+  color: '#333', /* Adjust the color as needed */
+  padding: '0.2em',
+};
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 // ... (imports)
 
 export default function Dashboard() {
-  const [open, setOpen] = React.useState(true);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+
+
   const handleLogout = async (e) => {
     try {
-      await fetch('http://localhost:8000/logout');
+      await fetch(`http://localhost:8000/logout`,{credentials: 'include'});
       window.location.href = 'http://localhost:3000/';
     } catch (error) {
       console.error('Error:', error);
     }
   };
+
+  const [open, setOpen] = React.useState(true);
+
+const [buttonPosition, setButtonPosition] = React.useState({
+    top: '75px',
+    left: '120px',
+  });
+  const toggleDrawer = () => {
+    setOpen(!open);
+    if (open) {
+      setButtonPosition({
+        top: '75px',
+        left: '120px',
+      });
+    } else {
+      setButtonPosition({
+        top: '75px',
+        left: '240px', // Adjust this value according to your drawer width
+      });
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+ 
+  
+   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -141,7 +181,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Welcome Manar!
+              <img src={Logo} alt="Logo" width="50" height="50" />
 
 
             </Typography>
@@ -192,6 +232,17 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flex: 1, display: 'flex' }}>
             <Grid container spacing={3}>
+            <button
+          onClick={goBack}
+          className="back-button"
+          style={{
+            ...specificButtonStyle,
+            top: buttonPosition.top,
+            left: buttonPosition.left,
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>   
               <Grid item xs={12} md={4} lg={6}
                 sx={{
                   '&:hover > div': {
