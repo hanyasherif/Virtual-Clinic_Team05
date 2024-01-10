@@ -334,9 +334,15 @@ export default function SApp  () {
        
 
       };
-      const handleReserveForMyselfClick = () => {
+      const handleReserveForMyselfClick = async() => {
         // Save the appointment patient's ID
-        patientId = '6543f2e0d09148f82f46195d';
+        await axios.get(`http://localhost:8000/getMyId`,{withCredentials:true}).then(
+          (res) => { 
+              
+              patientId = res.data;
+              
+          }
+        )
         console.log('Reserved for myself. Patient ID:', patientId);
 
         setShowFamilyMemberTable(false);
@@ -356,7 +362,21 @@ export default function SApp  () {
           return;
         }
         else{//pay with credit card $ stripe
-
+          modifyAppointmentStatus(appointmentId,patientId);
+          axios.post(`http://localhost:8000/payStripe`, {
+                  amount,
+                  patientId: patientId,
+                  appointment,
+                }, {
+                  withCredentials: true
+                })
+                  .then((res) => { 
+                    const session = res.data;
+                    window.location.href = session.url;
+                  })
+                  .catch((error) => {
+                    console.error('Error in the axios request:', error);
+                  });
         }
     }//pay with wallet
     else
@@ -380,7 +400,13 @@ export default function SApp  () {
               }
             } 
             else{ // reserve for myself
-                patientId = '6543f2e0d09148f82f46195d';
+              await axios.get(`http://localhost:8000/getMyId`,{withCredentials:true}).then(
+                (res) => { 
+                    
+                    patientId = res.data;
+                    
+                }
+              )
             }
            modifyPatientWallet(amount);
            modifyDoctorWallet(amount,appointment.doctor);

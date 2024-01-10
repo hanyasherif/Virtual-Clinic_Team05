@@ -215,6 +215,7 @@ export default function PatClinicDashboard() {
                   },
                 }}
               >
+                
                 <Paper
                   sx={{
                     p: 2,

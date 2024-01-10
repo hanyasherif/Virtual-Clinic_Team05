@@ -126,6 +126,10 @@ import DashPharmaWallet from './pages/DashPharmaWallet';
 import RequestFollowUp from './components/RequestFollowUp';
 import SubPackage from './components/SubPackage';
 import AddAdminPage from './components/AddAdminPage';
+ 
+import AppointmentFailure from './components/AppointmentFailure';
+import AppointmentSuccess from './components/AppointmentSuccess';
+
 // import DashboardWallet from './pages/DashboardWallet';
 
 // import ChooseMode from './pages/chooseMode';
@@ -259,8 +263,12 @@ function App() {
               element={<SelectedPrescriptionD/>}/>
               <Route path="/SelectedPrescriptionP"
               element={<SelectedPrescriptionP/>}/>
+              
 
-
+               {/*Stripe*/}
+               <Route path="/AppointmentSuccess" element={<AppointmentSuccess/>}/>
+               <Route path="/AppointmentFailure" element={<AppointmentFailure/>}/>
+              
               {/*SS*/}
             <Route
               path="/PH"

@@ -40,9 +40,7 @@ function Copyright(props) {
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
-    </Typography>
-
-    
+    </Typography>    
   );
 }
 
@@ -354,9 +352,6 @@ export default function DoctorsList() {
             marginBottom: '20px', // Adjust the margin as needed
             marginLeft: 1,
             minWidth: 180,
-            // '& .MuiInputLabel-root': {
-            //   color: '#25A18E', // Change label color if necessary
-            // },
             '& .MuiInputLabel-shrink': {
               color: '#25A18E', // Change label color while shrinking (on input)
             },
@@ -403,8 +398,6 @@ export default function DoctorsList() {
       label-Id = "status-label"
       value={filterSpec}
       sx={{
-        // marginBottom: '10px',
-        // minWidth: 180,
         marginLeft: 2,
         marginTop: 2,
         '& .MuiOutlinedInput-root': {

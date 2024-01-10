@@ -30,6 +30,10 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 
+//navigationn
+import { useNavigate } from 'react-router-dom';
+
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -127,6 +131,7 @@ const defaultTheme = createTheme();
  
 export default function SelectedPrescriptionP () {
   const [open, setOpen] = React.useState(true);
+  const navigate = useNavigate(); // Use useNavigate hook to get the navigation function
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -147,19 +152,8 @@ export default function SelectedPrescriptionP () {
   const params = new URLSearchParams(window.location.search);
   const prescriptionId = params.get('prescriptionId');
   const [prescription,setPrescription] = useState('');
+  
 
-  //paying
-  const [cardNumber,setcardNumber] = useState('');
-  const [expiryDate,setexpiryDate] = useState('');
-  const [CVV,setCVV] = useState('');
-
-  const [showCreditCardTextBox, setShowCreditCardTextBox] = useState(false);
-  const [showWalletTextBox, setShowWalletTextBox] = useState(false);
-  const [walletInfo, setWalletInfo] = useState('');
-
-  const [amount, setAmount] = useState('');
-
-  const [isPriceVisible, setIsPriceVisible] = useState(false);
 
   
 const [error, setError] = useState('');
@@ -179,80 +173,64 @@ useEffect(() => {
           console.log(err.message)
          });
   };
-  const fetchWalletInfo = async (id) => {
-      try {
-        const response = await axios.get(`http://localhost:8000/getUserByTokenId`,{withCredentials:true});
-        const user = response.data;
-        setWalletInfo(user.walletInfo);
-        console.log("Wallet Infoaa:", walletInfo);
-      } catch (error) {
-        setError('No Wallet assigned');
-      }
-    };
+
 
  
   fetchPrescriptionData();
-  fetchWalletInfo(prescription.patient)
  
     
   }, [prescriptionId]);
 
-//////Paying
-const handleCardNumber = (e) => {
-  setcardNumber(e.target.value);
-};
-const handleExpiryDate = (e) => {
-  setexpiryDate(e.target.value);
-};
-const handleCVV = (e) => {
-  setCVV(e.target.value);
-};
-const handleCreditCardButtonClick = () => {
-  setShowCreditCardTextBox(true);
-  setShowWalletTextBox(false); // Hide Wallet text box if it's currently shown
-};
 
-const handleWalletButtonClick = () => {
-  console.log("Wallet Infoaadd:", walletInfo);
-  setShowWalletTextBox(true);
-  setShowCreditCardTextBox(false); // Hide Credit Card text box if it's currently shown
+  const ProceedToCheckout = async () => {
+    
+
+
+    try {
+      // Iterate through prescription.medicines and add each medicine to the cart
+      for (const medicine of prescription.medicines) {
+        console.log("this medicine is ", medicine);
+        try {
+          const response = await axios.post('http://localhost:8000/getMedIdName', {
+            medicine,
+          }, { withCredentials: true });
+          console.log("getMedIdName response is ", response.data);
+            
+            console.log("Now medicine Id", response.data._id);
+            try {
+              // Replace 'http://localhost:8000' with the actual backend API URL
+              const response2 = await axios.post('http://localhost:8000/addToCart', {
+                medicineId: response.data._id , // Assuming each medicine object has an 'id' property
+                quantity: 1, // You can adjust the quantity as needed
+              }, { withCredentials: true });
+      
+              // Handle the response as needed
+              console.log('addToCart response:', response2.data);
+            } catch (error) {
+              // Handle errors from the addToCart API
+              console.error('Error adding medicine to cart:', error.message);
+            
+              throw error; // Re-throw the error to be caught by the outer catch block
+            }
+        } catch (error) {
+          // Handle errors from the addToCart API
+          console.error('Error fetching Id of given medicine:', error.message);
+        
+          throw error; // Re-throw the error to be caught by the outer catch block
+        } 
+        
+      }
   
-};
-  const handlePaymentSubmit = async (e) => {
-      e.preventDefault();
-      
-      if (showCreditCardTextBox){
-      if(!cardNumber || !expiryDate || !CVV){
-        alert('Please fill in all the credit card fields.');
-        return;
-      }
-      else{//pay with credit card $ stripe
 
-      }
-  }//pay with wallet
-  else
-      console.log("testo"+walletInfo);
-      if(walletInfo < amount){
-      alert('You do not have enough money in the wallet to pay');
-      return;
-      }
-      else{
-         modifyPatientWallet(amount);
-
-      }
-  }
-  const modifyPatientWallet = async (price,  id) =>{
-      try {
-          const response = await axios.post(`http://localhost:8000/modifyWallet`, {price  },{withCredentials:true});
       
-          console.log(response.data.message);
-          setWalletInfo(walletInfo-price);
-      } catch (error) {
-        console.error('Error updating PAtient wallet:', error);
-      }
-   
+    } catch (error) {
+      console.error('Error adding medicines to cart:', error.message);
+
+    }
+    // After adding medicines to the cart, navigate to the cart page
+    navigate('/cartPagePH');
+
   };
-
 
   const handleDownloadPDF = async () => {
       try {
@@ -347,7 +325,7 @@ const handleWalletButtonClick = () => {
       <p>Status: {prescription.filled? "Filled" : "Not Filled"}</p>
       <br />
       <h3>Pay For Prescription</h3>
-      <Button id="creditCard" onClick={handleCreditCardButtonClick}
+      <Button id="creditCard" onClick={ProceedToCheckout}
        sx={{
         color: 'white',
         marginBottom: 2,
@@ -357,79 +335,8 @@ const handleWalletButtonClick = () => {
         },
         }} 
       >
-      Credit Card
+      Proceed To Buy Prescription Items
     </Button>
-    <form >
-    <Button 
-  onClick={handleWalletButtonClick}
-  sx={{
-    color: 'white',
-    marginBottom: 3,
-    backgroundColor: '#25A18E',
-    '&:hover': {
-      backgroundColor: '#20756c', // Change color on hover if desired
-    },
-  }} 
->
-  Wallet
-</Button>
-
-    </form>
-
-
-
-    {showCreditCardTextBox && (
-      <form onSubmit={handlePaymentSubmit}>
-        <label>
-          Card number
-          <input type="text" value={cardNumber} onChange={handleCardNumber} />
-        </label>
-        <br />
-        <label>
-          Expiry date
-          <input type="text" value={expiryDate} onChange={handleExpiryDate} />
-        </label>
-        <br />
-        <label>
-          Security code(CVV)
-          <input type="text" value={CVV} onChange={handleCVV} />
-        </label>
-        <br />
-
-        <Button 
-         sx={{      
-          color: 'white',
-                  backgroundColor: '#25A18E',
-                  '&:hover': {
-                      backgroundColor: '#20756c', // Change color on hover if desired
-                  },
-                  }} 
-                  type="submit">
-        Pay</Button>
-      </form>
-    )}
-
-    {showWalletTextBox && (
-      <form onSubmit={handlePaymentSubmit}>
-        <label>
-          Wallet Info
-          <input type="text" value={walletInfo} readOnly />
-        </label>
-        <br />
-
-        <Button 
-        type="submit"
-        sx={{
-          color: 'white',
-          backgroundColor: '#25A18E',
-          '&:hover': {
-              backgroundColor: '#20756c', // Change color on hover if desired
-          },
-          }} >Pay
-        
-        </Button>
-      </form>
-    )}
     <br/>
     <Button onClick={handleDownloadPDF}
      sx={{

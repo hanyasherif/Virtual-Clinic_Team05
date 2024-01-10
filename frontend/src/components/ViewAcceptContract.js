@@ -230,12 +230,19 @@ export default function ViewAcceptContract() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
   <Grid container direction="column" alignItems="center">
-    <Grid item xs={12} md={8} lg={9}>
+    <Grid item xs={12} md={8} lg={9}
+    sx={{
+        '&:hover > div': {
+          transform: 'scale(1.01)',
+          transition: 'transform 0.3s ease-in-out',
+        },
+      }}>
       <Paper
         sx={{
           p: 2,
           display: 'flex',
           flexDirection: 'column',
+          transition: 'transform 0.3s ease-in-out',
           alignItems: 'center',
           borderRadius: 3,
           width: 890,

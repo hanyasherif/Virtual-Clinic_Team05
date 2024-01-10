@@ -25,9 +25,10 @@ const addToCart = async (req, res) => {
     const token = req.cookies.jwt;
     const decodedToken = jwt.verify(token, 'supersecret');
     const patientId = decodedToken.user._id;
-
+    console.log("the medicine Iddddddd" ,medicineId);
     const totalPrice = await calculateTotalPrice(medicineId, quantity);
 
+    console.log("the Totallllll " ,totalPrice);
     const cartItem = {
       medicine: medicineId,
       quantity,

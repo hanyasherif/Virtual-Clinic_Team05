@@ -132,7 +132,7 @@ const {addAdministrator, removeUser, checkUsername, getUsers, searchByName, sear
    uploadMedicalDocument, findPatById,login, removeMedicalDocument, 
     servefiles ,getUploaded ,    getWalletInfo,getFamilyMemberData,getUserByEmail, getUserByPhoneNumber,
     getUserByUsername,modifyWallet,modifyWalletDoctor , getUserById,getUserByTokenId, phviewPatients,
-     viewPharmacists, getWalletInfoDoc,searchByNamePatients} 
+     viewPharmacists, getWalletInfoDoc,searchByNamePatients,getMyId,payStripe} 
     = require("./Routes/userController");
 
 
@@ -150,7 +150,7 @@ const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData 
 const {createContract, acceptContract,   rejectContract,   getContract}= require("./Routes/employmentController");
 
 //////PHARMA OLAYAN
-const { createMedicine, getMedicine, updateMedicine, searchMedicine, filterMedicine, prescriptionMedicine, findAlternativeMedicines, getSales } = require("./RoutesPh/MedicineController");
+const { createMedicine, getMedicine, updateMedicine, searchMedicine, filterMedicine, prescriptionMedicine, findAlternativeMedicines, getSales,getMedIdName } = require("./RoutesPh/MedicineController");
 const { addRequestPH, getRequestsPH, getARequestPH, handleAcceptPH, handleRejectPH } = require("./RoutesPh/requestController");
 //const { loginPH, CEmailPH,GEmailPH,CheckOTPPH, changePasswordPH } = require("./RoutesPh/userController");
 
@@ -308,14 +308,15 @@ app.post("/modifyInstruction/:prescriptionId",modifyInstruction);
 app.get("/generatePdf/:prescriptionId" , generatePdf);
 
 app.post("/searchByNamePatients", requireAuth("Doctor") , searchByNamePatients);
-
+app.get("/getMyId",getMyId);
+app.post("/payStripe",payStripe);
 ////////////////////////////////////////////////sherif and momen/////////////////////////////
 app.post("/Addpatient", AddPatient);
 app.post("/Adddoctor", AddDoctor);
 app.post("/AddC", CreatAppoint);
 app.get("/getC",ViewPatients);
 app.get("/SearchP",SearchPatient);//Searchbyname
-app.post("/Edit",EditMyInfo);
+app.post("/Edit", requireAuth("Doctor"),EditMyInfo);
 app.get("/UpcomingAppoint",filteredAppointments);
 app.get("/GetFullData",GetPFullData);
 app.put("/handleAccept/:requestId", requireAuth("Administrator"), handleAccept);
@@ -434,6 +435,8 @@ app.get("/alternativeMedicines", findAlternativeMedicines);
 app.get("/getSales", getSales);
 
 
+///////Aseel
+app.post("/getMedIdName",getMedIdName);
 
 /*
                                                     End of your code
