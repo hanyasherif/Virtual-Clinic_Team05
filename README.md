@@ -32,6 +32,18 @@ In the ever-evolving landscape of healthcare, we recognize the need for accessib
 - Express.js as the backend framework
 - MongoDB as the database
 
+### Build Status 
+
+<ul>
+   <li>The project is currently in development.</li>
+   <li>Some input fields are case senstive.</li>
+   <li>Ui could be improved.</li>
+   <li>There may bugs that isn't found yet.</li>
+   <li>Changing of quantity in cart in pharmacy is buggy<li>
+   <li>Upload documents in request to be a Doctor/Pharmacist is buggy<li> 
+<ul>
+
+
 # Features
 
 ### Doctor
