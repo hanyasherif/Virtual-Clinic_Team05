@@ -211,9 +211,33 @@ const archiveMedicine = async (medicineId) => {
          res.status(500).json({ message: err.message });
       }
    };
-
+/////Aseel
+const getMedIdName = async (req, res) => {
+   try {
+     const  medicineName  = req.body.medicine;
+ 
+     // Ensure that the medicineName is provided in the request body
+     if (!medicineName) {
+       return res.status(400).json({ error: 'Medicine name is required in the request body' });
+     }
+ 
+     // Search for the medicine in the database
+     const foundMedicine = await medicineModel.findOne({ name: medicineName });
+ 
+     // Check if the medicine is found
+     if (!foundMedicine) {
+       return res.status(404).json({ error: 'Medicine not found' });
+     }
+ 
+     // Return the medicine ID
+     res.status(200).json( foundMedicine );
+   } catch (error) {
+     console.error('Error in getMedIdName:', error);
+     res.status(500).json({ error: 'Internal Server Error' });
+   }
+ };
  
 module.exports = {createMedicine, getMedicine, updateMedicine,searchMedicine, filterMedicine, 
-   prescriptionMedicine,findAlternativeMedicines, archiveMedicine, getSales};
+   prescriptionMedicine,findAlternativeMedicines, archiveMedicine, getSales,getMedIdName};
 
 

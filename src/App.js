@@ -150,7 +150,7 @@ const{ ViewPatients, EditMyInfo,SearchPatient,filteredAppointments,GetPFullData 
 const {createContract, acceptContract,   rejectContract,   getContract}= require("./Routes/employmentController");
 
 //////PHARMA OLAYAN
-const { createMedicine, getMedicine, updateMedicine, searchMedicine, filterMedicine, prescriptionMedicine, findAlternativeMedicines, getSales } = require("./RoutesPh/MedicineController");
+const { createMedicine, getMedicine, updateMedicine, searchMedicine, filterMedicine, prescriptionMedicine, findAlternativeMedicines, getSales,getMedIdName } = require("./RoutesPh/MedicineController");
 const { addRequestPH, getRequestsPH, getARequestPH, handleAcceptPH, handleRejectPH } = require("./RoutesPh/requestController");
 const { loginPH, CEmailPH,GEmailPH,CheckOTPPH, changePasswordPH } = require("./RoutesPh/userController");
 
@@ -435,6 +435,8 @@ app.get("/alternativeMedicines", findAlternativeMedicines);
 app.get("/getSales", getSales);
 
 
+///////Aseel
+app.post("/getMedIdName",getMedIdName);
 
 /*
                                                     End of your code
