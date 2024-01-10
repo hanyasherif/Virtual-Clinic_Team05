@@ -372,7 +372,9 @@ export default function Prescriptions () {
 
             
             </Box>
-                      
+        <Typography sx={{marginBottom: 2, marginLeft: 2}}>
+          Choose A Prescription To See its Details:
+        </Typography>   
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 1200 }} size="small" aria-label="a dense table">
         <TableHead>
