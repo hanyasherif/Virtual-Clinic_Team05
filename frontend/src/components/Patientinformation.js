@@ -114,6 +114,21 @@ const containerStyle = {
   boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
   
 };
+const ProfileContainer = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  marginBottom: theme.spacing(3),
+  textAlign: 'left',
+  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+}));
+const ProfileDetail = styled(Typography)(({ theme }) => ({
+  marginBottom: theme.spacing(1),
+}));
+
+const ActionButtonsContainer = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  display: 'flex',
+  gap: theme.spacing(2),
+}));
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
@@ -245,34 +260,67 @@ const Videochat= async() =>{
   <Grid container spacing={3}>
     {/* Grid for WalletDoc and ViewHealthRecords */}
     {Patient && (
-    <div className="profile-container">
+    
         <div className="profile-info">
-          <h2>Hello Dr</h2>
-          <p>name: {Patient.username}</p>
-          <p>Email: {Patient.email}</p>
-          <div style={containerStyle}>
-        
-          <button  onClick={ chat}>
-           Chat
-          </button>
           
-          <button  onClick={ Videochat}>
+          
+        <ProfileContainer elevation={3}>
+        <Typography variant="h4" gutterBottom sx={{marginTop: 1}}>
+          Patient {Patient.username}
+          </Typography>
+          <Divider />
+          <ProfileDetail sx={{marginTop: 2}}>
+          <strong>Email: </strong> {Patient.email}
+          </ProfileDetail>
+          <ProfileDetail>
+          <strong>Date Of Birth:</strong> {Patient.dateOfBirth}
+        </ProfileDetail>
+        <ProfileDetail>
+          <strong>Gender:</strong> {Patient.gender}
+        </ProfileDetail>
+        <ProfileDetail>
+          <strong>Emergency Contact Fullname:</strong> {Patient.emergencyContactFullname}
+        </ProfileDetail>
+        <ProfileDetail>
+          <strong>Emergency Contact MobileNumber:</strong> {Patient.emergencyContactMobileNumber}
+        </ProfileDetail>
+        
+          </ProfileContainer>
+        
+        
+          <ActionButtonsContainer>
+        <Button 
+        variant="contained"
+        sx={{
+          color: 'white',
+          marginLeft: 3,
+          backgroundColor: '#25A18E',
+          '&:hover': {
+            backgroundColor: '#20756c',
+          },
+        }}     
+        onClick={Videochat}>
           VideoChat
-          </button>
+        </Button>
+        <Button 
+        variant="contained"
+        sx={{
+          color: 'white',
+          backgroundColor: '#25A18E',
+          '&:hover': {
+            backgroundColor: '#20756c',
+          },
+        }}    
+        onClick={chat}>
+          Chat
+        </Button>
+      </ActionButtonsContainer>
+
+      <br />
         </div>
         
-          <div>
-          <p>dateOfBirth: {Patient.dateOfBirth}</p>
-          <p>gender: {Patient.gender}</p>
-          <p>famMemNatID: {Patient.famMemNatID}</p>
-          <p>famMemRelation: {Patient.famMemRelation}</p>
-          <p>famMemAge: {Patient.famMemAge}</p>
-          <p>emergencyContactMobileNumber: {Patient.emergencyContactMobileNumber}</p>
-          <p>emergencyContactFullname: {Patient.emergencyContactFullname}</p>            {/* Add more additional information here */}
-          </div>
-        
-      </div>
-        </div>
+          
+     
 )}
   </Grid>
   <Copyright sx={{ pt: 4 }} />
