@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextField, FormControlLabel, Radio } from '@mui/material';
+import Button from '@mui/material/Button';
 
 // import pillsImage from '../assets/pills.jpg';
 
@@ -89,8 +90,19 @@ const MedicineDetails = ({medicine}) => {
                 />
         </label>
       </div>
-      <button type="submit">Edit</button>
-            </form>
+      <Button
+          type="submit"
+          variant="contained"
+          sx={{
+            color: 'white',
+            backgroundColor: '#25A18E',
+            '&:hover': {
+              backgroundColor: '#20756c',
+            },
+          }}
+        >
+          Edit
+        </Button>            </form>
             </div>
             </div>
        
